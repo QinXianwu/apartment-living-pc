@@ -3,40 +3,26 @@
     <div class="hello">
       <div class="title">{{ title }}</div>
     </div>
-    <!-- 订单统计 -->
-    <OrderStatistic :statisticInfo="statisticInfo" />
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
-import OrderStatistic from "./components/OrderStatistic";
 export default {
-  components: { OrderStatistic },
+  components: {  },
   data() {
     return {
       statisticInfo: {},
     };
   },
   computed: {
-    ...mapState({
-      userInfo: (state) => state.user.userInfo,
-    }),
-    mainAccountId({ userInfo }) {
-      return userInfo?.account || "";
-    },
-    title({ mainAccountId }) {
-      return `欢迎回来！${mainAccountId}`;
+    title() {
+      return `欢迎回来！`;
     },
   },
   methods: {
-    async getStatisticData() {
-      const [, res] = await this.$http.Base.GetHomeOverview();
-      this.statisticInfo = res || {};
-    },
   },
   mounted() {
-    this.getStatisticData();
+    //
   },
 };
 </script>
