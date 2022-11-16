@@ -1,4 +1,4 @@
-import api from "@/api/module";
+// import api from "@/api/module";
 import Page401 from "@/views/ErrorPage/401";
 import { asyncRoutes, constantRoutes } from "@/router";
 
@@ -57,20 +57,14 @@ const mutations = {
 
 const actions = {
   // 根据接口接口返回的权限列表生成可以访问的路由
-  async GenerateRoutes({ commit }, data) {
-    const [, res] = await api.Authorization.GetPageMenuTenantListApi();
-    // 建立hash表
-    const permissionHash = getPermissionsHash(res, new Map());
-    // 配置站点路由
-    const orderRoute = asyncRoutes.find((item) => item.path === "/Order");
-    if (orderRoute) orderRoute.children = data?.siteRoutesChildren || [];
-    // 配置客服路由
-    const serviceRoute = asyncRoutes.find(
-      (item) => item.path === "/CustomerService"
-    );
-    if (serviceRoute) serviceRoute.children = data?.serviceRoutesChildren || [];
-    // 根据权限列表，获取得到可访问的路由
-    const accessedRoutes = filterAsyncRoutes(asyncRoutes, permissionHash);
+  async GenerateRoutes({ commit }) {
+    // const [, res] = await api.Authorization.GetPageMenuTenantListApi();
+    // // 建立hash表
+    // const permissionHash = getPermissionsHash(res, new Map());
+    // // 根据权限列表，获取得到可访问的路由
+    // const accessedRoutes = filterAsyncRoutes(asyncRoutes, permissionHash);
+    const permissionHash = new Map();
+    const accessedRoutes = [...asyncRoutes];
     if (accessedRoutes.length > 0) {
       accessedRoutes.unshift({
         path: "/",

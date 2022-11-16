@@ -14,9 +14,8 @@ router.beforeEach(async (to, from, next) => {
   if (!isLogin && to.path !== "/Authorization/Login") {
     return next({ path: "/Authorization/Login" });
   } else if (!permissionHash && isLogin && to.path !== "/401") {
-    // 如果没有hash表 但已授权
-    const accessRoutes = await store.dispatch("permission/GenerateRoutes", {
-    });
+    // // 如果没有hash表 但已授权
+    const accessRoutes = await store.dispatch("permission/GenerateRoutes", {});
     accessRoutes.forEach((r) => router.addRoute(r));
     next({ ...to, replace: true });
   } else {

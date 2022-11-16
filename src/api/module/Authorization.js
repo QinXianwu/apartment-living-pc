@@ -10,7 +10,7 @@ export default {
   Login(params) {
     return catchAsyncFun(
       apiFetch({
-        url: apiPrefix + "/rbac/login/login",
+        url: apiPrefix + "/auth/login",
         params,
         isReturnAll: true,
       })
@@ -20,7 +20,7 @@ export default {
   OutLogin(params) {
     return catchAsyncFun(
       apiFetch({
-        url: apiPrefix + "/rbac/login/out-login",
+        url: apiPrefix + "/auth/logout",
         params,
         isReturnAll: true,
       })

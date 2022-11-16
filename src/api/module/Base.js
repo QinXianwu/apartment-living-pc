@@ -17,24 +17,4 @@ export default {
       })
     );
   },
-  // 获取支付宝账号列表
-  GetAlipayAccountList(params) {
-    return catchAsyncFun(
-      apiFetch({
-        url: apiPrefix + "/common/list/alipay",
-        params,
-        method: "post",
-      })
-    );
-  },
-  // 获取首页数据
-  GetHomeOverview(params) {
-    return catchAsyncFun(
-      apiFetch({
-        url: apiPrefix + "/home/overview",
-        params,
-        method: "post",
-      })
-    );
-  },
 };
