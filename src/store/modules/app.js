@@ -6,7 +6,6 @@ const state = {
   },
   device: "desktop",
   size: localStorage.getItem("size") || "medium",
-  isAudio: localStorage.getItem("isAudio") === "1", // 是否开启声音
   // 全局读取的配置
   McatGlobal: window.McatGlobal || {},
 };
@@ -34,10 +33,6 @@ const mutations = {
   SET_SIZE: (state, size) => {
     state.size = size;
     localStorage.setItem("size", size);
-  },
-  SET_IS_AUDIO(state, is) {
-    state.isAudio = is;
-    localStorage.setItem("isAudio", is ? 1 : 0);
   },
 };
 

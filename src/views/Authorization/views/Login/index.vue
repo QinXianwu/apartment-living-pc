@@ -30,6 +30,23 @@
                   @keyup.enter.native="onSumbit"
                 ></el-input>
               </el-form-item>
+              <el-form-item label="" prop="code">
+                <div class="code">
+                  <el-input
+                    type="text"
+                    placeholder="验证码"
+                    v-model="formData.code"
+                    @keyup.enter.native="onSumbit"
+                  ></el-input>
+                  <div class="code" @click="getVerifyCode">
+                    <ImageView
+                      :src="codeUrl"
+                      class="code-img"
+                      :isPreviewImg="false"
+                    />
+                  </div>
+                </div>
+              </el-form-item>
             </el-form>
             <el-button class="sumbit-button" type="primary" @click="onSumbit"
               >登录</el-button
@@ -51,9 +68,12 @@ export default {
     return {
       backgroundImage,
       formData: {},
+      codeUrl: "",
+      isLoadingCode: false,
       rules: {
         username: [{ required: true, message: "请输入账号", trigger: "blur" }],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        code: [{ required: true, message: "请输入验证码", trigger: "blur" }],
       },
     };
   },
@@ -66,8 +86,20 @@ export default {
     if (this.token) {
       this.$router.push("/Home/BasicFacts");
     }
+    this.getVerifyCode();
   },
   methods: {
+    // 获取验证码
+    async getVerifyCode() {
+      if (this.isLoadingCode) return;
+      this.isLoadingCode = true;
+      const [, res] = await this.$http.Authorization.GetVerifyCode();
+      this.isLoadingCode = false;
+      if (res?.code !== this.AJAX_CODE.SUCCESS || !res?.img || !res?.uuid)
+        return this.$message.error(res?.msg || "获取验证码失败");
+      this.codeUrl = `data:image/gif;base64,${res.img}`;
+      this.formData.uuid = res?.uuid || "";
+    },
     async onSumbit() {
       try {
         const valid = await this.$refs.form.validate();
@@ -94,7 +126,7 @@ export default {
 
 .loginCollections {
   position: absolute;
-  top: 258px;
+  top: 208px;
   left: 50%;
   transform: translateX(-50%);
   .head {
@@ -110,7 +142,7 @@ export default {
   }
   .box-card {
     width: 480px;
-    height: 410px;
+    height: 510px;
     text-align: center;
     margin: 0 auto;
     padding: 0 32px;
@@ -124,6 +156,17 @@ export default {
       color: #333;
       border: 1px solid #e9e9e9;
       padding: 12px 7px;
+    }
+    .code {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .code-img {
+      width: 150px;
+      height: 100px;
+      margin: 0 0 0 20px;
+      cursor: pointer;
     }
   }
   .sumbit-button {

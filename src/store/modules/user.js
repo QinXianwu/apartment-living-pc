@@ -1,4 +1,3 @@
-import api from "@/api/module";
 const userInfo = localStorage.getItem("user_info") || "{}";
 
 const state = {
@@ -15,28 +14,9 @@ const mutations = {
   },
 };
 
-const actions = {
-  async GetPointSaleListAction({ commit, state }, isRefresh = false) {
-    if (state.provinceList.length !== 0 && !isRefresh)
-      return state.provinceList;
-    const [, data] = await api.AccountRoleManage.GetProvinceList();
-    commit("SET_PROVINCE_LIST", data?.length ? data : []);
-    return data || [];
-  },
-};
+const actions = {};
 
-const getters = {
-  // 省份options
-  provinceOptions(state) {
-    if (!state.provinceList?.length) return [];
-    const options = state.provinceList.map((item) => ({
-      label: item.province,
-      value: item.id,
-      // children: [],
-    }));
-    return options;
-  },
-};
+const getters = {};
 
 export default {
   namespaced: true,

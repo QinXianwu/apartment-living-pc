@@ -26,6 +26,17 @@ export default {
       })
     );
   },
+  // 获取验证码
+  GetVerifyCode(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/code",
+        params,
+        method: "GET",
+        isReturnAll: true,
+      })
+    );
+  },
   // 获取路由权限
   GetPageMenuTenantListApi(params) {
     return catchAsyncFun(

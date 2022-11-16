@@ -16,7 +16,9 @@ const service = axios.create({
   withCredentials: false, // 是否允许带cookie这些
   headers: {
     "Content-Type": "application/json",
-    authorization: CookieStore.getCookie("user_sessino") || "",
+    Authorization: CookieStore.getCookie("user_sessino")
+      ? `Bearer ${CookieStore.getCookie("user_sessino")}`
+      : "",
   },
 });
 
@@ -44,24 +46,19 @@ service.interceptors.response.use(
 
     // 对本地环境以及线上环境返回不一样字段名进行处理
     if (data) {
-      if (!isField(data, "resCode") && isField(data, "code"))
-        data.resCode = Number(data.code);
-      // if (!isField(data, "Message") && isField(data, "message"))
-      //   data.Message = data.message;
+      if (!isField(data, "message") && isField(data, "msg"))
+        data.message = data.msg;
       // if (!isField(data, "Data") && isField(data, "data"))
       //   data.Data = data.data; // 封装响应体
-      if (!data.message && data?.resCode !== CONST.AJAX_CODE.SUCCESS)
+      if (!data.message && data?.code !== CONST.AJAX_CODE.SUCCESS)
         data.message = "未知错误";
     }
 
     // 判断是否返回正确的业务编码，返回正确的时候则直接返回主体
-    if (data?.resCode === CONST.AJAX_CODE.SUCCESS) return data.data || true;
+    if (data?.code === CONST.AJAX_CODE.SUCCESS) return data.data || true;
 
     config.isErrorTips && Message.error(data?.message || "未知错误");
-    if (
-      data?.resCode === CONST.AJAX_CODE.AUTH_EXPIRE ||
-      data?.resCode === 401
-    ) {
+    if (data?.code === CONST.AJAX_CODE.AUTH_EXPIRE || data?.code === 401) {
       if (!un_login) {
         // 只需提示一次
         // 授权过期
@@ -81,8 +78,7 @@ service.interceptors.response.use(
     // 错误的请求结果处理，这里的代码根据后台的状态码来决定错误的输出信息
     var state;
     if (error?.response?.data?.message) {
-      // state = error.response.data.code;
-      state = Number(error.response.data.code);
+      state = error.response.data.code;
       error.message = error.response.data.message;
     } else if (error && error.response) {
       switch (error.response.status) {
