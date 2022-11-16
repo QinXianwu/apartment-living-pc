@@ -1,0 +1,292 @@
+// 中间带 | 的按钮组
+.action-groud {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .el-button {
+    font-size: 14px;
+  }
+
+  > .el-button > span:after {
+    content: "|";
+    color: $--color-primary;
+    margin: 0 5px;
+  }
+
+  .el-button:last-child > span::after {
+    display: none;
+  }
+
+  .el-button + .el-button {
+    margin-left: 0;
+  }
+
+  .no-after > span:after {
+    content: "";
+  }
+}
+
+// 页面普通的标题，不带杆
+.common_title {
+  color: $main-font-color;
+  font-weight: bold;
+  font-size: 14px;
+  padding-bottom: 10px;
+}
+
+// 详情页前面带杆的标题
+.fill_title {
+  padding: 10px 10px 10px 21px;
+  margin-bottom: 10px;
+  line-height: 20px;
+  font: normal bold 14px PingFang-SC-Medium, PingFang-SC;
+  color: $main-font-color;
+  background-color: #fff;
+  position: relative;
+
+  &::before {
+    content: " ";
+    width: 2px;
+    height: 14px;
+    background-color: $--color-primary;
+    position: absolute;
+    left: 11px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+  }
+
+  .edit-btn {
+    color: $--color-primary;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}
+
+// 用户等级显示
+.level_tag {
+  font-size: 12px;
+  line-height: 20px;
+  display: inline-block;
+  color: $tag-color;
+  border: 1px solid $tag-color;
+  border-radius: 2px;
+  padding: 0 6px;
+  box-sizing: border-box;
+}
+
+// 主字体颜色
+.main-font {
+  color: $main-font-color;
+}
+
+// 次级字体颜色
+.sub-font {
+  color: $sub-font-color;
+}
+
+// 宽度固定的输入框
+.min-input {
+  width: 300px;
+}
+
+// 主题色
+.theme-color {
+  color: $--color-primary;
+}
+
+// 主题色 危险
+.theme-color-danger {
+  color: $--color-danger;
+}
+
+// 主题色 警告
+.theme-color-warn {
+  color: $--color-warning;
+}
+
+// 主题色 成功
+.theme-color-success {
+  color: $--color-success;
+}
+
+// 左边距10
+.ml-10 {
+  margin-left: 10px;
+}
+
+// 右边距10
+.mr-10 {
+  margin-right: 10px;
+}
+
+// 上边距10
+.mt-10 {
+  margin-top: 10px;
+}
+
+// 下边距10
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.el-dialog__body {
+  border-top: 1px solid rgba(0, 0, 0, 0.09);
+}
+
+// 表单提示文本样式
+.form-tip {
+  color: rgba(0, 0, 0, 0.51);
+  font-size: 12px;
+  line-height: 24px;
+  padding: 4px 0;
+}
+
+// intro 提示特定的css样式 start
+.mt-intro-class {
+  .introjs-button {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #dcdfe6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    transition: 0.1s;
+    font-weight: 500;
+    /*firefox浏览器*/
+    -moz-user-select: none;
+    /*safari、chrome浏览器*/
+    -webkit-user-select: none;
+    /*Safari中不支持该属性值，只能使用none或者text，或者是在html的标签属性中使用*/
+    /*ie浏览器*/
+    -ms-user-select: none;
+    user-select: none;
+    font-size: 14px;
+    border-radius: 4px;
+    text-shadow: none;
+
+    &.introjs-prevbutton {
+      color: $--color-primary;
+      border-color: #c6e2ff;
+      background-color: #ecf5ff;
+    }
+
+    &.introjs-nextbutton {
+      background-color: #ecf5ff;
+      border-color: #b3d8ff;
+      text-align: center;
+      box-sizing: border-box;
+      outline: none;
+      margin: 0;
+      transition: 0.1s;
+      font-weight: 500;
+
+      &:hover,
+      &:focus {
+        background: $--color-primary;
+        border-color: $--color-primary;
+        color: #fff;
+        box-shadow: none;
+      }
+    }
+
+    &.introjs-disabled {
+      color: #c0c4cc;
+      cursor: not-allowed;
+      background-image: none;
+      background-color: #fff;
+      border-color: #ebeef5;
+    }
+  }
+}
+
+// intro 提示特定的css样式 end
+
+.formSelect {
+  width: 280px;
+  display: inline-block;
+  border: 1px solid $--border-color-light;
+  border-radius: 4px;
+  padding: 0 15px;
+  color: #bfbfbf;
+  border-radius: 4px;
+  box-sizing: border-box;
+
+  &.pointer {
+    cursor: pointer;
+  }
+
+  &.disable {
+    background: #f8f8f8;
+  }
+
+  &-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    height: 32px;
+    line-height: 32px;
+
+    &-text {
+      width: 90%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-right: 15px;
+      box-sizing: border-box;
+
+      .active {
+        width: 100%;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #282828;
+      }
+    }
+  }
+}
+
+// 溢出隐藏
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.multi-ellipsis--l2,
+.multi-ellipsis--l3 {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+}
+
+.multi-ellipsis--l2 {
+  -webkit-line-clamp: 2;
+}
+
+.multi-ellipsis--l3 {
+  -webkit-line-clamp: 3;
+}
+
+.input-medium {
+  width: 380px;
+}
+
+.input-small {
+  width: 280px;
+}
+
+.input-mini {
+  width: 180px;
+}

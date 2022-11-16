@@ -1,0 +1,67 @@
+// element ui 主题变量 star
+/**
+* I think element-ui's default theme color is too light for long-term use.
+* So I modified the default color and you can modify it to your liking.
+**/
+
+/* theme color */
+$--color-primary: #2b6fe5;
+$--color-success: #13ce66;
+$--color-warning: #ff7843;
+$--color-danger: #ff4949;
+$--color-info: #909399;
+
+$--button-font-weight: 400;
+
+// $--color-text-regular: #1f2d3d;
+
+$--border-color-light: #dfe4ed;
+$--border-color-lighter: #e6ebf5;
+
+$--table-border: 1px solid #dfe6ec;
+
+/* icon font path, required */
+$--font-path: "~element-ui/lib/theme-chalk/fonts";
+// element ui 主题变量 end
+
+// sidebar
+$menuText: #bfcbd9;
+$menuActiveText: #409eff;
+$subMenuActiveText: #f4f4f5; // https://github.com/ElemeFE/element/issues/12951
+
+$menuBg: #304156;
+$menuHover: #263445;
+
+$subMenuBg: #1f2d3d;
+$subMenuHover: #001528;
+
+$main-font-color: #282828; //主文本颜色
+$sub-font-color: #666666; //次级文本颜色
+$tip-font-color: #999999; //提示文本颜色
+$tag-color: #ff7843; //会员等级颜色
+$price-color: #ff5600; //价格颜色
+
+$z-index1: 10;
+$z-index2: 20;
+$z-index3: 30;
+$z-index4: 40;
+$z-index5: 99;
+
+$sideBarWidth: 210px; // 侧边栏宽度
+$sideBarCloseWidth: 54px; // 侧边栏闭合时宽度
+
+$paginationHeight: 50px; //分页器高度
+$paddingBottom: 66px; //带分页器时的 底部边距
+
+// the :export directive is the magic sauce for webpack
+// https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
+:export {
+  menuText: $menuText;
+  menuActiveText: $menuActiveText;
+  subMenuActiveText: $subMenuActiveText;
+  menuBg: $menuBg;
+  menuHover: $menuHover;
+  subMenuBg: $subMenuBg;
+  subMenuHover: $subMenuHover;
+  sideBarWidth: $sideBarWidth;
+}
