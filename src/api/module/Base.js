@@ -7,13 +7,18 @@ const catchAsyncFun = createCatchAsyncFun((error) => {
 });
 
 export default {
-  // 获取代售点列表
-  GetPointSaleList(params) {
+  // 获取用户信息
+  GetUserInfo(params) {
     return catchAsyncFun(
       apiFetch({
-        url: apiPrefix + "/common/list/point-sale",
-        params,
-        method: "post",
+        url: apiPrefix + "/system/user/getInfo",
+        params: {},
+        method: "GET",
+        isReturnAll: true,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: params.token,
+        },
       })
     );
   },

@@ -46,19 +46,23 @@ const actions = {
     });
   },
   // 登录
-  async Login({ commit }, userInfo) {
+  async Login({ commit }, formData) {
     const [, res] = await api.Authorization.Login({
-      ...userInfo,
+      ...formData,
     });
-    if (res?.code === CONST.AJAX_CODE.SUCCESS && res?.data) {
-      const token = res.data?.access_token;
-      const userInfo = JSON.stringify(res?.data?.sysUser || "");
-      commit("SET_USER_SIGNIN", { token, userInfo, date: 1 });
-      location.href = "/";
-      ELEMENT.Message.success("登录成功");
-    } else {
+    if (res?.code !== CONST.AJAX_CODE.SUCCESS || !res?.data) {
       ELEMENT.Message.error(res?.msg || "账号密码有误,请重试");
+      return Promise.reject(true);
     }
+    // 获取用户信息
+    const [, data] = await api.Base.GetUserInfo({
+      token: res.data?.access_token,
+    });
+    const token = res.data?.access_token;
+    const userInfo = JSON.stringify(data?.user || "");
+    commit("SET_USER_SIGNIN", { token, userInfo, date: 1 });
+    location.href = "/";
+    ELEMENT.Message.success("登录成功");
   },
 };
 

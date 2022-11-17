@@ -1,4 +1,4 @@
-// import api from "@/api/module";
+import api from "@/api/module";
 import Page401 from "@/views/ErrorPage/401";
 import { asyncRoutes, constantRoutes } from "@/router";
 
@@ -33,9 +33,9 @@ export function filterAsyncRoutes(routes, permissionHash) {
  */
 export function getPermissionsHash(permission = [], map) {
   permission?.forEach((p) => {
-    map.set(p.code, p);
-    if (p?.subordinate?.length) {
-      getPermissionsHash(p?.subordinate, map);
+    map.set(p.id, p);
+    if (p?.children?.length) {
+      getPermissionsHash(p?.children, map);
     }
   });
   return map;
@@ -58,13 +58,11 @@ const mutations = {
 const actions = {
   // 根据接口接口返回的权限列表生成可以访问的路由
   async GenerateRoutes({ commit }) {
-    // const [, res] = await api.Authorization.GetPageMenuTenantListApi();
-    // // 建立hash表
-    // const permissionHash = getPermissionsHash(res, new Map());
-    // // 根据权限列表，获取得到可访问的路由
-    // const accessedRoutes = filterAsyncRoutes(asyncRoutes, permissionHash);
-    const permissionHash = new Map();
-    const accessedRoutes = [...asyncRoutes];
+    const [, res] = await api.Authorization.GetPageMenuTenantListApi();
+    // 建立hash表
+    const permissionHash = getPermissionsHash(res, new Map());
+    // 根据权限列表，获取得到可访问的路由
+    const accessedRoutes = filterAsyncRoutes(asyncRoutes, permissionHash);
     if (accessedRoutes.length > 0) {
       accessedRoutes.unshift({
         path: "/",

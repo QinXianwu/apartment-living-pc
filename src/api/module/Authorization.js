@@ -21,6 +21,7 @@ export default {
     return catchAsyncFun(
       apiFetch({
         url: apiPrefix + "/auth/logout",
+        method: "DELETE",
         params,
         isReturnAll: true,
       })
@@ -41,8 +42,9 @@ export default {
   GetPageMenuTenantListApi(params) {
     return catchAsyncFun(
       apiFetch({
-        url: apiPrefix + "/common/list/resources",
+        url: apiPrefix + "/system/menu/getRouters",
         params,
+        method: "GET",
       })
     );
   },

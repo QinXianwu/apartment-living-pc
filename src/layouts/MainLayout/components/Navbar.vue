@@ -70,7 +70,7 @@ export default {
       McatGlobal: (state) => state.app.McatGlobal,
     }),
     mainAccountId({ userInfo }) {
-      const name = userInfo?.account;
+      const name = userInfo?.userName;
       return name || "";
     },
     userAvatar() {

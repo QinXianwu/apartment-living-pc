@@ -106,11 +106,12 @@ export default {
         if (!valid) {
           return;
         }
+        await this.$store.dispatch("authorization/Login", this.formData);
       } catch (error) {
         console.log(error);
+        if (error && typeof error === "boolean") this.getVerifyCode();
         return;
       }
-      await this.$store.dispatch("authorization/Login", this.formData);
     },
   },
 };
