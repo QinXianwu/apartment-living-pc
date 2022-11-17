@@ -10,6 +10,36 @@ export const createCatchAsyncFun = (errorHandle) => {
   };
 };
 
+/**
+ * 参数处理
+ * @param {*} params  参数
+ */
+export function tansParams(params) {
+  let result = "";
+  for (const propName of Object.keys(params)) {
+    const value = params[propName];
+    var part = encodeURIComponent(propName) + "=";
+    if (value !== null && value !== "" && typeof value !== "undefined") {
+      if (typeof value === "object") {
+        for (const key of Object.keys(value)) {
+          if (
+            value[key] !== null &&
+            value[key] !== "" &&
+            typeof value[key] !== "undefined"
+          ) {
+            let params = propName + "[" + key + "]";
+            var subPart = encodeURIComponent(params) + "=";
+            result += subPart + encodeURIComponent(value[key]) + "&";
+          }
+        }
+      } else {
+        result += part + encodeURIComponent(value) + "&";
+      }
+    }
+  }
+  return result;
+}
+
 function checkType(type) {
   return (a) => {
     return Object.prototype.toString.call(a) === `[object ${type}]`;
@@ -181,7 +211,6 @@ export function DownloadFile({ data, FileName, type }) {
   const blob = new Blob([data], {
     type: type || "",
   });
-  console.log("blob", blob);
   // 通过URL.createObjectURL生成文件路径
   const url = window.URL.createObjectURL(blob);
 

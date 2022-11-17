@@ -3,7 +3,7 @@ import * as ELEMENT from "element-ui";
 const { Loading, Message } = ELEMENT;
 import CONST from "@/constants/index";
 import store from "@/store/index";
-import { isField } from "@/utils";
+import { isField, tansParams } from "@/utils";
 import CookieStore from "@/utils/common";
 let requestNum = 0, // 累计请求数
   loadingInstance = null, // loading实例
@@ -147,6 +147,7 @@ export function apiFetch(objData) {
     isReturnAll: false, // 是否返回全部接受数据
     isQueryAll: true, // 是否传输全部请求参数
     isErrorTips: true, // 接口报错时是否弹窗提示
+    isHandleParams: false, // get 是否处理参数
     ...objData,
   };
   if (data.isLoading && !loadingInstance) {
@@ -159,30 +160,30 @@ export function apiFetch(objData) {
   let method = data.method;
   if (!method || typeof method !== "string") method = "POST";
   method = method.toUpperCase();
+  const url = data.isHandleParams
+    ? `${data.url}?${tansParams(data.params)}`.slice(0, -1)
+    : data.url;
+  const params = data.isQueryAll
+    ? data.isHandleParams
+      ? {}
+      : data.params
+    : { Data: data.params };
   if (method === "POST") {
-    return service.post(
-      data.url,
-      data.isQueryAll ? data.params : { Data: data.params },
-      { ...data, params: undefined }
-    );
+    return service.post(url, params, { ...data, params: undefined });
   }
   if (method === "GET") {
-    return service.get(data.url, {
+    return service.get(url, {
       ...data,
-      params: data.isQueryAll ? data.params : { Data: data.params },
+      params: params,
     });
   }
   if (method === "PUT") {
-    return service.put(
-      data.url,
-      data.isQueryAll ? data.params : { Data: data.params },
-      { ...data, params: undefined }
-    );
+    return service.put(url, params, { ...data, params: undefined });
   }
   if (method === "DELETE") {
-    return service.delete(data.url, {
+    return service.delete(url, {
       ...data,
-      params: data.isQueryAll ? data.params : { Data: data.params },
+      params: params,
     });
   }
   console.error("异常请求类型");

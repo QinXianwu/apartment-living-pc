@@ -1,7 +1,5 @@
 export default {
-  SetUp: "321704078174637715079186360864259812794", // 系统设置
-  SetUp_AccountManagement: "149638981461394765079437771236871191783", // 系统设置-用户管理
-  SetUp_RoleManagement: "47983029078456930446546423317487018433", // 系统设置-角色管理
-  SetUp_AliPayManagement: "339351241568907525354204475290696812191", // 系统设置-支付宝管理
-  SetUp_SysConfigManagement: "156975229965485983914797038258620674755", // 系统设置-系统配置
+  SetUp: 1, // 系统设置
+  SetUp_AccountManagement: 100, // 系统设置-用户管理
+  SetUp_RoleManagement: 101, // 系统设置-角色管理
 };

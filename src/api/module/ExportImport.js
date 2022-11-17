@@ -7,15 +7,20 @@ const catchAsyncFun = createCatchAsyncFun((error) => {
 });
 
 export default {
-  ExportTicketing(params) {
+  // 用户列表导出
+  ExportUserList(params) {
     return catchAsyncFun(
       apiFetch({
-        url: apiPrefix + "/query/ticketing/download",
+        url: apiPrefix + "/system/user/export",
         params,
-        method: "post",
-        TaskName: "出票查询导出",
+        method: "POST",
+        TaskName: "用户列表导出",
         isReturnAll: true,
+        isHandleParams: true,
         responseType: "blob",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
       })
     );
   },
