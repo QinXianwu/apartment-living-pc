@@ -58,7 +58,7 @@ service.interceptors.response.use(
     if (data?.code === CONST.AJAX_CODE.SUCCESS) return data.data || true;
 
     config.isErrorTips && Message.error(data?.message || "未知错误");
-    if (data?.code === CONST.AJAX_CODE.AUTH_EXPIRE || data?.code === 401) {
+    if (data?.code === 401) {
       if (!un_login) {
         // 只需提示一次
         // 授权过期
@@ -77,9 +77,9 @@ service.interceptors.response.use(
     }
     // 错误的请求结果处理，这里的代码根据后台的状态码来决定错误的输出信息
     var state;
-    if (error?.response?.data?.message) {
+    if (error.response.data.msg || error?.response?.data?.message) {
       state = error.response.data.code;
-      error.message = error.response.data.message;
+      error.message = error.response.data.msg || error.response.data.message;
     } else if (error && error.response) {
       switch (error.response.status) {
         case 400:
@@ -125,11 +125,7 @@ service.interceptors.response.use(
     } else {
       error.message = "连接到服务器失败";
     }
-    if (
-      state === CONST.AJAX_CODE.AUTH_EXPIRE ||
-      state === 401 ||
-      error?.response?.status === 401
-    ) {
+    if (state === 401 || error?.response?.status === 401) {
       if (!un_login) {
         // 只需提示一次
         // 授权过期
