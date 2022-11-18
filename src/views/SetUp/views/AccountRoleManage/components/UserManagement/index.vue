@@ -7,7 +7,11 @@
         :formData="formData"
         @on-search="onSearch"
         @on-export="onExport"
-      />
+      >
+        <template>
+          <!-- <el-button @click="onImport">导入</el-button> -->
+        </template>
+      </SearchForm>
       <div class="action">
         <el-button type="primary" @click="handleAdd"> 新增用户 </el-button>
       </div>
@@ -136,6 +140,9 @@ export default {
         tipText: "导出成功，是否进行下载？",
         fileName: "用户列表",
       });
+    },
+    async onImport() {
+      //
     },
     handleAdd() {
       this.editInfo = "";

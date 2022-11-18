@@ -98,7 +98,7 @@ export default {
       if (res?.code !== this.AJAX_CODE.SUCCESS || !res?.img || !res?.uuid)
         return this.$message.error(res?.msg || "获取验证码失败");
       this.codeUrl = `data:image/gif;base64,${res.img}`;
-      this.formData.uuid = res?.uuid || "";
+      this.formData.uuid = res.uuid || "";
     },
     async onSumbit() {
       try {
@@ -165,7 +165,7 @@ export default {
     }
     .code-img {
       width: 150px;
-      height: 100px;
+      // height: 100px;
       margin: 0 0 0 20px;
       cursor: pointer;
     }

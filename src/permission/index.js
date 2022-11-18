@@ -3,9 +3,13 @@ import Vue from "vue";
 import router from "@/router";
 import store from "@/store";
 import hasPermission from "./hasPermission";
-
 import { clearNum } from "@/api/request";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+
+NProgress.configure({ showSpinner: false });
 router.beforeEach(async (to, from, next) => {
+  NProgress.start();
   //true用户已登录， false用户未登录
   const isLogin = Boolean(store.state.authorization.state);
   const permissionHash = store.state.permission.permissionHash;
@@ -22,6 +26,10 @@ router.beforeEach(async (to, from, next) => {
     // 如果已经有hash表了，直接跳转
     next();
   }
+});
+
+router.afterEach(() => {
+  NProgress.done();
 });
 
 // 权限指令

@@ -1,10 +1,10 @@
 import axios from "axios";
 import * as ELEMENT from "element-ui";
 const { Loading, Message } = ELEMENT;
-import CONST from "@/constants/index";
 import store from "@/store/index";
-import { isField, tansParams } from "@/utils";
+import CONST from "@/constants/index";
 import CookieStore from "@/utils/common";
+import { isField, tansParams } from "@/utils";
 let requestNum = 0, // 累计请求数
   loadingInstance = null, // loading实例
   un_login = false; // 是否未登陆，用于判断提示登陆的次数
@@ -68,7 +68,6 @@ service.interceptors.response.use(
     }
     return Promise.reject(data || { message: "未知错误" });
   },
-
   (error) => {
     requestNum--;
     if (requestNum <= 0) {
