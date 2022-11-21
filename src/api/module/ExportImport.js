@@ -24,4 +24,21 @@ export default {
       })
     );
   },
+  // 下载导入用户列表的文件模板
+  ImportUserListTemplate(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/user/importTemplate",
+        params,
+        method: "POST",
+        TaskName: "导入用户列表模板",
+        isReturnAll: true,
+        isHandleParams: true,
+        responseType: "blob",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+    );
+  },
 };

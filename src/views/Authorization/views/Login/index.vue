@@ -165,7 +165,7 @@ export default {
     }
     .code-img {
       width: 150px;
-      // height: 100px;
+      max-height: 100px;
       margin: 0 0 0 20px;
       cursor: pointer;
     }

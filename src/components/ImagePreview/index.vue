@@ -40,7 +40,7 @@ export default {
       if (isExternal(real_src)) {
         return real_src;
       }
-      return process.env.VUE_APP_BASE_API + real_src;
+      return process.env.VITE_APP_BASE_API_URL + real_src;
     },
     realSrcList() {
       let real_src_list = this.src.split(",");
@@ -49,7 +49,7 @@ export default {
         if (isExternal(item)) {
           return srcList.push(item);
         }
-        return srcList.push(process.env.VUE_APP_BASE_API + item);
+        return srcList.push(process.env.VITE_APP_BASE_API_URL + item);
       });
       return srcList;
     },

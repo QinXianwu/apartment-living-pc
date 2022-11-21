@@ -8,8 +8,8 @@
         @on-search="onSearch"
         @on-export="onExport"
       >
-        <template>
-          <!-- <el-button @click="onImport">导入</el-button> -->
+        <template #buttonR>
+          <el-button @click="onImport">导入</el-button>
         </template>
       </SearchForm>
       <div class="action">
@@ -70,17 +70,20 @@
       :show.sync="isUpdatePassword"
       @close="close"
     />
+    <ImportUserDiaog :show.sync="isImportUser" @close="close" />
   </div>
 </template>
 
 <script>
 import { column, formData } from "./config";
-import { DownloadFile } from "@/utils";
+import downloadFilelMixin from "@/mixins/downloadFilelMixin";
+import ImportUserDiaog from "./components/ImportUserDiaog.vue";
 import UpdateAcconutDiaog from "./components/UpdateAcconutDiaog.vue";
 import UpdatePasswordDiaog from "./components/UpdatePasswordDiaog.vue";
 export default {
   name: "UserManagement",
-  components: { UpdateAcconutDiaog, UpdatePasswordDiaog },
+  mixins: [downloadFilelMixin],
+  components: { ImportUserDiaog, UpdateAcconutDiaog, UpdatePasswordDiaog },
   data() {
     return {
       formData,
@@ -88,6 +91,7 @@ export default {
       editInfo: "",
       isUpdateAccount: false,
       isUpdatePassword: false,
+      isImportUser: false,
       isExporting: false,
       list: [],
       page: {
@@ -142,7 +146,7 @@ export default {
       });
     },
     async onImport() {
-      //
+      this.isImportUser = true;
     },
     handleAdd() {
       this.editInfo = "";
@@ -206,6 +210,7 @@ export default {
       this.editInfo = "";
       this.isUpdateAccount = false;
       this.isSelectRole = false;
+      this.isImportUser = false;
       if (isRefresh) this.getList();
     },
     async getList(isClear) {
@@ -220,36 +225,6 @@ export default {
       }
       this.list = res?.rows || [];
       this.total = res?.total || 0;
-    },
-    /**
-     * @data 文件数据
-     * @tipText 提示语
-     * @fileName 文件名称
-     * @fileType 文件类型
-     */
-    async onExportDownloadFile({ data, tipText, fileName, fileType }) {
-      if (!data) return;
-      try {
-        await this.$confirm(tipText || "是否进行下载？", "提示", {
-          confirmButtonText: "去下载",
-          cancelButtonText: "取消",
-          type: "success",
-        });
-        const date = this.$options.filters.formatDate(
-          Date.now(),
-          "yyyy-MM-dd hh:mm:ss"
-        );
-        const dateType =
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8";
-        DownloadFile({
-          data: data,
-          FileName: `${fileName || ""}_${date}`,
-          type: fileType || dateType,
-        });
-      } catch (e) {
-        console.error(e);
-        // e;
-      }
     },
   },
   mounted() {

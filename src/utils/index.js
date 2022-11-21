@@ -197,35 +197,3 @@ export function debounce(func, wait, immediate = false) {
     }
   };
 }
-
-/**
- * @desc 下载文件
- * @data 二进制文件
- * @FileName 文件名称
- */
-
-export function DownloadFile({ data, FileName, type }) {
-  if (!data) return;
-  // console.log("下载文件", data);
-  // 用返回二进制数据创建一个Blob实例
-  const blob = new Blob([data], {
-    type: type || "",
-  });
-  // 通过URL.createObjectURL生成文件路径
-  const url = window.URL.createObjectURL(blob);
-
-  // 创建a标签
-  const ele = document.createElement("a");
-  ele.style.display = "none";
-
-  // 设置href属性为文件路径，download属性可以设置文件名称
-  ele.href = url;
-  ele.download = FileName || "文件";
-
-  // 将a标签添加到页面并模拟点击
-  document.querySelectorAll("body")[0].appendChild(ele);
-  ele.click();
-
-  // 移除a标签
-  ele.remove();
-}
