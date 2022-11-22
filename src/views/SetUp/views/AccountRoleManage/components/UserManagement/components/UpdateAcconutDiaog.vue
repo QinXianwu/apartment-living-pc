@@ -218,7 +218,8 @@ export default {
       });
       this.isLoadingUser = false;
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
-        this.$message.error(res?.mas || "获取用户信息异常");
+        if (this.editInfo?.userId)
+          this.$message.error(res?.mas || "获取用户信息异常");
         return;
       }
       this.postOptions = res?.posts?.length ? res.posts : [];
