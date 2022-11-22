@@ -163,17 +163,17 @@ export default {
           type: "warning",
           showClose: false,
         });
-        const [err] = await this.$http.AccountRoleManage.UpdateUserStatus({
+        const [, res] = await this.$http.AccountRoleManage.UpdateUserStatus({
           userId: item?.userId || "",
           status: item?.status,
         });
-        const msg = err ? err.Message : `${tipText}成功`;
+        const msg = res ? res?.msg || `${tipText}成功` : `${tipText}失败`;
         this.$confirm(msg, "删除提示", {
           showClose: false,
           showCancelButton: false,
-          type: !err ? "success" : "error",
+          type: res ? "success" : "error",
         }).then(() => {
-          if (!err) this.getList();
+          if (res) this.getList();
         });
       } catch (error) {
         item.status = item?.status === "0" ? "1" : "0";

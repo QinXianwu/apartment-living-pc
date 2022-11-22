@@ -79,4 +79,26 @@ export default {
       })
     );
   },
+  // 获取角色列表
+  GetRoleList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/role/list",
+        params,
+        method: "GET",
+        isReturnAll: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 更新角色状态
+  UpdateRoleStatus(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/role/changeStatus",
+        params,
+        method: "PUT",
+      })
+    );
+  },
 };
