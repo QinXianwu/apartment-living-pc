@@ -41,4 +41,21 @@ export default {
       })
     );
   },
+  // 角色列表导出
+  ExportRoleList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/role/export",
+        params,
+        method: "POST",
+        TaskName: "角色列表导出",
+        isReturnAll: true,
+        isHandleParams: true,
+        responseType: "blob",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+    );
+  },
 };

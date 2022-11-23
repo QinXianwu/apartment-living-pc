@@ -22,12 +22,12 @@
       </template>
       <!-- 操作 -->
       <template #action="{ scope }">
-        <div class="action-groud">
+        <div class="action-groud" v-if="scope.roleId !== 1">
           <el-button type="text" @click="handleEdit(scope)"> 编辑 </el-button>
-          <el-button type="text" @click="handlePermission(scope)">
-            分配权限
-          </el-button>
           <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
+          <el-button type="text" @click="handleAssignUsers(scope)">
+            分配用户
+          </el-button>
         </div>
       </template>
     </TablePanel>
@@ -45,12 +45,20 @@
       :show.sync="showUpdateRole"
       @close="close"
     />
-    <!-- 分配权限 -->
-    <DistributionPermission
-      :editInfo="editInfo"
-      :show.sync="showUpdatePermission"
-      @close="close"
+    <AddAssignUserDiaog
+      :roleInfo="roleInfo"
+      :show.sync="showAddAssignUser"
+      @close="closeAssignUser"
     />
+    <DrawerPopup v-model="showAssignUsers">
+      <AssignUsersList
+        @close="close"
+        ref="AssignUsersList"
+        @addAssignUser="handleAddAssignUser"
+        :editInfo="editInfo"
+        v-if="showAssignUsers"
+      />
+    </DrawerPopup>
   </div>
 </template>
 
@@ -58,21 +66,24 @@
 import { formData, column } from "./config";
 import downloadFilelMixin from "@/mixins/downloadFilelMixin";
 import UpdateRoleDiaog from "./components/UpdateRoleDiaog.vue";
-import DistributionPermission from "./components/DistributionPermission.vue";
+import AssignUsersList from "./components/AssignUsersList.vue";
+import AddAssignUserDiaog from "./components/AddAssignUserDiaog.vue";
 
 export default {
   name: "RoleManage",
   mixins: [downloadFilelMixin],
-  components: { UpdateRoleDiaog, DistributionPermission },
+  components: { UpdateRoleDiaog, AssignUsersList, AddAssignUserDiaog },
   data() {
     return {
       formData,
       column, //表格头
       list: [],
       editInfo: "",
+      roleInfo: "",
       isExporting: false,
       showUpdateRole: false,
-      showUpdatePermission: false,
+      showAssignUsers: false,
+      showAddAssignUser: false,
       page: {
         size: 10,
         current: 1,
@@ -113,7 +124,7 @@ export default {
         delete query.createDate;
       }
       this.isExporting = true;
-      const [, res] = await this.$http.ExportImport.ExportUserList({
+      const [, res] = await this.$http.ExportImport.ExportRoleList({
         ...this.page,
         ...this.query,
       });
@@ -152,38 +163,47 @@ export default {
     close(isRefresh = false) {
       this.editInfo = "";
       this.showUpdateRole = false;
-      this.showUpdatePermission = false;
+      this.showAssignUsers = false;
       if (isRefresh) this.getList();
     },
     handleAdd() {
       this.editInfo = "";
       this.showUpdateRole = true;
     },
-    handleEdit(item) {
-      this.editInfo = item;
+    handleEdit({ roleId }) {
+      this.editInfo = { roleId };
       this.showUpdateRole = true;
     },
-    handlePermission(item) {
-      this.editInfo = item;
-      this.showUpdatePermission = true;
+    handleAssignUsers({ roleId }) {
+      this.editInfo = { roleId };
+      this.showAssignUsers = true;
     },
-    async handleDelete({ id }) {
-      if (!id) return this.$message.error("获取不到当前角色ID");
+    handleAddAssignUser(val) {
+      this.roleInfo = val;
+      this.showAddAssignUser = true;
+    },
+    closeAssignUser(val) {
+      this.roleInfo = "";
+      this.showAddAssignUser = false;
+      if (val) this.$refs.AssignUsersList.getList();
+    },
+    async handleDelete({ roleId }) {
+      if (!roleId) return this.$message.error("获取不到当前角色ID");
       try {
         await this.$confirm("确定要删除当前角色吗?", "删除提示", {
           type: "warning",
           showClose: false,
         });
-        const [err] = await this.$http.AccountRoleManage.DeleteRole({ id });
-        let msg = err ? err.Message : "删除成功";
+        const [, res] = await this.$http.AccountRoleManage.DeleteRole({
+          roleId,
+        });
+        const msg = res ? res?.msg || `删除成功` : `删除失败`;
         this.$confirm(msg, "删除提示", {
           showClose: false,
           showCancelButton: false,
-          type: !err ? "success" : "error",
+          type: res ? "success" : "error",
         }).then(() => {
-          if (!err) {
-            this.getList();
-          }
+          if (res) this.getList();
         });
       } catch (error) {
         error;

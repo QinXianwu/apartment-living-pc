@@ -48,8 +48,9 @@ service.interceptors.response.use(
     if (data) {
       if (!isField(data, "message") && isField(data, "msg"))
         data.message = data.msg;
-      // if (!isField(data, "Data") && isField(data, "data"))
-      //   data.Data = data.data; // 封装响应体
+      if (!isField(data, "data") && isField(data, "rows"))
+        data.data = data.rows; // 封装响应体
+
       if (!data.message && data?.code !== CONST.AJAX_CODE.SUCCESS)
         data.message = "未知错误";
     }

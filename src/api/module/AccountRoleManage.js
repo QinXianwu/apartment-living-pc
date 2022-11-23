@@ -101,4 +101,117 @@ export default {
       })
     );
   },
+  // 获取角色详情
+  GetRoleDetail(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + `/system/role/${params.roleId}`,
+        params,
+        method: "GET",
+      })
+    );
+  },
+  // 修改角色
+  UpdateRole(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/role",
+        params,
+        method: "PUT",
+      })
+    );
+  },
+  // 新增角色
+  AddRole(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/role",
+        params,
+      })
+    );
+  },
+  // 删除角色
+  DeleteRole(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + `/system/role/${params.roleId}`,
+        params,
+        method: "DELETE",
+      })
+    );
+  },
+  // 查询菜单下拉树结构
+  GetMenuTree(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/menu/treeselect",
+        params,
+        method: "GET",
+      })
+    );
+  },
+  // 根据角色ID查询菜单下拉树结构
+  GetRoleByMenuTree(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + `/system/menu/roleMenuTreeselect/${params.roleId}`,
+        params,
+        method: "GET",
+        isReturnAll: true,
+      })
+    );
+  },
+  // 查询角色已授权用户列表
+  GetRoleByAllocatedList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/role/authUser/allocatedList",
+        params,
+        method: "GET",
+        isReturnAll: true,
+      })
+    );
+  },
+  // 查询角色未授权用户列表
+  GetRoleByUnallocatedList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/role/authUser/unallocatedList",
+        params,
+        method: "GET",
+        isReturnAll: true,
+      })
+    );
+  },
+  // 角色分配用户
+  AddRoleByUser(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/role/authUser/selectAll",
+        params,
+        method: "PUT",
+        isHandleParams: true,
+      })
+    );
+  },
+  // 取消用户授权角色
+  DeleteRoleByUser(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/role/authUser/cancel",
+        params,
+        method: "PUT",
+      })
+    );
+  },
+  // 批量取消用户授权角色
+  DeleteRoleByUserAll(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/role/authUser/cancelAll",
+        params,
+        method: "PUT",
+      })
+    );
+  },
 };
