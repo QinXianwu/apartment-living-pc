@@ -1,6 +1,7 @@
 import PERMISSION_ID from "@/permission/PERMISSION_ID";
 import MainLayout from "@/layouts/MainLayout/index";
 import AccountRoleManage from "@/views/SetUp/views/AccountRoleManage/index";
+import MenuManage from "@/views/SetUp/views/MenuManage/index";
 
 export default {
   path: "/SetUp",
@@ -19,6 +20,12 @@ export default {
       component: AccountRoleManage,
       name: "AccountRoleManage",
       meta: { title: "账号角色管理", notPassPermissionVerify: true },
+    },
+    {
+      path: "MenuManage",
+      component: MenuManage,
+      name: "MenuManage",
+      meta: { title: "菜单管理" },
     },
   ],
 };
