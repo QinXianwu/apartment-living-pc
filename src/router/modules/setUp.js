@@ -25,7 +25,10 @@ export default {
       path: "MenuManage",
       component: MenuManage,
       name: "MenuManage",
-      meta: { title: "菜单管理" },
+      meta: {
+        title: "菜单管理",
+        PermissionId: PERMISSION_ID.SetUp_MenuManagement,
+      },
     },
   ],
 };
