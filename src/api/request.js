@@ -58,7 +58,8 @@ service.interceptors.response.use(
     // 判断是否返回正确的业务编码，返回正确的时候则直接返回主体
     if (data?.code === CONST.AJAX_CODE.SUCCESS) return data.data || true;
 
-    config.isErrorTips && Message.error(data?.message || "未知错误");
+    config.isErrorTips &&
+      Message.error(data?.message || data?.msg || "未知错误");
     if (data?.code === 401) {
       if (!un_login) {
         // 只需提示一次

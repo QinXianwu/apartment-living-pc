@@ -1,32 +1,25 @@
 <template>
   <div class="UserManagement">
     <div class="content view-container">
-      <SearchForm
-        isShowExport
-        isReturnFormData
-        :formData="formData"
-        @on-search="onSearch"
-        @on-export="onExport"
-      >
-        <template #buttonR>
-          <el-button @click="onImport">导入</el-button>
-        </template>
-      </SearchForm>
+      <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
       <div class="action">
-        <el-button type="primary" @click="handleAdd"> 新增用户 </el-button>
+        <el-button type="primary" @click="handleAdd"> 新增菜单 </el-button>
+        <el-button type="primary" @click="handleExpandAll" plain>
+          {{ isExpandAll ? "折叠菜单" : "展开菜单" }}
+        </el-button>
       </div>
-      <TablePanel :tableData="list" :tableHead="column">
-        <template #deptName="{ scope }">
-          <span>{{ (scope.dept && scope.dept.deptName) || "-" }}</span>
-        </template>
+      <TablePanel
+        v-if="refreshTable"
+        rowKey="menuId"
+        :tableData="list"
+        :tableHead="column"
+        :isExpandAll="isExpandAll"
+      >
         <template #status="{ scope }">
-          <el-switch
-            v-model="scope.status"
-            active-value="0"
-            inactive-value="1"
-            @change="handleStatusChange(scope)"
+          <el-tag
+            :type="scope.status === $CONST.MENU_STATE.OFF ? 'danger' : ''"
+            >{{ $CONST.MENU_STATE_TEXT[scope.status] }}</el-tag
           >
-          </el-switch>
         </template>
         <!-- 操作 -->
         <template #action="{ scope }">
@@ -42,8 +35,8 @@
                 style="min-width: 100px; text-align: center"
               >
                 <el-dropdown-item>
-                  <div @click.stop="handleUpdatePassword(scope)">
-                    <span>修改账号密码</span>
+                  <div @click.stop="handleSubAdd(scope)">
+                    <span>新增子菜单</span>
                   </div>
                 </el-dropdown-item>
               </el-dropdown-menu>
@@ -52,47 +45,37 @@
         </template>
       </TablePanel>
       <!-- 分页 -->
-      <Pagination
+      <!-- <Pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :page-size="page.pageSize"
         :current-page="page.pageNum"
         :total="total"
-      />
+      /> -->
     </div>
-    <UpdateAcconutDiaog
+    <UpdateMenuDiaog
       :editInfo="editInfo"
       :show.sync="isUpdateAccount"
       @close="close"
     />
-    <UpdatePasswordDiaog
-      :editInfo="editInfo"
-      :show.sync="isUpdatePassword"
-      @close="close"
-    />
-    <ImportUserDiaog :show.sync="isImportUser" @close="close" />
   </div>
 </template>
 
 <script>
 import { column, formData } from "./config";
-import downloadFilelMixin from "@/mixins/downloadFilelMixin";
-import ImportUserDiaog from "./components/ImportUserDiaog.vue";
-import UpdateAcconutDiaog from "./components/UpdateAcconutDiaog.vue";
-import UpdatePasswordDiaog from "./components/UpdatePasswordDiaog.vue";
+import { handleTree } from "@/utils";
+import UpdateMenuDiaog from "./components/UpdateMenuDiaog.vue";
 export default {
   name: "UserManagement",
-  mixins: [downloadFilelMixin],
-  components: { ImportUserDiaog, UpdateAcconutDiaog, UpdatePasswordDiaog },
+  components: { UpdateMenuDiaog },
   data() {
     return {
       formData,
       column, //表格头
       editInfo: "",
       isUpdateAccount: false,
-      isUpdatePassword: false,
-      isImportUser: false,
-      isExporting: false,
+      isExpandAll: false,
+      refreshTable: true, // 重新渲染表格状态
       list: [],
       page: {
         pageNum: 1,
@@ -115,91 +98,41 @@ export default {
     },
     onSearch(data) {
       this.query = { ...data };
-      if (data?.createDate?.length) {
-        this.query.params = {};
-        this.query.params["beginTime"] = data.createDate[0];
-        this.query.params["endTime"] = data.createDate[1];
-        delete this.query.createDate;
-      }
       this.getList(true);
     },
-    async onExport(data) {
-      if (this.isExporting) return false;
-      const query = { ...data };
-      if (data?.createDate?.length) {
-        query.params = {};
-        query.params["beginTime"] = data.createDate[0];
-        query.params["endTime"] = data.createDate[1];
-        delete query.createDate;
-      }
-      this.isExporting = true;
-      const [, res] = await this.$http.ExportImport.ExportUserList({
-        ...this.page,
-        ...this.query,
-      });
-      this.isExporting = false;
-      if (!res) return this.$message.error("导出失败");
-      this.onExportDownloadFile({
-        data: res,
-        tipText: "导出成功，是否进行下载？",
-        fileName: "用户列表",
-      });
-    },
-    async onImport() {
-      this.isImportUser = true;
+    handleExpandAll() {
+      this.refreshTable = false;
+      this.isExpandAll = !this.isExpandAll;
+      this.$nextTick(() => (this.refreshTable = true));
     },
     handleAdd() {
       this.editInfo = "";
       this.isUpdateAccount = true;
     },
-    handleEdit(item) {
-      this.editInfo = item;
+    handleSubAdd({ menuId }) {
+      this.editInfo = { parentId: menuId };
       this.isUpdateAccount = true;
     },
-    async handleStatusChange(item) {
-      const tipText = item?.status === "0" ? "启用" : "停用";
+    handleEdit({ menuId }) {
+      this.editInfo = { menuId: menuId };
+      this.isUpdateAccount = true;
+    },
+    async handleDelete({ menuId }) {
       try {
-        await this.$confirm(`确定要${tipText}该用户吗?`, tipText, {
+        await this.$confirm("确定要删除该菜单吗?", "删除提示", {
           type: "warning",
           showClose: false,
         });
-        const [, res] = await this.$http.AccountRoleManage.UpdateUserStatus({
-          userId: item?.userId || "",
-          status: item?.status,
+        const [, res] = await this.$http.MenuManage.DeleteMenu({
+          menuId,
         });
-        const msg = res ? res?.msg || `${tipText}成功` : `${tipText}失败`;
+        const msg = res ? res?.msg || `删除成功` : `删除失败`;
         this.$confirm(msg, "删除提示", {
           showClose: false,
           showCancelButton: false,
           type: res ? "success" : "error",
         }).then(() => {
           if (res) this.getList();
-        });
-      } catch (error) {
-        item.status = item?.status === "0" ? "1" : "0";
-        console.error(error);
-      }
-    },
-    handleUpdatePassword(item) {
-      this.editInfo = item;
-      this.isUpdatePassword = true;
-    },
-    async handleDelete({ userId }) {
-      try {
-        await this.$confirm("确定要删除该账号吗?", "删除提示", {
-          type: "warning",
-          showClose: false,
-        });
-        const [err] = await this.$http.AccountRoleManage.DeleteUser({
-          userId,
-        });
-        const msg = err ? err.Message : "删除成功";
-        this.$confirm(msg, "删除提示", {
-          showClose: false,
-          showCancelButton: false,
-          type: !err ? "success" : "error",
-        }).then(() => {
-          if (!err) this.getList();
         });
       } catch (error) {
         console.error(error);
@@ -209,22 +142,17 @@ export default {
     close(isRefresh = false) {
       this.editInfo = "";
       this.isUpdateAccount = false;
-      this.isSelectRole = false;
-      this.isImportUser = false;
       if (isRefresh) this.getList();
     },
     async getList(isClear) {
       if (isClear) this.page.pageNum = 1;
       const query = {
-        ...this.page,
+        // ...this.page,
         ...this.query,
       };
-      const [, res] = await this.$http.AccountRoleManage.GetUserList(query);
-      if (res?.code !== this.AJAX_CODE.SUCCESS) {
-        this.$message.error(res?.msg || "获取用户列表异常");
-      }
-      this.list = res?.rows || [];
-      this.total = res?.total || 0;
+      const [, res] = await this.$http.MenuManage.GetMenuList(query);
+      this.list = res?.length ? handleTree(res, "menuId") : [];
+      // this.total = res?.total || 0;
     },
   },
   mounted() {

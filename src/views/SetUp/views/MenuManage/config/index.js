@@ -3,60 +3,45 @@ import CONST from "@/constants/index";
 // 搜索选项
 export const formData = [
   {
-    label: "用户名称",
-    prop: "userName",
+    label: "菜单名称",
+    prop: "menuName",
     type: "text",
     value: "",
-    placeholder: "请输入用户名称",
+    placeholder: "请输入菜单名称",
   },
   {
-    label: "手机号码",
-    prop: "phonenumber",
-    type: "text",
-    value: "",
-    placeholder: "请输入手机号码",
-  },
-  {
-    label: "账号状态",
+    label: "状态",
     prop: "status",
     type: "select",
     value: "",
-    options: CONST.USER_STATE_OPTIONS(),
-    placeholder: "请选择账号状态",
-  },
-  {
-    label: "创建时间",
-    prop: "createDate",
-    type: "daterange",
-    value: "",
-    placeholder: "请选择创建时间",
+    options: CONST.MENU_STATE_OPTIONS(),
+    placeholder: "请选择菜单状态",
   },
 ];
 // 表格头
 export const column = [
   {
-    label: "用户编号",
-    prop: "userId",
-  },
-  {
-    label: "用户名称",
-    prop: "userName",
+    label: "菜单名称",
+    prop: "menuName",
     showOverflowTooltip: true,
   },
   {
-    label: "用户昵称",
-    prop: "nickName",
+    label: "图标",
+    prop: "icon",
+  },
+  {
+    label: "排序",
+    prop: "orderNum",
+  },
+  {
+    label: "权限标识",
+    prop: "perms",
     showOverflowTooltip: true,
   },
   {
-    label: "部门",
-    prop: "deptName",
-    type: "custom",
+    label: "组件路径",
+    prop: "component",
     showOverflowTooltip: true,
-  },
-  {
-    label: "手机号码",
-    prop: "phonenumber",
   },
   {
     label: "状态",

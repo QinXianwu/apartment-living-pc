@@ -190,16 +190,16 @@ export default {
           type: "warning",
           showClose: false,
         });
-        const [err] = await this.$http.AccountRoleManage.DeleteUser({
+        const [, res] = await this.$http.AccountRoleManage.DeleteUser({
           userId,
         });
-        const msg = err ? err.Message : "删除成功";
+        const msg = res ? res?.msg || `删除成功` : `删除失败`;
         this.$confirm(msg, "删除提示", {
           showClose: false,
           showCancelButton: false,
-          type: !err ? "success" : "error",
+          type: res ? "success" : "error",
         }).then(() => {
-          if (!err) this.getList();
+          if (res) this.getList();
         });
       } catch (error) {
         console.error(error);

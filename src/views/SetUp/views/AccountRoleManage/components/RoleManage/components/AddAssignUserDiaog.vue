@@ -22,7 +22,10 @@
         @selection-change="handleSelectionChange"
       >
         <template #status="{ scope }">
-          <el-tag>{{ $CONST.USER_STATE_TEXT[scope.status] }}</el-tag>
+          <el-tag
+            :type="scope.status === $CONST.USER_STATE.OFF ? 'danger' : ''"
+            >{{ $CONST.USER_STATE_TEXT[scope.status] }}</el-tag
+          >
         </template>
       </TablePanel>
     </div>

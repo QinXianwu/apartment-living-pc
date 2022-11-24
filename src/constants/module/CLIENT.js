@@ -46,24 +46,3 @@ export const USER_STATE_OPTIONS = () => [
     value: USER_STATE.OFF,
   },
 ];
-
-// 角色状态
-export const ROLE_STATE = {
-  ON: "0", // 正常
-  OFF: "1", //停用
-};
-export const ROLE_STATE_TEXT = {
-  [ROLE_STATE.ON]: "正常",
-  [ROLE_STATE.OFF]: "停用",
-};
-// 角色options类型
-export const ROLE_STATE_OPTIONS = () => [
-  {
-    label: ROLE_STATE_TEXT[ROLE_STATE.ON],
-    value: ROLE_STATE.ON,
-  },
-  {
-    label: ROLE_STATE_TEXT[ROLE_STATE.OFF],
-    value: ROLE_STATE.OFF,
-  },
-];
