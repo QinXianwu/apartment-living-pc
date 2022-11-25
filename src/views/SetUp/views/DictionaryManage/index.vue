@@ -154,7 +154,11 @@ export default {
       this.showUpdateDict = true;
     },
     async handleCache() {
-      //
+      const [, res] =
+        await this.$http.DictionaryManage.UpdateDictRefreshCache();
+      this.$message[res ? "success" : "error"](
+        res ? res?.msg || "刷新缓存成功" : "刷新缓存失败"
+      );
     },
     lookDictDetail({ dictId }) {
       this.editInfo = { dictId };
