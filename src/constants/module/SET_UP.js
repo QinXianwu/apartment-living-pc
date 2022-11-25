@@ -99,3 +99,24 @@ export const MENU_CACHE = {
   YES: "0", // 是
   NOT: "1", // 否
 };
+
+// 部门状态
+export const DEPT_STATE = {
+  ON: "0", // 正常
+  OFF: "1", //停用
+};
+export const DEPT_STATE_TEXT = {
+  [DEPT_STATE.ON]: "正常",
+  [DEPT_STATE.OFF]: "停用",
+};
+// 部门options类型
+export const DEPT_STATE_OPTIONS = () => [
+  {
+    label: DEPT_STATE_TEXT[DEPT_STATE.ON],
+    value: DEPT_STATE.ON,
+  },
+  {
+    label: DEPT_STATE_TEXT[DEPT_STATE.OFF],
+    value: DEPT_STATE.OFF,
+  },
+];

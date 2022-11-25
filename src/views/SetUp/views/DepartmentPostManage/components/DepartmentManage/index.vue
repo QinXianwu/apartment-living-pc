@@ -1,24 +1,24 @@
 <template>
-  <div class="MenuManage">
-    <div class="content view-container">
+  <div class="DepartmentManage">
+    <div class="content">
       <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
       <div class="action">
-        <el-button type="primary" @click="handleAdd"> 新增菜单 </el-button>
+        <el-button type="primary" @click="handleAdd"> 新增部门 </el-button>
         <el-button type="primary" @click="handleExpandAll" plain>
-          {{ isExpandAll ? "折叠菜单列表" : "展开菜单列表" }}
+          {{ isExpandAll ? "折叠部门列表" : "展开部门列表" }}
         </el-button>
       </div>
       <TablePanel
         v-if="refreshTable"
-        rowKey="menuId"
+        rowKey="deptId"
         :tableData="list"
         :tableHead="column"
         :isExpandAll="isExpandAll"
       >
         <template #status="{ scope }">
           <el-tag
-            :type="scope.status === $CONST.MENU_STATE.OFF ? 'danger' : ''"
-            >{{ $CONST.MENU_STATE_TEXT[scope.status] }}</el-tag
+            :type="scope.status === $CONST.DEPT_STATE.OFF ? 'danger' : ''"
+            >{{ $CONST.DEPT_STATE_TEXT[scope.status] }}</el-tag
           >
         </template>
         <!-- 操作 -->
@@ -28,19 +28,13 @@
             <el-button type="text" @click="handleDelete(scope)">
               删除
             </el-button>
-            <el-dropdown trigger="click">
-              <span class="el-dropdown-link more"> 更多 </span>
-              <el-dropdown-menu
-                slot="dropdown"
-                style="min-width: 100px; text-align: center"
-              >
-                <el-dropdown-item>
-                  <div @click.stop="handleSubAdd(scope)">
-                    <span>新增子菜单</span>
-                  </div>
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
+            <el-button
+              type="text"
+              v-if="scope.status !== $CONST.DEPT_STATE.OFF"
+              @click="handleSubAdd(scope)"
+            >
+              新增子部门
+            </el-button>
           </div>
         </template>
       </TablePanel>
@@ -53,27 +47,27 @@
         :total="total"
       /> -->
     </div>
-    <UpdateMenuDiaog
+    <UpdateDeptDiaog
       :editInfo="editInfo"
-      :show.sync="isUpdateMenu"
+      :show.sync="isUpdateDept"
       @close="close"
     />
   </div>
 </template>
 
 <script>
-import { column, formData } from "./config";
 import { handleTree } from "@/utils";
-import UpdateMenuDiaog from "./components/UpdateMenuDiaog.vue";
+import { column, formData } from "./config";
+import UpdateDeptDiaog from "./components/UpdateDeptDiaog.vue";
 export default {
-  name: "MenuManage",
-  components: { UpdateMenuDiaog },
+  name: "DepartmentManage",
+  components: { UpdateDeptDiaog },
   data() {
     return {
       formData,
       column, //表格头
       editInfo: "",
-      isUpdateMenu: false,
+      isUpdateDept: false,
       isExpandAll: false,
       refreshTable: true, // 重新渲染表格状态
       list: [],
@@ -107,24 +101,24 @@ export default {
     },
     handleAdd() {
       this.editInfo = "";
-      this.isUpdateMenu = true;
+      this.isUpdateDept = true;
     },
-    handleSubAdd({ menuId }) {
-      this.editInfo = { parentId: menuId };
-      this.isUpdateMenu = true;
+    handleSubAdd({ deptId }) {
+      this.editInfo = { parentId: deptId };
+      this.isUpdateDept = true;
     },
-    handleEdit({ menuId }) {
-      this.editInfo = { menuId: menuId };
-      this.isUpdateMenu = true;
+    handleEdit({ deptId }) {
+      this.editInfo = { deptId: deptId };
+      this.isUpdateDept = true;
     },
-    async handleDelete({ menuId }) {
+    async handleDelete({ deptId }) {
       try {
-        await this.$confirm("确定要删除该菜单吗?", "删除提示", {
+        await this.$confirm("确定要删除该部门吗?", "删除提示", {
           type: "warning",
           showClose: false,
         });
-        const [, res] = await this.$http.MenuManage.DeleteMenu({
-          menuId,
+        const [, res] = await this.$http.DepartmentPostManage.DeleteDepartment({
+          deptId,
         });
         const msg = res ? res?.msg || `删除成功` : `删除失败`;
         this.$confirm(msg, "删除提示", {
@@ -141,7 +135,7 @@ export default {
     },
     close(isRefresh = false) {
       this.editInfo = "";
-      this.isUpdateMenu = false;
+      this.isUpdateDept = false;
       if (isRefresh) this.getList();
     },
     async getList(isClear) {
@@ -150,8 +144,10 @@ export default {
         // ...this.page,
         ...this.query,
       };
-      const [, res] = await this.$http.MenuManage.GetMenuList(query);
-      this.list = res?.length ? handleTree(res, "menuId") : [];
+      const [, res] = await this.$http.DepartmentPostManage.GetDepartmentList(
+        query
+      );
+      this.list = res?.length ? handleTree(res, "deptId") : [];
       // this.total = res?.total || 0;
     },
   },

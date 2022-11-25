@@ -1,5 +1,5 @@
 <template>
-  <div class="UserManagement">
+  <div class="UserManage">
     <div class="content">
       <SearchForm
         isShowExport
@@ -81,7 +81,7 @@ import ImportUserDiaog from "./components/ImportUserDiaog.vue";
 import UpdateAcconutDiaog from "./components/UpdateAcconutDiaog.vue";
 import UpdatePasswordDiaog from "./components/UpdatePasswordDiaog.vue";
 export default {
-  name: "UserManagement",
+  name: "UserManage",
   mixins: [downloadFilelMixin],
   components: { ImportUserDiaog, UpdateAcconutDiaog, UpdatePasswordDiaog },
   data() {

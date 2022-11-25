@@ -34,7 +34,7 @@ export default {
       name: "MenuManage",
       meta: {
         title: "菜单管理",
-        PermissionId: PERMISSION_ID.SetUp_MenuManagement,
+        PermissionId: PERMISSION_ID.SetUp_MenuManage,
       },
     },
   ],

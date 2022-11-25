@@ -12,38 +12,38 @@
     </el-tabs>
 
     <div class="content">
-      <UserManagement v-if="activeName === 'UserManagement'" />
-      <RoleManage v-if="activeName === 'RoleManage'" />
+      <DepartmentManage v-if="activeName === 'DepartmentManage'" />
+      <PostManage v-if="activeName === 'PostManage'" />
     </div>
   </div>
   <Page401 v-else />
 </template>
 <script>
 import Page401 from "@/views/ErrorPage/401";
-import RoleManage from "./components/RoleManage/index.vue";
-import UserManagement from "./components/UserManagement/index.vue";
+import PostManage from "./components/PostManage/index.vue";
+import DepartmentManage from "./components/DepartmentManage/index.vue";
 
 export default {
   name: "DepartmentPostManage",
   components: {
-    UserManagement,
-    RoleManage,
+    DepartmentManage,
+    PostManage,
     Page401,
   },
   data() {
     return {
       isPermission: false,
-      activeName: "UserManagement",
+      activeName: "DepartmentManage",
       tabPaneList: [
         {
-          label: "账号管理",
-          name: "UserManagement",
-          permission: this.$PERMISSION_ID.SetUp_AccountManagement,
+          label: "部门管理",
+          name: "DepartmentManage",
+          permission: this.$PERMISSION_ID.SetUp_AccountManage,
         },
         {
-          label: "角色管理",
-          name: "RoleManage",
-          permission: this.$PERMISSION_ID.SetUp_RoleManagement,
+          label: "岗位管理",
+          name: "PostManage",
+          permission: this.$PERMISSION_ID.SetUp_PostManage,
         },
       ],
     };

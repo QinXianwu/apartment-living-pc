@@ -1,5 +1,5 @@
 <template>
-  <div class="RoleManage">
+  <div class="PostManage">
     <SearchForm
       isShowExport
       isReturnFormData
@@ -70,7 +70,7 @@ import AssignUsersList from "./components/AssignUsersList.vue";
 import AddAssignUserDiaog from "./components/AddAssignUserDiaog.vue";
 
 export default {
-  name: "RoleManage",
+  name: "PostManage",
   mixins: [downloadFilelMixin],
   components: { UpdateRoleDiaog, AssignUsersList, AddAssignUserDiaog },
   data() {

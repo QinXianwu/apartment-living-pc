@@ -3,45 +3,31 @@ import CONST from "@/constants/index";
 // 搜索选项
 export const formData = [
   {
-    label: "菜单名称",
-    prop: "menuName",
+    label: "部门名称",
+    prop: "deptName",
     type: "text",
     value: "",
-    placeholder: "请输入菜单名称",
+    placeholder: "请输入部门名称",
   },
   {
     label: "状态",
     prop: "status",
     type: "select",
     value: "",
-    options: CONST.MENU_STATE_OPTIONS(),
-    placeholder: "请选择菜单状态",
+    options: CONST.DEPT_STATE_OPTIONS(),
+    placeholder: "请选择部门状态",
   },
 ];
 // 表格头
 export const column = [
   {
-    label: "菜单名称",
-    prop: "menuName",
+    label: "部门名称",
+    prop: "deptName",
     showOverflowTooltip: true,
-  },
-  {
-    label: "图标",
-    prop: "icon",
   },
   {
     label: "排序",
     prop: "orderNum",
-  },
-  {
-    label: "权限标识",
-    prop: "perms",
-    showOverflowTooltip: true,
-  },
-  {
-    label: "组件路径",
-    prop: "component",
-    showOverflowTooltip: true,
   },
   {
     label: "状态",

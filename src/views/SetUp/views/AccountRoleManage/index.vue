@@ -12,7 +12,7 @@
     </el-tabs>
 
     <div class="content">
-      <UserManagement v-if="activeName === 'UserManagement'" />
+      <UserManage v-if="activeName === 'UserManage'" />
       <RoleManage v-if="activeName === 'RoleManage'" />
     </div>
   </div>
@@ -21,29 +21,29 @@
 <script>
 import Page401 from "@/views/ErrorPage/401";
 import RoleManage from "./components/RoleManage/index.vue";
-import UserManagement from "./components/UserManagement/index.vue";
+import UserManage from "./components/UserManage/index.vue";
 
 export default {
   name: "AccountRoleManage",
   components: {
-    UserManagement,
+    UserManage,
     RoleManage,
     Page401,
   },
   data() {
     return {
       isPermission: false,
-      activeName: "UserManagement",
+      activeName: "UserManage",
       tabPaneList: [
         {
           label: "账号管理",
-          name: "UserManagement",
-          permission: this.$PERMISSION_ID.SetUp_AccountManagement,
+          name: "UserManage",
+          permission: this.$PERMISSION_ID.SetUp_AccountManage,
         },
         {
           label: "角色管理",
           name: "RoleManage",
-          permission: this.$PERMISSION_ID.SetUp_RoleManagement,
+          permission: this.$PERMISSION_ID.SetUp_RoleManage,
         },
       ],
     };

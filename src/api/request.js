@@ -41,6 +41,15 @@ service.interceptors.response.use(
     }
     const { data, config } = response;
 
+    if (data?.code === 401) {
+      if (!un_login) {
+        // 只需提示一次
+        // 授权过期
+        store.dispatch("authorization/LoginAsync");
+        un_login = true;
+      }
+    }
+
     // 判断此接口是否需要完整返回后端返回的数据
     if (config.isReturnAll) return data;
 
@@ -60,14 +69,6 @@ service.interceptors.response.use(
 
     config.isErrorTips &&
       Message.error(data?.message || data?.msg || "未知错误");
-    if (data?.code === 401) {
-      if (!un_login) {
-        // 只需提示一次
-        // 授权过期
-        store.dispatch("authorization/LoginAsync");
-        un_login = true;
-      }
-    }
     return Promise.reject(data || { message: "未知错误" });
   },
   (error) => {
