@@ -126,7 +126,7 @@ export default {
       this.isExporting = true;
       const [, res] = await this.$http.ExportImport.ExportRoleList({
         ...this.page,
-        ...this.query,
+        ...query,
       });
       this.isExporting = false;
       if (!res) return this.$message.error("导出失败");
@@ -217,7 +217,7 @@ export default {
       };
       const [, res] = await this.$http.AccountRoleManage.GetRoleList(query);
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
-        this.$message.error(res?.msg || "获取用户列表异常");
+        this.$message.error(res?.msg || "获取角色列表异常");
       }
       this.list = res?.rows || [];
       this.total = res?.total || 0;

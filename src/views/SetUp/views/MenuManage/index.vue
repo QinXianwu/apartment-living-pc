@@ -132,7 +132,13 @@ export default {
           showCancelButton: false,
           type: res ? "success" : "error",
         }).then(() => {
-          if (res) this.getList();
+          if (res) {
+            this.getList();
+            this.$store.dispatch(
+              "accountRoleManage/GetMenuTreeListAction",
+              true
+            );
+          }
         });
       } catch (error) {
         console.error(error);

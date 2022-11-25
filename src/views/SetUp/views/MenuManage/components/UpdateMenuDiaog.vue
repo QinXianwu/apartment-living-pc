@@ -352,7 +352,10 @@ export default {
       this.$message[res ? "success" : "error"](
         res?.message || `${id ? "编辑" : "新增"}菜单${res ? "成功" : "失败"}`
       );
-      if (res) this.handleClose(true);
+      if (res) {
+        this.handleClose(true);
+        this.$store.dispatch("accountRoleManage/GetMenuTreeListAction", true);
+      }
     },
   },
   mounted() {

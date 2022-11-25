@@ -23,12 +23,6 @@ export default {
       meta: { title: "账号角色管理", notPassPermissionVerify: true },
     },
     {
-      path: "DepartmentPostManage",
-      component: DepartmentPostManage,
-      name: "DepartmentPostManage",
-      meta: { title: "部门岗位管理", notPassPermissionVerify: true },
-    },
-    {
       path: "MenuManage",
       component: MenuManage,
       name: "MenuManage",
@@ -36,6 +30,12 @@ export default {
         title: "菜单管理",
         PermissionId: PERMISSION_ID.SetUp_MenuManage,
       },
+    },
+    {
+      path: "DepartmentPostManage",
+      component: DepartmentPostManage,
+      name: "DepartmentPostManage",
+      meta: { title: "部门岗位管理", notPassPermissionVerify: true },
     },
   ],
 };

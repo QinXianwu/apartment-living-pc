@@ -120,3 +120,24 @@ export const DEPT_STATE_OPTIONS = () => [
     value: DEPT_STATE.OFF,
   },
 ];
+
+// 岗位状态
+export const POST_STATE = {
+  ON: "0", // 正常
+  OFF: "1", //停用
+};
+export const POST_STATE_TEXT = {
+  [POST_STATE.ON]: "正常",
+  [POST_STATE.OFF]: "停用",
+};
+// 部门options类型
+export const POST_STATE_OPTIONS = () => [
+  {
+    label: POST_STATE_TEXT[POST_STATE.ON],
+    value: POST_STATE.ON,
+  },
+  {
+    label: POST_STATE_TEXT[POST_STATE.OFF],
+    value: POST_STATE.OFF,
+  },
+];

@@ -102,7 +102,7 @@
 import dialogMixin from "@/mixins/dialogMixin";
 import { mapState } from "vuex";
 export default {
-  name: "UpdatePayAccountDiaog",
+  name: "UpdateRoleDiaog",
   mixins: [dialogMixin],
   props: {
     editInfo: {
@@ -114,7 +114,7 @@ export default {
     visible(val) {
       this.init();
       if (val) {
-        this.getUserInfo();
+        this.getRoleInfo();
         this.getRoleByMenuPermission();
         this.$store.dispatch("accountRoleManage/GetMenuTreeListAction");
       }
@@ -172,14 +172,14 @@ export default {
   methods: {
     init() {
       this.formData = {
-        status: "0",
+        status: this.$CONST.ROLE_STATE.ON,
         menuIds: [],
         deptIds: [],
         menuCheckStrictly: true,
       };
     },
     // 获取角色详情
-    async getUserInfo() {
+    async getRoleInfo() {
       if (this.isLoadingRole || !this.editInfo?.roleId) return;
       this.isLoadingRole = true;
       const [, res] = await this.$http.AccountRoleManage.GetRoleDetail({
@@ -251,10 +251,7 @@ export default {
       this.$message[res ? "success" : "error"](
         res?.message || `${id ? "编辑" : "新增"}角色${res ? "成功" : "失败"}`
       );
-      if (res) {
-        this.isLoading = false;
-        this.handleClose(true);
-      }
+      if (res) this.handleClose(true);
     },
   },
 };

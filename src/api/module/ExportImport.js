@@ -58,4 +58,21 @@ export default {
       })
     );
   },
+  // 岗位列表导出
+  ExportPostList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/post/export",
+        params,
+        method: "POST",
+        TaskName: "岗位列表导出",
+        isReturnAll: true,
+        isHandleParams: true,
+        responseType: "blob",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+    );
+  },
 };

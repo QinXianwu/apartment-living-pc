@@ -66,4 +66,54 @@ export default {
       })
     );
   },
+  // 获取岗位列表
+  GetPostList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/post/list",
+        params,
+        method: "GET",
+        isReturnAll: true,
+      })
+    );
+  },
+  // 获取岗位详情
+  GetPostInfo(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + `/system/post/${params.postId}`,
+        params,
+        method: "GET",
+      })
+    );
+  },
+  // 新增岗位
+  AddPost(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/post",
+        params,
+      })
+    );
+  },
+  // 修改岗位
+  UpdatePost(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/post",
+        params,
+        method: "PUT",
+      })
+    );
+  },
+  // 删除岗位
+  DeletePost(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + `/system/post/${params.postId}`,
+        params,
+        method: "DELETE",
+      })
+    );
+  },
 };

@@ -38,7 +38,7 @@ export default {
         {
           label: "部门管理",
           name: "DepartmentManage",
-          permission: this.$PERMISSION_ID.SetUp_AccountManage,
+          permission: this.$PERMISSION_ID.SetUp_DeptManage,
         },
         {
           label: "岗位管理",
