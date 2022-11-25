@@ -10,7 +10,7 @@
       <el-form-item v-for="(item, index) in form" :key="index">
         <!-- 左边label栏 -->
         <div slot="label" :style="{ width: item.labelWidth }">
-          <el-select v-if="Array.isArray(item.label)" v-model="item.prop">
+          <el-select v-model="item.prop" v-if="Array.isArray(item.label)">
             <el-option
               v-for="(lab, i) in item.label"
               :key="i"
@@ -144,6 +144,7 @@
               v-model="item.value"
               :clearable="item.disabledClear ? false : true"
               :placeholder="item.placeholder"
+              @change="(val) => $emit('selectChange', { prop: item.prop, val })"
             >
               <el-option
                 v-for="opr in item.options"

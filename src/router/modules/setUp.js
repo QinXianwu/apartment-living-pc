@@ -3,6 +3,7 @@ import MainLayout from "@/layouts/MainLayout/index";
 import AccountRoleManage from "@/views/SetUp/views/AccountRoleManage/index";
 import DepartmentPostManage from "@/views/SetUp/views/DepartmentPostManage/index";
 import MenuManage from "@/views/SetUp/views/MenuManage/index";
+import DictionaryManage from "@/views/SetUp/views/DictionaryManage/index";
 
 export default {
   path: "/SetUp",
@@ -36,6 +37,15 @@ export default {
       component: DepartmentPostManage,
       name: "DepartmentPostManage",
       meta: { title: "部门岗位管理", notPassPermissionVerify: true },
+    },
+    {
+      path: "DictionaryManage",
+      component: DictionaryManage,
+      name: "DictionaryManage",
+      meta: {
+        title: "字典管理",
+        PermissionId: PERMISSION_ID.SetUp_DictionaryManage,
+      },
     },
   ],
 };

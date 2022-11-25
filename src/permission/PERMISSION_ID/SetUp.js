@@ -5,4 +5,5 @@ export default {
   SetUp_MenuManage: 102, // 系统设置-菜单管理
   SetUp_DeptManage: 103, // 系统设置-部门管理
   SetUp_PostManage: 104, // 系统设置-岗位管理
+  SetUp_DictionaryManage: 105, // 系统设置-字典管理
 };

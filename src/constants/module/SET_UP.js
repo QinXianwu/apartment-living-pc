@@ -130,7 +130,7 @@ export const POST_STATE_TEXT = {
   [POST_STATE.ON]: "正常",
   [POST_STATE.OFF]: "停用",
 };
-// 部门options类型
+// 岗位options类型
 export const POST_STATE_OPTIONS = () => [
   {
     label: POST_STATE_TEXT[POST_STATE.ON],
@@ -139,5 +139,26 @@ export const POST_STATE_OPTIONS = () => [
   {
     label: POST_STATE_TEXT[POST_STATE.OFF],
     value: POST_STATE.OFF,
+  },
+];
+
+// 字典状态
+export const DICT_STATE = {
+  ON: "0", // 正常
+  OFF: "1", //停用
+};
+export const DICT_STATE_TEXT = {
+  [DICT_STATE.ON]: "正常",
+  [DICT_STATE.OFF]: "停用",
+};
+// 字典ptions类型
+export const DICT_STATE_OPTIONS = () => [
+  {
+    label: DICT_STATE_TEXT[DICT_STATE.ON],
+    value: DICT_STATE.ON,
+  },
+  {
+    label: DICT_STATE_TEXT[DICT_STATE.OFF],
+    value: DICT_STATE.OFF,
   },
 ];

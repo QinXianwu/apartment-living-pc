@@ -75,4 +75,38 @@ export default {
       })
     );
   },
+  // 字典列表导出
+  ExportDictList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/dict/type/export",
+        params,
+        method: "POST",
+        TaskName: "字典列表导出",
+        isReturnAll: true,
+        isHandleParams: true,
+        responseType: "blob",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+    );
+  },
+  // 字典数据列表导出
+  ExportDictDataList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/dict/data/export",
+        params,
+        method: "POST",
+        TaskName: "字典数据导出",
+        isReturnAll: true,
+        isHandleParams: true,
+        responseType: "blob",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+    );
+  },
 };
