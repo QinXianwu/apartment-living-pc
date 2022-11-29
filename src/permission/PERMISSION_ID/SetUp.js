@@ -6,4 +6,6 @@ export default {
   SetUp_DeptManage: 103, // 系统设置-部门管理
   SetUp_PostManage: 104, // 系统设置-岗位管理
   SetUp_DictionaryManage: 105, // 系统设置-字典管理
+  SetUp_LogManage: 108, // 系统设置-日志管理
+  SetUp_LogManage_OperationalLogs: 500, // 系统设置-日志管理-操作日志
 };

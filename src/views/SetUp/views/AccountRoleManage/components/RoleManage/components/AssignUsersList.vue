@@ -1,8 +1,5 @@
 <template>
   <div class="AssignUsersList">
-    <div class="action">
-      <el-button type="primary" @click="$emit('close')">返回</el-button>
-    </div>
     <div class="content">
       <SearchForm
         isReturnFormData
@@ -11,6 +8,7 @@
       />
       <div class="action">
         <el-button type="primary" @click="handleAdd"> 新增用户 </el-button>
+        <el-button type="primary" @click="$emit('close')">返回</el-button>
       </div>
       <TablePanel :tableData="list" :tableHead="AssignUsers_column">
         <template #status="{ scope }">

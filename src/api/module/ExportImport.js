@@ -109,4 +109,38 @@ export default {
       })
     );
   },
+  // 定时任务列表导出
+  ExportScheduleJobList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/schedule/job/export",
+        params,
+        method: "POST",
+        TaskName: "定时任务列表导出",
+        isReturnAll: true,
+        isHandleParams: true,
+        responseType: "blob",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+    );
+  },
+  // 任务调度日志列表导出
+  ExportScheduleJobLogList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/schedule/job/log/export",
+        params,
+        method: "POST",
+        TaskName: "任务调度日志列表导出",
+        isReturnAll: true,
+        isHandleParams: true,
+        responseType: "blob",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+    );
+  },
 };

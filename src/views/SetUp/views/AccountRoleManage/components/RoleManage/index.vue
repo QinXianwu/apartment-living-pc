@@ -14,8 +14,8 @@
       <template #status="{ scope }">
         <el-switch
           v-model="scope.status"
-          active-value="0"
-          inactive-value="1"
+          :active-value="$CONST.ROLE_STATE.ON"
+          :inactive-value="$CONST.ROLE_STATE.OFF"
           @change="handleStatusChange(scope)"
         >
         </el-switch>
@@ -137,7 +137,8 @@ export default {
       });
     },
     async handleStatusChange(item) {
-      const tipText = item?.status === "0" ? "启用" : "停用";
+      const tipText =
+        item?.status === this.$CONST.ROLE_STATE.ON ? "启用" : "停用";
       try {
         await this.$confirm(`确定要${tipText}该角色吗?`, tipText, {
           type: "warning",
@@ -156,7 +157,10 @@ export default {
           if (res) this.getList();
         });
       } catch (error) {
-        item.status = item?.status === "0" ? "1" : "0";
+        item.status =
+          item?.status === this.$CONST.ROLE_STATE.ON
+            ? this.$CONST.ROLE_STATE.OFF
+            : this.$CONST.ROLE_STATE.ON;
         console.error(error);
       }
     },

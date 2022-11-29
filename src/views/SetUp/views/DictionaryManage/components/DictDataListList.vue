@@ -1,8 +1,5 @@
 <template>
   <div class="DictDataList">
-    <div class="action">
-      <el-button type="primary" @click="$emit('close')">返回</el-button>
-    </div>
     <div class="content">
       <SearchForm
         isShowExport
@@ -14,6 +11,7 @@
       />
       <div class="action">
         <el-button type="primary" @click="handleAdd"> 新增 </el-button>
+        <el-button type="primary" @click="$emit('close')">返回</el-button>
       </div>
       <TablePanel :tableData="list" :tableHead="DictDetail_column">
         <template #dictLabel="{ scope }">

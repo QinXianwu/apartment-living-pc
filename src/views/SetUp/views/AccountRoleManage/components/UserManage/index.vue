@@ -22,8 +22,8 @@
         <template #status="{ scope }">
           <el-switch
             v-model="scope.status"
-            active-value="0"
-            inactive-value="1"
+            :active-value="$CONST.USER_STATE.ON"
+            :inactive-value="$CONST.USER_STATE.OFF"
             @change="handleStatusChange(scope)"
           >
           </el-switch>
@@ -157,7 +157,8 @@ export default {
       this.isUpdateAccount = true;
     },
     async handleStatusChange(item) {
-      const tipText = item?.status === "0" ? "启用" : "停用";
+      const tipText =
+        item?.status === this.$CONST.USER_STATE.ON ? "启用" : "停用";
       try {
         await this.$confirm(`确定要${tipText}该用户吗?`, tipText, {
           type: "warning",
@@ -176,7 +177,10 @@ export default {
           if (res) this.getList();
         });
       } catch (error) {
-        item.status = item?.status === "0" ? "1" : "0";
+        item.status =
+          item?.status === this.$CONST.USER_STATE.ON
+            ? this.$CONST.USER_STATE.OFF
+            : this.$CONST.USER_STATE.ON;
         console.error(error);
       }
     },

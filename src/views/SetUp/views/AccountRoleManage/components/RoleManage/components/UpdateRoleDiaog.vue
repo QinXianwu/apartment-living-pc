@@ -47,7 +47,7 @@
         <el-select
           clearable
           class="input-medium"
-          placeholder="角色状态"
+          placeholder="请选择角色状态"
           v-model="formData.status"
         >
           <el-option
