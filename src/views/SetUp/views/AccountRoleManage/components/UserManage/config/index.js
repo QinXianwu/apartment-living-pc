@@ -115,3 +115,26 @@ export const selectFormData = [
     isShowSelectAll: true,
   },
 ];
+
+// 分配角色 表格头
+export const AssignRole_column = [
+  {
+    label: "角色编号",
+    prop: "roleId",
+  },
+  {
+    label: "角色名称",
+    prop: "roleName",
+    showOverflowTooltip: true,
+  },
+  {
+    label: "权限字符",
+    prop: "roleKey",
+    showOverflowTooltip: true,
+  },
+  {
+    label: "创建时间",
+    prop: "createTime",
+    width: 160,
+  },
+];

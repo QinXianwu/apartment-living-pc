@@ -79,6 +79,28 @@ export default {
       })
     );
   },
+  // 获取用户下的角色列表以及已分配角色
+  GetUserByRoleList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + `/system/user/authRole/${params.userId}`,
+        params,
+        method: "GET",
+        isReturnAll: true,
+      })
+    );
+  },
+  // 更新用户分配的角色
+  UpdataUserByRole(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/user/authRole",
+        params,
+        method: "PUT",
+        isHandleParams: true,
+      })
+    );
+  },
   // 获取角色列表
   GetRoleList(params) {
     return catchAsyncFun(

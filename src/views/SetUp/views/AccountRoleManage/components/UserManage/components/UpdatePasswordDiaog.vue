@@ -96,7 +96,7 @@ export default {
       });
       this.isLoading = false;
       this.$message[res ? "success" : "error"](
-        res?.message || `修改账号密码${res ? "成功" : "失败"}`
+        res?.msg || `修改账号密码${res ? "成功" : "失败"}`
       );
       if (res) this.handleClose(true);
     },

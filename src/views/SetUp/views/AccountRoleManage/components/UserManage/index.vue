@@ -46,6 +46,11 @@
                     <span>修改账号密码</span>
                   </div>
                 </el-dropdown-item>
+                <el-dropdown-item>
+                  <div @click.stop="handleAssignRole(scope)">
+                    <span>分配角色</span>
+                  </div>
+                </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -70,6 +75,11 @@
       :show.sync="isUpdatePassword"
       @close="close"
     />
+    <AssignRoleListDiaog
+      :editInfo="editInfo"
+      :show.sync="isAssignRole"
+      @close="close"
+    />
     <ImportUserDiaog :show.sync="isImportUser" @close="close" />
   </div>
 </template>
@@ -80,10 +90,17 @@ import downloadFilelMixin from "@/mixins/downloadFilelMixin";
 import ImportUserDiaog from "./components/ImportUserDiaog.vue";
 import UpdateAcconutDiaog from "./components/UpdateAcconutDiaog.vue";
 import UpdatePasswordDiaog from "./components/UpdatePasswordDiaog.vue";
+import AssignRoleListDiaog from "./components/AssignRoleListDiaog.vue";
+
 export default {
   name: "UserManage",
   mixins: [downloadFilelMixin],
-  components: { ImportUserDiaog, UpdateAcconutDiaog, UpdatePasswordDiaog },
+  components: {
+    ImportUserDiaog,
+    UpdateAcconutDiaog,
+    UpdatePasswordDiaog,
+    AssignRoleListDiaog,
+  },
   data() {
     return {
       formData,
@@ -93,6 +110,7 @@ export default {
       isUpdatePassword: false,
       isImportUser: false,
       isExporting: false,
+      isAssignRole: false,
       list: [],
       page: {
         pageNum: 1,
@@ -188,6 +206,10 @@ export default {
       this.editInfo = item;
       this.isUpdatePassword = true;
     },
+    handleAssignRole(item) {
+      this.editInfo = item;
+      this.isAssignRole = true;
+    },
     async handleDelete({ userId }) {
       try {
         await this.$confirm("确定要删除该账号吗?", "删除提示", {
@@ -215,6 +237,7 @@ export default {
       this.isUpdateAccount = false;
       this.isSelectRole = false;
       this.isImportUser = false;
+      this.isAssignRole = false;
       if (isRefresh) this.getList();
     },
     async getList(isClear) {
