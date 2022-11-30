@@ -20,6 +20,7 @@
         <el-button type="primary" @click="$emit('close')">返回</el-button>
       </div>
       <TablePanel
+        ref="TablePanel"
         :checkbox="true"
         :isShowTopCheck="false"
         :tableData="list"
@@ -188,7 +189,11 @@ export default {
           showCancelButton: false,
           type: res ? "success" : "error",
         }).then(() => {
-          if (res) this.getList();
+          if (res) {
+            this.selectDataMap = {};
+            this.isDisabledDelete = true;
+            this.getList();
+          }
         });
       } catch (error) {
         console.error(error);

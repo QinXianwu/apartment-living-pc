@@ -151,7 +151,7 @@ export const DICT_STATE_TEXT = {
   [DICT_STATE.ON]: "正常",
   [DICT_STATE.OFF]: "停用",
 };
-// 字典ptions类型
+// 字典options类型
 export const DICT_STATE_OPTIONS = () => [
   {
     label: DICT_STATE_TEXT[DICT_STATE.ON],
@@ -160,5 +160,89 @@ export const DICT_STATE_OPTIONS = () => [
   {
     label: DICT_STATE_TEXT[DICT_STATE.OFF],
     value: DICT_STATE.OFF,
+  },
+];
+
+// 系统日志操作状态
+export const SYS_ACTION_STATE = {
+  SUCCESS: 0, // 正常
+  FAIL: 1, // 失败
+};
+export const SYS_ACTION_STATE_TEXT = {
+  [SYS_ACTION_STATE.SUCCESS]: "正常",
+  [SYS_ACTION_STATE.FAIL]: "失败",
+};
+// 系统日志操作状态options类型
+export const SYS_ACTION_STATE_OPTIONS = () => [
+  {
+    label: SYS_ACTION_STATE_TEXT[SYS_ACTION_STATE.SUCCESS],
+    value: SYS_ACTION_STATE.SUCCESS,
+  },
+  {
+    label: SYS_ACTION_STATE_TEXT[SYS_ACTION_STATE.FAIL],
+    value: SYS_ACTION_STATE.FAIL,
+  },
+];
+
+// 系统日志操作类型
+export const SYS_ACTION_TYPE = {
+  ADD: "1", // 新增
+  UPDATE: "2", // 修改
+  DELETE: "3", // 删除
+  LICENSING: "4", // 授权
+  EXPORT: "5", // 导出
+  IMPORT: "6", // 导入
+  FORCE_OUT: "7", // 强制退出
+  GENERATE_CODE: "8", // 生产代码
+  CLEAR_DATA: "9", // 清空数据
+};
+export const SYS_ACTION_TYPE_TEXT = {
+  [SYS_ACTION_TYPE.ADD]: "新增",
+  [SYS_ACTION_TYPE.UPDATE]: "修改",
+  [SYS_ACTION_TYPE.DELETE]: "删除",
+  [SYS_ACTION_TYPE.LICENSING]: "授权",
+  [SYS_ACTION_TYPE.EXPORT]: "导出",
+  [SYS_ACTION_TYPE.IMPORT]: "导入",
+  [SYS_ACTION_TYPE.FORCE_OUT]: "强制退出",
+  [SYS_ACTION_TYPE.GENERATE_CODE]: "生产代码",
+  [SYS_ACTION_TYPE.CLEAR_DATA]: "清空数据",
+};
+// 系统日志操作类型options类型
+export const SYS_ACTION_TYPE_OPTIONS = () => [
+  {
+    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.ADD],
+    value: SYS_ACTION_TYPE.ADD,
+  },
+  {
+    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.UPDATE],
+    value: SYS_ACTION_TYPE.UPDATE,
+  },
+  {
+    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.DELETE],
+    value: SYS_ACTION_TYPE.DELETE,
+  },
+  {
+    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.LICENSING],
+    value: SYS_ACTION_TYPE.LICENSING,
+  },
+  {
+    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.EXPORT],
+    value: SYS_ACTION_TYPE.EXPORT,
+  },
+  {
+    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.IMPORT],
+    value: SYS_ACTION_TYPE.IMPORT,
+  },
+  {
+    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.FORCE_OUT],
+    value: SYS_ACTION_TYPE.FORCE_OUT,
+  },
+  {
+    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.GENERATE_CODE],
+    value: SYS_ACTION_TYPE.GENERATE_CODE,
+  },
+  {
+    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.CLEAR_DATA],
+    value: SYS_ACTION_TYPE.CLEAR_DATA,
   },
 ];

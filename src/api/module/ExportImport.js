@@ -143,4 +143,21 @@ export default {
       })
     );
   },
+  // 系统操作日志列表导出
+  ExportOperLogList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/operlog/export",
+        params,
+        method: "POST",
+        TaskName: "系统操作日志列表导出",
+        isReturnAll: true,
+        isHandleParams: true,
+        responseType: "blob",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+    );
+  },
 };
