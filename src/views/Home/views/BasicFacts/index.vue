@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  components: {  },
+  components: {},
   data() {
     return {
       statisticInfo: {},
@@ -19,8 +19,7 @@ export default {
       return `欢迎回来！`;
     },
   },
-  methods: {
-  },
+  methods: {},
   mounted() {
     //
   },

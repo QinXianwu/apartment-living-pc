@@ -1,7 +1,7 @@
 <template>
   <div class="OnlineUsers view-container">
     <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
-    <TablePanel :tableData="list" :tableHead="column">
+    <TablePanel :tableHead="column" :tableData="tableData">
       <template #index="{ index }">
         {{ index + 1 }}
       </template>
@@ -43,16 +43,24 @@ export default {
       rules: [], //过滤规则
     };
   },
-  computed: {},
+  computed: {
+    tableData({ list, page }) {
+      if (!list?.length) return [];
+      return list.slice(
+        (page.pageNum - 1) * page.pageSize,
+        page.pageNum * page.pageSize
+      );
+    },
+  },
   methods: {
     handleSizeChange(val) {
       this.page.pageSize = val;
       this.page.pageNum = 1;
-      this.getList(true);
+      // this.getList(true);
     },
     handleCurrentChange(val) {
       this.page.pageNum = val;
-      this.getList(false);
+      // this.getList(false);
     },
     onSearch(data) {
       this.query = { ...data };
