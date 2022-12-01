@@ -8,7 +8,7 @@
 export default {
   mounted() {
     // 设置应用title
-    document.title = this.$store.state.app.McatGlobal?.AppInfo?.AppTitle || "";
+    document.title = this.$store.state.app.SysGlobal?.AppInfo?.AppTitle || "";
     // console.log(import.meta.env);
   },
 };

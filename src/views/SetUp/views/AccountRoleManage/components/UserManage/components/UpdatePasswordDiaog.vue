@@ -8,11 +8,16 @@
   >
     <el-form ref="form" :model="formData" :rules="rules" label-width="150px">
       <el-form-item label="用户名:" prop="userName">
-        <el-input v-model="formData.userName" :disabled="true" />
+        <el-input
+          v-model="formData.userName"
+          class="input-medium"
+          :disabled="true"
+        />
       </el-form-item>
       <el-form-item label="登录密码:" prop="password">
         <el-input
           type="password"
+          class="input-medium"
           v-model="formData.password"
           placeholder="请输入登录密码"
         />

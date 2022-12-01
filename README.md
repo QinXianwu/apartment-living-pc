@@ -22,11 +22,4 @@ yarn serve.prod // 运行正式环境
 yanr build // 打包开发环境
 yarn build.pre // 打包业务演示环境
 yarn build.prod // 打包正式环境
-
-/**
- * node_modules\echarts\lib\chart\themeRiver\ThemeRiverView.js
- * 引入echarts打包后可能会报错
- * 原因 ThemeRiverView.js 文件的中有一个方法为 process => 和node环境中process重名
- * 解决方法 修改 ThemeRiverView.js 方法名称
- */
 ```

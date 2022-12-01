@@ -10,7 +10,7 @@ export default function getIsRequiredRemarsRule(
   const rule = {};
   if (
     Number(
-      this.$store.state.app.McatGlobal?.AppInfo?.Application?.ExtendInfo
+      this.$store.state.app.SysGlobal?.AppInfo?.Application?.ExtendInfo
         ?.IsRemarsRequired
     ) === 1
   ) {

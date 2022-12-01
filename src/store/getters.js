@@ -9,11 +9,11 @@ const getters = {
   // 租户信息
   tenantInfo: (state) => {
     const { TenantName, TenantId } =
-      state.app.McatGlobal.AppInfo?.TenantInfo || {};
+      state.app.SysGlobal.AppInfo?.TenantInfo || {};
     return {
       id: TenantId,
       name: TenantName,
-      logo: state.app.McatGlobal.AppInfo?.AppLogo || "",
+      logo: state.app.SysGlobal.AppInfo?.AppLogo || "",
     };
   },
 };

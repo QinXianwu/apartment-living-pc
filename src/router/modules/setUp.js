@@ -5,6 +5,7 @@ import DepartmentPostManage from "@/views/SetUp/views/DepartmentPostManage/index
 import MenuManage from "@/views/SetUp/views/MenuManage/index";
 import DictionaryManage from "@/views/SetUp/views/DictionaryManage/index";
 import OperationalLogs from "@/views/SetUp/views/OperationalLogs/index";
+import ProtocolManage from "@/views/SetUp/views/ProtocolManage/index";
 
 export default {
   path: "/SetUp",
@@ -56,6 +57,12 @@ export default {
         title: "操作日志",
         PermissionId: PERMISSION_ID.SetUp_LogManage_OperationalLogs,
       },
+    },
+    {
+      path: "ProtocolManage",
+      component: ProtocolManage,
+      name: "ProtocolManage",
+      meta: { title: "协议管理", notPassPermissionVerify: true },
     },
   ],
 };

@@ -246,3 +246,25 @@ export const SYS_ACTION_TYPE_OPTIONS = () => [
     value: SYS_ACTION_TYPE.CLEAR_DATA,
   },
 ];
+
+// 协议类型
+export const PROTOCOL_TYPE = {
+  USER_AGREEMENT: 1, // 用户协议
+  PRIVACY_AGREEMENT: 2, //  隐私协议
+};
+
+export const PROTOCOL_TYPE_TEXT = {
+  [PROTOCOL_TYPE.USER_AGREEMENT]: "用户协议",
+  [PROTOCOL_TYPE.PRIVACY_AGREEMENT]: "隐私协议",
+};
+
+export const PROTOCOL_TYPE_OPTIONS = [
+  {
+    label: PROTOCOL_TYPE_TEXT[PROTOCOL_TYPE.USER_AGREEMENT],
+    value: PROTOCOL_TYPE.USER_AGREEMENT,
+  },
+  {
+    label: PROTOCOL_TYPE_TEXT[PROTOCOL_TYPE.PRIVACY_AGREEMENT],
+    value: PROTOCOL_TYPE.PRIVACY_AGREEMENT,
+  },
+];

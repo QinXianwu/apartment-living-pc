@@ -7,7 +7,7 @@ const state = {
   device: "desktop",
   size: localStorage.getItem("size") || "medium",
   // 全局读取的配置
-  McatGlobal: window.McatGlobal || {},
+  SysGlobal: window.SysGlobal || {},
 };
 
 const getters = {};

@@ -67,7 +67,7 @@ export default {
   computed: {
     ...mapState({
       userInfo: (state) => state.user.userInfo,
-      McatGlobal: (state) => state.app.McatGlobal,
+      SysGlobal: (state) => state.app.SysGlobal,
     }),
     mainAccountId({ userInfo }) {
       const name = userInfo?.userName;

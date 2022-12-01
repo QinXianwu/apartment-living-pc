@@ -69,7 +69,7 @@
 <script>
 import dialogMixin from "@/mixins/dialogMixin";
 export default {
-  name: "TaskDetailDiaog",
+  name: "LogDetailDiaog",
   mixins: [dialogMixin],
   props: {
     editInfo: {
