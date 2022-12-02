@@ -1,5 +1,5 @@
 <template>
-  <div class="Goods view-container">
+  <div class="GoodsList view-container">
     <div class="content">
       <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
       <TablePanel :tableData="list" :tableHead="column">
@@ -37,7 +37,7 @@
 import { formData, column } from "./config";
 
 export default {
-  name: "Goods",
+  name: "GoodsList",
   components: {},
   data() {
     return {
@@ -102,10 +102,27 @@ export default {
         error;
       }
     },
+    async getList(isClear) {
+      if (isClear) this.page.pageNum = 1;
+      const query = {
+        ...this.page,
+        ...this.query,
+      };
+      const [, res] = await this.$http.Goods.GetList(query);
+      if (res?.code !== this.AJAX_CODE.SUCCESS) {
+        this.$message.error(res?.msg || "获取商品列表异常");
+      }
+      this.list = res?.rows || [];
+      this.total = res?.total || 0;
+    },
   },
   mounted() {
-    //
+    this.getList();
   },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.view-container {
+  background: #fff;
+}
+</style>

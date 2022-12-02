@@ -36,7 +36,88 @@
           placeholder="请输入登录密码"
         />
       </el-form-item>
-      <el-collapse
+      <div class="more-config-content">
+        <el-form-item
+          v-for="item in selectFormDataArr"
+          :key="item.prop"
+          :prop="item.prop"
+          :label="item.label"
+        >
+          <el-select
+            :multiple="item.multiple"
+            collapse-tags
+            class="input-medium"
+            :value-key="item.valueKey"
+            :placeholder="item.placeholder"
+            v-model="formData[item.prop]"
+          >
+            <div
+              class="select-all"
+              v-if="item.multiple && item.isShowSelectAll"
+            >
+              <el-checkbox
+                :value="formData[item.prop].length === item.options.length"
+                @change="selectAll(item.prop)"
+                >全选</el-checkbox
+              >
+            </div>
+            <el-option
+              :key="index"
+              :label="ele.label"
+              :value="ele.value"
+              v-for="(ele, index) in item.options"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </div>
+      <el-form-item label="服务点:" prop="serviceStationId">
+        <el-select
+          filterable
+          class="input-medium"
+          placeholder="请选择服务点"
+          v-model="formData.serviceStationId"
+        >
+          <el-option
+            :value="ele.value"
+            :label="ele.label"
+            :key="index"
+            v-for="(ele, index) in serviceStationOptions"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="供应商:" prop="supplierId">
+        <el-select
+          filterable
+          class="input-medium"
+          placeholder="请选择供应商"
+          v-model="formData.supplierId"
+        >
+          <el-option
+            :value="ele.value"
+            :label="ele.label"
+            :key="index"
+            v-for="(ele, index) in supplierOptions"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="手机号码:" prop="phonenumber">
+        <el-input
+          class="input-medium"
+          v-model="formData.phonenumber"
+          placeholder="请输入手机号码"
+        />
+      </el-form-item>
+      <el-form-item label="邮箱地址:" prop="email">
+        <el-input
+          class="input-medium"
+          v-model="formData.email"
+          placeholder="请输入邮箱地址"
+        />
+      </el-form-item>
+      <!-- <el-collapse
         accordion
         class="more-config"
         @change="(val) => (allocationName = val)"
@@ -50,57 +131,8 @@
               <span>更多配置</span>
             </div>
           </template>
-          <el-form-item label="手机号码:" prop="phonenumber">
-            <el-input
-              class="input-medium"
-              v-model="formData.phonenumber"
-              placeholder="请输入手机号码"
-            />
-          </el-form-item>
-          <el-form-item label="邮箱地址:" prop="email">
-            <el-input
-              class="input-medium"
-              v-model="formData.email"
-              placeholder="请输入邮箱地址"
-            />
-          </el-form-item>
-          <div class="more-config-content">
-            <el-form-item
-              v-for="item in selectFormDataArr"
-              :key="item.prop"
-              :prop="item.prop"
-              :label="item.label"
-            >
-              <el-select
-                :multiple="item.multiple"
-                collapse-tags
-                class="input-medium"
-                :value-key="item.valueKey"
-                :placeholder="item.placeholder"
-                v-model="formData[item.prop]"
-              >
-                <div
-                  class="select-all"
-                  v-if="item.multiple && item.isShowSelectAll"
-                >
-                  <el-checkbox
-                    :value="formData[item.prop].length === item.options.length"
-                    @change="selectAll(item.prop)"
-                    >全选</el-checkbox
-                  >
-                </div>
-                <el-option
-                  :key="index"
-                  :label="ele.label"
-                  :value="ele.value"
-                  v-for="(ele, index) in item.options"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </div>
         </el-collapse-item>
-      </el-collapse>
+      </el-collapse> -->
     </el-form>
     <span slot="footer">
       <el-button type="primary" :loading="isLoading" @click="handleSubmit">
@@ -113,6 +145,7 @@
 <script>
 import dialogMixin from "@/mixins/dialogMixin";
 import { selectFormData } from "../config/index";
+import { mapGetters } from "vuex";
 export default {
   name: "UpdateAcconutDiaog",
   mixins: [dialogMixin],
@@ -125,7 +158,11 @@ export default {
   watch: {
     visible(val) {
       this.init();
-      if (val) this.getUserInfo();
+      if (val) {
+        this.$store.dispatch("accountRoleManage/GetServiceStationListAction");
+        this.$store.dispatch("accountRoleManage/GetSupplierListAction");
+        this.getUserInfo();
+      }
     },
   },
   data() {
@@ -139,6 +176,8 @@ export default {
       isLoadingUser: false,
       postOptions: [],
       roleOptions: [],
+      serviceList: [],
+      supplierList: [],
       rules: {
         userName: [
           { required: true, message: "请输入用户名称", trigger: "blur" },
@@ -161,6 +200,13 @@ export default {
             trigger: "blur",
           },
         ],
+        roleIds: [{ required: true, message: "请选择角色", trigger: "blur" }],
+        serviceStationId: [
+          { required: true, message: "请选择服务点", trigger: "blur" },
+        ],
+        supplierId: [
+          { required: true, message: "请选择供应商", trigger: "blur" },
+        ],
         email: [
           {
             type: "email",
@@ -181,6 +227,10 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      serviceStationOptions: "accountRoleManage/serviceStationOptions",
+      supplierOptions: "accountRoleManage/supplierOptions",
+    }),
     dialogTitle({ editInfo }) {
       const title = editInfo?.userId ? "编辑" : "新增";
       return `${title}账号`;

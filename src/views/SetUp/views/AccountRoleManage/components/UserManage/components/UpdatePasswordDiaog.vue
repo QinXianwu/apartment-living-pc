@@ -2,7 +2,7 @@
   <el-dialog
     title="修改账号密码"
     :visible.sync="visible"
-    width="550px"
+    width="650px"
     v-loading="isLoading"
     @close="handleClose(false)"
   >

@@ -80,15 +80,12 @@ export const column = [
 // 表单 - 选择器
 export const selectFormData = [
   {
-    prop: "sex",
-    label: "用户性别:",
-    valueKey: "label",
-    placeholder: "请选择用户性别",
-    options: CONST.GENDER_OPTIONS().map((item) => ({
-      ...item,
-      value: String(item.value),
-    })),
-    isShowSelectAll: false,
+    prop: "roleIds",
+    label: "角色:",
+    valueKey: "value",
+    placeholder: "请选择角色",
+    options: [],
+    multiple: false,
   },
   {
     prop: "deptId",
@@ -98,14 +95,6 @@ export const selectFormData = [
     options: [],
   },
   {
-    prop: "roleIds",
-    label: "角色:",
-    valueKey: "value",
-    placeholder: "请选择角色",
-    options: [],
-    multiple: false,
-  },
-  {
     prop: "postIds",
     label: "岗位:",
     valueKey: "label",
@@ -113,6 +102,17 @@ export const selectFormData = [
     options: [],
     multiple: true,
     isShowSelectAll: true,
+  },
+  {
+    prop: "sex",
+    label: "用户性别:",
+    valueKey: "label",
+    placeholder: "请选择用户性别",
+    options: CONST.GENDER_OPTIONS().map((item) => ({
+      ...item,
+      value: String(item.value),
+    })),
+    isShowSelectAll: false,
   },
 ];
 

@@ -23,9 +23,25 @@
       <!-- 操作 -->
       <template #action="{ scope }">
         <div class="action-groud" v-if="scope.roleId !== 1">
-          <el-button type="text" @click="handleEdit(scope)"> 编辑 </el-button>
-          <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
-          <el-button type="text" @click="handleAssignUsers(scope)">
+          <el-button
+            type="text"
+            v-if="isAction(scope)"
+            @click="handleEdit(scope)"
+          >
+            编辑
+          </el-button>
+          <el-button
+            type="text"
+            v-if="isAction(scope)"
+            @click="handleDelete(scope)"
+          >
+            删除
+          </el-button>
+          <el-button
+            type="text"
+            v-if="isAction(scope)"
+            @click="handleAssignUsers(scope)"
+          >
             分配用户
           </el-button>
         </div>
@@ -68,6 +84,7 @@ import downloadFilelMixin from "@/mixins/downloadFilelMixin";
 import UpdateRoleDiaog from "./components/UpdateRoleDiaog.vue";
 import AssignUsersList from "./components/AssignUsersList.vue";
 import AddAssignUserDiaog from "./components/AddAssignUserDiaog.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "RoleManage",
@@ -93,8 +110,19 @@ export default {
       rules: [], //过滤规则
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      isAdmin: "user/isAdmin",
+    }),
+  },
   methods: {
+    isAction(item) {
+      return (
+        this.isAdmin ||
+        (item?.roleKey !== this.$CONST.ACCOUNT_TYPE.VENDOR &&
+          item?.roleKey !== this.$CONST.ACCOUNT_TYPE.SERVICE)
+      );
+    },
     handleSizeChange(val) {
       this.page.pageSize = val;
       this.page.pageNum = 1;

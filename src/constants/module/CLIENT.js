@@ -1,4 +1,11 @@
 // 客户模块
+// 账号类型
+export const ACCOUNT_TYPE = {
+  ADMIN: "admin", // 平台账号
+  VENDOR: "vendor", // 供应商
+  SERVICE: "service", // 服务点
+};
+
 // 性别
 export const GENDER = {
   MALE: 0, // 男
