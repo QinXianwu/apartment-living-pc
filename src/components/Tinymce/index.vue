@@ -161,7 +161,6 @@ export default {
           paste_data_images: true, // 是否启动拖拽上传
           images_file_types: "jpeg,jpg,png,gif,bmp,webp", // 允许拖拽的图片类型
           init_instance_callback: (editor) => {
-            console.log(editor);
             if (this.value) {
               editor.setContent(this.value);
             }

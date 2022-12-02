@@ -16,11 +16,19 @@
         ref="TablePanel"
         :tableData="list"
         :tableHead="column"
-        :checkbox="true"
-        :isShowTopCheck="false"
         v-loading="isLoadingList"
-        @selection-change="handleSelectionChange"
       >
+        <!-- 复选框(只允许选中一个) -->
+        <template #custom_checkbox="{ scope }">
+          <div class="checkbox">
+            <el-checkbox
+              :value="!!selectDataMap[scope.userId]"
+              :disabled="scope.roles && scope.roles.length"
+              @change="handleRadioChange(scope)"
+            >
+            </el-checkbox>
+          </div>
+        </template>
         <template #status="{ scope }">
           <el-tag
             :type="scope.status === $CONST.USER_STATE.OFF ? 'danger' : ''"
@@ -123,13 +131,13 @@ export default {
     },
     initSelection() {
       if (!this.list?.length) return;
-      this.list.forEach((item) => {
-        if (this.selectDataMap[item?.userId]) {
-          this.$nextTick(() => {
-            this.$refs.TablePanel.setSelection(item, true);
-          });
-        }
-      });
+      // this.list.forEach((item) => {
+      //   if (this.selectDataMap[item?.userId]) {
+      //     this.$nextTick(() => {
+      //       this.$refs.TablePanel.setSelection(item, true);
+      //     });
+      //   }
+      // });
     },
     handleSelectionChange(val) {
       this.list.forEach((item) => {
@@ -139,6 +147,16 @@ export default {
           delete this.selectDataMap[item.userId];
       });
       val.forEach((item) => (this.selectDataMap[item.userId] = { ...item }));
+    },
+    // 单选
+    handleRadioChange(item) {
+      if (this.selectDataMap[item.userId]) {
+        this.selectDataMap = {};
+      } else {
+        this.selectDataMap = {
+          [item.userId]: item,
+        };
+      }
     },
     async handleSubmit() {
       console.log(this.selectDataMap);

@@ -100,10 +100,10 @@ export const selectFormData = [
   {
     prop: "roleIds",
     label: "角色:",
-    valueKey: "label",
+    valueKey: "value",
     placeholder: "请选择角色",
     options: [],
-    multiple: true,
+    multiple: false,
   },
   {
     prop: "postIds",
@@ -118,6 +118,12 @@ export const selectFormData = [
 
 // 分配角色 表格头
 export const AssignRole_column = [
+  {
+    label: "",
+    prop: "custom_checkbox",
+    type: "custom",
+    width: "55",
+  },
   {
     label: "角色编号",
     prop: "roleId",

@@ -90,6 +90,12 @@ export const AssignUsers_formData = [
 // 分配用户 表格头
 export const AssignUsers_column = [
   {
+    label: "",
+    prop: "custom_checkbox",
+    type: "custom",
+    width: "55",
+  },
+  {
     label: "用户名称",
     prop: "userName",
     showOverflowTooltip: true,

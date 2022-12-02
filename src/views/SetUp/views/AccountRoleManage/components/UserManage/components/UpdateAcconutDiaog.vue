@@ -74,8 +74,8 @@
               <el-select
                 :multiple="item.multiple"
                 collapse-tags
-                :value-key="item.valueKey"
                 class="input-medium"
+                :value-key="item.valueKey"
                 :placeholder="item.placeholder"
                 v-model="formData[item.prop]"
               >
@@ -227,7 +227,7 @@ export default {
       this.formData = {
         ...(res?.data || {}),
         postIds: res?.postIds?.length ? res.postIds : [],
-        roleIds: res?.roleIds?.length ? res.roleIds : [],
+        roleIds: res?.roleIds?.length ? res?.roleIds[0] : [],
         password: "",
       };
     },
@@ -262,7 +262,14 @@ export default {
       }
       this.isLoading = true;
       const id = this.editInfo?.userId || "";
-      const query = { ...this.formData };
+      const query = {
+        ...this.formData,
+        roleIds: this.formData?.roleIds?.length
+          ? this.formData.roleIds
+          : this.formData?.roleIds
+          ? [this.formData?.roleIds]
+          : [],
+      };
 
       const [, res] = await this.$http.AccountRoleManage[
         id ? "UpdateUser" : "AddUser"

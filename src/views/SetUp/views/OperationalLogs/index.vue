@@ -82,7 +82,6 @@ export default {
       },
       query: {},
       total: 0,
-      rules: [], //过滤规则
       selectDataMap: {},
       isDisabledDelete: true,
       isExporting: false,

@@ -10,11 +10,19 @@
         ref="TablePanel"
         v-loading="isLoadingList"
         :tableData="list"
-        :checkbox="true"
-        :isShowTopCheck="false"
         :tableHead="AssignRole_column"
-        @selection-change="handleSelectionChange"
-      />
+      >
+        <!-- 复选框(只允许选中一个) -->
+        <template #custom_checkbox="{ scope }">
+          <div class="checkbox">
+            <el-checkbox
+              :value="!!selectDataMap[scope.roleId]"
+              @change="handleRadioChange(scope)"
+            >
+            </el-checkbox>
+          </div>
+        </template>
+      </TablePanel>
       <!-- 分页 -->
       <!-- <Pagination
         @size-change="handleSizeChange"
@@ -48,8 +56,10 @@ export default {
   },
   watch: {
     visible(val) {
-      this.selectDataMap = {};
-      if (val) this.getList();
+      if (val) {
+        this.selectDataMap = {};
+        this.getList();
+      }
     },
   },
   data() {
@@ -67,7 +77,6 @@ export default {
       isLoadingList: false,
     };
   },
-  computed: {},
   mounted() {
     //
   },
@@ -83,14 +92,15 @@ export default {
     },
     initSelection() {
       if (!this.list?.length) return;
-      this.list.forEach((item) => {
-        if (this.selectDataMap[item?.roleId]) {
-          this.$nextTick(() => {
-            this.$refs.TablePanel.setSelection(item, true);
-          });
-        }
-      });
+      // this.list.forEach((item) => {
+      //   if (this.selectDataMap[item?.roleId]) {
+      //     this.$nextTick(() => {
+      //       this.$refs.TablePanel.setSelection(item, true);
+      //     });
+      //   }
+      // });
     },
+    // 多选
     handleSelectionChange(val) {
       this.list.forEach((item) => {
         // 存在于当前页以及map 但不存在 val -> 去掉
@@ -99,6 +109,15 @@ export default {
           delete this.selectDataMap[item.roleId];
       });
       val.forEach((item) => (this.selectDataMap[item.roleId] = { ...item }));
+    },
+    handleRadioChange(item) {
+      if (this.selectDataMap[item.roleId]) {
+        this.selectDataMap = {};
+      } else {
+        this.selectDataMap = {
+          [item.roleId]: item,
+        };
+      }
     },
     async getList(isClear) {
       if (!this.editInfo?.userId) return;
@@ -119,9 +138,10 @@ export default {
       this.list = res?.roles || [];
       this.total = res?.total || 0;
       const roles = res?.user?.roles?.length ? res.user.roles : [];
-      roles.map((item) => {
-        if (item.roleId) this.selectDataMap[item.roleId] = item;
-      });
+      // roles.map((item) => {
+      //   if (item.roleId) this.selectDataMap[item.roleId] = item;
+      // });
+      if (roles?.length) this.selectDataMap[roles[0].roleId] = roles[0];
       this.initSelection();
     },
     async handleSubmit() {
