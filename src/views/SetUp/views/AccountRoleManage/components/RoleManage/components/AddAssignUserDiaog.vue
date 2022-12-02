@@ -23,7 +23,6 @@
           <div class="checkbox">
             <el-checkbox
               :value="!!selectDataMap[scope.userId]"
-              :disabled="scope.roles && scope.roles.length"
               @change="handleRadioChange(scope)"
             >
             </el-checkbox>
