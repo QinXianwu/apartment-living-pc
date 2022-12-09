@@ -1,20 +1,42 @@
 <template>
-  <div class="GoodsList view-container">
+  <div class="GoodsCategory view-container">
     <div class="content">
       <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
       <div class="action">
-        <el-button type="primary" @click="handleAdd">新增商品</el-button>
-        <el-button type="primary" plain>批量上架</el-button>
-        <el-button type="primary" plain>批量下架</el-button>
+        <el-button type="primary" @click="handleAdd">新增分类</el-button>
       </div>
       <TablePanel :tableData="list" :tableHead="column">
-        <template #goodsTab="{ scope }">
-          {{ $CONST.PROTOCOL_TYPE_TEXT[scope.type] }}
+        <template #icon="{ scope }">
+          <ImageView class="mainImg" :src="scope.icon | formatImage" />
+        </template>
+        <template #navigationShow="{ scope }">
+          <el-switch
+            v-model="scope.navigationShow"
+            :active-value="$CONST.CATEGORY_NAV_STATE.ON"
+            :inactive-value="$CONST.CATEGORY_NAV_STATE.OFF"
+          >
+            <!-- @change="handleStatusChange(scope)" -->
+          </el-switch>
+        </template>
+        <template #hotShow="{ scope }">
+          <el-switch
+            v-model="scope.hotShow"
+            :active-value="$CONST.CATEGORY_HOT_TYPE.YES"
+            :inactive-value="$CONST.CATEGORY_HOT_TYPE.NOT"
+          >
+          </el-switch>
+        </template>
+        <template #status="{ scope }">
+          <el-tag
+            :type="scope.status === $CONST.CATEGORY_STATE.OFF ? 'danger' : ''"
+            >{{ $CONST.CATEGORY_STATE_TEXT[scope.status] }}</el-tag
+          >
         </template>
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
-            <el-button type="text" @click="handleEdit(scope)"> 编辑 </el-button>
+            <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
+            <el-button type="text" @click="handleDelete(scope)">删除</el-button>
           </div>
         </template>
       </TablePanel>
@@ -26,25 +48,16 @@
         :current-page="page.pageNum"
         :total="total"
       />
-      <DrawerPopup v-model="showUpdataGoods">
-        <!-- 更新商品 -->
-        <UpdateGoods
-          v-if="showUpdataGoods"
-          :editInfo="editInfo"
-          @close="close"
-        />
-      </DrawerPopup>
     </div>
   </div>
 </template>
 
 <script>
 import { formData, column } from "./config";
-import UpdateGoods from "./components/UpdateGoods/index";
 
 export default {
   name: "GoodsList",
-  components: { UpdateGoods },
+  components: {},
   data() {
     return {
       formData,
@@ -57,8 +70,7 @@ export default {
       query: {},
       total: 0,
       editInfo: {},
-      selectDataMap: {},
-      showUpdataGoods: false,
+      showUpdataCategory: false,
     };
   },
   computed: {},
@@ -78,20 +90,19 @@ export default {
     },
     handleAdd() {
       this.editInfo = "";
-      this.showUpdataGoods = true;
+      this.showUpdataCategory = true;
     },
     handleEdit() {
       //
     },
     close() {
       this.editInfo = "";
-      this.showUpdataGoods = false;
+      this.showUpdataCategory = false;
     },
-    async handleDelete() {
-      const ids = Object.keys(this.selectDataMap).join(",");
+    async handleDelete({ id }) {
       try {
         await this.$confirm(
-          `是否确认删除日志编号为${ids}的数据项？`,
+          `是否确认删除日志编号为${id}的数据项？`,
           "删除提示",
           {
             type: "warning",
@@ -99,7 +110,7 @@ export default {
           }
         );
         const [, res] = await this.$http.OperationalLogs.DeleteOperLog({
-          operId: ids,
+          operId: id,
         });
         const msg = res ? res?.msg || `删除成功` : `删除失败`;
         this.$confirm(msg, "删除提示", {
@@ -107,10 +118,7 @@ export default {
           showCancelButton: false,
           type: res ? "success" : "error",
         }).then(() => {
-          if (res) {
-            this.selectDataMap = {};
-            this.getList();
-          }
+          if (res) this.getList();
         });
       } catch (error) {
         console.error(error);
@@ -123,9 +131,9 @@ export default {
         ...this.page,
         ...this.query,
       };
-      const [, res] = await this.$http.Goods.GetList(query);
+      const [, res] = await this.$http.GoodsCategory.GetList(query);
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
-        this.$message.error(res?.msg || "获取商品列表异常");
+        this.$message.error(res?.msg || "获取商品分类列表异常");
       }
       this.list = res?.rows || [];
       this.total = res?.total || 0;
@@ -142,5 +150,10 @@ export default {
 }
 .action {
   padding: 0 0 15px;
+}
+.mainImg {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
 }
 </style>

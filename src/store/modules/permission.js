@@ -2,7 +2,7 @@ import api from "@/api/module";
 import Page401 from "@/views/ErrorPage/401";
 import { asyncRoutes, constantRoutes } from "@/router";
 
-const IS_NO_PERMISSION = !!process.env.VUE_APP_NO_PERMISSION;
+const IS_NO_PERMISSION = !!process.env.VITE_APP_NO_PERMISSION;
 /**
  * 根据返回的权限列表查找到可访问的页面
  * @param routes asyncRoutes

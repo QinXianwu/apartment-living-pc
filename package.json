@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "serve": "vite --mode development",
+    "serve.nopermission": "vite --mode development_nopermission",
     "build": "vite build --mode development",
     "serve.pre": "vite --mode pre",
     "serve.prod": "vite --mode prod",
