@@ -99,6 +99,7 @@ export default {
   },
   mounted() {
     this.getGoodsInfo();
+    this.$store.dispatch("accountRoleManage/GetSupplierListAction");
   },
 };
 </script>

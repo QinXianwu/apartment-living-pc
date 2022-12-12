@@ -65,7 +65,6 @@ export const CATEGORY_NAV_STATE_OPTIONS = () => [
     value: CATEGORY_NAV_STATE.HIDE,
   },
 ];
-
 // 商品分类-是否为热门推荐
 export const CATEGORY_HOT_TYPE = {
   YES: 1, // 正常
@@ -83,5 +82,89 @@ export const CATEGORY_HOT_TYPE_OPTIONS = () => [
   {
     label: CATEGORY_HOT_TYPE_TEXT[CATEGORY_HOT_TYPE.NOT],
     value: CATEGORY_HOT_TYPE.NOT,
+  },
+];
+
+// 商品上下架状态
+export const GOODS_OPER_STATE = {
+  LISTING: 1, // 上架
+  REMOVAL: 0, // 下架
+};
+export const GOODS_OPER_STATE_TEXT = {
+  [GOODS_OPER_STATE.LISTING]: "上架",
+  [GOODS_OPER_STATE.REMOVAL]: "下架",
+};
+// 商品上下架状态options
+export const GOODS_OPER_STATE_OPTIONS = () => [
+  {
+    label: GOODS_OPER_STATE_TEXT[GOODS_OPER_STATE.LISTING],
+    value: GOODS_OPER_STATE.LISTING,
+  },
+  {
+    label: GOODS_OPER_STATE_TEXT[GOODS_OPER_STATE.REMOVAL],
+    value: GOODS_OPER_STATE.REMOVAL,
+  },
+];
+
+// 特价类型
+export const SPECIALS_TYPE = {
+  YES: 1, // 是
+  NOT: 0, // 否
+};
+export const SPECIALS_TYPE_TEXT = {
+  [SPECIALS_TYPE.YES]: "是",
+  [SPECIALS_TYPE.NOT]: "否",
+};
+// 特价类型options
+export const SPECIALS_TYPE_OPTIONS = () => [
+  {
+    label: SPECIALS_TYPE_TEXT[SPECIALS_TYPE.YES],
+    value: SPECIALS_TYPE.YES,
+  },
+  {
+    label: SPECIALS_TYPE_TEXT[SPECIALS_TYPE.NOT],
+    value: SPECIALS_TYPE.NOT,
+  },
+];
+
+// 折扣类型
+export const DISCOUNTED_TYPE = {
+  YES: 1, // 是
+  NOT: 0, // 否
+};
+export const DISCOUNTED_TYPE_TEXT = {
+  [DISCOUNTED_TYPE.YES]: "是",
+  [DISCOUNTED_TYPE.NOT]: "否",
+};
+// 折扣类型options
+export const DISCOUNTED_TYPE_OPTIONS = () => [
+  {
+    label: DISCOUNTED_TYPE_TEXT[DISCOUNTED_TYPE.YES],
+    value: DISCOUNTED_TYPE.YES,
+  },
+  {
+    label: DISCOUNTED_TYPE_TEXT[DISCOUNTED_TYPE.NOT],
+    value: DISCOUNTED_TYPE.NOT,
+  },
+];
+
+// 限购类型
+export const RESTRICTED_TYPE = {
+  YES: 1, // 是
+  NOT: 0, // 否
+};
+export const RESTRICTED_TYPE_TEXT = {
+  [RESTRICTED_TYPE.YES]: "是",
+  [RESTRICTED_TYPE.NOT]: "否",
+};
+// 限购类型options
+export const RESTRICTED_TYPE_OPTIONS = () => [
+  {
+    label: RESTRICTED_TYPE_TEXT[RESTRICTED_TYPE.YES],
+    value: RESTRICTED_TYPE.YES,
+  },
+  {
+    label: RESTRICTED_TYPE_TEXT[RESTRICTED_TYPE.NOT],
+    value: RESTRICTED_TYPE.NOT,
   },
 ];
