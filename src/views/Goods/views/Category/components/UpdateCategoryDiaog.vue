@@ -183,6 +183,7 @@ export default {
       } else {
         this.formData = {
           name: "",
+          status: this.$CONST.CATEGORY_STATE.ON,
           hotShow: this.$CONST.CATEGORY_HOT_TYPE.YES,
           navigationShow: this.$CONST.CATEGORY_NAV_STATE.OFF,
         };
