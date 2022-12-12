@@ -1,3 +1,30 @@
+// 商品分类层级
+export const CATEGORY_LEVEL = {
+  FIRST: 1, // 一级
+  SECOND: 2, // 二级
+  THIRD: 3, // 三级
+};
+export const CATEGORY_LEVEL_TEXT = {
+  [CATEGORY_LEVEL.FIRST]: "一级",
+  [CATEGORY_LEVEL.SECOND]: "二级",
+  [CATEGORY_LEVEL.THIRD]: "三级",
+};
+// 商品分类层级options
+export const CATEGORY_LEVEL_OPTIONS = () => [
+  {
+    label: CATEGORY_LEVEL_TEXT[CATEGORY_LEVEL.FIRST],
+    value: CATEGORY_LEVEL.FIRST,
+  },
+  {
+    label: CATEGORY_LEVEL_TEXT[CATEGORY_LEVEL.SECOND],
+    value: CATEGORY_LEVEL.SECOND,
+  },
+  {
+    label: CATEGORY_LEVEL_TEXT[CATEGORY_LEVEL.THIRD],
+    value: CATEGORY_LEVEL.THIRD,
+  },
+];
+
 // 商品分类状态
 export const CATEGORY_STATE = {
   ON: 1, // 正常
@@ -25,17 +52,17 @@ export const CATEGORY_NAV_STATE = {
   HIDE: 0, // 隐藏
 };
 export const CATEGORY_NAV_STATE_TEXT = {
-  [CATEGORY_NAV_STATE.ON]: "显示",
-  [CATEGORY_NAV_STATE.OFF]: "隐藏",
+  [CATEGORY_NAV_STATE.SHOW]: "显示",
+  [CATEGORY_NAV_STATE.HIDE]: "隐藏",
 };
 export const CATEGORY_NAV_STATE_OPTIONS = () => [
   {
-    label: CATEGORY_NAV_STATE_TEXT[CATEGORY_NAV_STATE.ON],
-    value: CATEGORY_NAV_STATE.ON,
+    label: CATEGORY_NAV_STATE_TEXT[CATEGORY_NAV_STATE.SHOW],
+    value: CATEGORY_NAV_STATE.SHOW,
   },
   {
-    label: CATEGORY_NAV_STATE_TEXT[CATEGORY_NAV_STATE.OFF],
-    value: CATEGORY_NAV_STATE.OFF,
+    label: CATEGORY_NAV_STATE_TEXT[CATEGORY_NAV_STATE.HIDE],
+    value: CATEGORY_NAV_STATE.HIDE,
   },
 ];
 
@@ -45,8 +72,8 @@ export const CATEGORY_HOT_TYPE = {
   NOT: 0, // 禁止
 };
 export const CATEGORY_HOT_TYPE_TEXT = {
-  [CATEGORY_NAV_STATE.YES]: "是",
-  [CATEGORY_NAV_STATE.NOT]: "否",
+  [CATEGORY_HOT_TYPE.YES]: "是",
+  [CATEGORY_HOT_TYPE.NOT]: "否",
 };
 export const CATEGORY_HOT_TYPE_OPTIONS = () => [
   {

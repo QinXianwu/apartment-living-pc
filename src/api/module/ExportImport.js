@@ -17,10 +17,8 @@ export default {
         TaskName: "用户列表导出",
         isReturnAll: true,
         isHandleParams: true,
+        isHeadersForm: true,
         responseType: "blob",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
       })
     );
   },
@@ -34,10 +32,8 @@ export default {
         TaskName: "导入用户列表模板",
         isReturnAll: true,
         isHandleParams: true,
+        isHeadersForm: true,
         responseType: "blob",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
       })
     );
   },
@@ -51,10 +47,8 @@ export default {
         TaskName: "角色列表导出",
         isReturnAll: true,
         isHandleParams: true,
+        isHeadersForm: true,
         responseType: "blob",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
       })
     );
   },
@@ -68,10 +62,8 @@ export default {
         TaskName: "岗位列表导出",
         isReturnAll: true,
         isHandleParams: true,
+        isHeadersForm: true,
         responseType: "blob",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
       })
     );
   },
@@ -85,10 +77,8 @@ export default {
         TaskName: "字典列表导出",
         isReturnAll: true,
         isHandleParams: true,
+        isHeadersForm: true,
         responseType: "blob",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
       })
     );
   },
@@ -102,10 +92,8 @@ export default {
         TaskName: "字典数据导出",
         isReturnAll: true,
         isHandleParams: true,
+        isHeadersForm: true,
         responseType: "blob",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
       })
     );
   },
@@ -119,10 +107,8 @@ export default {
         TaskName: "定时任务列表导出",
         isReturnAll: true,
         isHandleParams: true,
+        isHeadersForm: true,
         responseType: "blob",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
       })
     );
   },
@@ -136,10 +122,8 @@ export default {
         TaskName: "任务调度日志列表导出",
         isReturnAll: true,
         isHandleParams: true,
+        isHeadersForm: true,
         responseType: "blob",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
       })
     );
   },
@@ -153,10 +137,8 @@ export default {
         TaskName: "系统操作日志列表导出",
         isReturnAll: true,
         isHandleParams: true,
+        isHeadersForm: true,
         responseType: "blob",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
       })
     );
   },

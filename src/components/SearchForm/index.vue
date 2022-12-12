@@ -451,9 +451,7 @@ export default {
       if (this.isReturnFormData) {
         let obj = {};
         this.form.map((item) => {
-          if (item.value) {
-            obj[item.prop] = item.value;
-          }
+          obj[item.prop] = item.value;
         });
         this.$emit(eventName, obj);
         return;

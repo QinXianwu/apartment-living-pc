@@ -109,6 +109,6 @@ export default {
   color: $main-font-color;
 }
 .content {
-  padding: 10px 0;
+  padding: 20px 0;
 }
 </style>

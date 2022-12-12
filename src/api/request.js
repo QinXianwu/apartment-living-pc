@@ -145,13 +145,21 @@ service.interceptors.response.use(
 export function apiFetch(objData) {
   let data = {
     method: "post",
+    headers: {}, // 请求头
     isLoading: true, // 是否显示加载
     isReturnAll: false, // 是否返回全部接受数据
     isQueryAll: true, // 是否传输全部请求参数
     isErrorTips: true, // 接口报错时是否弹窗提示
-    isHandleParams: false, // get 是否处理参数
-    ...objData,
+    isHandleParams: false, // 是否处理参数拼接到url上
+    isHeadersForm: false, // 请求头 表单格式 application/x-www-form-urlencoded
   };
+  data = { ...data, ...objData };
+  if (data.isHeadersForm) {
+    data.headers = {
+      ...data.headers,
+      "Content-Type": "application/x-www-form-urlencoded",
+    };
+  }
   if (data.isLoading && !loadingInstance) {
     loadingInstance = Loading.service({
       target: ".main-container", // 不包括侧边栏和头部操作栏

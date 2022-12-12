@@ -10,27 +10,31 @@
           <ImageView class="mainImg" :src="scope.icon | formatImage" />
         </template>
         <template #navigationShow="{ scope }">
-          <el-switch
-            v-model="scope.navigationShow"
-            :active-value="$CONST.CATEGORY_NAV_STATE.ON"
-            :inactive-value="$CONST.CATEGORY_NAV_STATE.OFF"
+          <el-tag
+            :type="
+              scope.navigationShow === $CONST.CATEGORY_NAV_STATE.HIDE
+                ? 'danger'
+                : ''
+            "
+            >{{ $CONST.CATEGORY_NAV_STATE_TEXT[scope.navigationShow] }}</el-tag
           >
-            <!-- @change="handleStatusChange(scope)" -->
-          </el-switch>
         </template>
         <template #hotShow="{ scope }">
-          <el-switch
-            v-model="scope.hotShow"
-            :active-value="$CONST.CATEGORY_HOT_TYPE.YES"
-            :inactive-value="$CONST.CATEGORY_HOT_TYPE.NOT"
+          <el-tag
+            :type="
+              scope.hotShow === $CONST.CATEGORY_HOT_TYPE.NOT ? 'danger' : ''
+            "
+            >{{ $CONST.CATEGORY_HOT_TYPE_TEXT[scope.hotShow] }}</el-tag
           >
-          </el-switch>
         </template>
         <template #status="{ scope }">
-          <el-tag
-            :type="scope.status === $CONST.CATEGORY_STATE.OFF ? 'danger' : ''"
-            >{{ $CONST.CATEGORY_STATE_TEXT[scope.status] }}</el-tag
+          <el-switch
+            v-model="scope.status"
+            :active-value="$CONST.CATEGORY_STATE.ON"
+            :inactive-value="$CONST.CATEGORY_STATE.OFF"
+            @change="handleStatusChange(scope)"
           >
+          </el-switch>
         </template>
         <!-- 操作 -->
         <template #action="{ scope }">
@@ -49,15 +53,21 @@
         :total="total"
       />
     </div>
+    <UpdateCategoryDiaog
+      :editInfo="editInfo"
+      :show.sync="showUpdataCategory"
+      @close="close"
+    />
   </div>
 </template>
 
 <script>
 import { formData, column } from "./config";
+import UpdateCategoryDiaog from "./components/UpdateCategoryDiaog.vue";
 
 export default {
   name: "GoodsList",
-  components: {},
+  components: { UpdateCategoryDiaog },
   data() {
     return {
       formData,
@@ -92,28 +102,55 @@ export default {
       this.editInfo = "";
       this.showUpdataCategory = true;
     },
-    handleEdit() {
-      //
+    handleEdit({ id }) {
+      this.editInfo = { id };
+      this.showUpdataCategory = true;
     },
-    close() {
+    close(isRefresh = false) {
       this.editInfo = "";
       this.showUpdataCategory = false;
+      if (isRefresh) this.getList(isRefresh);
     },
-    async handleDelete({ id }) {
+    async handleDelete({ id, name }) {
       try {
-        await this.$confirm(
-          `是否确认删除日志编号为${id}的数据项？`,
-          "删除提示",
-          {
-            type: "warning",
-            showClose: false,
-          }
-        );
-        const [, res] = await this.$http.OperationalLogs.DeleteOperLog({
-          operId: id,
+        await this.$confirm(`确认删除 '${name}' 分类吗？`, "删除提示", {
+          type: "warning",
+          showClose: false,
         });
+        const [, res] = await this.$http.GoodsCategory.DeleteCategory(
+          JSON.stringify([id])
+        );
         const msg = res ? res?.msg || `删除成功` : `删除失败`;
         this.$confirm(msg, "删除提示", {
+          showClose: false,
+          showCancelButton: false,
+          type: res ? "success" : "error",
+        }).then(() => {
+          if (res) {
+            this.getList();
+            this.$store.dispatch("goods/GetCategoryAllAction", true);
+          }
+        });
+      } catch (error) {
+        console.error(error);
+        error;
+      }
+    },
+    async handleStatusChange(item) {
+      const tipText =
+        item?.status === this.$CONST.CATEGORY_STATE.ON ? "启用" : "禁止";
+      try {
+        await this.$confirm(`确定要${tipText}该分类吗?`, tipText, {
+          type: "warning",
+          showClose: false,
+        });
+        const [, res] = await this.$http.GoodsCategory.UpdateCategoryStatus({
+          id: item?.id || "",
+          status: item.status,
+        });
+        const msg = res ? res?.msg || `${tipText}成功` : `${tipText}失败`;
+        this.$store.dispatch("goods/GetCategoryAllAction", true);
+        this.$confirm(msg, "操作结果", {
           showClose: false,
           showCancelButton: false,
           type: res ? "success" : "error",
@@ -121,8 +158,11 @@ export default {
           if (res) this.getList();
         });
       } catch (error) {
+        item.status =
+          item?.status === this.$CONST.CATEGORY_STATE.ON
+            ? this.$CONST.CATEGORY_STATE.OFF
+            : this.$CONST.CATEGORY_STATE.ON;
         console.error(error);
-        error;
       }
     },
     async getList(isClear) {
