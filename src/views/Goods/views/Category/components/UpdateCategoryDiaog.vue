@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="dialogTitle"
+    :title="`${isEdit ? '编辑' : '新增'}分类`"
     :visible.sync="visible"
     width="700px"
     v-loading="isLoading"
@@ -14,7 +14,11 @@
       v-loading="isLoadingCategory"
     >
       <el-form-item label="分类层级" prop="catLevel">
-        <el-select v-model="formData.catLevel" class="input-medium">
+        <el-select
+          class="input-medium"
+          v-model="formData.catLevel"
+          :disabled="isEdit"
+        >
           <el-option
             v-for="item in $CONST.CATEGORY_LEVEL_OPTIONS()"
             :label="item.label"
@@ -23,11 +27,16 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="上级分类" prop="parentCid">
+      <el-form-item
+        label="上级分类"
+        prop="parentCid"
+        v-if="formData.catLevel !== $CONST.CATEGORY_LEVEL.FIRST"
+      >
         <el-cascader
           v-model="formData.parentCid"
           class="input-medium"
-          :options="categoryOptions"
+          :key="cascaderKey"
+          :options="categoryOptions || []"
           :props="{
             emitPath: false,
             checkStrictly: true,
@@ -108,6 +117,7 @@ export default {
   },
   watch: {
     visible(val) {
+      this.cascaderKey++;
       this.init();
       if (val) {
         this.$store.dispatch("goods/GetCategoryAllAction");
@@ -115,13 +125,14 @@ export default {
       }
     },
     "formData.catLevel"() {
-      this.$set(this.formData, "parentCid", "");
+      if (!this.isLoadingCategory) this.$set(this.formData, "parentCid", "");
     },
   },
   data() {
     return {
       imgList: [],
       formData: {},
+      cascaderKey: 0,
       isLoading: false,
       isLoadingCategory: false,
       rules: {
@@ -139,9 +150,8 @@ export default {
     ...mapGetters({
       categoryAllOptions: "goods/CategoryAllOptions",
     }),
-    dialogTitle({ editInfo }) {
-      const title = editInfo?.id ? "编辑" : "新增";
-      return `${title}分类`;
+    isEdit({ editInfo }) {
+      return !!editInfo?.id;
     },
     categoryOptions({ formData, categoryAllOptions }) {
       if (
@@ -183,6 +193,8 @@ export default {
       } else {
         this.formData = {
           name: "",
+          catLevel: "",
+          parentCid: "",
           status: this.$CONST.CATEGORY_STATE.ON,
           hotShow: this.$CONST.CATEGORY_HOT_TYPE.YES,
           navigationShow: this.$CONST.CATEGORY_NAV_STATE.OFF,
@@ -196,9 +208,12 @@ export default {
       const [, res] = await this.$http.GoodsCategory.GetCategoryById({
         id: this.editInfo?.id || "",
       });
-      this.isLoadingCategory = false;
-      if (!res) return this.$message.error(res?.msg || "获取分类详情异常");
-      this.formData = { ...this.formData, ...res };
+      if (!res) this.$message.error(res?.msg || "获取分类详情异常");
+      this.formData = {
+        ...this.formData,
+        ...(res || {}),
+      };
+      this.$nextTick(() => (this.isLoadingCategory = false));
     },
     // 处理提交
     async handleSubmit() {

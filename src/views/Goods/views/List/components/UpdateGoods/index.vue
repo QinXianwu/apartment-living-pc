@@ -5,7 +5,12 @@
     </div>
     <div class="content">
       <GoodsStep :activeIndex="activeIndex" :setpList="setpList" />
-      <GoodsInfo />
+      <!-- 商品基础信息 -->
+      <GoodsInfo ref="GoodsInfo" />
+      <!-- 商品预售 -->
+      <GoodsPreSale ref="GoodsPreSale" />
+      <!-- 商品服务 -->
+      <GoodsServe ref="GoodsServe" />
     </div>
     <!-- 底部按钮 -->
     <FooterView
@@ -22,11 +27,13 @@
 <script>
 import GoodsStep from "./GoodsStep.vue";
 import GoodsInfo from "./GoodsInfo.vue";
+import GoodsPreSale from "./GoodsPreSale.vue";
+import GoodsServe from "./GoodsServe.vue";
 import FooterView from "./Footer.vue";
 
 export default {
   name: "UpdateGoods",
-  components: { GoodsStep, GoodsInfo, FooterView },
+  components: { GoodsStep, GoodsInfo, GoodsPreSale, GoodsServe, FooterView },
   props: {
     editInfo: {
       type: [Object, String],
@@ -104,12 +111,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.title {
-  font-size: 14px;
-  font-weight: bold;
-  color: $main-font-color;
-}
-.content {
-  padding: 20px 0;
+.UpdateGoods {
+  margin-bottom: 60px;
+  .title {
+    font-size: 14px;
+    font-weight: bold;
+    color: $main-font-color;
+  }
+  .content {
+    padding: 20px 0;
+  }
 }
 </style>

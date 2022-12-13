@@ -168,3 +168,24 @@ export const RESTRICTED_TYPE_OPTIONS = () => [
     value: RESTRICTED_TYPE.NOT,
   },
 ];
+
+// 预售类型
+export const PRE_SALE_TYPE = {
+  YES: 1, // 是
+  NOT: 0, // 否
+};
+export const PRE_SALE_TYPE_TEXT = {
+  [PRE_SALE_TYPE.YES]: "是",
+  [PRE_SALE_TYPE.NOT]: "否",
+};
+// 限购类型options
+export const PRE_SALE_TYPE_OPTIONS = () => [
+  {
+    label: PRE_SALE_TYPE_TEXT[PRE_SALE_TYPE.YES],
+    value: PRE_SALE_TYPE.YES,
+  },
+  {
+    label: PRE_SALE_TYPE_TEXT[PRE_SALE_TYPE.NOT],
+    value: PRE_SALE_TYPE.NOT,
+  },
+];
