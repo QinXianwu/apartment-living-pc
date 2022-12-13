@@ -52,7 +52,7 @@
       </el-form-item>
       <el-form-item label="上传图标" prop="icon">
         <Uploader
-          :list.sync="imgList"
+          :list.sync="iconList"
           tip="建议尺寸：1000 x 600像素，小于1M，支持jpg、png、jpeg格式"
         />
       </el-form-item>
@@ -130,7 +130,7 @@ export default {
   },
   data() {
     return {
-      imgList: [],
+      iconList: [],
       formData: {},
       cascaderKey: 0,
       isLoading: false,
@@ -188,6 +188,7 @@ export default {
   },
   methods: {
     init() {
+      this.iconList = [];
       if (this.editInfo?.id) {
         this.formData = { ...this.editInfo };
       } else {
@@ -213,6 +214,7 @@ export default {
         ...this.formData,
         ...(res || {}),
       };
+      this.iconList = this.formData?.icon ? [{ url: this.formData?.icon }] : [];
       this.$nextTick(() => (this.isLoadingCategory = false));
     },
     // 处理提交
@@ -233,6 +235,7 @@ export default {
       ]({
         id,
         ...this.formData,
+        icon: this.iconList?.length ? this.iconList[0].url : "",
       });
       this.isLoading = false;
       this.$message[res ? "success" : "error"](

@@ -2,6 +2,7 @@ import PERMISSION_ID from "@/permission/PERMISSION_ID";
 import MainLayout from "@/layouts/MainLayout/index";
 import GoodsList from "@/views/Goods/views/List/index.vue";
 import GoodsCategory from "@/views/Goods/views/Category/index.vue";
+import Specification from "@/views/Goods/views/Specification/index.vue";
 
 export default {
   path: "/Goods",
@@ -29,6 +30,15 @@ export default {
       name: "GoodsCategory",
       meta: {
         title: "商品分类",
+        // PermissionId: PERMISSION_ID.Goods_List,
+      },
+    },
+    {
+      path: "Specification",
+      component: Specification,
+      name: "Specification",
+      meta: {
+        title: "商品规格",
         // PermissionId: PERMISSION_ID.Goods_List,
       },
     },

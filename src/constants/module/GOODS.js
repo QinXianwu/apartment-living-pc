@@ -189,3 +189,24 @@ export const PRE_SALE_TYPE_OPTIONS = () => [
     value: PRE_SALE_TYPE.NOT,
   },
 ];
+
+// 规格类型
+export const SPECIFICA_TYPE = {
+  ON: 1, // 正常
+  OFF: 0, // 禁止
+};
+export const SPECIFICA_TYPE_TEXT = {
+  [SPECIFICA_TYPE.ON]: "正常",
+  [SPECIFICA_TYPE.OFF]: "禁止",
+};
+// 规格类型options
+export const SPECIFICA_TYPE_OPTIONS = () => [
+  {
+    label: SPECIFICA_TYPE_TEXT[SPECIFICA_TYPE.ON],
+    value: SPECIFICA_TYPE.ON,
+  },
+  {
+    label: SPECIFICA_TYPE_TEXT[SPECIFICA_TYPE.OFF],
+    value: SPECIFICA_TYPE.OFF,
+  },
+];

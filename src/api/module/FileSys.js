@@ -38,6 +38,7 @@ const UploadSingleImage = ({ flag, fileList }) => {
       params: { flag, multipartFile: blob },
       isLoading: true,
       isQueryAll: true,
+      isReturnAll: true,
       headers: {
         "Content-Type": "multipart/form-data",
       },

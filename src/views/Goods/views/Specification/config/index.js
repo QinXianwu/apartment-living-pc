@@ -1,10 +1,10 @@
-// import CONST from "@/constants/index";
+import CONST from "@/constants/index";
 
 // 搜索选项
 export const formData = [
   {
     label: "规格名称",
-    prop: "goodsName",
+    prop: "specificationName",
     type: "text",
     value: "",
     placeholder: "请输入规格名称",
@@ -14,7 +14,7 @@ export const formData = [
     prop: "status",
     type: "select",
     value: "",
-    options: [],
+    options: CONST.SPECIFICA_TYPE_OPTIONS(),
     placeholder: "请选择规格状态",
   },
 ];
@@ -23,15 +23,16 @@ export const formData = [
 export const column = [
   {
     label: "ID",
-    prop: "ID",
+    prop: "id",
+    showOverflowTooltip: true,
   },
   {
     label: "规格名称",
-    prop: "icon",
+    prop: "specificationName",
   },
   {
     label: "分类排序",
-    prop: "orderNum",
+    prop: "sort",
   },
   {
     label: "状态",

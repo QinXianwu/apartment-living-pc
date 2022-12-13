@@ -197,6 +197,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("goods/GetCategoryAllAction");
+    this.$store.dispatch("accountRoleManage/GetSupplierListAction");
   },
 };
 </script>

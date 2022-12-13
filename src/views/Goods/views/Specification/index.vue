@@ -4,15 +4,31 @@
       <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
       <div class="action">
         <el-button type="primary" @click="handleAdd">新增规格</el-button>
+        <el-button type="danger" @click="handleBatchDelete">批量删除</el-button>
       </div>
-      <TablePanel :tableData="list" :tableHead="column">
-        <template #goodsTab="{ scope }">
-          {{ $CONST.PROTOCOL_TYPE_TEXT[scope.type] }}
+      <TablePanel
+        :tableData="list"
+        :tableHead="column"
+        :checkbox="true"
+        :isShowTopCheck="false"
+        @selection-change="handleSelectionChange"
+      >
+        <template #status="{ scope }">
+          <el-tag
+            :type="scope.status === $CONST.SPECIFICA_TYPE.OFF ? 'danger' : ''"
+            >{{ $CONST.SPECIFICA_TYPE_TEXT[scope.status] }}</el-tag
+          >
         </template>
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
             <el-button type="text" @click="handleEdit(scope)"> 编辑 </el-button>
+            <el-button type="text" @click="handleDelete([scope.id])">
+              删除
+            </el-button>
+            <el-button type="text" @click="handleSpecifica(scope)">
+              规格值管理
+            </el-button>
           </div>
         </template>
       </TablePanel>
@@ -24,25 +40,31 @@
         :current-page="page.pageNum"
         :total="total"
       />
-      <DrawerPopup v-model="showUpdataGoods">
-        <!-- 更新商品 -->
-        <UpdateGoods
-          v-if="showUpdataGoods"
-          :editInfo="editInfo"
-          @close="close"
-        />
-      </DrawerPopup>
     </div>
+    <UpdateSpecificaDiaog
+      :editInfo="editInfo"
+      :show.sync="showUpdataSpecifica"
+      @close="close"
+    />
+    <DrawerPopup v-model="showSpecificaValue">
+      <!-- 管理规格值 -->
+      <UpdateSpecificaValue
+        v-if="showSpecificaValue"
+        :editInfo="editInfo"
+        @close="close"
+      />
+    </DrawerPopup>
   </div>
 </template>
 
 <script>
 import { formData, column } from "./config";
-import UpdateGoods from "./components/UpdateGoods/index";
+import UpdateSpecificaDiaog from "./components/UpdateSpecificaDiaog.vue";
+import UpdateSpecificaValue from "./components/UpdateSpecificaValue.vue";
 
 export default {
   name: "Specification",
-  components: { UpdateGoods },
+  components: { UpdateSpecificaDiaog, UpdateSpecificaValue },
   data() {
     return {
       formData,
@@ -56,7 +78,8 @@ export default {
       total: 0,
       editInfo: {},
       selectDataMap: {},
-      showUpdataGoods: false,
+      showUpdataSpecifica: false,
+      showSpecificaValue: false,
     };
   },
   computed: {},
@@ -76,29 +99,42 @@ export default {
     },
     handleAdd() {
       this.editInfo = "";
-      this.showUpdataGoods = true;
+      this.showUpdataSpecifica = true;
     },
-    handleEdit() {
-      //
+    handleEdit({ id }) {
+      this.editInfo = { id };
+      this.showUpdataSpecifica = true;
     },
-    close() {
+    handleSpecifica({ id }) {
+      this.editInfo = { id };
+      this.showSpecificaValue = true;
+    },
+    close(isRefresh = false) {
       this.editInfo = "";
-      this.showUpdataGoods = false;
+      this.showUpdataSpecifica = false;
+      this.showSpecificaValue = false;
+      if (isRefresh) this.getList(isRefresh);
     },
-    async handleDelete() {
-      const ids = Object.keys(this.selectDataMap).join(",");
+    // 批量删除
+    handleBatchDelete() {
+      if (!Object.keys(this.selectDataMap)?.length)
+        return this.$message.error("请选择规格后再试");
+      const ids = Object.keys(this.selectDataMap);
+      this.handleDelete(ids);
+    },
+    async handleDelete(ids) {
       try {
         await this.$confirm(
-          `是否确认删除日志编号为${ids}的数据项？`,
+          `是否确认删除规格ID为${ids}的数据项？`,
           "删除提示",
           {
             type: "warning",
             showClose: false,
           }
         );
-        const [, res] = await this.$http.OperationalLogs.DeleteOperLog({
-          operId: ids,
-        });
+        const [, res] = await this.$http.GoodsSpecification.DeleteSpecifica(
+          JSON.stringify(ids)
+        );
         const msg = res ? res?.msg || `删除成功` : `删除失败`;
         this.$confirm(msg, "删除提示", {
           showClose: false,
@@ -108,6 +144,7 @@ export default {
           if (res) {
             this.selectDataMap = {};
             this.getList();
+            this.$store.dispatch("goods/GetSpecificaListAction", true);
           }
         });
       } catch (error) {
@@ -115,18 +152,39 @@ export default {
         error;
       }
     },
+    initSelection() {
+      if (!this.list?.length) return;
+      this.list.forEach((item) => {
+        if (this.selectDataMap[item?.id]) {
+          this.$nextTick(() => {
+            this.$refs.TablePanel.setSelection(item, true);
+          });
+        }
+      });
+    },
+    handleSelectionChange(val) {
+      this.list.forEach((item) => {
+        // 存在于当前页以及map 但不存在 val -> 去掉
+        const index = val.findIndex((vItem) => vItem?.id === item.id);
+        if (this.selectDataMap[item.id] && index < 0)
+          delete this.selectDataMap[item.id];
+      });
+      val.forEach((item) => (this.selectDataMap[item.id] = { ...item }));
+      this.isDisabledDelete = !Object.keys(this.selectDataMap).length;
+    },
     async getList(isClear) {
       if (isClear) this.page.pageNum = 1;
       const query = {
         ...this.page,
         ...this.query,
       };
-      const [, res] = await this.$http.Goods.GetList(query);
+      const [, res] = await this.$http.GoodsSpecification.GetList(query);
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
-        this.$message.error(res?.msg || "获取商品列表异常");
+        this.$message.error(res?.msg || "获取商品规格列表异常");
       }
       this.list = res?.rows || [];
       this.total = res?.total || 0;
+      this.initSelection();
     },
   },
   mounted() {

@@ -9,6 +9,8 @@ import "./icons"; // icon
 import "./permission/index"; // 权限控制相关
 import hasPermission from "./permission/hasPermission";
 import PERMISSION_ID from "@/permission/PERMISSION_ID";
+import JSONbig from "json-bigint"; // 解决超过 16 位数字精度丢失问题
+
 // import { i18n } from "@/lang/index"; // 多语言
 import "virtual:svg-icons-register";
 
@@ -44,6 +46,7 @@ Vue.prototype.$hasPermission = hasPermission; // 权限判断
 Vue.prototype.$http = api;
 Vue.prototype.$CONST = CONST; // 全局挂载常量
 Vue.prototype.$CookieStore = CookieStore;
+Vue.prototype.$JSONbig = JSONbig;
 
 new Vue({
   el: "#app",

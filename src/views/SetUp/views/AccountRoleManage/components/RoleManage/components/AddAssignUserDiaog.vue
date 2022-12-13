@@ -158,7 +158,6 @@ export default {
       }
     },
     async handleSubmit() {
-      console.log(this.selectDataMap);
       if (!Object.keys({ ...this.selectDataMap })?.length)
         return this.$message.error("请选择用户后再试");
       const [, res] = await this.$http.AccountRoleManage.AddRoleByUser({

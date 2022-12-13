@@ -5,6 +5,7 @@ import store from "@/store/index";
 import CONST from "@/constants/index";
 import CookieStore from "@/utils/common";
 import { isField, tansParams } from "@/utils";
+import JSONbig from "json-bigint"; // 解决超过 16 位数字精度丢失问题
 let requestNum = 0, // 累计请求数
   loadingInstance = null, // loading实例
   un_login = false; // 是否未登陆，用于判断提示登陆的次数
@@ -20,6 +21,20 @@ const service = axios.create({
       ? `Bearer ${CookieStore.getCookie("user_sessino")}`
       : "",
   },
+  // 解决超过 16 位数字精度丢失问题
+  transformResponse: [
+    function (data) {
+      try {
+        // 如果转换成功则返回转换的数据结果
+        return JSONbig.parse(data);
+      } catch (err) {
+        // 如果转换失败，则包装为统一数据格式并返回
+        return {
+          data,
+        };
+      }
+    },
+  ],
 });
 
 service.interceptors.request.use(
@@ -49,7 +64,6 @@ service.interceptors.response.use(
         un_login = true;
       }
     }
-
     // 判断此接口是否需要完整返回后端返回的数据
     if (config.isReturnAll) return data;
 
@@ -171,7 +185,7 @@ export function apiFetch(objData) {
   if (!method || typeof method !== "string") method = "POST";
   method = method.toUpperCase();
   const url = data.isHandleParams
-    ? `${data.url}?${tansParams(data.params)}`.slice(0, -1)
+    ? `${data.url}?${tansParams(data?.params || {})}`.slice(0, -1)
     : data.url;
   const params = data.isQueryAll
     ? data.isHandleParams

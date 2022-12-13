@@ -1,28 +1,41 @@
 import api from "@/api/module";
 
 const state = {
-  categoryAll: [], // 商品分类级联
+  categoryListAll: [], // 商品分类级联
+  specificaListAll: [], // 商品规格列表
 };
 
 const mutations = {
-  SET_CATEGORY_ALL(state, data) {
-    state.categoryAll = data;
+  SET_CATEGORY_LIST_ALL(state, data) {
+    state.categoryListAll = data;
+  },
+  SET_SPECIFICA_LIST_ALL(state, data) {
+    state.specificaListAll = data;
   },
 };
 
 const actions = {
   // 商品分类级联
   async GetCategoryAllAction({ commit, state }, isRefresh = false) {
-    if (state.categoryAll.length !== 0 && !isRefresh) return state.categoryAll;
+    if (state.categoryListAll.length !== 0 && !isRefresh)
+      return state.categoryListAll;
     const [, data] = await api.GoodsCategory.GetCategoryAll();
-    commit("SET_CATEGORY_ALL", data?.length ? data : []);
+    commit("SET_CATEGORY_LIST_ALL", data?.length ? data : []);
+    return data?.length ? data : [];
+  },
+  // 商品规格列表
+  async GetSpecificaListAction({ commit, state }, isRefresh = false) {
+    if (state.specificaListAll.length !== 0 && !isRefresh)
+      return state.specificaListAll;
+    const [, data] = await api.GoodsSpecification.GetListAll();
+    commit("SET_SPECIFICA_LIST_ALL", data?.length ? data : []);
     return data?.length ? data : [];
   },
 };
 
 const getters = {
   CategoryAllOptions(state) {
-    const option = state.categoryAll;
+    const option = state.categoryListAll;
     if (!option?.length) return [];
     return option.map((item) => {
       const first_options = {

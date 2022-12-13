@@ -221,9 +221,9 @@ export default {
         fileList,
       });
       this.isLoading = false;
-      if (!Data) return;
-      this.$emit("success", Data || []); //直接抛出
-      this.$emit("update:list", this.list.concat(Data || [])); //更新数组
+      if (!Data?.msg) return;
+      this.$emit("success", [{ url: Data.msg }] || []); //直接抛出
+      this.$emit("update:list", this.list.concat([{ url: Data.msg }] || [])); //更新数组
     },
     // 点击上传
     handleClickUpload() {

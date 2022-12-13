@@ -7,7 +7,7 @@
       </div>
       <TablePanel :tableData="list" :tableHead="column">
         <template #icon="{ scope }">
-          <ImageView class="mainImg" :src="scope.icon | formatImage" />
+          <ImageView class="mainImg" :src="scope.icon" />
         </template>
         <template #navigationShow="{ scope }">
           <el-tag

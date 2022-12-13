@@ -11,6 +11,8 @@
       <GoodsPreSale ref="GoodsPreSale" />
       <!-- 商品服务 -->
       <GoodsServe ref="GoodsServe" />
+      <!-- 价格与库存 -->
+      <GoodsSpecifica ref="GoodsSpecifica" />
     </div>
     <!-- 底部按钮 -->
     <FooterView
@@ -29,11 +31,19 @@ import GoodsStep from "./GoodsStep.vue";
 import GoodsInfo from "./GoodsInfo.vue";
 import GoodsPreSale from "./GoodsPreSale.vue";
 import GoodsServe from "./GoodsServe.vue";
+import GoodsSpecifica from "./GoodsSpecifica.vue";
 import FooterView from "./Footer.vue";
 
 export default {
   name: "UpdateGoods",
-  components: { GoodsStep, GoodsInfo, GoodsPreSale, GoodsServe, FooterView },
+  components: {
+    GoodsStep,
+    GoodsInfo,
+    GoodsPreSale,
+    GoodsServe,
+    GoodsSpecifica,
+    FooterView,
+  },
   props: {
     editInfo: {
       type: [Object, String],
@@ -106,7 +116,6 @@ export default {
   },
   mounted() {
     this.getGoodsInfo();
-    this.$store.dispatch("accountRoleManage/GetSupplierListAction");
   },
 };
 </script>
