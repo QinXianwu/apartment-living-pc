@@ -82,4 +82,37 @@ export default {
       })
     );
   },
+  // 新增规格值
+  AddSpecificaValue(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url:
+          apiPrefix +
+          "/apartment-product/product/atspecificationvalue/saveInfo",
+        params,
+      })
+    );
+  },
+  // 更新规格值
+  UpdateSpecificaValue(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url:
+          apiPrefix +
+          "/apartment-product/product/atspecificationvalue/updateInfo",
+        params,
+      })
+    );
+  },
+  // 删除规格值
+  DeleteSpecificaValue(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url:
+          apiPrefix +
+          "/apartment-product/product/atspecificationvalue/deleteBt",
+        params,
+      })
+    );
+  },
 };

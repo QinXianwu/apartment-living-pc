@@ -6,25 +6,12 @@
     v-loading="isLoading"
     @close="handleClose(false)"
   >
-    <el-form
-      ref="form"
-      :model="formData"
-      :rules="rules"
-      label-width="180px"
-      v-loading="isLoadingSpecifica"
-    >
-      <el-form-item label="规格名称" prop="specificationName">
+    <el-form ref="form" :model="formData" :rules="rules" label-width="180px">
+      <el-form-item label="规格名称" prop="specificationValueName">
         <el-input
           class="input-medium"
-          v-model="formData.specificationName"
+          v-model="formData.specificationValueName"
           placeholder="请输入规格名称"
-        />
-      </el-form-item>
-      <el-form-item label="规格排序" prop="sort">
-        <el-input
-          class="input-medium"
-          v-model="formData.sort"
-          placeholder="请输入规格排序"
         />
       </el-form-item>
     </el-form>
@@ -54,7 +41,7 @@ export default {
     visible(val) {
       this.init();
       if (val) {
-        this.getSpecificaInfo();
+        //
       }
     },
   },
@@ -62,19 +49,11 @@ export default {
     return {
       formData: {},
       isLoading: false,
-      isLoadingSpecifica: false,
       rules: {
-        specificationName: [
+        specificationValueName: [
           {
             required: true,
-            message: "请输入规格名称",
-            trigger: "blur",
-          },
-        ],
-        sort: [
-          {
-            required: true,
-            message: "请输入规格名称",
+            message: "请输入规格值",
             trigger: "blur",
           },
         ],
@@ -92,24 +71,8 @@ export default {
       if (this.editInfo?.id) {
         this.formData = { ...this.editInfo };
       } else {
-        this.formData = {
-          status: this.$CONST.SPECIFICA_TYPE.ON,
-        };
+        this.formData = {};
       }
-    },
-    // 获取规格详情
-    async getSpecificaInfo() {
-      if (this.isLoadingSpecifica || !this.editInfo?.id) return;
-      this.isLoadingSpecifica = true;
-      const [, res] = await this.$http.GoodsSpecification.GetSpecificaById({
-        id: this.editInfo?.id || "",
-      });
-      if (!res) this.$message.error(res?.msg || "获取规格详情异常");
-      this.formData = {
-        ...this.formData,
-        ...(res || {}),
-      };
-      this.$nextTick(() => (this.isLoadingSpecifica = false));
     },
     // 处理提交
     async handleSubmit() {
@@ -125,14 +88,14 @@ export default {
       this.isLoading = true;
       const id = this.editInfo?.id || "";
       const [, res] = await this.$http.GoodsSpecification[
-        id ? "UpdateSpecifica" : "AddSpecifica"
+        id ? "UpdateSpecificaValue" : "AddSpecificaValue"
       ]({
         id,
         ...this.formData,
       });
       this.isLoading = false;
       this.$message[res ? "success" : "error"](
-        res?.message || `${id ? "编辑" : "新增"}规格${res ? "成功" : "失败"}`
+        res?.message || `${id ? "编辑" : "新增"}规格值${res ? "成功" : "失败"}`
       );
       if (res) {
         this.$store.dispatch("goods/GetSpecificaListAction", true);
