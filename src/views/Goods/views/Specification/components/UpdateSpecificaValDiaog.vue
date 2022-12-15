@@ -87,12 +87,15 @@ export default {
       }
       this.isLoading = true;
       const id = this.editInfo?.id || "";
+      const specificationId = this.editInfo?.specificationId || "";
+      const query = {
+        ...this.formData,
+      };
+      if (id) query.id = id;
+      if (specificationId) query.specificationId = specificationId;
       const [, res] = await this.$http.GoodsSpecification[
         id ? "UpdateSpecificaValue" : "AddSpecificaValue"
-      ]({
-        id,
-        ...this.formData,
-      });
+      ](query);
       this.isLoading = false;
       this.$message[res ? "success" : "error"](
         res?.message || `${id ? "编辑" : "新增"}规格值${res ? "成功" : "失败"}`

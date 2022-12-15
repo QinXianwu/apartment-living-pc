@@ -76,7 +76,6 @@ export default {
           apiPrefix +
           "/apartment-product/product/atspecificationvalue/queryList",
         params,
-        isReturnAll: true,
         isHeadersForm: true,
         isHandleParams: true,
       })

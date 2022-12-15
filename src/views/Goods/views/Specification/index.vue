@@ -46,12 +46,19 @@
       :show.sync="showUpdataSpecifica"
       @close="close"
     />
+    <UpdateSpecificaValDiaog
+      :editInfo="editValInfo"
+      :show.sync="showUpdataSpecificaVal"
+      @close="closeVal"
+    />
     <DrawerPopup v-model="showSpecificaValue">
       <!-- 管理规格值 -->
       <UpdateSpecificaValue
+        ref="UpdateSpecificaValue"
         v-if="showSpecificaValue"
         :editInfo="editInfo"
         @close="close"
+        @showSpecificaVal="updateSpecificaVal"
       />
     </DrawerPopup>
   </div>
@@ -61,10 +68,14 @@
 import { formData, column } from "./config";
 import UpdateSpecificaDiaog from "./components/UpdateSpecificaDiaog.vue";
 import UpdateSpecificaValue from "./components/UpdateSpecificaValue.vue";
-
+import UpdateSpecificaValDiaog from "./components/UpdateSpecificaValDiaog.vue";
 export default {
   name: "Specification",
-  components: { UpdateSpecificaDiaog, UpdateSpecificaValue },
+  components: {
+    UpdateSpecificaDiaog,
+    UpdateSpecificaValue,
+    UpdateSpecificaValDiaog,
+  },
   data() {
     return {
       formData,
@@ -77,9 +88,11 @@ export default {
       query: {},
       total: 0,
       editInfo: {},
+      editValInfo: {},
       selectDataMap: {},
       showUpdataSpecifica: false,
       showSpecificaValue: false,
+      showUpdataSpecificaVal: false,
     };
   },
   computed: {},
@@ -108,6 +121,15 @@ export default {
     handleSpecifica({ id }) {
       this.editInfo = { id };
       this.showSpecificaValue = true;
+    },
+    updateSpecificaVal(data) {
+      this.editValInfo = data || {};
+      this.showUpdataSpecificaVal = true;
+    },
+    closeVal(isRefresh = false) {
+      this.editValInfo = "";
+      this.showUpdataSpecificaVal = false;
+      if (isRefresh) this.$refs.UpdateSpecificaValue.getList(isRefresh);
     },
     close(isRefresh = false) {
       this.editInfo = "";

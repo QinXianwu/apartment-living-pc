@@ -2,7 +2,7 @@
   <div class="UpdateSpecificaValue">
     <div class="content">
       <div class="action">
-        <el-button @click="handleAdd" type="primary">新增规格值</el-button>
+        <el-button @click="handleUpdate()" type="primary">新增规格值</el-button>
       </div>
       <div class="list">
         <template v-if="list && list.length">
@@ -11,8 +11,11 @@
               <span class="name">{{ item.specificationValueName }}</span>
             </div>
             <div class="list-item-r">
-              <i class="icon el-icon-edit mr-10" @click="handleEdit(item)" />
-              <i class="icon el-icon-delete mr-10" />
+              <i class="icon el-icon-edit mr-10" @click="handleUpdate(item)" />
+              <i
+                class="icon el-icon-delete mr-10"
+                @click="handleDelete(item)"
+              />
             </div>
           </div>
         </template>
@@ -26,21 +29,15 @@
         <el-button @click="$emit('close')" type="primary">返回</el-button>
       </footer>
     </div>
-    <UpdateSpecificaValDiaog
-      :editInfo="editValInfo"
-      :show.sync="showUpdataSpecificaVal"
-      @close="close"
-    />
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import UpdateSpecificaValDiaog from "./UpdateSpecificaValDiaog.vue";
 
 export default {
   name: "UpdateSpecificaValue",
-  components: { UpdateSpecificaValDiaog },
+  components: {},
   props: {
     editInfo: {
       type: [Object, String],
@@ -50,40 +47,57 @@ export default {
   data() {
     return {
       list: [],
-      showUpdataSpecificaVal: false,
-      editValInfo: "",
     };
   },
   computed: {
     ...mapGetters(["sidebar"]),
   },
   methods: {
-    handleAdd() {
-      this.editValInfo = "";
-      this.showUpdataSpecificaVal = true;
+    handleUpdate(item) {
+      const data = {
+        specificationId: this.$JSONbig.stringify(this.editInfo.id),
+        ...(item || {}),
+      };
+      this.$emit("showSpecificaVal", data);
     },
-    handleEdit(item) {
-      this.editValInfo = item || "";
-      this.showUpdataSpecificaVal = true;
+    async handleDelete({ id, specificationValueName }) {
+      try {
+        await this.$confirm(
+          `是否确认删除规则值为'${specificationValueName}'的数据项？`,
+          "删除提示",
+          {
+            type: "warning",
+            showClose: false,
+          }
+        );
+        const [, res] =
+          await this.$http.GoodsSpecification.DeleteSpecificaValue(
+            JSON.stringify([id])
+          );
+        const msg = res ? res?.msg || `删除成功` : `删除失败`;
+        this.$confirm(msg, "删除提示", {
+          showClose: false,
+          showCancelButton: false,
+          type: res ? "success" : "error",
+        }).then(() => {
+          if (res) {
+            this.getList();
+            this.$store.dispatch("goods/GetSpecificaListAction", true);
+          }
+        });
+      } catch (error) {
+        console.error(error);
+        error;
+      }
     },
-    close(isRefresh = false) {
-      this.editValInfo = "";
-      this.showUpdataSpecificaVal = false;
-      if (isRefresh) this.getList(isRefresh);
-    },
-    async getList(isClear) {
+    async getList() {
       if (!this.editInfo?.id) return;
-      if (isClear) this.page.pageNum = 1;
       const [, res] = await this.$http.GoodsSpecification.GetSpecificaValueList(
         {
           specificationId: this.$JSONbig.stringify(this.editInfo.id),
         }
       );
-      if (res?.code !== this.AJAX_CODE.SUCCESS) {
-        this.$message.error(res?.msg || "获取规格值列表异常");
-      }
-      this.list = res?.rows || [];
-      this.total = res?.total || 0;
+      this.list = res?.length ? res : [];
     },
   },
   mounted() {
