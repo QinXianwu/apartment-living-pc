@@ -68,8 +68,8 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="上下架" prop="status">
-          <el-radio-group v-model="formData.status">
+        <el-form-item label="上下架" prop="operStatus">
+          <el-radio-group v-model="formData.operStatus">
             <el-radio-button
               v-for="(item, index) in CONST.GOODS_OPER_STATE_OPTIONS()"
               :label="item.value"
@@ -141,7 +141,7 @@ export default {
     return {
       CONST,
       formData: {
-        status: CONST.GOODS_OPER_STATE.LISTING,
+        operStatus: CONST.GOODS_OPER_STATE.LISTING,
         bargainIs: CONST.SPECIALS_TYPE.NOT,
         discountIs: CONST.DISCOUNTED_TYPE.NOT,
         isLimit: CONST.RESTRICTED_TYPE.NOT,

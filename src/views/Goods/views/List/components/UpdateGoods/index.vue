@@ -12,7 +12,7 @@
       <!-- 商品服务 -->
       <GoodsServe ref="GoodsServe" />
       <!-- 价格与库存 -->
-      <GoodsSpecifica ref="GoodsSpecifica" />
+      <PricesStocks ref="PricesStocks" />
     </div>
     <!-- 底部按钮 -->
     <FooterView
@@ -31,7 +31,7 @@ import GoodsStep from "./GoodsStep.vue";
 import GoodsInfo from "./GoodsInfo.vue";
 import GoodsPreSale from "./GoodsPreSale.vue";
 import GoodsServe from "./GoodsServe.vue";
-import GoodsSpecifica from "./GoodsSpecifica.vue";
+import PricesStocks from "./PricesStocks";
 import FooterView from "./Footer.vue";
 
 export default {
@@ -41,7 +41,7 @@ export default {
     GoodsInfo,
     GoodsPreSale,
     GoodsServe,
-    GoodsSpecifica,
+    PricesStocks,
     FooterView,
   },
   props: {

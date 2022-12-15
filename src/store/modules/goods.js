@@ -1,4 +1,5 @@
 import api from "@/api/module";
+import JSONbig from "json-bigint"; // 解决超过 16 位数字精度丢失问题
 
 const state = {
   categoryListAll: [], // 商品分类级联
@@ -28,8 +29,10 @@ const actions = {
     if (state.specificaListAll.length !== 0 && !isRefresh)
       return state.specificaListAll;
     const [, data] = await api.GoodsSpecification.GetListAll();
-    commit("SET_SPECIFICA_LIST_ALL", data?.length ? data : []);
-    return data?.length ? data : [];
+    const list = data?.length ? data : [];
+    list.forEach((item) => (item.id = JSONbig.stringify(item.id)));
+    commit("SET_SPECIFICA_LIST_ALL", list);
+    return list;
   },
 };
 

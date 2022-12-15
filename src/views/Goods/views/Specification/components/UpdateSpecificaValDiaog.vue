@@ -100,10 +100,7 @@ export default {
       this.$message[res ? "success" : "error"](
         res?.message || `${id ? "编辑" : "新增"}规格值${res ? "成功" : "失败"}`
       );
-      if (res) {
-        this.$store.dispatch("goods/GetSpecificaListAction", true);
-        this.handleClose(true);
-      }
+      if (res) this.handleClose(true);
     },
   },
 };

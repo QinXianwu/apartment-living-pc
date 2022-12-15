@@ -205,6 +205,9 @@ export default {
         this.$message.error(res?.msg || "获取商品规格列表异常");
       }
       this.list = res?.rows || [];
+      this.list.forEach((item) => {
+        if (item?.id) item.id = this.$JSONbig.stringify(item.id);
+      });
       this.total = res?.total || 0;
       this.initSelection();
     },

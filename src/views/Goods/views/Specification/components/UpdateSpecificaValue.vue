@@ -55,7 +55,7 @@ export default {
   methods: {
     handleUpdate(item) {
       const data = {
-        specificationId: this.$JSONbig.stringify(this.editInfo.id),
+        specificationId: this.editInfo.id,
         ...(item || {}),
       };
       this.$emit("showSpecificaVal", data);
@@ -80,10 +80,7 @@ export default {
           showCancelButton: false,
           type: res ? "success" : "error",
         }).then(() => {
-          if (res) {
-            this.getList();
-            this.$store.dispatch("goods/GetSpecificaListAction", true);
-          }
+          if (res) this.getList();
         });
       } catch (error) {
         console.error(error);
@@ -94,7 +91,7 @@ export default {
       if (!this.editInfo?.id) return;
       const [, res] = await this.$http.GoodsSpecification.GetSpecificaValueList(
         {
-          specificationId: this.$JSONbig.stringify(this.editInfo.id),
+          specificationId: this.editInfo.id,
         }
       );
       this.list = res?.length ? res : [];
