@@ -7,7 +7,7 @@ const catchAsyncFun = createCatchAsyncFun((error) => {
 });
 
 export default {
-  // 获取商品列表
+  // 获取商品列表 -> 平台-供应商商品列表
   GetList(params) {
     return catchAsyncFun(
       apiFetch({
