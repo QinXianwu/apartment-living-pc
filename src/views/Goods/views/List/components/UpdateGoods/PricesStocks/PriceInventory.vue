@@ -2,6 +2,7 @@
   <div class="PriceInventory">
     <div class="action">
       <div class="batch-input" v-if="showBatchInput">
+        <span class="mr-10 form-tip">{{ batchData.label }}</span>
         <el-input-number
           v-model="batchData.val"
           placeholder="请输入"
@@ -75,6 +76,7 @@ export default {
       batchData: {
         val: "",
         key: "",
+        label: "",
         precision: 2,
         max: 999999999999,
         min: 0,
@@ -91,15 +93,18 @@ export default {
     batchAction(key) {
       this.batchData.key = key;
       this.batchData.val = "";
+      const item = this.column.find((item) => item.prop === key);
       if (key === "discount") {
-        const item = this.column.find((item) => item.prop === key);
         this.batchData.precision = item.precision;
         this.batchData.max = item.max;
       }
+      this.batchData.label = item.btnText;
       this.showBatchInput = true;
     },
     handleBatch() {
       console.log(this.batchData);
+      if (!this.skuList?.length)
+        return this.$message.error("请选择商品规格后再试");
     },
   },
   mounted() {
