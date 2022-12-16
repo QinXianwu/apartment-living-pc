@@ -26,7 +26,7 @@
             </el-select>
           </div>
           <div class="specifica-item-r">
-            <el-button type="danger" @click="deleteSpecifica"
+            <el-button type="danger" @click="deleteSpecifica(_index_)"
               >移除规格</el-button
             >
           </div>
@@ -123,6 +123,14 @@ export default {
       this.list.push({});
     },
     deleteSpecifica(index) {
+      const id = this.list[index].id;
+      const tempList = simpleCloneDeep(this.specificaValMapOld[id]);
+      this.$set(this.specificaValMap, id, tempList);
+      this.$set(
+        this.specificaValCheckboxMap,
+        id,
+        tempList.map((item) => item.id)
+      );
       this.list.splice(index, 1);
     },
     async selectSpecifica(val) {
@@ -139,13 +147,16 @@ export default {
     },
     handleTagClose(id, index) {
       const _index_ = this.specificaValCheckboxMap[id].findIndex(
-        (item) => item.id === this.specificaValMap[id][index].id
+        (item) => item === this.specificaValMap[id][index].id
       );
-      this.specificaValMap[id].splice(index, 1);
       this.specificaValCheckboxMap[id].splice(_index_, 1);
+      this.specificaValMap[id].splice(index, 1);
     },
     handleCheckbox(val, id, data) {
-      if (val) {
+      const index = this.specificaValMap[id].findIndex(
+        (item) => item?.id === data?.id
+      );
+      if (val && index === -1) {
         this.specificaValMap[id].push({
           ...data,
         });
