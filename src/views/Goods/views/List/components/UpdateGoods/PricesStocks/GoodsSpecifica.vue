@@ -80,7 +80,15 @@
         </div>
       </div>
     </div>
-    <el-button type="primary" @click="addSpecifica">新增规格</el-button>
+    <el-button
+      type="primary"
+      @click="addSpecifica"
+      v-if="list && list.length < 2"
+      >新增规格</el-button
+    >
+    <div class="form-tip" style="color: #ff4949" v-else>
+      <span>最多可新增两组规格</span>
+    </div>
   </div>
 </template>
 
@@ -92,7 +100,12 @@ import { simpleCloneDeep } from "@/utils/index";
 export default {
   name: "GoodsSpecifica",
   components: {},
-  props: {},
+  props: {
+    specificaList: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       CONST,
@@ -108,8 +121,21 @@ export default {
     ...mapState({
       specificaListAll: (state) => state.goods.specificaListAll,
     }),
+    skuIds({ list }) {
+      return list.filter((item) => item?.id);
+    },
+    skuList({ skuIds, specificaValMap }) {
+      return skuIds.map((item) => ({
+        id: item.id,
+        productSpecificationValueList: specificaValMap[item.id],
+      }));
+    },
   },
-  watch: {},
+  watch: {
+    skuList(val) {
+      this.$emit("update:specificaList", val);
+    },
+  },
   methods: {
     isDisabled(id) {
       return !!this.list.find((item) => item?.id === id);
@@ -124,7 +150,7 @@ export default {
     },
     deleteSpecifica(index) {
       const id = this.list[index].id;
-      const tempList = simpleCloneDeep(this.specificaValMapOld[id]);
+      const tempList = simpleCloneDeep(this.specificaValMapOld[id] || []);
       this.$set(this.specificaValMap, id, tempList);
       this.$set(
         this.specificaValCheckboxMap,
@@ -199,9 +225,23 @@ export default {
       });
       return data;
     },
-    async handleSubmit() {
-      this.$emit("success", this.formData);
-      return this.formData;
+    async getQuery() {
+      if (this.skuList.length !== this.list.length) {
+        this.$message.error("请选择商品规格后再试");
+        return { verify: false, message: "请选择商品规格后再试" };
+      }
+      try {
+        for (const index in this.skuList) {
+          if (!this.skuList[index]?.length)
+            throw Error({
+              verify: false,
+              message: "请添加相关商品规格值后再试",
+            });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+      return { verify: true, message: "", data: this.skuList };
     },
   },
   mounted() {
@@ -210,8 +250,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.GoodsSpecifica {
+  width: 680px;
+}
 .specifica {
-  padding: 10px;
+  padding: 10px 0;
+
   &-select {
     display: flex;
     align-items: center;

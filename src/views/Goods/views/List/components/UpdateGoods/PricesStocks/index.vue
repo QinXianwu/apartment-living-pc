@@ -4,10 +4,13 @@
     <div class="content">
       <el-form label-width="120px">
         <el-form-item label="商品规格">
-          <GoodsSpecifica ref="GoodsSpecifica" />
+          <GoodsSpecifica
+            ref="GoodsSpecifica"
+            :specificaList.sync="specificaList"
+          />
         </el-form-item>
         <el-form-item label="价格库存">
-          <!--  -->
+          <PriceInventory ref="PriceInventory" :skuList="specificaList" />
         </el-form-item>
       </el-form>
     </div>
@@ -16,12 +19,16 @@
 
 <script>
 import GoodsSpecifica from "./GoodsSpecifica.vue";
+import PriceInventory from "./PriceInventory.vue";
+
 export default {
   name: "PricesStocks",
-  components: { GoodsSpecifica },
+  components: { GoodsSpecifica, PriceInventory },
   props: {},
   data() {
-    return {};
+    return {
+      specificaList: [],
+    };
   },
   computed: {},
   watch: {},
@@ -38,9 +45,6 @@ export default {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 20px;
-  }
-  .content {
-    width: 800px;
   }
   .action {
     padding: 10px 0;
