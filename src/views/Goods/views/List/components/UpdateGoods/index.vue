@@ -6,13 +6,13 @@
     <div class="content">
       <GoodsStep :activeIndex="activeIndex" :setpList="setpList" />
       <!-- 商品基础信息 -->
-      <GoodsInfo ref="GoodsInfo" />
+      <GoodsInfo ref="GoodsInfo" :discountIs.sync="discountIs" />
       <!-- 商品预售 -->
       <GoodsPreSale ref="GoodsPreSale" />
       <!-- 商品服务 -->
       <GoodsServe ref="GoodsServe" />
       <!-- 价格与库存 -->
-      <PricesStocks ref="PricesStocks" />
+      <PricesStocks ref="PricesStocks" :discountIs="discountIs" />
     </div>
     <!-- 底部按钮 -->
     <FooterView
@@ -56,6 +56,7 @@ export default {
       isLoading: false,
       isLoadingGoods: false,
       setpList: [{ label: "编辑商品信息" }, { label: "商品关联信息" }],
+      discountIs: "",
     };
   },
   computed: {},

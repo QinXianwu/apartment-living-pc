@@ -137,6 +137,12 @@ import CONST from "@/constants/index";
 export default {
   name: "GoodsInfo",
   components: {},
+  props: {
+    discountIs: {
+      type: [Number, String],
+      default: CONST.DISCOUNTED_TYPE.NOT,
+    },
+  },
   data() {
     return {
       CONST,
@@ -170,6 +176,9 @@ export default {
         this.$set(this.formData, "limitNum", 0);
       else if (val === this.CONST.RESTRICTED_TYPE.YES)
         this.$set(this.formData, "limitNum", 1);
+    },
+    "formData.discountIs"(val) {
+      this.$emit("update:discountIs", val);
     },
   },
   computed: {

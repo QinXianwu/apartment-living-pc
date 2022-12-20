@@ -2,15 +2,14 @@ export const dynamic_column = [
   {
     label: "规格",
     prop: "specificationValueName1",
+    showOverflowTooltip: true,
+    minWidth: 120,
   },
   {
     label: "规格名称",
     prop: "specificationValueName2",
-  },
-  {
-    label: "规格图片",
-    prop: "images",
-    type: "custom",
+    showOverflowTooltip: true,
+    minWidth: 120,
   },
 ];
 
@@ -26,7 +25,7 @@ export const column = [
     label: "折扣",
     btnText: "折扣",
     prop: "discount",
-    precision: 0,
+    precision: 1,
     max: 10,
   },
   {

@@ -10,7 +10,12 @@
           />
         </el-form-item>
         <el-form-item label="价格库存">
-          <PriceInventory ref="PriceInventory" :skuList="specificaList" />
+          <PriceInventory
+            ref="PriceInventory"
+            :isDiscount="discountIs === CONST.DISCOUNTED_TYPE.YES"
+            :skuList="specificaList"
+            :skuData.sync="skuData"
+          />
         </el-form-item>
       </el-form>
     </div>
@@ -18,21 +23,33 @@
 </template>
 
 <script>
+import CONST from "@/constants/index";
 import GoodsSpecifica from "./GoodsSpecifica.vue";
 import PriceInventory from "./PriceInventory.vue";
 
 export default {
   name: "PricesStocks",
   components: { GoodsSpecifica, PriceInventory },
-  props: {},
+  props: {
+    discountIs: {
+      type: [Number, String],
+      default: CONST.DISCOUNTED_TYPE.NOT,
+    },
+  },
   data() {
     return {
+      CONST,
       specificaList: [],
+      skuData: [],
     };
   },
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    getQuery() {
+      // this.$refs.GoodsSpecifica.getQuery();
+    },
+  },
   mounted() {
     //
   },

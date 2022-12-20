@@ -127,7 +127,7 @@ export default {
     skuList({ skuIds, specificaValMap }) {
       return skuIds.map((item) => ({
         id: item.id,
-        productSpecificationValueList: specificaValMap[item.id],
+        productSpecificationValueList: specificaValMap[item.id] || [],
       }));
     },
   },
@@ -225,7 +225,7 @@ export default {
       });
       return data;
     },
-    async getQuery() {
+    getQuery() {
       if (this.skuList.length !== this.list.length) {
         this.$message.error("请选择商品规格后再试");
         return { verify: false, message: "请选择商品规格后再试" };
