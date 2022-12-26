@@ -51,22 +51,66 @@ export const column = [
     showOverflowTooltip: true,
   },
   {
-    label: "图标",
+    label: "分类",
     prop: "icon",
   },
   {
-    label: "排序",
+    label: "商品标签",
     prop: "orderNum",
   },
   {
-    label: "权限标识",
+    label: "供应商",
     prop: "perms",
     showOverflowTooltip: true,
   },
   {
-    label: "组件路径",
+    label: "商品名称",
     prop: "component",
-    showOverflowTooltip: true,
+  },
+  {
+    label: "供应价",
+    prop: "icon",
+    type: "money",
+  },
+  {
+    label: "活动标签",
+    prop: "icon",
+  },
+  {
+    label: "售价",
+    prop: "icon",
+    type: "money",
+  },
+  {
+    label: "当前剩余库存",
+    // label: "当前剩余库存(服务点)",
+    prop: "icon",
+  },
+  {
+    label: "销量",
+    // label: "销量(服务点)",
+    prop: "icon",
+  },
+  {
+    label: "采购总量",
+    // label: "采购总量(服务点)",
+    prop: "icon",
+  },
+  {
+    label: "折扣",
+    prop: "icon",
+  },
+  {
+    label: "折扣价",
+    prop: "icon",
+  },
+  {
+    label: "预售时间",
+    prop: "icon",
+  },
+  {
+    label: "更新时间",
+    prop: "icon",
   },
   {
     label: "状态",

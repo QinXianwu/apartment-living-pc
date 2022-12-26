@@ -23,7 +23,7 @@ export default {
       name: "GoodsList",
       meta: {
         title: "商品列表",
-        // PermissionId: PERMISSION_ID.Goods_List,
+        PermissionId: PERMISSION_ID.Goods_List,
       },
     },
     {
@@ -33,7 +33,7 @@ export default {
       hidden: true,
       meta: {
         title: "更新商品",
-        // PermissionId: PERMISSION_ID.Goods_List,
+        PermissionId: PERMISSION_ID.Goods_Category,
       },
     },
     {
@@ -42,7 +42,7 @@ export default {
       name: "GoodsCategory",
       meta: {
         title: "商品分类",
-        // PermissionId: PERMISSION_ID.Goods_List,
+        PermissionId: PERMISSION_ID.Goods_Specification,
       },
     },
     {
@@ -51,7 +51,7 @@ export default {
       name: "Specification",
       meta: {
         title: "商品规格",
-        // PermissionId: PERMISSION_ID.Goods_List,
+        PermissionId: PERMISSION_ID.Goods_Edit,
       },
     },
     {
@@ -60,7 +60,7 @@ export default {
       name: "Audit",
       meta: {
         title: "商品审核",
-        // PermissionId: PERMISSION_ID.Goods_List,
+        PermissionId: PERMISSION_ID.Goods_Audit,
       },
     },
   ],
