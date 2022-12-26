@@ -82,20 +82,28 @@ export default {
   },
   computed: {},
   methods: {
-    async handleSubmit() {
-      // 表单校验
-      try {
-        const valid = await this.$refs.form.validate();
-        if (!valid) {
-          return false;
+    async getQuery() {
+      // eslint-disable-next-line
+      return new Promise(async (resolve) => {
+        // 表单校验
+        try {
+          const valid = await this.$refs.form.validate();
+          if (!valid) {
+            return false;
+          }
+        } catch (error) {
+          if (
+            this.formData?.isPre === this.CONST.PRE_SALE_TYPE.YES &&
+            !this.formData?.preFhDate
+          )
+            return this.$message.error("请选择商品预售日期");
         }
-      } catch (error) {
-        return false;
-      }
-      this.$emit("success", this.formData);
-      this.$emit("update:isPre", this.formData.isPre);
-      this.$emit("update:preFhDate", this.formData.preFhDate);
-      return this.formData;
+        // this.$emit("update:isPre", this.formData.isPre);
+        // this.$emit("update:preFhDate", this.formData.preFhDate);
+        resolve({
+          ...this.formData,
+        });
+      });
     },
   },
   mounted() {

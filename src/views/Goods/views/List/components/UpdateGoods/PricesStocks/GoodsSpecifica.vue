@@ -225,23 +225,25 @@ export default {
       });
       return data;
     },
-    getQuery() {
-      if (this.skuList.length !== this.list.length) {
-        this.$message.error("请选择商品规格后再试");
-        return { verify: false, message: "请选择商品规格后再试" };
-      }
-      try {
-        for (const index in this.skuList) {
-          if (!this.skuList[index]?.length)
-            throw Error({
-              verify: false,
-              message: "请添加相关商品规格值后再试",
-            });
+    async getQuery() {
+      // eslint-disable-next-line
+      return new Promise(async (resolve) => {
+        if (!this.list.length) return this.$message.error("请添加商品规格");
+        if (this.skuList.length !== this.list.length)
+          return this.$message.error("请选择商品规格");
+        try {
+          for (const index in this.skuList) {
+            if (!this.skuList[index]?.productSpecificationValueList?.length)
+              throw Error("请添加相关商品规格值");
+          }
+        } catch (error) {
+          console.error(error);
+          return this.$message.error(error);
         }
-      } catch (error) {
-        console.error(error);
-      }
-      return { verify: true, message: "", data: this.skuList };
+        resolve({
+          productSpecificationList: this.skuList,
+        });
+      });
     },
   },
   mounted() {

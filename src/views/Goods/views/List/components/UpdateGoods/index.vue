@@ -71,14 +71,16 @@ export default {
       // this.formData = { ...this.formData, ...(res || {}) };
     },
     async next() {
-      if (this.activeIndex < this.setpList.length - 1) this.activeIndex++;
+      // if (this.activeIndex < this.setpList.length - 1) this.activeIndex++;
       if (this.activeIndex === 0) {
         //编辑基本信息
-        // const data1 = await this.$refs.CommodityType.getQuery();
-        // const data2 = await this.$refs.BaseInfo.getQuery();
-        // const data3 = await this.$refs.DetailsInfo.getQuery();
+        const data1 = await this.$refs.GoodsInfo.getQuery();
+        const data2 = await this.$refs.GoodsPreSale.getQuery();
+        const data3 = await this.$refs.GoodsServe.getQuery();
+        const data4 = await this.$refs.PricesStocks.getQuery();
+        console.log(data1, data2, data3, data4);
         // this.BaseInfo = { ...data1, ...data2, ...data3 };
-        // this.activeIndex++;
+        this.activeIndex++;
       } else if (this.activeIndex === 1) {
         //编辑详情
         // const SpecificaData = await this.$refs.Specifica.getQuery();

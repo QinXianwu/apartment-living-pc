@@ -46,8 +46,19 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    getQuery() {
-      // this.$refs.GoodsSpecifica.getQuery();
+    async getQuery() {
+      // eslint-disable-next-line
+      return new Promise(async (resolve) => {
+        const data1 = await this.$refs.GoodsSpecifica.getQuery();
+        if (!data1?.productSpecificationList) {
+          return this.$message.error("请选择商品规格后再试");
+        }
+        const data2 = await this.$refs.PriceInventory.getQuery();
+        resolve({
+          ...data1,
+          ...data2,
+        });
+      });
     },
   },
   mounted() {

@@ -190,6 +190,7 @@ export default {
           type: "warning",
         });
       }
+      if (!fileList?.length) return;
       //   大小校验
       if (fileList[0].size > calLimmit) {
         this.isLoading = false;

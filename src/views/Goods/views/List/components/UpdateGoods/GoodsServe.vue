@@ -66,7 +66,6 @@ export default {
       ],
       formData: {},
       list: [],
-      rules: {},
     };
   },
   watch: {},
@@ -81,18 +80,25 @@ export default {
     handleDelete(index) {
       this.list.splice(index, 1);
     },
-    async handleSubmit() {
-      // 表单校验
-      try {
-        const valid = await this.$refs.form.validate();
-        if (!valid) {
-          return false;
+    async getQuery() {
+      // eslint-disable-next-line
+      return new Promise(async (resolve) => {
+        try {
+          for (const index in this.list) {
+            if (!this.list[index]?.serviceName) {
+              throw new Error("请输入服务名称");
+            } else if (!this.list[index]?.serviceDescribe) {
+              throw new Error("请输入服务介绍");
+            }
+          }
+        } catch (error) {
+          return this.$message.error(error);
         }
-      } catch (error) {
-        return false;
-      }
-      this.$emit("success", this.formData);
-      return this.formData;
+        // 表单校验
+        resolve({
+          productSerList: this.list,
+        });
+      });
     },
   },
   mounted() {

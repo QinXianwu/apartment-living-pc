@@ -163,7 +163,7 @@ export default {
         productName: [
           {
             required: true,
-            message: "请选择商品名称",
+            message: "请输入商品名称",
             trigger: "blur",
           },
         ],
@@ -190,18 +190,25 @@ export default {
     }),
   },
   methods: {
-    async handleSubmit() {
-      // 表单校验
-      try {
-        const valid = await this.$refs.form.validate();
-        if (!valid) {
-          return false;
+    async getQuery() {
+      // eslint-disable-next-line
+      return new Promise(async (resolve) => {
+        // 表单校验
+        try {
+          const valid = await this.$refs.form.validate();
+          if (!valid) {
+            return null;
+          }
+        } catch (error) {
+          if (!this.formData?.categoryId)
+            return this.$message.error("请选择商品分类");
+          if (!this.formData?.productName)
+            return this.$message.error("请输入商品名称");
         }
-      } catch (error) {
-        return false;
-      }
-      this.$emit("success", this.formData);
-      return this.formData;
+        resolve({
+          ...this.formData,
+        });
+      });
     },
   },
   mounted() {

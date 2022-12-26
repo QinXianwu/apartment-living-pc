@@ -164,6 +164,9 @@ export default {
               specificationValueId2: "",
               specificationValueName1: ele.specificationValueName,
               specificationValueName2: "",
+              discount: 0,
+              procurNum: 0,
+              stock: 0,
             }))
           : [];
       const list = [];
@@ -180,6 +183,9 @@ export default {
                 specificationValueId2: i.id,
                 specificationValueName1: ele.specificationValueName,
                 specificationValueName2: i.specificationValueName,
+                discount: 0,
+                procurNum: 0,
+                stock: 0,
               });
             });
           });
@@ -268,6 +274,23 @@ export default {
       }));
       this.showBatchInput = false;
       this.batchData.val = "";
+    },
+    async getQuery() {
+      // eslint-disable-next-line
+      return new Promise(async (resolve) => {
+        try {
+          for (const index in this.list) {
+            if (!this.list[index]?.images || !this.list[index]?.images?.length)
+              throw Error("请上传相关商品规格图片");
+          }
+        } catch (error) {
+          console.error(error);
+          return this.$message.error(error);
+        }
+        resolve({
+          productStockPriceList: this.list,
+        });
+      });
     },
   },
   mounted() {
