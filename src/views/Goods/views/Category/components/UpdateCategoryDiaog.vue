@@ -53,7 +53,7 @@
       <el-form-item label="上传图标" prop="icon">
         <Uploader
           :list.sync="iconList"
-          tip="建议尺寸：1000 x 600像素，小于1M，支持jpg、png、jpeg格式"
+          tip="建议尺寸：800 x 800像素，小于1M，支持jpg、png、jpeg格式"
         />
       </el-form-item>
       <el-form-item label="分类排序" prop="sort">

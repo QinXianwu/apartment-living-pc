@@ -26,25 +26,16 @@
         :current-page="page.pageNum"
         :total="total"
       />
-      <DrawerPopup v-model="showUpdataGoods">
-        <!-- 更新商品 -->
-        <UpdateGoods
-          v-if="showUpdataGoods"
-          :editInfo="editInfo"
-          @close="close"
-        />
-      </DrawerPopup>
     </div>
   </div>
 </template>
 
 <script>
 import { formData, column } from "./config";
-import UpdateGoods from "./components/UpdateGoods/index";
 
 export default {
   name: "GoodsList",
-  components: { UpdateGoods },
+  components: {},
   data() {
     return {
       formData,
@@ -56,9 +47,7 @@ export default {
       },
       query: {},
       total: 0,
-      editInfo: {},
       selectDataMap: {},
-      showUpdataGoods: false,
     };
   },
   computed: {},
@@ -77,15 +66,16 @@ export default {
       this.getList(true);
     },
     handleAdd() {
-      this.editInfo = "";
-      this.showUpdataGoods = true;
+      this.$router.push({
+        name: "GoodsEdit",
+        query: { productNo: "", serviceId: "" },
+      });
     },
     handleEdit() {
-      //
-    },
-    close() {
-      this.editInfo = "";
-      this.showUpdataGoods = false;
+      this.$router.push({
+        name: "GoodsEdit",
+        query: { productNo: "", serviceId: "" },
+      });
     },
     async handleDelete() {
       const ids = Object.keys(this.selectDataMap).join(",");

@@ -87,3 +87,20 @@ export const column = [
     type: "money",
   },
 ];
+
+// 服务商品列表-表格头
+export const serveColumn = [
+  {
+    label: "ID",
+    prop: "sellPrice",
+  },
+  {
+    label: "商品分类",
+    prop: "sellPrice",
+  },
+  {
+    label: "商品信息",
+    prop: "sellPrice",
+    type: "custom",
+  },
+];

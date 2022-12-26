@@ -1,18 +1,30 @@
 <template>
-  <div class="UpdateGoods">
+  <div class="Edit view-container">
     <div class="title">
       {{ editInfo && editInfo.id ? "编辑商品" : "新增商品" }}
     </div>
     <div class="content">
       <GoodsStep :activeIndex="activeIndex" :setpList="setpList" />
-      <!-- 商品基础信息 -->
-      <GoodsInfo ref="GoodsInfo" :discountIs.sync="discountIs" />
-      <!-- 商品预售 -->
-      <GoodsPreSale ref="GoodsPreSale" />
-      <!-- 商品服务 -->
-      <GoodsServe ref="GoodsServe" />
-      <!-- 价格与库存 -->
-      <PricesStocks ref="PricesStocks" :discountIs="discountIs" />
+      <div class="next-0" v-show="activeIndex === 0">
+        <!-- 商品基础信息 -->
+        <GoodsInfo ref="GoodsInfo" :discountIs.sync="discountIs" />
+        <!-- 商品预售 -->
+        <GoodsPreSale ref="GoodsPreSale" />
+        <!-- 商品服务 -->
+        <GoodsServe ref="GoodsServe" />
+        <!-- 价格与库存 -->
+        <PricesStocks ref="PricesStocks" :discountIs="discountIs" />
+        <!-- 商品详情 -->
+        <GoodsDetail ref="GoodsDetail" />
+      </div>
+      <div class="next-1" v-show="activeIndex === 1">
+        <!-- 相似推荐 -->
+        <SimilarSuggest ref="SimilarSuggest" />
+        <!-- 推荐购买 -->
+        <SuggestPurchase ref="SuggestPurchase" />
+        <!-- 经常购买 -->
+        <FrequentlyPurchased ref="FrequentlyPurchased" />
+      </div>
     </div>
     <!-- 底部按钮 -->
     <FooterView
@@ -27,21 +39,30 @@
 </template>
 
 <script>
-import GoodsStep from "./GoodsStep.vue";
-import GoodsInfo from "./GoodsInfo.vue";
-import GoodsPreSale from "./GoodsPreSale.vue";
-import GoodsServe from "./GoodsServe.vue";
-import PricesStocks from "./PricesStocks";
-import FooterView from "./Footer.vue";
+import { mapGetters } from "vuex";
+import GoodsStep from "./components/GoodsStep.vue";
+import GoodsInfo from "./components/GoodsInfo.vue";
+import GoodsPreSale from "./components/GoodsPreSale.vue";
+import GoodsServe from "./components/GoodsServe.vue";
+import PricesStocks from "./components/PricesStocks";
+import GoodsDetail from "./components/GoodsDetail";
+import SimilarSuggest from "./components/SimilarSuggest";
+import SuggestPurchase from "./components/SuggestPurchase";
+import FrequentlyPurchased from "./components/FrequentlyPurchased";
+import FooterView from "./components/Footer.vue";
 
 export default {
-  name: "UpdateGoods",
+  name: "Edit",
   components: {
     GoodsStep,
     GoodsInfo,
     GoodsPreSale,
     GoodsServe,
     PricesStocks,
+    GoodsDetail,
+    SimilarSuggest,
+    SuggestPurchase,
+    FrequentlyPurchased,
     FooterView,
   },
   props: {
@@ -55,11 +76,19 @@ export default {
       activeIndex: 0, // 当前进度
       isLoading: false,
       isLoadingGoods: false,
-      setpList: [{ label: "编辑商品信息" }, { label: "商品关联信息" }],
       discountIs: "",
+      BaseInfo: {},
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      isService: "user/isService",
+    }),
+    setpList({ isService }) {
+      const setpArr = [{ label: "编辑商品信息" }, { label: "商品关联信息" }];
+      return isService ? setpArr : [setpArr[0]];
+    },
+  },
   methods: {
     async getGoodsInfo() {
       if (!this.editInfo?.id) return;
@@ -78,8 +107,10 @@ export default {
         const data2 = await this.$refs.GoodsPreSale.getQuery();
         const data3 = await this.$refs.GoodsServe.getQuery();
         const data4 = await this.$refs.PricesStocks.getQuery();
-        console.log(data1, data2, data3, data4);
-        // this.BaseInfo = { ...data1, ...data2, ...data3 };
+        const data5 = await this.$refs.GoodsDetail.getQuery();
+        data1.productTag = data1.productTag.join(",");
+        this.BaseInfo = { ...data1, ...data2, ...data3, ...data4, ...data5 };
+        console.log(this.BaseInfo);
         this.activeIndex++;
       } else if (this.activeIndex === 1) {
         //编辑详情
@@ -116,15 +147,33 @@ export default {
       // );
       // if (res) this.$emit("close", true);
     },
+    // 初始化操作
+    async initLoad() {
+      this.getGoodsInfo();
+    },
   },
+  // this.getGoodsInfo();
+
+  // 依然需要mounted是为了应对直接按F5刷新的时候不会触发activated，
   mounted() {
-    this.getGoodsInfo();
+    this.hasMounted = true;
+    this.initLoad();
+  },
+  // 激活的时候重新获取列表
+  // this.hasMounted 是防止页面正常跳转（非F5刷新）第一次进入的时候触发两次
+  activated() {
+    if (this.hasMounted) {
+      this.hasMounted = false;
+    } else {
+      this.initLoad();
+    }
   },
 };
 </script>
 <style lang="scss" scoped>
-.UpdateGoods {
+.Edit {
   margin-bottom: 60px;
+  background: #fff;
   .title {
     font-size: 14px;
     font-weight: bold;

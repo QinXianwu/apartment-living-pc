@@ -1,6 +1,7 @@
 import PERMISSION_ID from "@/permission/PERMISSION_ID";
 import MainLayout from "@/layouts/MainLayout/index";
-import GoodsList from "@/views/Goods/views/List/index.vue";
+import List from "@/views/Goods/views/List/index.vue";
+import Edit from "@/views/Goods/views/Edit/index.vue";
 import GoodsCategory from "@/views/Goods/views/Category/index.vue";
 import Specification from "@/views/Goods/views/Specification/index.vue";
 
@@ -17,10 +18,19 @@ export default {
   children: [
     {
       path: "List",
-      component: GoodsList,
+      component: List,
       name: "GoodsList",
       meta: {
         title: "商品列表",
+        // PermissionId: PERMISSION_ID.Goods_List,
+      },
+    },
+    {
+      path: "Edit",
+      component: Edit,
+      name: "GoodsEdit",
+      meta: {
+        title: "更新商品",
         // PermissionId: PERMISSION_ID.Goods_List,
       },
     },

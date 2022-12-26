@@ -72,7 +72,8 @@
 </template>
 
 <script>
-import { dynamic_column, column } from "../../../config/pricesStocks";
+import { mapGetters } from "vuex";
+import { dynamic_column, column } from "../../config/index";
 import Uploader from "@/components/Uploader";
 export default {
   name: "PriceInventory",
@@ -97,7 +98,6 @@ export default {
       else {
         this.list = this.skuRowList.map((item) => ({
           ...item,
-          images: [],
         }));
       }
     },
@@ -127,7 +127,12 @@ export default {
     };
   },
   computed: {
-    actionHead({ isDiscount, column }) {
+    ...mapGetters({
+      isVendor: "user/isVendor",
+    }),
+    actionHead({ isVendor, isDiscount, column }) {
+      if (isVendor)
+        return column.filter((item) => item.prop === "originalPrice");
       if (isDiscount) return column;
       const props = "discount,discountPrice";
       return column.filter((item) => !props.includes(item.prop));
@@ -155,21 +160,31 @@ export default {
       );
     },
     // 规格列表下的规格值组合
-    skuRowList({ skuList }) {
+    skuRowList({ skuList, list }) {
       if (!skuList?.length) return [];
       else if (skuList.length <= 1)
         return skuList[0].productSpecificationValueList?.length
-          ? skuList[0].productSpecificationValueList.map((ele) => ({
-              specificationValueId1: ele.id,
-              specificationValueId2: "",
-              specificationValueName1: ele.specificationValueName,
-              specificationValueName2: "",
-              discount: 0,
-              procurNum: 0,
-              stock: 0,
-            }))
+          ? skuList[0].productSpecificationValueList.map((ele) => {
+              const oldItem = list.find(
+                (v) =>
+                  v?.specificationValueId1 === ele.id &&
+                  v?.specificationValueId2 === ""
+              );
+              return (
+                oldItem || {
+                  specificationValueId1: ele.id,
+                  specificationValueId2: "",
+                  specificationValueName1: ele.specificationValueName,
+                  specificationValueName2: "",
+                  discount: 0,
+                  procurNum: 0,
+                  stock: 0,
+                  images: [],
+                }
+              );
+            })
           : [];
-      const list = [];
+      const arr = [];
       skuList.forEach((item, index) => {
         const tempIndex = index + 1;
         if (
@@ -177,21 +192,29 @@ export default {
           skuList.length > tempIndex
         ) {
           item.productSpecificationValueList.forEach((ele) => {
+            const oldItem = list.find(
+              (v) =>
+                v?.specificationValueId1 === ele.id &&
+                v?.specificationValueId2 === ""
+            );
             skuList[tempIndex].productSpecificationValueList.forEach((i) => {
-              list.push({
-                specificationValueId1: ele.id,
-                specificationValueId2: i.id,
-                specificationValueName1: ele.specificationValueName,
-                specificationValueName2: i.specificationValueName,
-                discount: 0,
-                procurNum: 0,
-                stock: 0,
-              });
+              arr.push(
+                oldItem || {
+                  specificationValueId1: ele.id,
+                  specificationValueId2: i.id,
+                  specificationValueName1: ele.specificationValueName,
+                  specificationValueName2: i.specificationValueName,
+                  discount: 0,
+                  procurNum: 0,
+                  stock: 0,
+                  images: [],
+                }
+              );
             });
           });
         }
       });
-      return list;
+      return arr;
     },
   },
   methods: {
@@ -287,8 +310,12 @@ export default {
           console.error(error);
           return this.$message.error(error);
         }
+        const data = this.list.map((item) => ({
+          ...item,
+          images: item.images[0].url,
+        }));
         resolve({
-          productStockPriceList: this.list,
+          productStockPriceList: data,
         });
       });
     },
