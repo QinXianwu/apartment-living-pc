@@ -1,25 +1,35 @@
 <template>
-  <div class="GoodsList view-container">
+  <div class="GoodsAudit view-container">
     <div class="content">
-      <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
+      <SearchForm
+        isReturnFormData
+        :formData="searchForm"
+        @on-search="onSearch"
+      />
       <div class="action">
-        <el-button type="primary" @click="handleAdd">新增商品</el-button>
-        <el-button type="primary" plain>批量上架</el-button>
-        <el-button type="primary" plain>批量下架</el-button>
+        <el-button type="primary" @click="handleAdd">审核通过</el-button>
+        <el-button type="danger" @click="handleAdd">审核驳回</el-button>
       </div>
-      <TablePanel :tableData="list" :tableHead="column">
-        <template #goodsTab="{ scope }">
-          {{ $CONST.PROTOCOL_TYPE_TEXT[scope.type] }}
+      <TablePanel
+        :tableData="list"
+        :tableHead="column"
+        :checkbox="true"
+        :isShowTopCheck="false"
+        @selection-change="handleSelectionChange"
+      >
+        <template #status="{ scope }">
+          <el-tag
+            :type="
+              scope.status === $CONST.AUDIT_TYPE.FAIL_CHECK ? 'danger' : ''
+            "
+            v-if="scope.status !== ''"
+            >{{ $CONST.AUDIT_TYPE_TEXT[scope.status] }}</el-tag
+          >
         </template>
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
             <el-button type="text" @click="handleEdit(scope)"> 编辑 </el-button>
-            <el-button type="text" @click="handleEdit(scope)"> 详情 </el-button>
-            <el-button type="text" @click="handleEdit(scope)"> 上架 </el-button>
-            <el-button type="text" @click="handleEdit(scope)"> 下架 </el-button>
-            <el-button type="text" @click="handleEdit(scope)"> 采购 </el-button>
-            <el-button type="text" @click="handleEdit(scope)"> 删除 </el-button>
           </div>
         </template>
       </TablePanel>
@@ -36,10 +46,11 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { formData, column } from "./config";
 
 export default {
-  name: "GoodsList",
+  name: "GoodsAudit",
   components: {},
   data() {
     return {
@@ -55,7 +66,19 @@ export default {
       selectDataMap: {},
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      supplierOptions: "accountRoleManage/supplierOptions",
+      categoryAllOptions: "goods/CategoryAllOptions",
+    }),
+    searchForm({ formData, categoryAllOptions, supplierOptions }) {
+      const categoryItem = formData.find((item) => item.prop === "categoryId");
+      if (categoryItem) categoryItem.options = categoryAllOptions;
+      const supplierItem = formData.find((item) => item.prop === "supplierId");
+      if (supplierItem) supplierItem.options = supplierOptions;
+      return formData;
+    },
+  },
   methods: {
     handleSizeChange(val) {
       this.page.pageSize = val;
@@ -71,16 +94,7 @@ export default {
       this.getList(true);
     },
     handleAdd() {
-      this.$router.push({
-        name: "GoodsEdit",
-        query: { productNo: "", serviceId: "" },
-      });
-    },
-    handleEdit() {
-      this.$router.push({
-        name: "GoodsEdit",
-        query: { productNo: "", serviceId: "" },
-      });
+      //
     },
     async handleDelete() {
       const ids = Object.keys(this.selectDataMap).join(",");
@@ -112,13 +126,33 @@ export default {
         error;
       }
     },
+    handleSelectionChange(val) {
+      this.list.forEach((item) => {
+        // 存在于当前页以及map 但不存在 val -> 去掉
+        const index = val.findIndex((vItem) => vItem?.id === item.id);
+        if (this.selectDataMap[item.id] && index < 0)
+          delete this.selectDataMap[item.id];
+      });
+      val.forEach((item) => (this.selectDataMap[item.id] = { ...item }));
+      this.isDisabledDelete = !Object.keys(this.selectDataMap).length;
+    },
+    initSelection() {
+      if (!this.list?.length) return;
+      this.list.forEach((item) => {
+        if (this.selectDataMap[item?.id]) {
+          this.$nextTick(() => {
+            this.$refs.TablePanel.setSelection(item, true);
+          });
+        }
+      });
+    },
     async getList(isClear) {
       if (isClear) this.page.pageNum = 1;
       const query = {
         ...this.page,
         ...this.query,
       };
-      const [, res] = await this.$http.Goods.GetList(query);
+      const [, res] = await this.$http.GoodsAudit.GetList(query);
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
         this.$message.error(res?.msg || "获取商品列表异常");
       }
@@ -128,6 +162,8 @@ export default {
   },
   mounted() {
     this.getList();
+    this.$store.dispatch("goods/GetCategoryAllAction");
+    this.$store.dispatch("accountRoleManage/GetSupplierListAction");
   },
 };
 </script>

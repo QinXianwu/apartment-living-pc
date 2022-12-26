@@ -62,7 +62,10 @@ export default {
       path: "ProtocolManage",
       component: ProtocolManage,
       name: "ProtocolManage",
-      meta: { title: "协议管理", notPassPermissionVerify: true },
+      meta: {
+        title: "协议管理",
+        PermissionId: PERMISSION_ID.SetUp_ProtocolManage,
+      },
     },
   ],
 };
