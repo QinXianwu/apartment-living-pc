@@ -32,7 +32,7 @@ export default {
       name: "GoodsEdit",
       hidden: true,
       meta: {
-        title: "更新商品",
+        title: "商品发布",
         PermissionId: PERMISSION_ID.Goods_Category,
       },
     },
