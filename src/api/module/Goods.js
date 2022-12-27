@@ -7,13 +7,25 @@ const catchAsyncFun = createCatchAsyncFun((error) => {
 });
 
 export default {
-  // 获取商品列表 -> 平台-供应商商品列表
+  // 获取商品列表 -> 平台/供应商商品列表
   GetList(params) {
     return catchAsyncFun(
       apiFetch({
         url:
           apiPrefix +
           "/apartment-product/product/atproduct/queryPageForSupplier",
+        params,
+        isReturnAll: true,
+      })
+    );
+  },
+  // 获取商品列表 -> 服务点商品列表
+  GetServeGoodsList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url:
+          apiPrefix +
+          "/apartment-product/product/atproduct/queryPageForServicePoint",
         params,
         isReturnAll: true,
       })
