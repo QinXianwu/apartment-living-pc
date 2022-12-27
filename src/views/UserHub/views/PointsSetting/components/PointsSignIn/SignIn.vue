@@ -78,7 +78,7 @@
               item.signReward.couponStatus === CONST.REWARD_COUPONS_STATE.GIVE
             "
           >
-            <el-button type="primary" @click="handleAddCoupon"
+            <el-button type="primary" @click="handleAddCoupon(index)"
               >新增关联优惠劵</el-button
             >
             <div class="coupon">
@@ -116,16 +116,22 @@
         </el-form-item>
       </el-form>
     </div>
+    <AddCouponDiaog
+      :editInfo="editInfo"
+      :show.sync="showAddCoupon"
+      @close="close"
+    />
   </div>
 </template>
 
 <script>
 import CONST from "@/constants/index";
 import { convertToChinaNum } from "@/utils/index";
+import AddCouponDiaog from "./AddCouponDiaog.vue";
 
 export default {
   name: "SignIn",
-  components: {},
+  components: { AddCouponDiaog },
   props: {
     limitType: {
       type: [String, Number],
@@ -143,13 +149,19 @@ export default {
   data() {
     return {
       CONST,
+      editInfo: {},
       list: [],
       activityDate: [],
       dayCount: 7,
       limitTimeStatus: "",
+      showAddCoupon: false,
     };
   },
-  watch: {},
+  watch: {
+    signRewardList() {
+      this.init();
+    },
+  },
   computed: {},
   methods: {
     convertToChinaNum,
@@ -171,13 +183,19 @@ export default {
         this.$emit("update:activityTime", []);
       }
     },
-    handleAddCoupon() {
-      //
+    handleAddCoupon(index) {
+      this.editInfo = { index };
+      this.showAddCoupon = true;
     },
     handleDeleteCoupon() {
       //
     },
+    close(isRefresh = false) {
+      this.showAddCoupon = false;
+      if (isRefresh) this.$emit("refresh", true);
+    },
     init() {
+      this.list = [];
       this.activityDate = this.activityTime || [];
       this.limitTimeStatus = this.limitType;
       if (!this.signRewardList?.length) {

@@ -4,7 +4,7 @@
     <!-- 签到获得积分设置 -->
     <SignIn
       ref="SignIn"
-      :limitType.sync="sign.limitType"
+      :limitType.sync="sign.limitTimeStatus"
       :activityTime.sync="activityTime"
       :signRewardList="signRewardList"
     />
@@ -34,7 +34,7 @@ export default {
       nextSignDay: "",
       sign: {
         rule: "",
-        limitType: CONST.ACTIVITY_LIMIT_DATE_TYPE.LONG_ACTIVITY,
+        limitTimeStatus: CONST.ACTIVITY_LIMIT_DATE_TYPE.LONG_ACTIVITY,
       },
       activityTime: [],
       signRewardList: [],
@@ -44,8 +44,9 @@ export default {
   methods: {
     async getDetail() {
       const [, res] = await this.$http.SignIn.GetSignInDetail();
+      this.sign = res?.sign || {};
       this.sign.rule = res?.sign?.rule || "";
-      this.sign.limitType = res?.sign?.limitTimeStatus || "";
+      this.sign.limitTimeStatus = res?.sign?.limitTimeStatus || "";
       if (res?.sign?.startTime && res?.sign?.endTime) {
         this.activityTime = [res.sign.startTime, res.sign.endTime];
       }
@@ -54,7 +55,8 @@ export default {
     },
     async handleSubmit() {
       if (
-        this.sign.limitType === CONST.ACTIVITY_LIMIT_DATE_TYPE.LIMITED_TIME &&
+        this.sign.limitTimeStatus ===
+          CONST.ACTIVITY_LIMIT_DATE_TYPE.LIMITED_TIME &&
         this.activityTime?.length < 2
       ) {
         return this.$message.error("请选择活动时间区间");
