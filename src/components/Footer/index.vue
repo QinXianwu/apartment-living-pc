@@ -1,10 +1,11 @@
 <template>
   <footer :class="{ fullWidth: sidebar.opened, colseWidth: !sidebar.opened }">
-    <el-button @click="cancel">取消</el-button>
+    <el-button @click="cancel" v-if="showCancelBtn">取消</el-button>
     <el-button @click="goBack" v-if="activeIndex > 0"> 上一步</el-button>
-    <el-button type="primary" @click="onNext">{{
+    <el-button type="primary" @click="onNext" v-if="isShowSave">{{
       activeIndex >= setpAll ? (isUpdate ? "修改" : "保存") : "下一步"
     }}</el-button>
+    <slot></slot>
   </footer>
 </template>
 <script>
@@ -23,6 +24,19 @@ export default {
       type: Boolean,
       default: false,
     },
+    isShowSave: {
+      type: Boolean,
+      default: false,
+    },
+    showCancelBtn: {
+      type: Boolean,
+      default: true,
+    },
+    // false => 关闭当前路由 true => 抛出cancel事件
+    cancelType: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     ...mapGetters(["sidebar"]),
@@ -35,10 +49,13 @@ export default {
       this.$emit("goBack");
     },
     cancel() {
-      // this.$emit("cancel");
-      // 调用全局挂载的方法,关闭当前标签页
-      this.$store.dispatch("tagsView/delView", this.$route);
-      this.$router.back();
+      if (this.cancelType) {
+        this.$emit("cancel");
+      } else {
+        // 调用全局挂载的方法,关闭当前标签页
+        this.$store.dispatch("tagsView/delView", this.$route);
+        this.$router.back();
+      }
     },
   },
 };

@@ -1,0 +1,79 @@
+// 积分设置模块
+
+// 奖励积分
+export const REWARD_INTEGRAL_STATE = {
+  GIVE: 1, // 赠送
+  NOT_GIFTED: 2, // 不赠送
+};
+export const REWARD_INTEGRAL_STATE_TEXT = {
+  [REWARD_INTEGRAL_STATE.GIVE]: "赠送",
+  [REWARD_INTEGRAL_STATE.NOT_GIFTED]: "不赠送",
+};
+export const REWARD_INTEGRAL_STATE_OPTIONS = () => [
+  {
+    label: REWARD_INTEGRAL_STATE_TEXT[REWARD_INTEGRAL_STATE.GIVE],
+    value: REWARD_INTEGRAL_STATE.GIVE,
+  },
+  {
+    label: REWARD_INTEGRAL_STATE_TEXT[REWARD_INTEGRAL_STATE.NOT_GIFTED],
+    value: REWARD_INTEGRAL_STATE.NOT_GIFTED,
+  },
+];
+
+// 奖励优惠券状态
+export const REWARD_COUPONS_STATE = {
+  GIVE: 1, // 赠送
+  NOT_GIFTED: 2, // 不赠送
+};
+export const REWARD_COUPONS_STATE_TEXT = {
+  [REWARD_COUPONS_STATE.GIVE]: "赠送",
+  [REWARD_COUPONS_STATE.NOT_GIFTED]: "不赠送",
+};
+export const REWARD_COUPONS_STATE_OPTIONS = () => [
+  {
+    label: REWARD_COUPONS_STATE_TEXT[REWARD_COUPONS_STATE.GIVE],
+    value: REWARD_COUPONS_STATE.GIVE,
+  },
+  {
+    label: REWARD_COUPONS_STATE_TEXT[REWARD_COUPONS_STATE.NOT_GIFTED],
+    value: REWARD_COUPONS_STATE.NOT_GIFTED,
+  },
+];
+
+// 商品类型
+export const APPLY_PRODUCT_TYPE = {
+  ALL: 1, // 全部商品
+  PART: 2, // 部分商品
+};
+export const APPLY_PRODUCT_TYPE_TEXT = {
+  [APPLY_PRODUCT_TYPE.ALL]: "全部商品",
+  [APPLY_PRODUCT_TYPE.PART]: "部分商品",
+};
+
+// 优惠劵过期类型
+export const COUPONS_EXPIRE_TYPE = {
+  DESIGNATE_DATE: 1, // 指定到期时间
+  HOLS_AFFETER: 2, //  领取后X小时
+  DYCE_AFFETER: 3, //  领取后X天
+};
+
+// 活动限制日期类型
+export const ACTIVITY_LIMIT_DATE_TYPE = {
+  LONG_ACTIVITY: 1, // 长期活动
+  LIMITED_TIME: 2, // 限期活动
+};
+export const ACTIVITY_LIMIT_DATE_TYPE_TEXT = {
+  [ACTIVITY_LIMIT_DATE_TYPE.LONG_ACTIVITY]: "长期活动",
+  [ACTIVITY_LIMIT_DATE_TYPE.LIMITED_TIME]: "限期活动",
+};
+export const ACTIVITY_LIMIT_DATE_TYPE_OPTIONS = () => [
+  {
+    label:
+      ACTIVITY_LIMIT_DATE_TYPE_TEXT[ACTIVITY_LIMIT_DATE_TYPE.LONG_ACTIVITY],
+    value: ACTIVITY_LIMIT_DATE_TYPE.LONG_ACTIVITY,
+  },
+  {
+    label: ACTIVITY_LIMIT_DATE_TYPE_TEXT[ACTIVITY_LIMIT_DATE_TYPE.LIMITED_TIME],
+    value: ACTIVITY_LIMIT_DATE_TYPE.LIMITED_TIME,
+  },
+];

@@ -3,17 +3,15 @@ import { createCatchAsyncFun } from "@/utils/index";
 // async 方法的处理
 const catchAsyncFun = createCatchAsyncFun((error) => {
   // 错误日志上报 todo
-  console.warn("商品相关接口网络请求出错", error);
+  console.warn("用户中心相关接口网络请求出错", error);
 });
 
 export default {
-  // 获取商品列表 -> 平台/供应商商品列表
+  // 获取移动端用户列表
   GetList(params) {
     return catchAsyncFun(
       apiFetch({
-        url:
-          apiPrefix +
-          "/apartment-product/product/atproduct/queryPageForSupplier",
+        url: apiPrefix + "/apartment-user/sysMoblieUser/queryListPage",
         params,
         isReturnAll: true,
         isHeadersForm: true,
@@ -21,15 +19,12 @@ export default {
       })
     );
   },
-  // 获取商品列表 -> 服务点商品列表
-  GetServeGoodsList(params) {
+  // 获取移动端用户详情
+  GetUserDetail(params) {
     return catchAsyncFun(
       apiFetch({
-        url:
-          apiPrefix +
-          "/apartment-product/product/atproduct/queryPageForServicePoint",
+        url: apiPrefix + "/apartment-user/sysMoblieUser/queryInfo",
         params,
-        isReturnAll: true,
         isHeadersForm: true,
         isHandleParams: true,
       })

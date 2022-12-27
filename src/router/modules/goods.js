@@ -10,6 +10,7 @@ export default {
   path: "/Goods",
   component: MainLayout,
   redirect: "/Goods/List",
+  alwaysShow: true,
   meta: {
     title: "商品管理",
     icon: "goods",

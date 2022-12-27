@@ -31,7 +31,7 @@
       :activeIndex="activeIndex"
       :isUpdate="!!editInfo.id"
       :setpAll="setpList.length - 1"
-      @cancel="$emit('close', false)"
+      :isShowSave="true"
       @next="next"
       @goBack="goBack"
     />
@@ -49,7 +49,7 @@ import GoodsDetail from "./components/GoodsDetail";
 import SimilarSuggest from "./components/SimilarSuggest";
 import SuggestPurchase from "./components/SuggestPurchase";
 import FrequentlyPurchased from "./components/FrequentlyPurchased";
-import FooterView from "./components/Footer.vue";
+import FooterView from "@/components/Footer/";
 
 export default {
   name: "Edit",

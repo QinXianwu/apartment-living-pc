@@ -12,6 +12,10 @@ export default {
       return isArray ? [] : "";
     }
   },
+  // 显示昵称
+  filtersName(data) {
+    return data?.name || data?.userName || data?.nickName || "-";
+  },
   formatMobile(val) {
     if (!val) return "";
     if (!isPhone(val)) return val;
