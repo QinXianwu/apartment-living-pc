@@ -1,4 +1,4 @@
-// import PERMISSION_ID from "@/permission/PERMISSION_ID";
+import PERMISSION_ID from "@/permission/PERMISSION_ID";
 import MainLayout from "@/layouts/MainLayout/index";
 import List from "@/views/VendorManage/views/List/index.vue";
 
@@ -11,7 +11,7 @@ export default {
     title: "供应商管理",
     icon: "vendor",
     affix: true,
-    // PermissionId: PERMISSION_ID.UserHub,
+    PermissionId: PERMISSION_ID.VendorManage,
   },
   children: [
     {
@@ -20,7 +20,7 @@ export default {
       name: "VendorList",
       meta: {
         title: "供应商列表",
-        // PermissionId: PERMISSION_ID.Goods_List,
+        PermissionId: PERMISSION_ID.VendorManage_List,
       },
     },
   ],
