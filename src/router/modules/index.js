@@ -3,6 +3,7 @@ import home from "./home"; // 首页模块
 import goods from "./goods"; // 商品模块
 import userHub from "./userHub"; // 用户中心模块
 import vendorManage from "./vendorManage"; // 供应商管理模块
+import serviceStationManage from "./serviceStationManage"; // 供应商管理模块
 import setUp from "./setUp"; // 系统设置模块
 import systemMonitoring from "./systemMonitoring"; // 系统设置模块
 import error from "./error"; // 异常页面模块
@@ -13,6 +14,7 @@ const routerList = [
   goods,
   userHub,
   vendorManage,
+  serviceStationManage,
   systemMonitoring,
   setUp,
   error,
