@@ -1273,6 +1273,11 @@ chalk@^4.0.0, chalk@^4.1.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
+china-area-data@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.npmmirror.com/china-area-data/-/china-area-data-5.0.1.tgz#7943b83a0619f033bb5893da80cb46e52e44be66"
+  integrity sha512-BQDPpiv5Nn+018ekcJK2oSD9PAD+E1bvXB0wgabc//dFVS/KvRqCgg0QOEUt3vBkx9XzB5a9BmkJCEZDBxVjVw==
+
 "chokidar@>=3.0.0 <4.0.0":
   version "3.5.3"
   resolved "https://registry.npmmirror.com/chokidar/-/chokidar-3.5.3.tgz#1cf37c8707b932bd1af1ae22c0432e2acd1903bd"
@@ -1766,6 +1771,14 @@ electron-to-chromium@^1.4.202:
   version "1.4.242"
   resolved "https://registry.npmmirror.com/electron-to-chromium/-/electron-to-chromium-1.4.242.tgz#51284820b0e6f6ce6c60d3945a3c4f9e4bd88f5f"
   integrity sha512-nPdgMWtjjWGCtreW/2adkrB2jyHjClo9PtVhR6rW+oxa4E4Wom642Tn+5LslHP3XPL5MCpkn5/UEY60EXylNeQ==
+
+element-china-area-data@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.npmmirror.com/element-china-area-data/-/element-china-area-data-5.0.2.tgz#006c26594b8865cb619994063c732562e4583d30"
+  integrity sha512-vLQuvOKJy/uiX7MRHEk3x/j09hipuIl6DJ/C4XFUG7D7Pj3O47sy+Y6aAArM6k9v8cD9UX6e+yz2S4J+IPnZ8g==
+  dependencies:
+    china-area-data "^5.0.1"
+    lodash-es "^4.17.15"
 
 element-ui@2.15.7:
   version "2.15.7"
@@ -3103,6 +3116,11 @@ locate-path@^6.0.0:
   integrity sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==
   dependencies:
     p-locate "^5.0.0"
+
+lodash-es@^4.17.15:
+  version "4.17.21"
+  resolved "https://registry.npmmirror.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
 
 lodash.kebabcase@^4.1.1:
   version "4.1.1"

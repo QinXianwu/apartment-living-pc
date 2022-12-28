@@ -4,9 +4,9 @@ import List from "@/views/UserHub/views/List/index.vue";
 import PointsSetting from "@/views/UserHub/views/PointsSetting/index.vue";
 
 export default {
-  path: "/userHub",
+  path: "/UserHub",
   component: MainLayout,
-  redirect: "/userHub/List",
+  redirect: "/UserHub/List",
   alwaysShow: true,
   meta: {
     title: "用户中心",
