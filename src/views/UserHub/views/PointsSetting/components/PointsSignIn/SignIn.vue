@@ -107,7 +107,9 @@
                 </div>
                 <div class="coupon-item-r">
                   <div class="action">
-                    <el-button type="text" @click="handleDeleteCoupon"
+                    <el-button
+                      type="text"
+                      @click="handleDeleteCoupon(item, _index_)"
                       >删除</el-button
                     >
                   </div>
@@ -191,8 +193,8 @@ export default {
       this.editInfo = { index };
       this.showAddCoupon = true;
     },
-    handleDeleteCoupon() {
-      //
+    handleDeleteCoupon(item, _index_) {
+      item.couponConfigList.splice(_index_, 1);
     },
     addCoupon(res) {
       if (!this.list[res?.index]) return;

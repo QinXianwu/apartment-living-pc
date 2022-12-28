@@ -93,6 +93,7 @@
             "
             v-model="formData.expireTime"
             type="date"
+            :picker-options="datePickerOptions"
             value-format="yyyy-MM-dd"
             placeholder="选择日期"
           />
@@ -164,6 +165,11 @@ export default {
       CONST,
       formData: {},
       isLoading: false,
+      datePickerOptions: {
+        disabledDate(time) {
+          return time.getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天的
+        },
+      },
       rules: {
         name: [
           { required: true, message: "请输入优惠券名称", trigger: "blur" },
