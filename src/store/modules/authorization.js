@@ -4,6 +4,7 @@ import CONST from "@/constants/index";
 import CookieStore from "@/utils/common";
 import ELEMENT from "element-ui";
 import router, { resetRouter } from "@/router/index";
+import JSONbig from "json-bigint"; // 解决超过 16 位数字精度丢失问题
 
 const state = {
   state: CookieStore.getCookie("user_sessino") || null,
@@ -59,7 +60,11 @@ const actions = {
       token: res.data?.access_token,
     });
     const token = res.data?.access_token;
-    const userInfo = JSON.stringify(data?.user || "");
+    if (data?.user?.serviceStationId)
+      data.user.serviceStationId = JSONbig.stringify(
+        data.user.serviceStationId
+      );
+    const userInfo = JSONbig.stringify(data?.user || "");
     commit("SET_USER_SIGNIN", { token, userInfo, date: 1 });
     location.href = "/";
     ELEMENT.Message.success("登录成功");

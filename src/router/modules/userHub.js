@@ -10,7 +10,7 @@ export default {
   alwaysShow: true,
   meta: {
     title: "用户中心",
-    icon: "goods",
+    icon: "data-user",
     affix: true,
     PermissionId: PERMISSION_ID.UserHub,
   },

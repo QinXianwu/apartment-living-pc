@@ -35,4 +35,22 @@ export default {
       })
     );
   },
+  // 新增商品
+  AddGoods(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-product/product/atproduct/save",
+        params,
+      })
+    );
+  },
+  // 更新商品
+  UpdateGoods(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-product/product/atproduct/update",
+        params,
+      })
+    );
+  },
 };

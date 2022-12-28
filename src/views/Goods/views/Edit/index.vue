@@ -46,9 +46,9 @@ import GoodsPreSale from "./components/GoodsPreSale.vue";
 import GoodsServe from "./components/GoodsServe.vue";
 import PricesStocks from "./components/PricesStocks";
 import GoodsDetail from "./components/GoodsDetail";
-import SimilarSuggest from "./components/SimilarSuggest";
-import SuggestPurchase from "./components/SuggestPurchase";
-import FrequentlyPurchased from "./components/FrequentlyPurchased";
+import SimilarSuggest from "./components/Association/SimilarSuggest.vue";
+import SuggestPurchase from "./components/Association/SuggestPurchase.vue";
+import FrequentlyPurchased from "./components/Association/FrequentlyPurchased.vue";
 import FooterView from "@/components/Footer/";
 
 export default {
@@ -83,9 +83,13 @@ export default {
   computed: {
     ...mapGetters({
       isService: "user/isService",
+      serviceStationId: "user/serviceStationId",
     }),
     setpList({ isService }) {
-      const setpArr = [{ label: "编辑商品信息" }, { label: "商品关联信息" }];
+      const setpArr = [
+        { label: "编辑商品信息", key: "base" },
+        { label: "商品关联信息", key: "association" },
+      ];
       return isService ? setpArr : [setpArr[0]];
     },
   },
@@ -100,8 +104,8 @@ export default {
       // this.formData = { ...this.formData, ...(res || {}) };
     },
     async next() {
-      // if (this.activeIndex < this.setpList.length - 1) this.activeIndex++;
-      if (this.activeIndex === 0) {
+      const key = this.setpList[this.activeIndex].key;
+      if (key === "base") {
         //编辑基本信息
         const data1 = await this.$refs.GoodsInfo.getQuery();
         const data2 = await this.$refs.GoodsPreSale.getQuery();
@@ -110,9 +114,12 @@ export default {
         const data5 = await this.$refs.GoodsDetail.getQuery();
         data1.productTag = data1.productTag.join(",");
         this.BaseInfo = { ...data1, ...data2, ...data3, ...data4, ...data5 };
-        console.log(this.BaseInfo);
+        if (!this.isService) {
+          this.handleSubmit();
+          return;
+        }
         this.activeIndex++;
-      } else if (this.activeIndex === 1) {
+      } else if (key === "association") {
         //编辑详情
         // const SpecificaData = await this.$refs.Specifica.getQuery();
         // if (!SpecificaData) return;
@@ -128,32 +135,28 @@ export default {
     },
     async handleSubmit() {
       // 表单校验
-      try {
-        const valid = await this.$refs.form.validate();
-        if (!valid) {
-          return;
-        }
-      } catch (error) {
-        return;
-      }
       this.isLoading = true;
-      // const [, res] = await this.$http.ProtocolManage.UpdateAgreement({
-      //   type: this.editInfo?.type || "",
-      //   agreement: this.formData?.agreement,
-      // });
+      const query = {
+        ...this.BaseInfo,
+      };
+      if (this.isService) query.stationId = this.serviceStationId;
+      const [, res] = await this.$http.Goods.AddGoods(query);
       this.isLoading = false;
-      // this.$message[res ? "success" : "error"](
-      //   res?.msg || `修改账号密码${res ? "成功" : "失败"}`
-      // );
-      // if (res) this.$emit("close", true);
+      this.$message[res ? "success" : "error"](
+        res?.msg || `发布商品${res ? "成功" : "失败"}`
+      );
+      if (res) {
+        this.$store.dispatch("tagsView/delView", this.$route);
+        this.$router.push({
+          name: "GoodsList",
+        });
+      }
     },
     // 初始化操作
     async initLoad() {
       this.getGoodsInfo();
     },
   },
-  // this.getGoodsInfo();
-
   // 依然需要mounted是为了应对直接按F5刷新的时候不会触发activated，
   mounted() {
     this.hasMounted = true;

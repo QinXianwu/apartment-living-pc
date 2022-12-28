@@ -1,21 +1,15 @@
 <template>
-  <div class="FrequentlyPurchased">
-    <div class="title">经常购买</div>
+  <div class="SimilarSuggest">
+    <div class="title">相似推荐</div>
     <div class="content">
       <el-form ref="form" :model="formData" label-width="120px">
-        <el-form-item label="经常购买">
+        <el-form-item label="相似推荐">
           <el-button type="text" @click="chooseGoods">选择商品</el-button>
-          <TablePanel
-            :tableData="list"
-            :tableHead="serveColumn"
-            :checkbox="true"
-            :isShowTopCheck="false"
-            @selection-change="handleSelectionChange"
-          >
+          <TablePanel :tableData="list" :tableHead="column">
             <!-- 操作 -->
-            <template #action="{ scope }">
+            <template #action="{ index }">
               <div class="action-groud">
-                <el-button type="text" @click="handleDelete(scope.id)">
+                <el-button type="text" @click="handleDelete(index)">
                   删除
                 </el-button>
               </div>
@@ -34,19 +28,20 @@
         </el-form-item>
       </el-form>
     </div>
+    <ChooseServeGoodsDiaog :show.sync="showServeGoods" @close="close" />
   </div>
 </template>
 
 <script>
-import { serveColumn } from "../config/index";
-
+import { column } from "./config/index";
+import ChooseServeGoodsDiaog from "./ChooseServeGoodsDiaog.vue";
 export default {
-  name: "FrequentlyPurchased",
-  components: {},
+  name: "SimilarSuggest",
+  components: { ChooseServeGoodsDiaog },
   props: {},
   data() {
     return {
-      serveColumn,
+      column,
       formData: {},
       list: [],
       selectDataMap: {},
@@ -54,6 +49,7 @@ export default {
         pageNum: 1,
         pageSize: 5,
       },
+      showServeGoods: false,
     };
   },
   computed: {},
@@ -66,33 +62,13 @@ export default {
       this.page.pageNum = val;
     },
     chooseGoods() {
-      this.$emit("chooseGoods", {
-        key: "FrequentlyPurchased",
-        selectDataMap: this.selectDataMap,
-      });
+      this.showServeGoods = true;
     },
-    handleDelete() {
-      //
+    handleDelete(index) {
+      this.list.splice(index, 1);
     },
-    handleSelectionChange(val) {
-      this.list.forEach((item) => {
-        // 存在于当前页以及map 但不存在 val -> 去掉
-        const index = val.findIndex((vItem) => vItem?.id === item.id);
-        if (this.selectDataMap[item.id] && index < 0)
-          delete this.selectDataMap[item.id];
-      });
-      val.forEach((item) => (this.selectDataMap[item.id] = { ...item }));
-      this.isDisabledDelete = !Object.keys(this.selectDataMap).length;
-    },
-    initSelection() {
-      if (!this.list?.length) return;
-      this.list.forEach((item) => {
-        if (this.selectDataMap[item?.id]) {
-          this.$nextTick(() => {
-            this.$refs.TablePanel.setSelection(item, true);
-          });
-        }
-      });
+    close() {
+      this.showServeGoods = false;
     },
     async getQuery() {
       // eslint-disable-next-line
@@ -118,7 +94,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.FrequentlyPurchased {
+.SimilarSuggest {
   padding: 20px 20px 0;
   .title {
     font-size: 16px;

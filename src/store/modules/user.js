@@ -1,8 +1,8 @@
 import CONST from "@/constants/index";
-const userInfo = localStorage.getItem("user_info") || "{}";
+const userData = JSON.parse(localStorage.getItem("user_info") || "{}");
 
 const state = {
-  userInfo: JSON.parse(userInfo || {}),
+  userInfo: userData,
   provinceList: [],
 };
 
@@ -32,6 +32,13 @@ const getters = {
   isService({ userInfo }) {
     const role = userInfo?.roles?.length ? userInfo.roles[0] : {};
     return role?.roleKey === CONST.ACCOUNT_TYPE.SERVICE;
+  },
+  // 服务点ID
+  serviceStationId({ userInfo }) {
+    const role = userInfo?.roles?.length ? userInfo.roles[0] : {};
+    if (role?.roleKey === CONST.ACCOUNT_TYPE.SERVICE)
+      return userInfo?.serviceStationId || "";
+    return "";
   },
 };
 
