@@ -9,7 +9,7 @@ export default {
   alwaysShow: true,
   meta: {
     title: "供应商管理",
-    icon: "data-user",
+    icon: "vendor",
     affix: true,
     // PermissionId: PERMISSION_ID.UserHub,
   },

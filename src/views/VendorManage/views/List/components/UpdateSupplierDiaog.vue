@@ -38,7 +38,7 @@
         <el-cascader
           class="input-medium"
           v-model="formData.address"
-          :options="regionData"
+          :options="addressLinkageOptions"
           :props="{ value: 'label' }"
         />
       </el-form-item>
@@ -72,9 +72,9 @@
   </el-dialog>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import { isPhone } from "@/utils/validate";
 import dialogMixin from "@/mixins/dialogMixin";
-import { regionData } from "element-china-area-data";
 
 export default {
   name: "UpdateSupplierDiaog",
@@ -95,7 +95,6 @@ export default {
   },
   data() {
     return {
-      regionData,
       formData: {},
       isLoading: false,
       isLoadingSupplier: false,
@@ -124,6 +123,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      addressLinkageOptions: "app/addressLinkageOptions",
+    }),
     dialogTitle({ editInfo }) {
       const title = editInfo?.id ? "编辑" : "新增";
       return `${title}供应商`;

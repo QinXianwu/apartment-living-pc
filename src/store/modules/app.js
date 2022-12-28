@@ -1,3 +1,5 @@
+import { regionData } from "element-china-area-data";
+
 const sidebarOpened = localStorage.getItem("sidebarStatus");
 const state = {
   sidebar: {
@@ -9,8 +11,6 @@ const state = {
   // 全局读取的配置
   SysGlobal: window.SysGlobal || {},
 };
-
-const getters = {};
 
 const mutations = {
   TOGGLE_SIDEBAR: (state) => {
@@ -48,6 +48,12 @@ const actions = {
   },
   setSize({ commit }, size) {
     commit("SET_SIZE", size);
+  },
+};
+
+const getters = {
+  addressLinkageOptions() {
+    return regionData;
   },
 };
 
