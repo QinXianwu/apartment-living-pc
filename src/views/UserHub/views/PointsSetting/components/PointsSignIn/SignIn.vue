@@ -90,11 +90,13 @@
                 <div class="coupon-item-l">
                   <div class="info-l">
                     <span class="price">
-                      {{ ele.deductAmount | formatCurrency }}
+                      {{ ele | couponPriceText }}
                     </span>
                   </div>
                   <div class="info-r">
-                    <span>满{{ ele.meetAmount }}减{{ ele.deductAmount }}</span>
+                    <span v-if="ele.type === CONST.COUPONS_TYPE.FULL_MINUS"
+                      >满{{ ele.meetAmount }}减{{ ele.deductAmount }}</span
+                    >
                     <span>{{ ele | couponDateText }}</span>
                     <span>
                       {{
@@ -120,12 +122,14 @@
       :editInfo="editInfo"
       :show.sync="showAddCoupon"
       @close="close"
+      @addCoupon="addCoupon"
     />
   </div>
 </template>
 
 <script>
 import CONST from "@/constants/index";
+import filters from "@/filters/index";
 import { convertToChinaNum } from "@/utils/index";
 import AddCouponDiaog from "./AddCouponDiaog.vue";
 
@@ -190,6 +194,11 @@ export default {
     handleDeleteCoupon() {
       //
     },
+    addCoupon(res) {
+      if (!this.list[res?.index]) return;
+      const item = this.list[res.index];
+      if (res?.data) item.couponConfigList.push({ ...res.data });
+    },
     close(isRefresh = false) {
       this.showAddCoupon = false;
       if (isRefresh) this.$emit("refresh", true);
@@ -198,15 +207,18 @@ export default {
       this.list = [];
       this.activityDate = this.activityTime || [];
       this.limitTimeStatus = this.limitType;
+      const tempObj = {
+        couponIds: [],
+        integral: 0,
+        couponStatus: CONST.REWARD_COUPONS_STATE.GIVE,
+        integralStatus: CONST.REWARD_INTEGRAL_STATE.GIVE,
+      };
       if (!this.signRewardList?.length) {
         for (let index = 0; index < this.dayCount; index++) {
           this.list.push({
             signReward: {
               continueDay: index + 1,
-              couponIds: [],
-              integral: 0,
-              couponStatus: CONST.REWARD_COUPONS_STATE.GIVE,
-              integralStatus: CONST.REWARD_INTEGRAL_STATE.GIVE,
+              ...tempObj,
             },
             couponConfigList: [],
           });
@@ -215,7 +227,10 @@ export default {
         for (const index in this.signRewardList) {
           this.list.push({
             signReward: {
-              ...(this.signRewardList[index]?.signReward || {}),
+              ...(this.signRewardList[index]?.signReward || {
+                continueDay: index + 1,
+                ...tempObj,
+              }),
             },
             couponConfigList:
               this.signRewardList[index]?.couponConfigList || [],
@@ -225,13 +240,20 @@ export default {
     },
   },
   filters: {
+    couponPriceText(item) {
+      if (item?.type === CONST.COUPONS_TYPE.FULL_MINUS)
+        return filters.formatCurrency(item.deductAmount);
+      else if (item?.type === CONST.COUPONS_TYPE.DISTRIBUTION)
+        return CONST.COUPONS_TYPE_TEXT[item.type];
+      return;
+    },
     couponDateText(item) {
       if (item?.expireTimeType === CONST.COUPONS_EXPIRE_TYPE.DESIGNATE_DATE)
-        return `${item.expireTime || "-"} 到期`;
+        return `${item?.expireTime || "-"} 到期`;
       else if (item?.expireTimeType === CONST.COUPONS_EXPIRE_TYPE.HOLS_AFFETER)
-        return `${item.expireTime || "-"} 小时后到期`;
+        return `${item.expireTimeCount || "-"} 小时后到期`;
       else if (item?.expireTimeType === CONST.COUPONS_EXPIRE_TYPE.DYCE_AFFETER)
-        return `${item.expireTime || "-"} 天后到期`;
+        return `${item?.expireTimeCount || "-"} 天后到期`;
       else return "";
     },
   },
@@ -260,7 +282,7 @@ export default {
   flex-wrap: wrap;
   margin-top: 20px;
   &-item {
-    width: 280px;
+    min-width: 280px;
     height: 100px;
     display: flex;
     align-items: center;

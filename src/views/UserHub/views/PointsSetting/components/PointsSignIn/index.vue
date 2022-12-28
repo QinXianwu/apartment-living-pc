@@ -71,12 +71,13 @@ export default {
         quert.sign.endTime = this.activityTime[1];
       }
       quert.signRewardList.map((item) => {
-        item.signReward.couponIds = item.signReward.couponIds?.length
-          ? item.signReward.couponIds.join(",")
-          : "";
+        const idsArr = item.couponConfigList
+          .filter((ele) => ele?.id)
+          .map((v) => v.id);
+        item.signReward.couponIds = idsArr.join(",");
       });
       const [, res] = await this.$http.SignIn.UpdateSignInDetail(quert);
-      console.log(res);
+      if (res) this.$message.success("保存成功");
     },
   },
   mounted() {

@@ -20,26 +20,6 @@ export const REWARD_INTEGRAL_STATE_OPTIONS = () => [
   },
 ];
 
-// 奖励优惠券状态
-export const REWARD_COUPONS_STATE = {
-  GIVE: 1, // 赠送
-  NOT_GIFTED: 2, // 不赠送
-};
-export const REWARD_COUPONS_STATE_TEXT = {
-  [REWARD_COUPONS_STATE.GIVE]: "赠送",
-  [REWARD_COUPONS_STATE.NOT_GIFTED]: "不赠送",
-};
-export const REWARD_COUPONS_STATE_OPTIONS = () => [
-  {
-    label: REWARD_COUPONS_STATE_TEXT[REWARD_COUPONS_STATE.GIVE],
-    value: REWARD_COUPONS_STATE.GIVE,
-  },
-  {
-    label: REWARD_COUPONS_STATE_TEXT[REWARD_COUPONS_STATE.NOT_GIFTED],
-    value: REWARD_COUPONS_STATE.NOT_GIFTED,
-  },
-];
-
 // 商品类型
 export const APPLY_PRODUCT_TYPE = {
   ALL: 1, // 全部商品
@@ -50,11 +30,14 @@ export const APPLY_PRODUCT_TYPE_TEXT = {
   [APPLY_PRODUCT_TYPE.PART]: "部分商品",
 };
 
-// 优惠劵过期类型
-export const COUPONS_EXPIRE_TYPE = {
-  DESIGNATE_DATE: 1, // 指定到期时间
-  HOLS_AFFETER: 2, //  领取后X小时
-  DYCE_AFFETER: 3, //  领取后X天
+// 服务点类型
+export const SERVE_TYPE = {
+  ALL: 1, // 全部服务点
+  PART: 2, // 部分服务点
+};
+export const SERVE_TYPE_TEXT = {
+  [APPLY_PRODUCT_TYPE.ALL]: "全部服务点",
+  [APPLY_PRODUCT_TYPE.PART]: "部分服务点)",
 };
 
 // 活动限制日期类型
