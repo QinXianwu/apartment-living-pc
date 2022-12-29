@@ -7,7 +7,16 @@
       </div>
       <TablePanel :tableData="list" :tableHead="column">
         <template #address="{ scope }">
-          <span>{{ scope | addressFilter }}</span>
+          <div class="address">
+            <el-tooltip
+              class="item"
+              effect="dark"
+              :content="scope | addressFilter"
+              placement="right"
+            >
+              <span>{{ scope | addressFilter }}</span>
+            </el-tooltip>
+          </div>
         </template>
         <template #status="{ scope }">
           <el-tag
@@ -215,6 +224,15 @@ export default {
     .user-name {
       @include overflow-eps(1);
     }
+  }
+  .address {
+    word-wrap: break-word;
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
   .action {
     padding: 0 0 15px;

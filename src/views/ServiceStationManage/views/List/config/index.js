@@ -43,6 +43,11 @@ export const column = [
     label: "地址",
     prop: "address",
     type: "custom",
+    // showOverflowTooltip: true,
+  },
+  {
+    label: "服务点联系方式",
+    prop: "phone",
   },
   {
     label: "管理员",
