@@ -16,6 +16,7 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
     "@vitejs/plugin-vue": "^3.0.3",
     "axios": "^0.27.2",
     "echarts": "^5.4.0",

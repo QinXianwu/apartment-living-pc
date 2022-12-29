@@ -32,6 +32,9 @@
                     ]
               }}
             </el-button>
+            <el-button type="text" @click="handleDelete(scope)">
+              删除
+            </el-button>
           </div>
         </template>
       </TablePanel>
@@ -44,20 +47,22 @@
         :total="total"
       />
     </div>
-    <UpdateServiceDiaog
-      :show.sync="showServiceDetail"
-      :editInfo="editInfo"
-      @close="close"
-    />
+    <DrawerPopup v-model="showServiceDetail">
+      <UpdateService
+        v-if="showServiceDetail"
+        :editInfo="editInfo"
+        @close="close"
+      />
+    </DrawerPopup>
   </div>
 </template>
 
 <script>
 import { formData, column } from "./config";
 import CONST from "@/constants/index";
-import UpdateServiceDiaog from "./components/UpdateServiceDiaog.vue";
+import UpdateService from "./components/UpdateService.vue";
 export default {
-  components: { UpdateServiceDiaog },
+  components: { UpdateService },
   data() {
     return {
       CONST,
@@ -96,6 +101,34 @@ export default {
     handleEdit(item) {
       this.editInfo = { id: item?.id || "" };
       this.showServiceDetail = true;
+    },
+    async handleDelete({ id, name }) {
+      try {
+        await this.$confirm(`确认删除 '${name}' 服务点吗？`, "删除提示", {
+          type: "warning",
+          showClose: false,
+        });
+        const [, res] = await this.$http.ServiceStation.DeleteServiceStation({
+          id,
+        });
+        const msg = res ? res?.msg || `删除成功` : `删除失败`;
+        this.$confirm(msg, "删除提示", {
+          showClose: false,
+          showCancelButton: false,
+          type: res ? "success" : "error",
+        }).then(() => {
+          if (res) {
+            this.getList();
+            this.$store.dispatch(
+              "accountRoleManage/GetServiceStationListAction",
+              true
+            );
+          }
+        });
+      } catch (error) {
+        console.error(error);
+        error;
+      }
     },
     async switchStatus({ id, name, status }) {
       const tempStatus =

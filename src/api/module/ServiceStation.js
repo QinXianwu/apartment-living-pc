@@ -56,6 +56,17 @@ export default {
       })
     );
   },
+  // 删除服务点
+  DeleteServiceStation(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/serviceStation/delete",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
   // 更新服务点状态
   UpdateServiceStationStatus(params) {
     return catchAsyncFun(
