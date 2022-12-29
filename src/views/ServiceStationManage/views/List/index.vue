@@ -3,7 +3,7 @@
     <div class="content">
       <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
       <div class="action">
-        <el-button type="primary" @click="handleAdd">新增供应商</el-button>
+        <el-button type="primary" @click="handleAdd">新增服务点</el-button>
       </div>
       <TablePanel :tableData="list" :tableHead="column">
         <template #address="{ scope }">
@@ -11,14 +11,27 @@
         </template>
         <template #status="{ scope }">
           <el-tag
-            :type="scope.status === $CONST.SUPPLIER_STATE.OFF ? 'danger' : ''"
-            >{{ $CONST.SUPPLIER_STATE_TEXT[scope.status] }}</el-tag
+            :type="
+              scope.status === CONST.SERVICE_STATION_STATE.OFF ? 'danger' : ''
+            "
+            >{{ CONST.SERVICE_STATION_STATE_TEXT[scope.status] }}</el-tag
           >
         </template>
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
             <el-button type="text" @click="handleEdit(scope)"> 编辑 </el-button>
+            <el-button type="text" @click="switchStatus(scope)">
+              {{
+                scope.status === CONST.SERVICE_STATION_STATE.ON
+                  ? CONST.SERVICE_STATION_STATE_TEXT[
+                      CONST.SERVICE_STATION_STATE.OFF
+                    ]
+                  : CONST.SERVICE_STATION_STATE_TEXT[
+                      CONST.SERVICE_STATION_STATE.ON
+                    ]
+              }}
+            </el-button>
           </div>
         </template>
       </TablePanel>
@@ -31,8 +44,8 @@
         :total="total"
       />
     </div>
-    <UpdateSupplierDiaog
-      :show.sync="showSupplierDetail"
+    <UpdateServiceDiaog
+      :show.sync="showServiceDetail"
       :editInfo="editInfo"
       @close="close"
     />
@@ -41,11 +54,13 @@
 
 <script>
 import { formData, column } from "./config";
-import UpdateSupplierDiaog from "./components/UpdateSupplierDiaog.vue";
+import CONST from "@/constants/index";
+import UpdateServiceDiaog from "./components/UpdateServiceDiaog.vue";
 export default {
-  components: { UpdateSupplierDiaog },
+  components: { UpdateServiceDiaog },
   data() {
     return {
+      CONST,
       formData,
       column, //表格头
       list: [],
@@ -56,7 +71,7 @@ export default {
       query: {},
       editInfo: {},
       total: 0,
-      showSupplierDetail: false,
+      showServiceDetail: false,
     };
   },
   computed: {},
@@ -76,21 +91,50 @@ export default {
     },
     handleAdd() {
       this.editInfo = {};
-      this.showSupplierDetail = true;
+      this.showServiceDetail = true;
     },
     handleEdit(item) {
       this.editInfo = { id: item?.id || "" };
-      this.showSupplierDetail = true;
+      this.showServiceDetail = true;
     },
-    handleRemark() {
-      //
-    },
-    retroactivePoints() {
-      //
+    async switchStatus({ id, name, status }) {
+      const tempStatus =
+        status === CONST.SERVICE_STATION_STATE.ON
+          ? CONST.SERVICE_STATION_STATE.OFF
+          : CONST.SERVICE_STATION_STATE.ON;
+      const title = CONST.SERVICE_STATION_STATE_TEXT[tempStatus];
+      try {
+        await this.$confirm(`${title}'${name}' 服务点状态吗？`, "修改状态", {
+          type: "warning",
+          showClose: false,
+        });
+        const [, res] =
+          await this.$http.ServiceStation.UpdateServiceStationStatus({
+            id,
+            status: tempStatus,
+          });
+        const msg = res ? res?.msg || `${title}成功` : `${title}失败`;
+        this.$confirm(msg, "修改状态", {
+          showClose: false,
+          showCancelButton: false,
+          type: res ? "success" : "error",
+        }).then(() => {
+          if (res) {
+            this.getList();
+            this.$store.dispatch(
+              "accountRoleManage/GetServiceStationListAction",
+              true
+            );
+          }
+        });
+      } catch (error) {
+        console.error(error);
+        error;
+      }
     },
     close(isRefresh = false) {
       this.editInfo = "";
-      this.showSupplierDetail = false;
+      this.showServiceDetail = false;
       if (isRefresh) this.getList();
     },
     async getList(isClear) {
@@ -99,14 +143,13 @@ export default {
         ...this.page,
         ...this.query,
       };
-      const [, res] = await this.$http.Supplier.GetSupplierList(query);
+      const [, res] = await this.$http.ServiceStation.GetServiceStationList(
+        query
+      );
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
-        this.$message.error(res?.msg || "获取供应商列表异常");
+        this.$message.error(res?.msg || "获取服务点列表异常");
       }
       const data = res?.rows?.length ? res?.rows : [];
-      data.forEach((item) => {
-        if (item?.userId) item.userId = this.$JSONbig.stringify(item.userId);
-      });
       this.list = data || [];
       this.total = res?.total || 0;
     },

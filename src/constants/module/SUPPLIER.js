@@ -1,7 +1,7 @@
 // 供应商状态
 export const SUPPLIER_STATE = {
-  ON: "0", // 正常
-  OFF: "1", //停用
+  ON: 0, // 正常
+  OFF: 1, //停用
 };
 export const SUPPLIER_STATE_TEXT = {
   [SUPPLIER_STATE.ON]: "正常",

@@ -104,9 +104,6 @@ export default {
         this.$message.error(res?.msg || "获取供应商列表异常");
       }
       const data = res?.rows?.length ? res?.rows : [];
-      data.forEach((item) => {
-        if (item?.userId) item.userId = this.$JSONbig.stringify(item.userId);
-      });
       this.list = data || [];
       this.total = res?.total || 0;
     },

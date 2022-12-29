@@ -16,4 +16,56 @@ export default {
       })
     );
   },
+  // 获取服务点列表
+  GetServiceStationList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/serviceStation/page",
+        params,
+        isReturnAll: true,
+      })
+    );
+  },
+  // 获取服务点详情
+  GetServiceStationDetail(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/serviceStation/detail",
+        params,
+        method: "GET",
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 新增服务点
+  AddServiceStation(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/serviceStation/add",
+        params,
+      })
+    );
+  },
+  // 更新服务点
+  UpdateServiceStation(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/serviceStation/update",
+        params,
+      })
+    );
+  },
+  // 更新服务点状态
+  UpdateServiceStationStatus(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/system/serviceStation/updateStatus",
+        params,
+        method: "GET",
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
 };

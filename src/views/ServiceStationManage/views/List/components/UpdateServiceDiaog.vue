@@ -11,27 +11,27 @@
       :model="formData"
       :rules="rules"
       label-width="170px"
-      v-loading="isLoadingSupplier"
+      v-loading="isLoadingService"
     >
-      <el-form-item label="供应商名称" prop="name">
+      <el-form-item label="服务点名称" prop="name">
         <el-input
           class="input-medium"
-          placeholder="请输入供应商名称"
+          placeholder="请输入服务点名称"
           v-model="formData.name"
         />
       </el-form-item>
-      <el-form-item label="联系人" prop="manager">
+      <el-form-item label="管理员" prop="manager">
         <el-input
           class="input-medium"
-          placeholder="请输入联系人"
+          placeholder="请输入管理员"
           v-model="formData.manager"
         />
       </el-form-item>
-      <el-form-item label="联系电话" prop="managerPhone">
+      <el-form-item label="联系电话" prop="managePhone">
         <el-input
           class="input-medium"
-          placeholder="请输入联系电话"
-          v-model="formData.managerPhone"
+          placeholder="请输入管理员联系电话"
+          v-model="formData.managePhone"
         />
       </el-form-item>
       <el-form-item label="所在城市" prop="address">
@@ -54,7 +54,7 @@
       <el-form-item label="状态" prop="status">
         <el-radio-group v-model="formData.status">
           <el-radio-button
-            v-for="(item, index) in $CONST.SUPPLIER_STATE_OPTIONS()"
+            v-for="(item, index) in $CONST.SERVICE_STATION_STATE_OPTIONS()"
             :key="index"
             :value="item.value"
             :label="item.value"
@@ -77,7 +77,7 @@ import { isPhone } from "@/utils/validate";
 import dialogMixin from "@/mixins/dialogMixin";
 
 export default {
-  name: "UpdateSupplierDiaog",
+  name: "UpdateServiceDiaog",
   mixins: [dialogMixin],
   props: {
     editInfo: {
@@ -89,7 +89,7 @@ export default {
     visible(val) {
       this.init();
       if (val) {
-        this.getSupplierl();
+        this.getService();
       }
     },
   },
@@ -97,14 +97,14 @@ export default {
     return {
       formData: {},
       isLoading: false,
-      isLoadingSupplier: false,
+      isLoadingService: false,
       rules: {
         name: [
-          { required: true, message: "请输入供应商名称", trigger: "blur" },
+          { required: true, message: "请输入服务点名称", trigger: "blur" },
         ],
-        manager: [{ required: true, message: "请输入联系人", trigger: "blur" }],
-        managerPhone: [
-          { required: true, message: "请输入联系电话", trigger: "blur" },
+        manager: [{ required: true, message: "请输入管理员", trigger: "blur" }],
+        managePhone: [
+          { required: true, message: "请输入管理员联系电话", trigger: "blur" },
           {
             validator: (rule, value, callback) => {
               if (!isPhone(value)) {
@@ -128,18 +128,18 @@ export default {
     }),
     dialogTitle({ editInfo }) {
       const title = editInfo?.id ? "编辑" : "新增";
-      return `${title}供应商`;
+      return `${title}服务点`;
     },
   },
   methods: {
     init() {
       this.formData = {
-        status: this.$CONST.SUPPLIER_STATE.ON,
+        status: this.$CONST.SERVICE_STATION_STATE.ON,
       };
     },
-    async getSupplierl() {
+    async getService() {
       if (!this.editInfo?.id) return;
-      const [, res] = await this.$http.Supplier.GetSupplierDetail({
+      const [, res] = await this.$http.ServiceStation.GetServiceStationDetail({
         id: this.editInfo.id,
       });
       this.formData = { ...this.formData, ...(res || {}) };
@@ -180,15 +180,18 @@ export default {
         });
       }
       delete query.address;
-      const [, res] = await this.$http.Supplier[
-        id ? "UpdateSupplierl" : "AddSupplierl"
+      const [, res] = await this.$http.ServiceStation[
+        id ? "UpdateServiceStation" : "AddServiceStation"
       ]({ ...query });
       this.isLoading = false;
       this.$message[res ? "success" : "error"](
-        res?.message || `${id ? "编辑" : "新增"}供应商${res ? "成功" : "失败"}`
+        res?.message || `${id ? "编辑" : "新增"}服务点${res ? "成功" : "失败"}`
       );
       if (res) {
-        this.$store.dispatch("accountRoleManage/GetSupplierListAction", true);
+        this.$store.dispatch(
+          "accountRoleManage/GetServiceStationListAction",
+          true
+        );
         this.handleClose(true);
       }
     },
