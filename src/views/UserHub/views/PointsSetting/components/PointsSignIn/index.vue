@@ -77,7 +77,10 @@ export default {
         item.signReward.couponIds = idsArr.join(",");
       });
       const [, res] = await this.$http.SignIn.UpdateSignInDetail(quert);
-      if (res) this.$message.success("保存成功");
+      this.getDetail();
+      if (res) {
+        this.$message.success("保存成功");
+      }
     },
   },
   mounted() {
