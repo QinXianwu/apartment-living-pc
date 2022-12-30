@@ -168,6 +168,8 @@ export default {
       const tempArr = simpleCloneDeep(this.productSpecificationList);
       tempArr.forEach((item) => {
         if (item?.id) item.id = this.$JSONbig.stringify(item.id);
+        if (item?.specificationId)
+          item.specificationId = this.$JSONbig.stringify(item.specificationId);
         if (!item?.productSpecificationValueList?.length) {
           delete item.productSpecificationValueList;
           arr.push(item);
