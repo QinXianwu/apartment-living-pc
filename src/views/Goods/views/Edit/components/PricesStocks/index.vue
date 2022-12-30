@@ -7,6 +7,7 @@
           <GoodsSpecifica
             ref="GoodsSpecifica"
             :specificaList.sync="specificaList"
+            :productSpecificationList="productSpecificationList"
           />
         </el-form-item>
         <el-form-item label="价格库存">
@@ -31,6 +32,10 @@ export default {
   name: "PricesStocks",
   components: { GoodsSpecifica, PriceInventory },
   props: {
+    productInfo: {
+      type: Object,
+      default: () => ({}),
+    },
     discountIs: {
       type: [Number, String],
       default: CONST.DISCOUNTED_TYPE.NOT,
@@ -41,11 +46,25 @@ export default {
       CONST,
       specificaList: [],
       skuData: [],
+      productSpecificationList: [], // 规格实体
+      productStockPriceList: [], // 价格库存实体
     };
   },
   computed: {},
-  watch: {},
+  watch: {
+    productInfo(val) {
+      if (val) this.init();
+    },
+  },
   methods: {
+    init() {
+      this.productSpecificationList =
+        this.productInfo?.productSpecificationList || [];
+      const data2 = this.productInfo?.productSpecificationList || [];
+      if (data2?.length) {
+        this.productStockPriceList = [];
+      }
+    },
     async getQuery() {
       // eslint-disable-next-line
       return new Promise(async (resolve) => {
@@ -62,7 +81,7 @@ export default {
     },
   },
   mounted() {
-    //
+    this.init();
   },
 };
 </script>

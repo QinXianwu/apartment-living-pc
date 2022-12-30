@@ -1,21 +1,29 @@
 <template>
   <div class="Edit view-container">
     <div class="title">
-      {{ editInfo && editInfo.id ? "编辑商品" : "新增商品" }}
+      {{ productNo ? "编辑商品" : "新增商品" }}
     </div>
     <div class="content">
       <GoodsStep :activeIndex="activeIndex" :setpList="setpList" />
       <div class="next-0" v-show="activeIndex === 0">
         <!-- 商品基础信息 -->
-        <GoodsInfo ref="GoodsInfo" :discountIs.sync="discountIs" />
+        <GoodsInfo
+          ref="GoodsInfo"
+          :productInfo="productInfo"
+          :discountIs.sync="discountIs"
+        />
         <!-- 商品预售 -->
-        <GoodsPreSale ref="GoodsPreSale" />
+        <GoodsPreSale ref="GoodsPreSale" :productInfo="productInfo" />
         <!-- 商品服务 -->
-        <GoodsServe ref="GoodsServe" />
+        <GoodsServe ref="GoodsServe" :productInfo="productInfo" />
         <!-- 价格与库存 -->
-        <PricesStocks ref="PricesStocks" :discountIs="discountIs" />
+        <PricesStocks
+          ref="PricesStocks"
+          :productInfo="productInfo"
+          :discountIs="discountIs"
+        />
         <!-- 商品详情 -->
-        <GoodsDetail ref="GoodsDetail" />
+        <GoodsDetail ref="GoodsDetail" :productInfo="productInfo" />
       </div>
       <div class="next-1" v-show="activeIndex === 1">
         <!-- 相似推荐 -->
@@ -29,7 +37,7 @@
     <!-- 底部按钮 -->
     <FooterView
       :activeIndex="activeIndex"
-      :isUpdate="!!editInfo.id"
+      :isUpdate="!!productNo"
       :setpAll="setpList.length - 1"
       :isShowSave="true"
       @next="next"
@@ -65,12 +73,7 @@ export default {
     FrequentlyPurchased,
     FooterView,
   },
-  props: {
-    editInfo: {
-      type: [Object, String],
-      default: () => ({}),
-    },
-  },
+  props: {},
   data() {
     return {
       activeIndex: 0, // 当前进度
@@ -78,6 +81,8 @@ export default {
       isLoadingGoods: false,
       discountIs: "",
       BaseInfo: {},
+      productNo: "", // 商品编码
+      productInfo: {},
     };
   },
   computed: {
@@ -95,13 +100,18 @@ export default {
   },
   methods: {
     async getGoodsInfo() {
-      if (!this.editInfo?.id) return;
+      if (!this.productNo || this.isLoadingGoods) return;
       this.isLoadingGoods = true;
-      // const [, res] = await this.$http.ProtocolManage.GetAgreementInfo({
-      //   id: this.editInfo?.id || "",
-      // });
+      const [, res] = await this.$http.Goods.GetGoodsInfo({
+        productNo: this.productNo || "",
+      });
       this.isLoadingGoods = false;
-      // this.formData = { ...this.formData, ...(res || {}) };
+      if (!res) return this.$message.error("获取商品详情异常");
+      const JSONbigKeyArr = ["id", "categoryId"];
+      JSONbigKeyArr.forEach((key) => {
+        if (res[key]) res[key] = this.$JSONbig.stringify(res[key]);
+      });
+      this.productInfo = { ...res };
     },
     async next() {
       const key = this.setpList[this.activeIndex].key;
@@ -137,10 +147,13 @@ export default {
       // 表单校验
       this.isLoading = true;
       const query = {
+        ...this.productInfo,
         ...this.BaseInfo,
       };
       if (this.isService) query.stationId = this.serviceStationId;
-      const [, res] = await this.$http.Goods.AddGoods(query);
+      const [, res] = await this.$http.Goods[
+        this.productNo ? "UpdateGoods" : "AddGoods"
+      ](query);
       this.isLoading = false;
       this.$message[res ? "success" : "error"](
         res?.msg || `发布商品${res ? "成功" : "失败"}`
@@ -154,6 +167,9 @@ export default {
     },
     // 初始化操作
     async initLoad() {
+      const { query } = this.$route;
+      this.productNo = query?.productNo || "";
+      this.productInfo = {};
       this.getGoodsInfo();
     },
   },

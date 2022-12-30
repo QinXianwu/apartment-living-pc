@@ -35,6 +35,18 @@ export default {
       })
     );
   },
+  // 查询平台/供应商商品详情
+  GetGoodsInfo(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url:
+          apiPrefix + "/apartment-product/product/atproduct/queryByProductNo",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
   // 新增商品
   AddGoods(params) {
     return catchAsyncFun(

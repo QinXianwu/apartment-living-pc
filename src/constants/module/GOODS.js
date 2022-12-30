@@ -88,11 +88,13 @@ export const CATEGORY_HOT_TYPE_OPTIONS = () => [
 // 商品上下架状态
 export const GOODS_OPER_STATE = {
   LISTING: 1, // 上架
-  REMOVAL: 0, // 下架
+  REMOVAL: 2, // 下架
+  NO_CHECK: 3, // 待审核
 };
 export const GOODS_OPER_STATE_TEXT = {
   [GOODS_OPER_STATE.LISTING]: "上架",
   [GOODS_OPER_STATE.REMOVAL]: "下架",
+  [GOODS_OPER_STATE.NO_CHECK]: "待审核",
 };
 // 商品上下架状态options
 export const GOODS_OPER_STATE_OPTIONS = () => [
@@ -103,6 +105,10 @@ export const GOODS_OPER_STATE_OPTIONS = () => [
   {
     label: GOODS_OPER_STATE_TEXT[GOODS_OPER_STATE.REMOVAL],
     value: GOODS_OPER_STATE.REMOVAL,
+  },
+  {
+    label: GOODS_OPER_STATE_TEXT[GOODS_OPER_STATE.NO_CHECK],
+    value: GOODS_OPER_STATE.NO_CHECK,
   },
 ];
 

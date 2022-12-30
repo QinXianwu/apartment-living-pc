@@ -35,18 +35,39 @@ import Tinymce from "@/components/Tinymce";
 export default {
   name: "GoodsDetail",
   components: { Uploader, Tinymce },
-  props: {},
+  props: {
+    productInfo: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   data() {
     return {
-      formData: {
-        mainImage: [],
-        bannerImage: [],
-        productDetails: "",
-      },
+      formData: {},
     };
+  },
+  watch: {
+    productInfo(val) {
+      if (val) this.init();
+    },
   },
   computed: {},
   methods: {
+    init() {
+      const data = {
+        mainImage: [],
+        bannerImage: [],
+        productDetails: "",
+      };
+      const keyStr = "mainImage,bannerImage";
+      const keyArr = Object.keys(data);
+      keyArr.forEach((key) => {
+        if (keyStr.includes(key) && this.productInfo[key])
+          data[key] = [{ url: this.productInfo[key] }];
+        else if (this.productInfo[key]) data[key] = this.productInfo[key];
+      });
+      this.formData = { ...data };
+    },
     async getQuery() {
       // eslint-disable-next-line
       return new Promise(async (resolve) => {
@@ -65,7 +86,7 @@ export default {
     },
   },
   mounted() {
-    //
+    this.init();
   },
 };
 </script>

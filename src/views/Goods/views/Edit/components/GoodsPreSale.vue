@@ -20,11 +20,11 @@
           prop="preFhDate"
         >
           <el-date-picker
+            type="datetime"
             v-model="formData.preFhDate"
-            type="date"
             :picker-options="preDatePickerOptions"
             placeholder="选择日期时间"
-            value-format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd HH:mm:ss"
           />
           <span class="form-tip ml-10">之后开始发货，超过日期后正常售卖</span>
         </el-form-item>
@@ -40,6 +40,10 @@ export default {
   name: "GoodsPreSale",
   components: {},
   props: {
+    productInfo: {
+      type: Object,
+      default: () => ({}),
+    },
     isPre: {
       type: Boolean,
       default: false,
@@ -52,10 +56,7 @@ export default {
   data() {
     return {
       CONST,
-      formData: {
-        isPre: CONST.PRE_SALE_TYPE.NOT,
-        preFhDate: "",
-      },
+      formData: {},
       preDatePickerOptions: {
         disabledDate(time) {
           return time.getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天的
@@ -73,6 +74,9 @@ export default {
     };
   },
   watch: {
+    productInfo(val) {
+      if (val) this.init();
+    },
     "formData.isPre"(val) {
       if (val === this.CONST.PRE_SALE_TYPE.NOT) {
         this.$set(this.formData, "preFhDate", "");
@@ -82,6 +86,17 @@ export default {
   },
   computed: {},
   methods: {
+    init() {
+      const data = {
+        isPre: CONST.PRE_SALE_TYPE.NOT,
+        preFhDate: "",
+      };
+      const keyArr = Object.keys(data);
+      keyArr.forEach((key) => {
+        if (this.productInfo[key]) data[key] = this.productInfo[key];
+      });
+      this.formData = { ...data };
+    },
     async getQuery() {
       // eslint-disable-next-line
       return new Promise(async (resolve) => {
@@ -107,7 +122,7 @@ export default {
     },
   },
   mounted() {
-    //
+    this.init();
   },
 };
 </script>

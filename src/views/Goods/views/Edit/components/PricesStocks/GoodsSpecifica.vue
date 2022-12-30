@@ -12,7 +12,7 @@
               clearable
               class="input-medium"
               placeholder="请选择商品规格"
-              v-model="specifica.id"
+              v-model="specifica.specificationId"
               @change="selectSpecifica"
             >
               <el-option
@@ -31,46 +31,60 @@
             >
           </div>
         </div>
-        <div class="specifica-content" v-if="specifica.id">
+        <div class="specifica-content" v-if="specifica.specificationId">
           <div class="specificaVal">
             <el-tag
               closable
-              v-for="(tag, i) in specificaValMap[specifica.id]"
+              v-for="(tag, i) in specificaValMap[specifica.specificationId]"
               :key="i + 'tab'"
               class="mr-10"
-              @close="handleTagClose(specifica.id, i)"
+              @close="handleTagClose(specifica.specificationId, i)"
             >
               {{ tag.specificationValueName }}
             </el-tag>
           </div>
           <el-popover placement="bottom-start" trigger="click">
-            <el-button type="text" slot="reference">添加规格值</el-button>
+            <el-button
+              type="text"
+              slot="reference"
+              @click="showSpecifica(specifica.specificationId)"
+              >添加规格值</el-button
+            >
             <div class="specifica-addVal">
               <div class="addVal-input">
                 <el-input
                   type="text"
                   placeholder="请输入规格值"
                   class="input-small"
-                  v-model="specificaValInputMap[specifica.id]"
+                  v-model="specificaValInputMap[specifica.specificationId]"
                 />
                 <el-button
                   type="primary"
-                  @click="addSpecificaVal(specifica.id)"
+                  @click="addSpecificaVal(specifica.specificationId)"
                   v-loading="isLoadingSpecifica"
                   >新增规格值</el-button
                 >
               </div>
               <div class="select-val">
                 <el-checkbox-group
-                  v-model="specificaValCheckboxMap[specifica.id]"
+                  v-model="specificaValCheckboxMap[specifica.specificationId]"
                 >
                   <el-checkbox
                     border
-                    :key="ele.id"
-                    :disabled="isDisabledCheckbox(specifica.id, ele.id)"
-                    :label="ele.id"
-                    v-for="ele in specificaValMapOld[specifica.id]"
-                    @change="(val) => handleCheckbox(val, specifica.id, ele)"
+                    class="mb-10 ml-10 mr-10"
+                    :key="ele.specificationValueId"
+                    :label="ele.specificationValueId"
+                    :disabled="
+                      isDisabledCheckbox(
+                        specifica.specificationId,
+                        ele.specificationValueId
+                      )
+                    "
+                    v-for="ele in specificaValMapOld[specifica.specificationId]"
+                    @change="
+                      (val) =>
+                        handleCheckbox(val, specifica.specificationId, ele)
+                    "
                     >{{ ele.specificationValueName }}</el-checkbox
                   >
                 </el-checkbox-group>
@@ -105,6 +119,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    productSpecificationList: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -115,6 +133,7 @@ export default {
       specificaValInputMap: {},
       specificaValCheckboxMap: {},
       isLoadingSpecifica: false,
+      productNo: "",
     };
   },
   computed: {
@@ -122,12 +141,14 @@ export default {
       specificaListAll: (state) => state.goods.specificaListAll,
     }),
     skuIds({ list }) {
-      return list.filter((item) => item?.id);
+      return list.filter((item) => item?.specificationId);
     },
-    skuList({ skuIds, specificaValMap }) {
+    skuList({ productNo, skuIds, specificaValMap }) {
       return skuIds.map((item) => ({
-        id: item.id,
-        productSpecificationValueList: specificaValMap[item.id] || [],
+        productNo: productNo || "",
+        specificationId: item.specificationId,
+        productSpecificationValueList:
+          specificaValMap[item.specificationId] || [],
       }));
     },
   },
@@ -135,27 +156,79 @@ export default {
     skuList(val) {
       this.$emit("update:specificaList", val);
     },
+    productSpecificationList(val) {
+      if (val?.length) this.init();
+    },
   },
   methods: {
+    init() {
+      if (!this.productSpecificationList?.length) return;
+      const arr = [];
+      this.list = [];
+      const tempArr = simpleCloneDeep(this.productSpecificationList);
+      tempArr.forEach((item) => {
+        if (item?.id) item.id = this.$JSONbig.stringify(item.id);
+        if (!item?.productSpecificationValueList?.length) {
+          delete item.productSpecificationValueList;
+          arr.push(item);
+          return;
+        }
+        item.productSpecificationValueList.forEach((ele) => {
+          if (ele?.id) ele.id = this.$JSONbig.stringify(ele.id);
+          if (ele?.productSpecificationId) {
+            const productSpecificationId = this.$JSONbig.stringify(
+              ele.productSpecificationId
+            );
+            // ele.specificationId = productSpecificationId;
+            ele.productSpecificationId = productSpecificationId;
+            item.specificationId = ele.productSpecificationId;
+          }
+          if (ele?.specificationValueId)
+            ele.specificationValueId = this.$JSONbig.stringify(
+              ele.specificationValueId
+            );
+        });
+        this.$set(
+          this.specificaValMap,
+          item.specificationId,
+          item.productSpecificationValueList || []
+        );
+        this.$set(
+          this.specificaValCheckboxMap,
+          item.specificationId,
+          item.productSpecificationValueList.map(
+            (item) => item.specificationValueId
+          )
+        );
+        // delete item.productSpecificationValueList;
+        this.list.push(item);
+      });
+      console.log(this.list);
+    },
     isDisabled(id) {
-      return !!this.list.find((item) => item?.id === id);
+      return !!this.list.find((item) => item?.specificationId === id);
     },
     isDisabledCheckbox(specificaId, id) {
       return !!this.specificaValMap[specificaId].find(
-        (item) => item?.id === id
+        (item) => item?.specificationValueId === id
       );
     },
     addSpecifica() {
       this.list.push({});
     },
+    async showSpecifica(id) {
+      if (!id || this.specificaValMapOld[id]) return;
+      const list = await this.getSpecificaValList({ id: id });
+      this.$set(this.specificaValMapOld, id, simpleCloneDeep(list));
+    },
     deleteSpecifica(index) {
-      const id = this.list[index].id;
+      const id = this.list[index].specificationId;
       const tempList = simpleCloneDeep(this.specificaValMapOld[id] || []);
       this.$set(this.specificaValMap, id, tempList);
       this.$set(
         this.specificaValCheckboxMap,
         id,
-        tempList.map((item) => item.id)
+        tempList.map((item) => item.specificationValueId)
       );
       this.list.splice(index, 1);
     },
@@ -167,20 +240,20 @@ export default {
         this.$set(
           this.specificaValCheckboxMap,
           val,
-          list.map((item) => item.id)
+          list.map((item) => item.specificationValueId)
         );
       }
     },
     handleTagClose(id, index) {
       const _index_ = this.specificaValCheckboxMap[id].findIndex(
-        (item) => item === this.specificaValMap[id][index].id
+        (item) => item === this.specificaValMap[id][index].specificationValueId
       );
       this.specificaValCheckboxMap[id].splice(_index_, 1);
       this.specificaValMap[id].splice(index, 1);
     },
     handleCheckbox(val, id, data) {
       const index = this.specificaValMap[id].findIndex(
-        (item) => item?.id === data?.id
+        (item) => item?.specificationValueId === data?.specificationValueId
       );
       if (val && index === -1) {
         this.specificaValMap[id].push({
@@ -216,12 +289,19 @@ export default {
       );
       const data = res?.length ? res : [];
       data.forEach((item) => {
-        if (item?.id) item.id = this.$JSONbig.stringify(item.id);
-        if (item?.specificationId)
+        if (item?.id)
+          item.specificationValueId = this.$JSONbig.stringify(item.id);
+        if (item?.specificationId) {
           item.specificationId = this.$JSONbig.stringify(item.specificationId);
+          // item.productSpecificationId = this.$JSONbig.stringify(
+          //   item.specificationId
+          // );
+        }
+        if (this.productNo) item.productNo = this.productNo;
         this.$set(this.specificaValInputMap, id, "");
         if (isUpdateCheckboxMap)
           this.$set(this.specificaValCheckboxMap, id, []);
+        delete item.id;
       });
       return data;
     },
@@ -247,6 +327,8 @@ export default {
     },
   },
   mounted() {
+    const { query } = this.$route;
+    this.productNo = query?.productNo || "";
     this.$store.dispatch("goods/GetSpecificaListAction");
   },
 };

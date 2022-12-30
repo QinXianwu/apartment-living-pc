@@ -41,7 +41,12 @@ import CONST from "@/constants/index";
 export default {
   name: "GoodsServe",
   components: {},
-  props: {},
+  props: {
+    productInfo: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   data() {
     return {
       CONST,
@@ -68,9 +73,17 @@ export default {
       list: [],
     };
   },
-  watch: {},
+  watch: {
+    productInfo(val) {
+      if (val) this.init();
+    },
+  },
   computed: {},
   methods: {
+    init() {
+      if (this.productInfo?.productSerList?.length)
+        this.list = this.productInfo.productSerList;
+    },
     addServe() {
       this.list.push({
         serviceName: "",
@@ -102,7 +115,7 @@ export default {
     },
   },
   mounted() {
-    //
+    this.init();
   },
 };
 </script>

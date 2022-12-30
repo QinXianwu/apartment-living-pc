@@ -226,13 +226,7 @@ export default {
     }
   }
   .address {
-    word-wrap: break-word;
-    text-overflow: -o-ellipsis-lastline;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    @include overflow-eps(2);
   }
   .action {
     padding: 0 0 15px;

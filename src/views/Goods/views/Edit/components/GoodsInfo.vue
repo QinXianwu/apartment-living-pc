@@ -71,7 +71,7 @@
         <el-form-item label="上下架" prop="operStatus">
           <el-radio-group v-model="formData.operStatus">
             <el-radio-button
-              v-for="(item, index) in CONST.GOODS_OPER_STATE_OPTIONS()"
+              v-for="(item, index) in operStatusOptions"
               :label="item.value"
               :value="item.value"
               :key="index"
@@ -123,7 +123,7 @@
             :step="1"
             :min="1"
             :max="999999"
-          ></el-input-number>
+          />
         </el-form-item>
       </el-form>
     </div>
@@ -138,6 +138,10 @@ export default {
   name: "GoodsInfo",
   components: {},
   props: {
+    productInfo: {
+      type: Object,
+      default: () => ({}),
+    },
     discountIs: {
       type: [Number, String],
       default: CONST.DISCOUNTED_TYPE.NOT,
@@ -147,10 +151,7 @@ export default {
     return {
       CONST,
       formData: {
-        operStatus: CONST.GOODS_OPER_STATE.LISTING,
-        bargainIs: CONST.SPECIALS_TYPE.NOT,
-        discountIs: CONST.DISCOUNTED_TYPE.NOT,
-        isLimit: CONST.RESTRICTED_TYPE.NOT,
+        productTag: [],
       },
       rules: {
         categoryId: [
@@ -171,6 +172,9 @@ export default {
     };
   },
   watch: {
+    productInfo(val) {
+      if (val) this.init();
+    },
     "formData.isLimit"(val) {
       if (val === this.CONST.RESTRICTED_TYPE.NOT)
         this.$set(this.formData, "limitNum", 0);
@@ -188,9 +192,42 @@ export default {
       categoryAllOptions: "goods/CategoryAllOptions",
       supplierOptions: "accountRoleManage/supplierOptions",
     }),
+    operStatusOptions() {
+      return [
+        {
+          label: CONST.GOODS_OPER_STATE_TEXT[CONST.GOODS_OPER_STATE.LISTING],
+          value: CONST.GOODS_OPER_STATE.LISTING,
+        },
+        {
+          label: CONST.GOODS_OPER_STATE_TEXT[CONST.GOODS_OPER_STATE.REMOVAL],
+          value: CONST.GOODS_OPER_STATE.REMOVAL,
+        },
+      ];
+    },
   },
   methods: {
+    init() {
+      const data = {
+        categoryId: "",
+        productName: "",
+        title: "",
+        supplierId: "",
+        limitNum: "",
+        operStatus: CONST.GOODS_OPER_STATE.LISTING,
+        bargainIs: CONST.SPECIALS_TYPE.NOT,
+        discountIs: CONST.DISCOUNTED_TYPE.NOT,
+        isLimit: CONST.RESTRICTED_TYPE.NOT,
+      };
+      const keyArr = Object.keys(data);
+      keyArr.forEach((key) => {
+        if (this.productInfo[key]) data[key] = this.productInfo[key];
+      });
+      if (this.productInfo?.productTag)
+        data.productTag = this.productInfo.productTag.split(",");
+      this.formData = { ...data };
+    },
     async getQuery() {
+      // console.log(this.formData);
       // eslint-disable-next-line
       return new Promise(async (resolve) => {
         // 表单校验
@@ -212,6 +249,7 @@ export default {
     },
   },
   mounted() {
+    this.init();
     this.$store.dispatch("goods/GetCategoryAllAction");
     this.$store.dispatch("accountRoleManage/GetSupplierListAction");
   },

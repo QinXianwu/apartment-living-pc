@@ -90,9 +90,11 @@ export default {
   watch: {
     value(val) {
       // if (!this.hasChange && this.hasInit) {
-      this.$nextTick(() => {
-        TinymceCase.get(this.tinymceId).setContent(val || "");
-      });
+      if (TinymceCase?.get) {
+        this.$nextTick(() => {
+          TinymceCase.get(this.tinymceId).setContent(val || "");
+        });
+      }
       // }
     },
   },

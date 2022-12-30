@@ -124,6 +124,7 @@ export default {
         pageNum: 1,
         pageSize: 5,
       },
+      productNo: "",
     };
   },
   computed: {
@@ -321,6 +322,8 @@ export default {
     },
   },
   mounted() {
+    const { query } = this.$route;
+    this.productNo = query?.productNo || "";
     this.batcOld = { ...this.batchData };
   },
 };
