@@ -89,7 +89,9 @@
             <el-button type="text" @click="handleEdit(scope)"> 上架 </el-button>
             <el-button type="text" @click="handleEdit(scope)"> 下架 </el-button>
             <el-button type="text" @click="handleEdit(scope)"> 采购 </el-button>
-            <el-button type="text" @click="handleEdit(scope)"> 删除 </el-button>
+            <el-button type="text" @click="handleDelete([scope.id])">
+              删除
+            </el-button>
           </div>
         </template>
       </TablePanel>
@@ -169,20 +171,24 @@ export default {
         query: { productNo: productNo || "" },
       });
     },
-    async handleDelete() {
-      const ids = Object.keys(this.selectDataMap).join(",");
+    // 批量删除
+    handleBatchDelete() {
+      if (!Object.keys(this.selectDataMap)?.length)
+        return this.$message.error("请选择商品后再试");
+      const ids = Object.keys(this.selectDataMap);
+      this.handleDelete(ids);
+    },
+    async handleDelete(ids) {
       try {
         await this.$confirm(
-          `是否确认删除日志编号为${ids}的数据项？`,
+          `是否确认删除商品ID为${ids}的数据项？`,
           "删除提示",
           {
             type: "warning",
             showClose: false,
           }
         );
-        const [, res] = await this.$http.OperationalLogs.DeleteOperLog({
-          operId: ids,
-        });
+        const [, res] = await this.$http.Goods.DeleteGoods(JSON.stringify(ids));
         const msg = res ? res?.msg || `删除成功` : `删除失败`;
         this.$confirm(msg, "删除提示", {
           showClose: false,

@@ -65,4 +65,13 @@ export default {
       })
     );
   },
+  // 删除商品
+  DeleteGoods(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-product/product/atproduct/delete",
+        params,
+      })
+    );
+  },
 };

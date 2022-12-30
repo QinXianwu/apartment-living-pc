@@ -175,12 +175,6 @@ export default {
     productInfo(val) {
       if (val) this.init();
     },
-    "formData.isLimit"(val) {
-      if (val === this.CONST.RESTRICTED_TYPE.NOT)
-        this.$set(this.formData, "limitNum", 0);
-      else if (val === this.CONST.RESTRICTED_TYPE.YES)
-        this.$set(this.formData, "limitNum", 1);
-    },
     "formData.discountIs"(val) {
       this.$emit("update:discountIs", val);
     },
