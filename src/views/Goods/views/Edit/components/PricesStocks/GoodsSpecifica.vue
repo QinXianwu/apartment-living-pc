@@ -181,7 +181,6 @@ export default {
             );
             // ele.specificationId = productSpecificationId;
             ele.productSpecificationId = productSpecificationId;
-            item.specificationId = ele.productSpecificationId;
           }
           if (ele?.specificationValueId)
             ele.specificationValueId = this.$JSONbig.stringify(
