@@ -150,7 +150,6 @@ export default {
       if (!data?.location?.lat || !data?.location?.lng) return;
       this.$emit("update:longitude", data.location.lng);
       this.$emit("update:latitude", data.location.lat);
-      this.$emit("update:detailAddress", data?.address || "");
       const lnglat = [data.location.lng, data.location.lat];
       this.handleAddress(lnglat);
     },
@@ -163,10 +162,19 @@ export default {
         this.searchText = result?.regeocode?.formattedAddress || "";
         if (!addressComponent) return;
         const address = [];
+        const addressDetail = [];
         const keyArr = ["province", "city", "district"];
+        const keyDetailArr = ["township", "street", "streetNumber"];
         keyArr.forEach((key, index) => {
           address[index] = addressComponent[key] || "";
         });
+        keyDetailArr.forEach((key, index) => {
+          addressDetail[index] = addressComponent[key] || "";
+        });
+        this.$emit(
+          "update:detailAddress",
+          addressDetail?.length ? addressDetail.join("") : ""
+        );
         this.$emit("update:address", address);
       });
     },
