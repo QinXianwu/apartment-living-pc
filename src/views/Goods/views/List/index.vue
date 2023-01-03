@@ -238,9 +238,18 @@ export default {
     },
   },
   mounted() {
+    this.hasMounted = true;
     this.getList();
     this.$store.dispatch("goods/GetCategoryAllAction");
     this.$store.dispatch("accountRoleManage/GetSupplierListAction");
+  },
+  // 激活的时候重新获取列表
+  activated() {
+    if (this.hasMounted) {
+      this.hasMounted = false; // 防止页面第一次进入的时候触发两次
+    } else {
+      this.getList();
+    }
   },
 };
 </script>

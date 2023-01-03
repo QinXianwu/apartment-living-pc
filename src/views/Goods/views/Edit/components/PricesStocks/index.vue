@@ -76,7 +76,6 @@ export default {
 
       const data2 = this.productInfo?.productStockPriceList || [];
       data2.forEach((item) => digits2Str(item, valIds2));
-      console.log(data2);
       this.productStockPriceList = data2;
     },
     async getQuery() {

@@ -103,6 +103,9 @@ export default {
     list(val) {
       this.$emit("update:skuData", val?.length ? val : []);
     },
+    // productStockPriceList(val) {
+    //   if (val?.length) this.init();
+    // },
   },
   data() {
     return {
@@ -170,6 +173,10 @@ export default {
   methods: {
     init() {
       const data = this.getSkuCombo(this.skuList);
+      if (!this.productStockPriceList?.length) {
+        this.list = data;
+        return;
+      }
       this.productStockPriceList.forEach((item) => {
         let oldItem = data.find((ele) => {
           item.specificationValueId1 = item?.specificationValueId1 || "";
