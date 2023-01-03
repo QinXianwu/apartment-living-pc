@@ -94,12 +94,9 @@ export default {
   },
   watch: {
     skuList(val) {
-      if (!val?.length) this.list = [];
-      else {
-        this.list = this.skuRowList.map((item) => ({
-          ...item,
-        }));
-      }
+      // this.isRefresh = false;
+      this.list = this.getSkuCombo(val);
+      // this.$nextTick(() => (this.isRefresh = true));
     },
     list(val) {
       this.$emit("update:skuData", val?.length ? val : []);
@@ -160,6 +157,16 @@ export default {
         actionHead
       );
     },
+    initData({ column }) {
+      const obj = {
+        discount: 0,
+        procurNum: 0,
+        stock: 0,
+        images: [],
+      };
+      column.forEach((item) => (obj[item.prop] = 0));
+      return obj;
+    },
     // 规格列表下的规格值组合
     skuRowList({ skuList, list }) {
       if (!skuList?.length) return [];
@@ -168,12 +175,12 @@ export default {
           ? skuList[0].productSpecificationValueList.map((ele) => {
               const oldItem = list.find(
                 (v) =>
-                  v?.specificationValueId1 === ele.id &&
+                  v?.specificationValueId1 === ele.specificationValueId &&
                   v?.specificationValueId2 === ""
               );
               return (
                 oldItem || {
-                  specificationValueId1: ele.id,
+                  specificationValueId1: ele.specificationValueId,
                   specificationValueId2: "",
                   specificationValueName1: ele.specificationValueName,
                   specificationValueName2: "",
@@ -195,14 +202,14 @@ export default {
           item.productSpecificationValueList.forEach((ele) => {
             const oldItem = list.find(
               (v) =>
-                v?.specificationValueId1 === ele.id &&
-                v?.specificationValueId2 === ""
+                v?.specificationValueId1 === ele.specificationValueId &&
+                v?.specificationValueId2 === ele.specificationValueId2
             );
             skuList[tempIndex].productSpecificationValueList.forEach((i) => {
               arr.push(
                 oldItem || {
-                  specificationValueId1: ele.id,
-                  specificationValueId2: i.id,
+                  specificationValueId1: ele.specificationValueId,
+                  specificationValueId2: i.specificationValueId,
                   specificationValueName1: ele.specificationValueName,
                   specificationValueName2: i.specificationValueName,
                   discount: 0,
@@ -298,6 +305,60 @@ export default {
       }));
       this.showBatchInput = false;
       this.batchData.val = "";
+    },
+    // sku列表组合
+    getSkuCombo(skuList = []) {
+      if (!skuList?.length) return [];
+      const skuComboData = [];
+      skuList.map((item, index) => {
+        const nextIndex = index + 1;
+        const nextItem = skuList.length > nextIndex ? skuList[nextIndex] : {};
+        const valArr = item?.productSpecificationValueList || [];
+        const nextValArr = nextItem?.productSpecificationValueList || [];
+        const itemValArr = valArr.map((ele) => {
+          const oldItem = this.list.find(
+            (listItem) =>
+              listItem.specificationValueId1 === ele?.specificationValueId &&
+              !listItem.specificationValueId2
+          );
+          const tempObj = oldItem || {
+            ...this.specificationItem(ele),
+            ...this.initData,
+          };
+          return tempObj;
+        });
+        if (
+          skuList.length === 1 ||
+          (skuList.length - 1 >= nextIndex && !nextValArr.length)
+        ) {
+          itemValArr.forEach((i) => skuComboData.push(i));
+        } else if (skuList.length - 1 >= nextIndex && nextValArr.length) {
+          valArr.forEach((ele) => {
+            nextValArr.forEach((v) => {
+              const oldItem = this.list.find(
+                (listItem) =>
+                  listItem.specificationValueId1 ===
+                    ele?.specificationValueId &&
+                  listItem.specificationValueId2 === v?.specificationValueId
+              );
+              const tempData = {
+                ...this.specificationItem(ele, v),
+                ...this.initData,
+              };
+              skuComboData.push(oldItem || tempData);
+            });
+          });
+        }
+      });
+      return skuComboData;
+    },
+    specificationItem(data1, data2) {
+      return {
+        specificationValueId1: data1?.specificationValueId || "",
+        specificationValueId2: data2?.specificationValueId || "",
+        specificationValueName1: data1?.specificationValueName || "",
+        specificationValueName2: data2?.specificationValueName || "",
+      };
     },
     async getQuery() {
       // eslint-disable-next-line

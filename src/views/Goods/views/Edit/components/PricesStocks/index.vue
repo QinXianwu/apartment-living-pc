@@ -58,8 +58,28 @@ export default {
   },
   methods: {
     init() {
-      this.productSpecificationList =
-        this.productInfo?.productSpecificationList || [];
+      const data1 = this.productInfo?.productSpecificationList || [];
+      data1.forEach((item) => {
+        // 数据库18位id转换为字符串
+        item.id = this.$JSONbig.stringify(item?.id) || "";
+        item.specificationId =
+          this.$JSONbig.stringify(item?.specificationId) || "";
+        if (!item?.productSpecificationValueList?.length) return;
+        item.productSpecificationValueList.forEach((ele) => {
+          if (ele?.id) ele.id = this.$JSONbig.stringify(ele.id);
+          if (ele?.productSpecificationId) {
+            ele.productSpecificationId = this.$JSONbig.stringify(
+              ele.productSpecificationId
+            );
+          }
+          if (ele?.specificationValueId)
+            ele.specificationValueId = this.$JSONbig.stringify(
+              ele.specificationValueId
+            );
+        });
+      });
+      this.productSpecificationList = data1;
+
       const data2 = this.productInfo?.productSpecificationList || [];
       if (data2?.length) {
         this.productStockPriceList = [];

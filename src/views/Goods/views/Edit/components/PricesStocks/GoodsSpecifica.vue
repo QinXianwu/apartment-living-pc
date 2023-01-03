@@ -145,6 +145,7 @@ export default {
     },
     skuList({ productNo, skuIds, specificaValMap }) {
       return skuIds.map((item) => ({
+        ...item,
         productNo: productNo || "",
         specificationId: item.specificationId,
         productSpecificationValueList:
@@ -163,54 +164,32 @@ export default {
   methods: {
     init() {
       if (!this.productSpecificationList?.length) return;
-      const arr = [];
       this.list = [];
       const tempArr = simpleCloneDeep(this.productSpecificationList);
-      tempArr.forEach((item) => {
-        if (item?.id) item.id = this.$JSONbig.stringify(item.id);
-        if (item?.specificationId)
-          item.specificationId = this.$JSONbig.stringify(item.specificationId);
-        if (!item?.productSpecificationValueList?.length) {
-          delete item.productSpecificationValueList;
-          arr.push(item);
-          return;
-        }
-        item.productSpecificationValueList.forEach((ele) => {
-          if (ele?.id) ele.id = this.$JSONbig.stringify(ele.id);
-          if (ele?.productSpecificationId) {
-            const productSpecificationId = this.$JSONbig.stringify(
-              ele.productSpecificationId
-            );
-            // ele.specificationId = productSpecificationId;
-            ele.productSpecificationId = productSpecificationId;
-          }
-          if (ele?.specificationValueId)
-            ele.specificationValueId = this.$JSONbig.stringify(
-              ele.specificationValueId
-            );
+      console.log(tempArr);
+      tempArr.forEach(async (item) => {
+        const specificationId = item?.specificationId || "";
+        item.specificationId = specificationId;
+        const data = await this.getSpecificaValList({
+          id: specificationId,
         });
-        this.$set(
-          this.specificaValMap,
-          item.specificationId,
-          item.productSpecificationValueList || []
+        const skuValIds = item.productSpecificationValueList.map(
+          (item) => item.specificationValueId
         );
-        this.$set(
-          this.specificaValCheckboxMap,
-          item.specificationId,
-          item.productSpecificationValueList.map(
-            (item) => item.specificationValueId
-          )
+        const joinValList = data.filter((v) =>
+          skuValIds.includes(v.specificationValueId)
         );
-        // delete item.productSpecificationValueList;
+        this.$set(this.specificaValMap, specificationId, joinValList);
+        this.$set(this.specificaValMapOld, specificationId, data || []);
+        this.$set(this.specificaValCheckboxMap, specificationId, skuValIds);
         this.list.push(item);
       });
-      console.log(this.list);
     },
     isDisabled(id) {
       return !!this.list.find((item) => item?.specificationId === id);
     },
     isDisabledCheckbox(specificaId, id) {
-      return !!this.specificaValMap[specificaId].find(
+      return !!this.specificaValMap[specificaId]?.find(
         (item) => item?.specificationValueId === id
       );
     },
@@ -282,11 +261,10 @@ export default {
       this.$set(this.specificaValMapOld, id, simpleCloneDeep(list));
     },
     async getSpecificaValList({ id, isUpdateCheckboxMap = true }) {
-      if (!id) return;
+      if (!id) return Promise.resolve([]);
+      const query = { specificationId: id };
       const [, res] = await this.$http.GoodsSpecification.GetSpecificaValueList(
-        {
-          specificationId: id,
-        }
+        query
       );
       const data = res?.length ? res : [];
       data.forEach((item) => {
@@ -294,9 +272,6 @@ export default {
           item.specificationValueId = this.$JSONbig.stringify(item.id);
         if (item?.specificationId) {
           item.specificationId = this.$JSONbig.stringify(item.specificationId);
-          // item.productSpecificationId = this.$JSONbig.stringify(
-          //   item.specificationId
-          // );
         }
         if (this.productNo) item.productNo = this.productNo;
         this.$set(this.specificaValInputMap, id, "");
@@ -304,7 +279,7 @@ export default {
           this.$set(this.specificaValCheckboxMap, id, []);
         delete item.id;
       });
-      return data;
+      return Promise.resolve(data);
     },
     async getQuery() {
       // eslint-disable-next-line

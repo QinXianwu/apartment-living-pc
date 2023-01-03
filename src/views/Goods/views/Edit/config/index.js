@@ -77,7 +77,7 @@ export const column = [
   {
     label: "一级分销佣金",
     btnText: "一级分销佣金",
-    prop: "firstDistributionAmount	",
+    prop: "firstDistributionAmount",
     type: "money",
   },
   {

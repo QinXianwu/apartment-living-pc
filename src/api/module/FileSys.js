@@ -28,7 +28,6 @@ const UploadImage = ({ flag, fileList }) => {
 
 // 上传单个文件
 const UploadSingleImage = ({ flag, fileList }) => {
-  console.log(fileList);
   const blob = new Blob([fileList[0]], {
     type: fileList[0].type || "",
   });
