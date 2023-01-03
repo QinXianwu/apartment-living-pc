@@ -110,7 +110,6 @@
 <script>
 import { mapGetters } from "vuex";
 import CONST from "@/constants/index";
-// import filters from "@/filters/index";
 import { formData, column, activityTab } from "./config";
 
 export default {
