@@ -56,7 +56,7 @@ export const column = [
   },
   {
     label: "分类",
-    prop: "icon",
+    prop: "categoryName",
     showOverflowTooltip: true,
   },
   {
@@ -66,7 +66,7 @@ export const column = [
   },
   {
     label: "供应商",
-    prop: "perms",
+    prop: "supplierName",
     showOverflowTooltip: true,
   },
   {

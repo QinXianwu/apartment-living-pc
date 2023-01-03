@@ -97,8 +97,8 @@ export default {
     },
   },
   watch: {
-    skuList(val) {
-      this.list = this.getSkuCombo(val);
+    skuList() {
+      this.init();
     },
     list(val) {
       this.$emit("update:skuData", val?.length ? val : []);
@@ -168,6 +168,28 @@ export default {
     },
   },
   methods: {
+    init() {
+      const data = this.getSkuCombo(this.skuList);
+      this.productStockPriceList.forEach((item) => {
+        let oldItem = data.find((ele) => {
+          item.specificationValueId1 = item?.specificationValueId1 || "";
+          item.specificationValueId2 = item?.specificationValueId2 || "";
+          if (
+            item?.specificationValueId1 === ele.specificationValueId1 &&
+            item?.specificationValueId2 === ele.specificationValueId2
+          )
+            return ele;
+          else return null;
+        });
+        if (!oldItem) return;
+        for (const key in item) {
+          if (key === "images")
+            oldItem.images = item[key] ? [{ url: item[key] }] : "";
+          else oldItem[key] = item[key] || oldItem[key] || 0;
+        }
+      });
+      this.list = data;
+    },
     handleSizeChange(val) {
       this.page.pageSize = val;
       this.page.pageNum = 1;
