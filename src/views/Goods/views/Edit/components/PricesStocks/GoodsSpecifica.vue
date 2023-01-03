@@ -166,7 +166,6 @@ export default {
       if (!this.productSpecificationList?.length) return;
       this.list = [];
       const tempArr = simpleCloneDeep(this.productSpecificationList);
-      console.log(tempArr);
       tempArr.forEach(async (item) => {
         const specificationId = item?.specificationId || "";
         item.specificationId = specificationId;

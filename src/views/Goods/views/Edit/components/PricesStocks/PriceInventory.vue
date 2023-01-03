@@ -73,8 +73,8 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { dynamic_column, column } from "../../config/index";
 import Uploader from "@/components/Uploader";
+import { dynamic_column, column } from "../../config/index";
 export default {
   name: "PriceInventory",
   components: { Uploader },
@@ -91,12 +91,14 @@ export default {
       type: Array,
       default: () => [],
     },
+    productStockPriceList: {
+      type: Array,
+      default: () => [],
+    },
   },
   watch: {
     skuList(val) {
-      // this.isRefresh = false;
       this.list = this.getSkuCombo(val);
-      // this.$nextTick(() => (this.isRefresh = true));
     },
     list(val) {
       this.$emit("update:skuData", val?.length ? val : []);
@@ -159,70 +161,10 @@ export default {
     },
     initData({ column }) {
       const obj = {
-        discount: 0,
-        procurNum: 0,
-        stock: 0,
         images: [],
       };
       column.forEach((item) => (obj[item.prop] = 0));
       return obj;
-    },
-    // 规格列表下的规格值组合
-    skuRowList({ skuList, list }) {
-      if (!skuList?.length) return [];
-      else if (skuList.length <= 1)
-        return skuList[0].productSpecificationValueList?.length
-          ? skuList[0].productSpecificationValueList.map((ele) => {
-              const oldItem = list.find(
-                (v) =>
-                  v?.specificationValueId1 === ele.specificationValueId &&
-                  v?.specificationValueId2 === ""
-              );
-              return (
-                oldItem || {
-                  specificationValueId1: ele.specificationValueId,
-                  specificationValueId2: "",
-                  specificationValueName1: ele.specificationValueName,
-                  specificationValueName2: "",
-                  discount: 0,
-                  procurNum: 0,
-                  stock: 0,
-                  images: [],
-                }
-              );
-            })
-          : [];
-      const arr = [];
-      skuList.forEach((item, index) => {
-        const tempIndex = index + 1;
-        if (
-          item.productSpecificationValueList?.length &&
-          skuList.length > tempIndex
-        ) {
-          item.productSpecificationValueList.forEach((ele) => {
-            const oldItem = list.find(
-              (v) =>
-                v?.specificationValueId1 === ele.specificationValueId &&
-                v?.specificationValueId2 === ele.specificationValueId2
-            );
-            skuList[tempIndex].productSpecificationValueList.forEach((i) => {
-              arr.push(
-                oldItem || {
-                  specificationValueId1: ele.specificationValueId,
-                  specificationValueId2: i.specificationValueId,
-                  specificationValueName1: ele.specificationValueName,
-                  specificationValueName2: i.specificationValueName,
-                  discount: 0,
-                  procurNum: 0,
-                  stock: 0,
-                  images: [],
-                }
-              );
-            });
-          });
-        }
-      });
-      return arr;
     },
   },
   methods: {
@@ -234,8 +176,9 @@ export default {
       this.page.pageNum = val;
     },
     clearedList() {
-      this.list = this.skuRowList.map((item) => ({
+      this.list = this.getSkuCombo(this.skuList).map((item) => ({
         ...item,
+        ...this.initData,
         images: [],
       }));
     },

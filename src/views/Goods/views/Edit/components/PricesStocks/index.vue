@@ -16,6 +16,7 @@
             :isDiscount="discountIs === CONST.DISCOUNTED_TYPE.YES"
             :skuList="specificaList"
             :skuData.sync="skuData"
+            :productStockPriceList="productStockPriceList"
           />
         </el-form-item>
       </el-form>
@@ -25,6 +26,7 @@
 
 <script>
 import CONST from "@/constants/index";
+import { digits2Str } from "@/utils/index";
 import GoodsSpecifica from "./GoodsSpecifica.vue";
 import PriceInventory from "./PriceInventory.vue";
 
@@ -58,32 +60,24 @@ export default {
   },
   methods: {
     init() {
+      // 数据库18位id转换为字符串
       const data1 = this.productInfo?.productSpecificationList || [];
-      data1.forEach((item) => {
-        // 数据库18位id转换为字符串
-        item.id = this.$JSONbig.stringify(item?.id) || "";
-        item.specificationId =
-          this.$JSONbig.stringify(item?.specificationId) || "";
+      const ids = ["id", "specificationId"];
+      const valIds1 = ["id", "productSpecificationId", "specificationValueId"];
+      const valIds2 = ["id", "specificationValueId1", "specificationValueId2"];
+      data1.map((item) => {
+        digits2Str(item, ids);
         if (!item?.productSpecificationValueList?.length) return;
-        item.productSpecificationValueList.forEach((ele) => {
-          if (ele?.id) ele.id = this.$JSONbig.stringify(ele.id);
-          if (ele?.productSpecificationId) {
-            ele.productSpecificationId = this.$JSONbig.stringify(
-              ele.productSpecificationId
-            );
-          }
-          if (ele?.specificationValueId)
-            ele.specificationValueId = this.$JSONbig.stringify(
-              ele.specificationValueId
-            );
+        item.productSpecificationValueList.map((ele) => {
+          digits2Str(ele, valIds1);
         });
       });
       this.productSpecificationList = data1;
 
-      const data2 = this.productInfo?.productSpecificationList || [];
-      if (data2?.length) {
-        this.productStockPriceList = [];
-      }
+      const data2 = this.productInfo?.productStockPriceList || [];
+      data2.forEach((item) => digits2Str(item, valIds2));
+      console.log(data2);
+      this.productStockPriceList = data2;
     },
     async getQuery() {
       // eslint-disable-next-line

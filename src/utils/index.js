@@ -1,3 +1,5 @@
+import JSONbig from "json-bigint"; // 解决超过 16 位数字精度丢失问题
+
 // async 方法的处理
 export const createCatchAsyncFun = (errorHandle) => {
   return async (fn) => {
@@ -296,4 +298,14 @@ export function convertToChinaNum(num) {
   //将【一十】换成【十】
   result = result.replace(/^一十/g, "十");
   return result;
+}
+
+// 18位数字转字符串
+export function digits2Str(data = {}, keys = []) {
+  if (Object.prototype.toString.call(data) !== "[object Object]") return data;
+  if (!keys?.length) return data;
+  keys.forEach((key) => {
+    data[key] = data[key] ? JSONbig.stringify(data[key]) : "";
+  });
+  return data;
 }
