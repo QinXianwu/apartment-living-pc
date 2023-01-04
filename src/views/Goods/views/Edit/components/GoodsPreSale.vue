@@ -2,7 +2,13 @@
   <div class="GoodsPreSale">
     <div class="title">商品预售</div>
     <div class="content">
-      <el-form ref="form" :rules="rules" :model="formData" label-width="120px">
+      <el-form
+        ref="form"
+        :rules="rules"
+        :model="formData"
+        :disabled="isDisableForm"
+        label-width="120px"
+      >
         <el-form-item label="开启预售" prop="isPre">
           <el-radio-group v-model="formData.isPre">
             <el-radio-button
@@ -34,8 +40,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import CONST from "@/constants/index";
-
 export default {
   name: "GoodsPreSale",
   components: {},
@@ -84,7 +90,11 @@ export default {
       }
     },
   },
-  computed: {},
+  computed: {
+    ...mapState({
+      isDisableForm: (state) => state.goods.isDisableForm,
+    }),
+  },
   methods: {
     init() {
       const data = {

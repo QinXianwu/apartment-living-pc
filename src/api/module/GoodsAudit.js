@@ -24,7 +24,6 @@ export default {
       apiFetch({
         url: apiPrefix + "/apartment-product/product/atproduct/approval",
         params,
-        isReturnAll: true,
       })
     );
   },
@@ -34,7 +33,6 @@ export default {
       apiFetch({
         url: apiPrefix + "/apartment-product/product/atproduct/refreshApproval",
         params,
-        isReturnAll: true,
       })
     );
   },

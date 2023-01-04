@@ -142,6 +142,7 @@
 <script>
 import { mapGetters } from "vuex";
 import CONST from "@/constants/index";
+import { digits2Str } from "@/utils/index";
 import TagPage from "./components/TagPage.vue";
 import { formData, column, activityTab } from "./config";
 
@@ -193,12 +194,14 @@ export default {
       this.getList(true);
     },
     handleAdd() {
+      this.$store.commit("goods/SET_IS_DISABLE_FORM", 0);
       this.$router.push({
         name: "GoodsEdit",
         query: {},
       });
     },
     handleEdit({ productNo }) {
+      this.$store.commit("goods/SET_IS_DISABLE_FORM", 0);
       this.$router.push({
         name: "GoodsEdit",
         query: { productNo: productNo || "" },
@@ -300,7 +303,9 @@ export default {
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
         this.$message.error(res?.msg || "获取商品列表异常");
       }
-      this.list = res?.rows || [];
+      const data = res?.rows?.length ? res.rows : [];
+      data.forEach((item) => digits2Str(item, ["id"]));
+      this.list = data;
       this.total = res?.total || 0;
       this.initSelection();
     },

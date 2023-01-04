@@ -2,15 +2,22 @@
   <div class="GoodsDetail">
     <div class="title">商品详情</div>
     <div class="content">
-      <el-form ref="form" :model="formData" label-width="120px">
+      <el-form
+        ref="form"
+        :model="formData"
+        label-width="120px"
+        :disabled="isDisableForm"
+      >
         <el-form-item label="主图" prop="mainImage">
           <Uploader
+            :isOperation="!isDisableForm"
             :list.sync="formData.mainImage"
             tip="建议尺寸：800 x 800像素，小于1M，支持jpg、png、jpeg格式"
           />
         </el-form-item>
         <el-form-item label="轮播图" prop="bannerImage">
           <Uploader
+            :isOperation="!isDisableForm"
             tip="最多上传9张，建议尺寸：1000 x 600像素，小于1M，支持jpg、png、jpeg格式"
             :list.sync="formData.bannerImage"
             :count="9"
@@ -29,6 +36,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Uploader from "@/components/Uploader";
 import Tinymce from "@/components/Tinymce";
 
@@ -51,7 +59,11 @@ export default {
       if (val) this.init();
     },
   },
-  computed: {},
+  computed: {
+    ...mapState({
+      isDisableForm: (state) => state.goods.isDisableForm,
+    }),
+  },
   methods: {
     init() {
       const data = {

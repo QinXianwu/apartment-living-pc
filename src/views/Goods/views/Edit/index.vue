@@ -40,6 +40,7 @@
       :isUpdate="!!productNo"
       :setpAll="setpList.length - 1"
       :isShowSave="true"
+      :isDisable="isDisableForm"
       @next="next"
       @goBack="goBack"
     />
@@ -47,7 +48,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import GoodsStep from "./components/GoodsStep.vue";
 import GoodsInfo from "./components/GoodsInfo.vue";
 import GoodsPreSale from "./components/GoodsPreSale.vue";
@@ -86,6 +87,9 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      isDisableForm: (state) => state.goods.isDisableForm,
+    }),
     ...mapGetters({
       isService: "user/isService",
       serviceStationId: "user/serviceStationId",

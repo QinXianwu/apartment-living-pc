@@ -2,7 +2,13 @@
   <div class="GoodsInfo">
     <div class="title">商品信息</div>
     <div class="content">
-      <el-form ref="form" :rules="rules" :model="formData" label-width="120px">
+      <el-form
+        ref="form"
+        :rules="rules"
+        :model="formData"
+        label-width="120px"
+        :disabled="isDisableForm"
+      >
         <el-form-item label="商品分类" prop="categoryId">
           <el-cascader
             v-model="formData.categoryId"
@@ -131,7 +137,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import CONST from "@/constants/index";
 
 export default {
@@ -180,6 +186,9 @@ export default {
     },
   },
   computed: {
+    ...mapState({
+      isDisableForm: (state) => state.goods.isDisableForm,
+    }),
     ...mapGetters({
       isAdmin: "user/isAdmin",
       isService: "user/isService",

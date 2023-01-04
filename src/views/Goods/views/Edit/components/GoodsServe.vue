@@ -2,17 +2,19 @@
   <div class="GoodsServe">
     <div class="title">商品服务</div>
     <div class="content">
-      <el-form label-width="120px">
+      <el-form label-width="120px" :disabled="isDisableForm">
         <el-form-item label="商品服务">
           <TablePanel :tableData="list" :tableHead="column">
             <template #serviceName="{ scope }">
               <el-input
+                :disabled="isDisableForm"
                 v-model="scope.serviceName"
                 placeholder="请输入服务名称"
               />
             </template>
             <template #serviceDescribe="{ scope }">
               <el-input
+                :disabled="isDisableForm"
                 v-model="scope.serviceDescribe"
                 placeholder="请输入服务介绍"
               />
@@ -26,7 +28,7 @@
               </div>
             </template>
           </TablePanel>
-          <div class="action">
+          <div class="action" v-if="!isDisableForm">
             <el-button type="primary" @click="addServe">新增服务</el-button>
           </div>
         </el-form-item>
@@ -36,6 +38,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import CONST from "@/constants/index";
 
 export default {
@@ -78,7 +81,11 @@ export default {
       if (val) this.init();
     },
   },
-  computed: {},
+  computed: {
+    ...mapState({
+      isDisableForm: (state) => state.goods.isDisableForm,
+    }),
+  },
   methods: {
     init() {
       if (this.productInfo?.productSerList?.length)

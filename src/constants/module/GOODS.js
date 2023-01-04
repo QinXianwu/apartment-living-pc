@@ -223,13 +223,13 @@ export const SPECIFICA_TYPE_OPTIONS = () => [
 export const AUDIT_TYPE = {
   ALL: 0, // 全部 0转->字符串空
   NO_CHECK: 1, // 待审核
-  SUCCESS_CHECK: 2, // 审核成功
+  SUCCESS_CHECK: 2, // 审核通过
   FAIL_CHECK: 3, // 审核失败
 };
 export const AUDIT_TYPE_TEXT = {
   [AUDIT_TYPE.ALL]: "全部",
   [AUDIT_TYPE.NO_CHECK]: "待审核",
-  [AUDIT_TYPE.SUCCESS_CHECK]: "审核成功",
+  [AUDIT_TYPE.SUCCESS_CHECK]: "审核通过",
   [AUDIT_TYPE.FAIL_CHECK]: "审核失败",
 };
 // 商品审核类型options
