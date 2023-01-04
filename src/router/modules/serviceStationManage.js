@@ -1,4 +1,4 @@
-// import PERMISSION_ID from "@/permission/PERMISSION_ID";
+import PERMISSION_ID from "@/permission/PERMISSION_ID";
 import MainLayout from "@/layouts/MainLayout/index";
 import List from "@/views/ServiceStationManage/views/List/index.vue";
 
@@ -11,7 +11,7 @@ export default {
     title: "服务点管理",
     icon: "serviceStation",
     affix: true,
-    // PermissionId: PERMISSION_ID.VendorManage,
+    PermissionId: PERMISSION_ID.ServiceStationManage,
   },
   children: [
     {
@@ -20,7 +20,7 @@ export default {
       name: "ServiceStationList",
       meta: {
         title: "服务点列表",
-        // PermissionId: PERMISSION_ID.VendorManage_List,
+        PermissionId: PERMISSION_ID.ServiceStationManage_List,
       },
     },
   ],
