@@ -43,11 +43,11 @@
         </template>
         <!-- 商品标签 -->
         <template #goodsTab="{ scope }">
-          <span v-if="!scope.productTag">-</span>
+          <span v-if="!scope.activeLabels">-</span>
           <el-tag
             v-else
             class="mr-10 mb-10"
-            v-for="(item, index) in scope.productTag.split(',') || []"
+            v-for="(item, index) in scope.activeLabels.split(',') || []"
             :key="index"
             >{{ item }}</el-tag
           >
@@ -73,6 +73,12 @@
         <template #action="{ scope }">
           <div class="action-groud">
             <el-button type="text" @click="lookDetail(scope)">查看</el-button>
+            <el-button
+              type="text"
+              @click="handleRefreshReview(scope)"
+              v-if="scope.approvalStatus !== CONST.AUDIT_TYPE.NO_CHECK"
+              >重新审核</el-button
+            >
             <el-button
               type="text"
               @click="
@@ -185,6 +191,13 @@ export default {
       if (!datas?.length) return this.$message.error("请选择待审核商品后再试");
       const ids = datas.map((item) => item.id);
       this.handleReview({ ids, datas, approvalStatus });
+    },
+    async handleRefreshReview(data) {
+      const [, res] = await this.$http.GoodsAudit.RefreshAuditGoods(
+        JSON.stringify(data)
+      );
+      this.$message[res ? "success" : "error"](res ? "操作成功" : "操作失败");
+      if (res) this.getList();
     },
     handleReviewFail({ ids, datas = [], approvalStatus }) {
       this.$message.info("功能正在开发中...");
