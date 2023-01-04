@@ -14,6 +14,7 @@
               placeholder="请选择商品规格"
               v-model="specifica.specificationId"
               @change="selectSpecifica"
+              :disabled="isDisableForm"
             >
               <el-option
                 v-for="(item, index) in specificaListAll"
@@ -25,7 +26,7 @@
               </el-option>
             </el-select>
           </div>
-          <div class="specifica-item-r">
+          <div class="specifica-item-r" v-if="!isDisableForm">
             <el-button type="danger" @click="deleteSpecifica(_index_)"
               >移除规格</el-button
             >
@@ -34,7 +35,7 @@
         <div class="specifica-content" v-if="specifica.specificationId">
           <div class="specificaVal">
             <el-tag
-              closable
+              :closable="isDisableForm"
               v-for="(tag, i) in specificaValMap[specifica.specificationId]"
               :key="i + 'tab'"
               class="mr-10"
@@ -43,7 +44,11 @@
               {{ tag.specificationValueName }}
             </el-tag>
           </div>
-          <el-popover placement="bottom-start" trigger="click">
+          <el-popover
+            placement="bottom-start"
+            trigger="click"
+            v-if="!isDisableForm"
+          >
             <el-button
               type="text"
               slot="reference"
@@ -94,14 +99,16 @@
         </div>
       </div>
     </div>
-    <el-button
-      type="primary"
-      @click="addSpecifica"
-      v-if="list && list.length < 2"
-      >新增规格</el-button
-    >
-    <div class="form-tip" style="color: #ff4949" v-else>
-      <span>最多可新增两组规格</span>
+    <div v-if="!isDisableForm">
+      <el-button
+        type="primary"
+        @click="addSpecifica"
+        v-if="list && list.length < 2"
+        >新增规格</el-button
+      >
+      <div class="form-tip" style="color: #ff4949" v-else>
+        <span>最多可新增两组规格</span>
+      </div>
     </div>
   </div>
 </template>
@@ -138,6 +145,7 @@ export default {
   },
   computed: {
     ...mapState({
+      isDisableForm: (state) => state.goods.isDisableForm,
       specificaListAll: (state) => state.goods.specificaListAll,
     }),
     skuIds({ list }) {

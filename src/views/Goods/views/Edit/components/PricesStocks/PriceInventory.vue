@@ -1,6 +1,6 @@
 <template>
   <div class="PriceInventory">
-    <div class="action">
+    <div class="action" v-if="!isDisableForm">
       <div class="batch-input" v-if="showBatchInput">
         <span class="mr-10 form-tip">{{ batchData.label }}</span>
         <el-input-number
@@ -54,7 +54,7 @@
         :tableHead="tableHead"
       >
         <template #images="{ scope }">
-          <Uploader :list.sync="scope.images" />
+          <Uploader :list.sync="scope.images" :isOperation="!isDisableForm" />
         </template>
       </TablePanel>
       <!-- 分页 -->
@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import Uploader from "@/components/Uploader";
 import { dynamic_column, column } from "../../config/index";
 export default {
@@ -130,6 +130,9 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      isDisableForm: (state) => state.goods.isDisableForm,
+    }),
     ...mapGetters({
       isVendor: "user/isVendor",
     }),

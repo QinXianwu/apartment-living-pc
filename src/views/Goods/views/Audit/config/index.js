@@ -1,4 +1,4 @@
-import CONST from "@/constants/index";
+// import CONST from "@/constants/index";
 
 // 搜索选项
 export const formData = [
@@ -59,19 +59,9 @@ export const column = [
     minWidth: 150,
   },
   {
-    label: "活动标签",
-    prop: "activityTab",
+    label: "供应价",
+    prop: "originalPrice",
     type: "custom",
-    width: 125,
-  },
-  {
-    label: "售价",
-    prop: "sellPrice",
-    type: "custom",
-  },
-  {
-    label: "库存",
-    prop: "stock",
   },
   {
     label: "预售时间",
@@ -94,37 +84,5 @@ export const column = [
     type: "custom",
     fixed: "right",
     width: 250,
-  },
-];
-
-// 活动标签
-export const activityTab = () => [
-  {
-    key: "bargainIs",
-    label: "特价",
-    value: "",
-    tabType: "",
-    is: CONST.SPECIALS_TYPE.YES,
-  },
-  {
-    key: "discountIs",
-    label: "折扣",
-    value: "",
-    tabType: "success",
-    is: CONST.DISCOUNTED_TYPE.YES,
-  },
-  {
-    key: "isLimit",
-    label: "限购",
-    value: "",
-    tabType: "danger",
-    is: CONST.RESTRICTED_TYPE.YES,
-  },
-  {
-    key: "isPre",
-    label: "预售",
-    value: "",
-    tabType: "warning",
-    is: CONST.PRE_SALE_TYPE.YES,
   },
 ];

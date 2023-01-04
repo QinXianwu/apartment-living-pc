@@ -15,6 +15,7 @@ export default {
         params,
         isReturnAll: true,
         isHeadersForm: true,
+        isHandleParams: true,
       })
     );
   },

@@ -52,22 +52,11 @@
             >{{ item }}</el-tag
           >
         </template>
-        <!-- 活动标签 -->
-        <template #activityTab="{ scope }">
-          <div class="activityTab" v-if="getActivityTab(scope).length">
-            <el-tag
-              class="mr-10 mb-10"
-              :type="item.tabType"
-              v-for="(item, index) in getActivityTab(scope)"
-              :key="index"
-              >{{ item.label }}</el-tag
-            >
-          </div>
-          <span v-else>-</span>
-        </template>
-        <!-- 售价 -->
-        <template #sellPrice="{ scope }">
-          <span>{{ scope | priceRange("sellPriceMin", "sellPriceMax") }}</span>
+        <!-- 供应价 -->
+        <template #originalPrice="{ scope }">
+          <span>{{
+            scope | priceRange("originalPriceMin", "originalPriceMax")
+          }}</span>
         </template>
         <template #status="{ scope }">
           <el-tag
@@ -128,7 +117,7 @@ import { mapGetters } from "vuex";
 import CONST from "@/constants/index";
 import { digits2Str } from "@/utils/index";
 import TagPage from "./components/TagPage.vue";
-import { formData, column, activityTab } from "./config";
+import { formData, column } from "./config";
 
 export default {
   name: "GoodsAudit",
@@ -176,12 +165,6 @@ export default {
     onSearch(data) {
       this.query = { ...this.query, ...data };
       this.getList(true);
-    },
-    getActivityTab(data) {
-      const keyArr = [...activityTab()];
-      return keyArr
-        .filter((item) => data[item.key] === item.is)
-        .map((item) => ({ ...item, value: data[item.key] }));
     },
     lookDetail({ productNo }) {
       this.$store.commit("goods/SET_IS_DISABLE_FORM", 1);
@@ -303,9 +286,6 @@ export default {
     margin-left: 10px;
     @include overflow-eps(2);
   }
-}
-.activityTab {
-  text-align: left;
 }
 .action {
   padding: 0 0 15px;
