@@ -247,7 +247,7 @@ export default {
       }
     },
     handleProcured() {
-      //
+      this.$message.info("功能正在开发中...");
     },
     // 批量删除
     handleBatchDelete() {
