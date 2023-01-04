@@ -74,4 +74,22 @@ export default {
       })
     );
   },
+  // 商品上架
+  UpdateUpGoods(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-product/product/atproduct/upProduct",
+        params,
+      })
+    );
+  },
+  // 商品下架
+  UpdateOffGoods(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-product/product/atproduct/offProduct",
+        params,
+      })
+    );
+  },
 };

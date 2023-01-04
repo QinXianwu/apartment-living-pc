@@ -122,7 +122,9 @@ export default {
         const data3 = await this.$refs.GoodsServe.getQuery();
         const data4 = await this.$refs.PricesStocks.getQuery();
         const data5 = await this.$refs.GoodsDetail.getQuery();
-        data1.productTag = data1.productTag.join(",");
+        data1.productTag = data1?.productTag?.length
+          ? data1.productTag.join(",")
+          : "";
         this.BaseInfo = { ...data1, ...data2, ...data3, ...data4, ...data5 };
         if (!this.isService) {
           this.handleSubmit();

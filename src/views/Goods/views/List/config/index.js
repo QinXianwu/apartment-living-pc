@@ -22,14 +22,6 @@ export const formData = [
     },
   },
   {
-    label: "商品状态",
-    prop: "operStatus",
-    type: "select",
-    value: "",
-    options: CONST.GOODS_OPER_STATE_OPTIONS(),
-    placeholder: "请选择商品状态",
-  },
-  {
     label: "供应商",
     prop: "supplierId",
     type: "select",
@@ -37,14 +29,14 @@ export const formData = [
     options: [],
     placeholder: "请选择供应商",
   },
-  {
-    label: "商品库存",
-    prop: "status",
-    type: "textrange",
-    textType: "number",
-    value: [],
-    placeholder: "请输入商品库存",
-  },
+  // {
+  //   label: "商品库存",
+  //   prop: "status",
+  //   type: "textrange",
+  //   textType: "number",
+  //   value: [],
+  //   placeholder: "请输入商品库存",
+  // },
 ];
 
 // 表格头

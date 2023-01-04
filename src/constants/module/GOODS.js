@@ -87,11 +87,13 @@ export const CATEGORY_HOT_TYPE_OPTIONS = () => [
 
 // 商品上下架状态
 export const GOODS_OPER_STATE = {
+  ALL: 0, // 全部
   LISTING: 1, // 上架
   REMOVAL: 2, // 下架
   NO_CHECK: 3, // 待审核
 };
 export const GOODS_OPER_STATE_TEXT = {
+  [GOODS_OPER_STATE.ALL]: "全部",
   [GOODS_OPER_STATE.LISTING]: "上架",
   [GOODS_OPER_STATE.REMOVAL]: "下架",
   [GOODS_OPER_STATE.NO_CHECK]: "待审核",
