@@ -116,7 +116,7 @@ export const column = [
     width: 160,
   },
   {
-    label: "上下架状态",
+    label: "状态",
     prop: "operStatus",
     type: "custom",
     width: 100,
@@ -136,7 +136,7 @@ export const column = [
 ];
 
 // 活动标签
-export const activityTab = [
+export const activityTab = () => [
   {
     key: "bargainIs",
     label: "特价",

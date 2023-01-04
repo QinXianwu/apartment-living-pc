@@ -87,7 +87,7 @@ export const CATEGORY_HOT_TYPE_OPTIONS = () => [
 
 // 商品上下架状态
 export const GOODS_OPER_STATE = {
-  ALL: 0, // 全部
+  ALL: 0, // 全部 0转->字符串空
   LISTING: 1, // 上架
   REMOVAL: 2, // 下架
   NO_CHECK: 3, // 待审核
@@ -221,7 +221,7 @@ export const SPECIFICA_TYPE_OPTIONS = () => [
 
 // 商品审核类型
 export const AUDIT_TYPE = {
-  ALL: "", // 全部
+  ALL: 0, // 全部 0转->字符串空
   NO_CHECK: 1, // 待审核
   SUCCESS_CHECK: 2, // 审核成功
   FAIL_CHECK: 3, // 审核失败

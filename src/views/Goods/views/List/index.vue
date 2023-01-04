@@ -59,7 +59,7 @@
         </template>
         <!-- 活动标签 -->
         <template #activityTab="{ scope }">
-          <div class="activityTab">
+          <div class="activityTab" v-if="getActivityTab(scope).length">
             <el-tag
               class="mr-10 mb-10"
               :type="item.tabType"
@@ -68,6 +68,7 @@
               >{{ item.label }}</el-tag
             >
           </div>
+          <span v-else>-</span>
         </template>
         <!-- 售价 -->
         <template #sellPrice="{ scope }">
@@ -150,7 +151,6 @@ export default {
   data() {
     return {
       CONST,
-      activityTab,
       formData,
       column,
       list: [],
@@ -284,7 +284,7 @@ export default {
       }
     },
     getActivityTab(data) {
-      const keyArr = [...activityTab];
+      const keyArr = [...activityTab()];
       return keyArr
         .filter((item) => data[item.key] === item.is)
         .map((item) => ({ ...item, value: data[item.key] }));

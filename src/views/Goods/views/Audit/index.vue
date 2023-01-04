@@ -10,6 +10,7 @@
         <el-button type="primary" @click="handleAdd">审核通过</el-button>
         <el-button type="danger" @click="handleAdd">审核驳回</el-button>
       </div>
+      <TagPage :state.sync="query.approvalStatus" @getList="getList" />
       <TablePanel
         :tableData="list"
         :tableHead="column"
@@ -17,13 +18,58 @@
         :isShowTopCheck="false"
         @selection-change="handleSelectionChange"
       >
+        <template #goodsInfo="{ scope }">
+          <div class="goodsInfo">
+            <ImageView customClass="table-img" :src="scope.mainImage" />
+            <div class="name">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                :content="scope.productName"
+                placement="right"
+              >
+                <span>{{ scope.productName }}</span>
+              </el-tooltip>
+            </div>
+          </div>
+        </template>
+        <!-- 商品标签 -->
+        <template #goodsTab="{ scope }">
+          <span v-if="!scope.productTag">-</span>
+          <el-tag
+            v-else
+            class="mr-10 mb-10"
+            v-for="(item, index) in scope.productTag.split(',') || []"
+            :key="index"
+            >{{ item }}</el-tag
+          >
+        </template>
+        <!-- 活动标签 -->
+        <template #activityTab="{ scope }">
+          <div class="activityTab" v-if="getActivityTab(scope).length">
+            <el-tag
+              class="mr-10 mb-10"
+              :type="item.tabType"
+              v-for="(item, index) in getActivityTab(scope)"
+              :key="index"
+              >{{ item.label }}</el-tag
+            >
+          </div>
+          <span v-else>-</span>
+        </template>
+        <!-- 售价 -->
+        <template #sellPrice="{ scope }">
+          <span>{{ scope | priceRange("sellPriceMin", "sellPriceMax") }}</span>
+        </template>
         <template #status="{ scope }">
           <el-tag
             :type="
-              scope.status === $CONST.AUDIT_TYPE.FAIL_CHECK ? 'danger' : ''
+              scope.approvalStatus === $CONST.AUDIT_TYPE.FAIL_CHECK
+                ? 'danger'
+                : ''
             "
-            v-if="scope.status !== ''"
-            >{{ $CONST.AUDIT_TYPE_TEXT[scope.status] }}</el-tag
+            v-if="scope.approvalStatus"
+            >{{ $CONST.AUDIT_TYPE_TEXT[scope.approvalStatus] }}</el-tag
           >
         </template>
         <!-- 操作 -->
@@ -47,11 +93,12 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { formData, column } from "./config";
+import TagPage from "./components/TagPage.vue";
+import { formData, column, activityTab } from "./config";
 
 export default {
   name: "GoodsAudit",
-  components: {},
+  components: { TagPage },
   data() {
     return {
       formData,
@@ -61,7 +108,9 @@ export default {
         pageNum: 1,
         pageSize: 10,
       },
-      query: {},
+      query: {
+        approvalStatus: "",
+      },
       total: 0,
       selectDataMap: {},
     };
@@ -90,11 +139,20 @@ export default {
       this.getList(false);
     },
     onSearch(data) {
-      this.query = { ...data };
+      this.query = { ...this.query, ...data };
       this.getList(true);
+    },
+    getActivityTab(data) {
+      const keyArr = [...activityTab()];
+      return keyArr
+        .filter((item) => data[item.key] === item.is)
+        .map((item) => ({ ...item, value: data[item.key] }));
     },
     handleAdd() {
       //
+    },
+    handleEdit() {
+      this.$message.info("功能正在开发中...");
     },
     async handleDelete() {
       const ids = Object.keys(this.selectDataMap).join(",");
@@ -170,6 +228,21 @@ export default {
 <style lang="scss" scoped>
 .view-container {
   background: #fff;
+}
+.goodsInfo {
+  display: flex;
+  align-items: center;
+  .table-img {
+    width: 60px;
+    height: 60px;
+  }
+  .name {
+    margin-left: 10px;
+    @include overflow-eps(2);
+  }
+}
+.activityTab {
+  text-align: left;
 }
 .action {
   padding: 0 0 15px;
