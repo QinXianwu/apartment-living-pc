@@ -245,36 +245,6 @@ export default {
         error;
       }
     },
-    async handleDelete() {
-      const ids = Object.keys(this.selectDataMap).join(",");
-      try {
-        await this.$confirm(
-          `是否确认删除日志编号为${ids}的数据项？`,
-          "删除提示",
-          {
-            type: "warning",
-            showClose: false,
-          }
-        );
-        const [, res] = await this.$http.OperationalLogs.DeleteOperLog({
-          operId: ids,
-        });
-        const msg = res ? res?.msg || `删除成功` : `删除失败`;
-        this.$confirm(msg, "删除提示", {
-          showClose: false,
-          showCancelButton: false,
-          type: res ? "success" : "error",
-        }).then(() => {
-          if (res) {
-            this.selectDataMap = {};
-            this.getList();
-          }
-        });
-      } catch (error) {
-        console.error(error);
-        error;
-      }
-    },
     handleSelectionChange(val) {
       this.list.forEach((item) => {
         // 存在于当前页以及map 但不存在 val -> 去掉

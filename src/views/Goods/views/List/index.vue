@@ -6,7 +6,7 @@
         :formData="searchForm"
         @on-search="onSearch"
       />
-      <div class="action">
+      <div class="action" v-if="!isService">
         <el-button type="primary" @click="handleAdd">新增商品</el-button>
         <el-button
           type="primary"
@@ -105,23 +105,39 @@
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
-            <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
+            <el-button type="text" @click="handleEdit(scope)">{{
+              !isService ? "编辑" : "查看"
+            }}</el-button>
             <el-button
               type="text"
               @click="
                 changeStatus({ ids: [scope.id], operStatus: scope.operStatus })
               "
-              v-if="scope.operStatus !== CONST.GOODS_OPER_STATE.NO_CHECK"
+              v-if="
+                !isService &&
+                scope.operStatus !== CONST.GOODS_OPER_STATE.NO_CHECK
+              "
               >{{
                 scope.operStatus === CONST.GOODS_OPER_STATE.LISTING
                   ? CONST.GOODS_OPER_STATE_TEXT[CONST.GOODS_OPER_STATE.REMOVAL]
                   : CONST.GOODS_OPER_STATE_TEXT[CONST.GOODS_OPER_STATE.LISTING]
               }}</el-button
             >
-            <el-button type="text" @click="handleProcured(scope)"
+            <el-button
+              type="text"
+              @click="handleProcured(scope)"
+              v-if="
+                isService &&
+                (scope.operStatus === CONST.GOODS_OPER_STATE.LISTING ||
+                  scope.operStatus === CONST.GOODS_OPER_STATE.REMOVAL)
+              "
               >采购</el-button
             >
-            <el-button type="text" @click="handleDelete([scope.id])">
+            <el-button
+              type="text"
+              @click="handleDelete([scope.id])"
+              v-if="!isService"
+            >
               删除
             </el-button>
           </div>
@@ -136,6 +152,11 @@
         :total="total"
       />
     </div>
+    <ProcurementGoodsDiaog
+      @close="close"
+      :editInfo="editInfo"
+      :show.sync="showProcurementGoods"
+    />
   </div>
 </template>
 
@@ -144,11 +165,12 @@ import { mapGetters } from "vuex";
 import CONST from "@/constants/index";
 import { digits2Str } from "@/utils/index";
 import TagPage from "./components/TagPage.vue";
+import ProcurementGoodsDiaog from "./components/ProcurementGoodsDiaog.vue";
 import { formData, column, activityTab } from "./config";
 
 export default {
   name: "GoodsList",
-  components: { TagPage },
+  components: { TagPage, ProcurementGoodsDiaog },
   data() {
     return {
       CONST,
@@ -163,11 +185,14 @@ export default {
         operStatus: "",
       },
       total: 0,
+      editInfo: "",
       selectDataMap: {},
+      showProcurementGoods: false,
     };
   },
   computed: {
     ...mapGetters({
+      isService: "user/isService",
       categoryAllOptions: "goods/CategoryAllOptions",
       supplierOptions: "accountRoleManage/supplierOptions",
     }),
@@ -201,7 +226,7 @@ export default {
       });
     },
     handleEdit({ productNo }) {
-      this.$store.commit("goods/SET_IS_DISABLE_FORM", 0);
+      this.$store.commit("goods/SET_IS_DISABLE_FORM", this.isService ? 1 : 0);
       this.$router.push({
         name: "GoodsEdit",
         query: { productNo: productNo || "" },
@@ -249,8 +274,14 @@ export default {
         error;
       }
     },
-    handleProcured() {
-      this.$message.info("功能正在开发中...");
+    handleProcured({ productNo }) {
+      this.showProcurementGoods = true;
+      this.editInfo = { productNo };
+    },
+    close(isRefresh = false) {
+      this.editInfo = "";
+      this.showProcurementGoods = false;
+      if (isRefresh) this.getList();
     },
     // 批量删除
     handleBatchDelete() {

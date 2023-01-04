@@ -135,6 +135,41 @@ export const column = [
   },
 ];
 
+// 采购单规格表格头
+export const ProcurementColumn = [
+  {
+    label: "规格1",
+    prop: "specificationValueName1",
+    showOverflowTooltip: true,
+  },
+  {
+    label: "规格2",
+    prop: "specificationValueName2",
+    showOverflowTooltip: true,
+  },
+  {
+    label: "规格图片",
+    prop: "images",
+    type: "image",
+  },
+  {
+    label: "销售价",
+    prop: "sellPrice",
+    type: "money",
+  },
+  {
+    label: "供应价",
+    prop: "originalPrice",
+    type: "money",
+  },
+  {
+    label: "采购数量",
+    prop: "procurementNum",
+    type: "custom",
+    width: 160,
+  },
+];
+
 // 活动标签
 export const activityTab = () => [
   {
