@@ -92,4 +92,34 @@ export default {
       })
     );
   },
+  // 获取审核商品列表
+  GetAuditList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-product/product/atproduct/queryList",
+        params,
+        isReturnAll: true,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 审核商品
+  AuditGoods(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-product/product/atproduct/approval",
+        params,
+      })
+    );
+  },
+  // 重新审核商品
+  RefreshAuditGoods(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-product/product/atproduct/refreshApproval",
+        params,
+      })
+    );
+  },
 };

@@ -329,7 +329,6 @@ export default {
         ...this.page,
         ...this.query,
       };
-      // GetServeGoodsList
       const [, res] = await this.$http.Goods.GetList(query);
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
         this.$message.error(res?.msg || "获取商品列表异常");

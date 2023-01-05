@@ -225,7 +225,7 @@ export default {
             showClose: false,
           }
         );
-        const [, res] = await this.$http.GoodsAudit.AuditGoods(
+        const [, res] = await this.$http.Goods.AuditGoods(
           JSON.stringify(queryData)
         );
         const msg = res ? res?.msg || `${title}成功` : `${title}失败`;
@@ -270,7 +270,7 @@ export default {
         ...this.page,
         ...this.query,
       };
-      const [, res] = await this.$http.GoodsAudit.GetList(query);
+      const [, res] = await this.$http.Goods.GetAuditList(query);
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
         this.$message.error(res?.msg || "获取审核商品列表异常");
       }

@@ -158,15 +158,13 @@ export default {
       };
       if (this.isService) query.stationId = this.serviceStationId;
       const { REVIEW_TYPE } = this.$route?.query || {};
-      const ApiModule =
-        REVIEW_TYPE === "REFRESH_REVIEW" ? "GoodsAudit" : "Goods";
-      const Api =
+      const [, res] = await this.$http.Goods[
         REVIEW_TYPE === "REFRESH_REVIEW"
           ? "RefreshAuditGoods"
           : this.productNo
           ? "UpdateGoods"
-          : "AddGoods";
-      const [, res] = await this.$http[ApiModule][Api](query);
+          : "AddGoods"
+      ](query);
       this.$message[res ? "success" : "error"](
         res?.msg || `发布商品${res ? "成功" : "失败"}`
       );
