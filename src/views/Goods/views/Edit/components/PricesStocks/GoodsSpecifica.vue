@@ -35,7 +35,7 @@
         <div class="specifica-content" v-if="specifica.specificationId">
           <div class="specificaVal">
             <el-tag
-              :closable="isDisableForm"
+              :closable="!isDisableForm"
               v-for="(tag, i) in specificaValMap[specifica.specificationId]"
               :key="i + 'tab'"
               class="mr-10"

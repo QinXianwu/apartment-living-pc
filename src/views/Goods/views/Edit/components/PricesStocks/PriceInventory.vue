@@ -185,8 +185,8 @@ export default {
           item.specificationValueId1 = item?.specificationValueId1 || "";
           item.specificationValueId2 = item?.specificationValueId2 || "";
           if (
-            item?.specificationValueId1 === ele.specificationValueId1 &&
-            item?.specificationValueId2 === ele.specificationValueId2
+            item.specificationValueId1 === ele.specificationValueId1 &&
+            item.specificationValueId2 === ele.specificationValueId2
           )
             return ele;
           else return null;

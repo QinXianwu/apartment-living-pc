@@ -21,7 +21,7 @@
             </template>
             <!-- 操作 -->
             <template #action="{ index }">
-              <div class="action-groud">
+              <div class="action-groud" v-if="!isDisableForm">
                 <el-button type="text" @click="handleDelete(index)">
                   删除
                 </el-button>

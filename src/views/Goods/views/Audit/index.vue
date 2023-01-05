@@ -192,12 +192,15 @@ export default {
       const ids = datas.map((item) => item.id);
       this.handleReview({ ids, datas, approvalStatus });
     },
-    async handleRefreshReview(data) {
-      const [, res] = await this.$http.GoodsAudit.RefreshAuditGoods(
-        JSON.stringify(data)
-      );
-      this.$message[res ? "success" : "error"](res ? "操作成功" : "操作失败");
-      if (res) this.getList();
+    async handleRefreshReview({ productNo }) {
+      this.$store.commit("goods/SET_IS_DISABLE_FORM", 0);
+      this.$router.push({
+        name: "GoodsEdit",
+        query: {
+          productNo: productNo,
+          REVIEW_TYPE: "REFRESH_REVIEW",
+        },
+      });
     },
     handleReviewFail({ ids, datas = [], approvalStatus }) {
       this.$message.info("功能正在开发中...");

@@ -157,19 +157,26 @@ export default {
         ...this.BaseInfo,
       };
       if (this.isService) query.stationId = this.serviceStationId;
-      const [, res] = await this.$http.Goods[
-        this.productNo ? "UpdateGoods" : "AddGoods"
-      ](query);
-      this.isLoading = false;
+      const { REVIEW_TYPE } = this.$route?.query || {};
+      const ApiModule =
+        REVIEW_TYPE === "REFRESH_REVIEW" ? "GoodsAudit" : "Goods";
+      const Api =
+        REVIEW_TYPE === "REFRESH_REVIEW"
+          ? "RefreshAuditGoods"
+          : this.productNo
+          ? "UpdateGoods"
+          : "AddGoods";
+      const [, res] = await this.$http[ApiModule][Api](query);
       this.$message[res ? "success" : "error"](
         res?.msg || `发布商品${res ? "成功" : "失败"}`
       );
       if (res) {
         this.$store.dispatch("tagsView/delView", this.$route);
         this.$router.push({
-          name: "GoodsList",
+          name: REVIEW_TYPE === "REFRESH_REVIEW" ? "Audit" : "GoodsList",
         });
       }
+      this.isLoading = false;
     },
     // 初始化操作
     async initLoad() {
