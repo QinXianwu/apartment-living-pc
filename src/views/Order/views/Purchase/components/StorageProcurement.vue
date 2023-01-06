@@ -122,7 +122,6 @@ export default {
         ? this.orderInfo.orderDetailsList
         : [];
       this.list.forEach((item) => digits2Str(item, keys2));
-      console.log(this.list);
     },
     // 处理提交
     async handleSubmit() {
@@ -132,7 +131,6 @@ export default {
         putNum: item?.putNum || 0,
         pdOrderNo: this.editInfo.pdOrderNo,
       }));
-      console.log(queryData);
       const [, res] = await this.$http.Order.ServiceStationStorageGoods(
         JSON.stringify(queryData)
       );

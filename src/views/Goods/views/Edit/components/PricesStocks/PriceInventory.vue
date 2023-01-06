@@ -38,7 +38,7 @@
       <el-button
         type="primary"
         v-if="batchData.val || batchData.val === 0"
-        @click="handleBatch"
+        @click="batchActionList"
         >一键填充</el-button
       >
       <el-button type="primary" @click="clearedList">清空</el-button>
@@ -55,6 +55,15 @@
       >
         <template #images="{ scope }">
           <Uploader :list.sync="scope.images" :isOperation="!isDisableForm" />
+        </template>
+        <!-- 操作 -->
+        <template #action="{ scope }">
+          <div class="action-groud">
+            <el-button type="text" @click="batchActionRow(scope)"
+              >单行填充</el-button
+            >
+            <el-button type="text" @click="closeRow(scope)"> 清空 </el-button>
+          </div>
         </template>
       </TablePanel>
       <!-- 分页 -->
@@ -162,7 +171,16 @@ export default {
             minWidth: 100,
           },
         ],
-        actionHead
+        actionHead,
+        [
+          {
+            label: "操作",
+            prop: "action",
+            type: "custom",
+            fixed: "right",
+            width: 250,
+          },
+        ]
       );
     },
     initData({ column }) {
@@ -211,8 +229,11 @@ export default {
       this.list = this.getSkuCombo(this.skuList).map((item) => ({
         ...item,
         ...this.initData,
-        images: [],
+        images: item?.images || [],
       }));
+    },
+    closeRow(item) {
+      this.column.forEach((ele) => (item[ele.prop] = 0));
     },
     batchAction(key) {
       this.batchData.key = key;
@@ -246,6 +267,8 @@ export default {
             1000000
           ).toFixed(2);
       } else if (this.batchData.key === "discountPrice") {
+        if (this.batchData.val > sellPrice)
+          return this.$message.error("折扣价不得大于销售价");
         // 批量输入折扣价
         updateObj.discountPrice = this.batchData.val;
         // 计算折扣
@@ -274,9 +297,21 @@ export default {
       } else {
         updateObj[this.batchData.key] = this.batchData.val;
       }
+      return updateObj;
+    },
+    batchActionRow(item) {
+      const data = this.handleBatch();
+      for (const key in data) {
+        item[key] = data[key];
+      }
+      // this.showBatchInput = false;
+      // this.batchData.val = "";
+    },
+    batchActionList() {
+      const data = this.handleBatch();
       this.list = this.list.map((item) => ({
         ...item,
-        ...updateObj,
+        ...data,
       }));
       this.showBatchInput = false;
       this.batchData.val = "";

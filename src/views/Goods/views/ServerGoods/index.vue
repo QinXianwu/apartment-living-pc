@@ -7,9 +7,6 @@
         @on-search="onSearch"
       />
       <div class="action">
-        <el-button type="primary" @click="handleAdd" v-if="!isService"
-          >新增商品</el-button
-        >
         <el-button
           type="primary"
           plain
@@ -22,7 +19,6 @@
           @click="handleBatchStatus(CONST.GOODS_OPER_STATE.LISTING)"
           >批量下架</el-button
         >
-        <el-button type="danger" @click="handleBatchDelete">批量删除</el-button>
       </div>
       <TagPage :state.sync="query.operStatus" @getList="getList" />
       <TablePanel
@@ -130,9 +126,6 @@
               "
               >采购</el-button
             >
-            <el-button type="text" @click="handleDelete([scope.id])">
-              删除
-            </el-button>
           </div>
         </template>
       </TablePanel>

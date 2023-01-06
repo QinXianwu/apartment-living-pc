@@ -309,7 +309,6 @@ export default {
         this.$set(this.remarkInputMap, item.id, item?.remark || "");
       });
       this.list = data;
-      console.log(data);
       this.total = res?.total || 0;
       this.initSelection();
     },
