@@ -59,15 +59,26 @@
           }}</span>
         </template>
         <template #status="{ scope }">
-          <el-tag
-            :type="
-              scope.approvalStatus === CONST.AUDIT_TYPE.FAIL_CHECK
-                ? 'danger'
-                : ''
-            "
-            v-if="scope.approvalStatus"
-            >{{ CONST.AUDIT_TYPE_TEXT[scope.approvalStatus] }}</el-tag
-          >
+          <div class="status">
+            <el-tag
+              :type="
+                scope.approvalStatus === CONST.AUDIT_TYPE.FAIL_CHECK
+                  ? 'danger'
+                  : ''
+              "
+              v-if="scope.approvalStatus"
+              >{{ CONST.AUDIT_TYPE_TEXT[scope.approvalStatus] }}</el-tag
+            >
+            <el-tooltip
+              class="item"
+              effect="dark"
+              :content="`驳回原因：${scope.remark}`"
+              placement="right-start"
+              v-if="scope.remark"
+            >
+              <i class="el-icon-warning ml-10" />
+            </el-tooltip>
+          </div>
         </template>
         <!-- 操作 -->
         <template #action="{ scope }">
@@ -106,7 +117,6 @@
           </div>
         </template>
       </TablePanel>
-      <!-- 分页 -->
       <Pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -115,6 +125,12 @@
         :total="total"
       />
     </div>
+    <AuditFailDialog
+      :editInfo="editInfo"
+      :show.sync="showAuditFail"
+      @close="close"
+      @on-success="handleReview"
+    />
   </div>
 </template>
 
@@ -122,12 +138,13 @@
 import { mapGetters } from "vuex";
 import CONST from "@/constants/index";
 import { digits2Str } from "@/utils/index";
-import TagPage from "./components/TagPage.vue";
 import { formData, column } from "./config";
+import TagPage from "./components/TagPage.vue";
+import AuditFailDialog from "./components/AuditFailDialog.vue";
 
 export default {
   name: "GoodsAudit",
-  components: { TagPage },
+  components: { TagPage, AuditFailDialog },
   data() {
     return {
       CONST,
@@ -143,12 +160,14 @@ export default {
       },
       total: 0,
       selectDataMap: {},
+      editInfo: "",
+      showAuditFail: false,
     };
   },
   computed: {
     ...mapGetters({
-      supplierOptions: "accountRoleManage/supplierOptions",
       categoryAllOptions: "goods/CategoryAllOptions",
+      supplierOptions: "accountRoleManage/supplierOptions",
     }),
     searchForm({ formData, categoryAllOptions, supplierOptions }) {
       const categoryItem = formData.find((item) => item.prop === "categoryId");
@@ -181,17 +200,6 @@ export default {
         },
       });
     },
-    // 批量审核
-    handleBatchReview(approvalStatus) {
-      if (!Object.keys(this.selectDataMap)?.length)
-        return this.$message.error("请选择商品后再试");
-      const datas = Object.values(this.selectDataMap).filter(
-        (item) => item?.approvalStatus === CONST.AUDIT_TYPE.NO_CHECK
-      );
-      if (!datas?.length) return this.$message.error("请选择待审核商品后再试");
-      const ids = datas.map((item) => item.id);
-      this.handleReview({ ids, datas, approvalStatus });
-    },
     async handleRefreshReview({ productNo }) {
       this.$store.commit("goods/SET_IS_DISABLE_FORM", 0);
       this.$router.push({
@@ -203,8 +211,22 @@ export default {
       });
     },
     handleReviewFail({ ids, datas = [], approvalStatus }) {
-      this.$message.info("功能正在开发中...");
-      console.log(ids, datas, approvalStatus);
+      this.showAuditFail = true;
+      this.editInfo = { ids, datas, approvalStatus };
+    },
+    // 批量审核
+    handleBatchReview(approvalStatus) {
+      if (!Object.keys(this.selectDataMap)?.length)
+        return this.$message.error("请选择商品后再试");
+      const datas = Object.values(this.selectDataMap).filter(
+        (item) => item?.approvalStatus === CONST.AUDIT_TYPE.NO_CHECK
+      );
+      if (!datas?.length) return this.$message.error("请选择待审核商品后再试");
+      const ids = datas.map((item) => item.id);
+      const query = { ids, datas, approvalStatus };
+      if (approvalStatus === CONST.AUDIT_TYPE.FAIL_CHECK)
+        this.handleReviewFail(query);
+      else this.handleReview(query);
     },
     async handleReview({ ids, datas = [], approvalStatus }) {
       const queryData = datas?.length
@@ -215,11 +237,12 @@ export default {
             remark: item.remark,
           }))
         : [];
-      const title = CONST.AUDIT_TYPE_TEXT[approvalStatus];
+      const title =
+        approvalStatus === CONST.AUDIT_TYPE.SUCCESS_CHECK ? "通过" : "驳回";
       try {
         await this.$confirm(
-          `是否确认${title}商品ID为${ids}的数据项？`,
-          `${title}提示`,
+          `是否确认商品ID为${ids}的数据项${title}申请？`,
+          `审核提示`,
           {
             type: "warning",
             showClose: false,
@@ -228,8 +251,8 @@ export default {
         const [, res] = await this.$http.Goods.AuditGoods(
           JSON.stringify(queryData)
         );
-        const msg = res ? res?.msg || `${title}成功` : `${title}失败`;
-        this.$confirm(msg, `${title}提示`, {
+        const msg = res ? res?.msg || `审核成功` : `审核失败`;
+        this.$confirm(msg, `审核提示`, {
           showClose: false,
           showCancelButton: false,
           type: res ? "success" : "error",
@@ -243,6 +266,11 @@ export default {
         console.error(error);
         error;
       }
+    },
+    close(isRefresh = false) {
+      this.editInfo = "";
+      this.showAuditFail = false;
+      if (isRefresh) this.getList();
     },
     handleSelectionChange(val) {
       this.list.forEach((item) => {

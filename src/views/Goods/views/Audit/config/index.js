@@ -72,6 +72,7 @@ export const column = [
     label: "状态",
     prop: "status",
     type: "custom",
+    width: 110,
   },
   {
     label: "创建时间",
