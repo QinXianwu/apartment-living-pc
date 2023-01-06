@@ -71,13 +71,49 @@
               "
               >入库</el-button
             >
-            <el-button type="text">备注</el-button>
             <el-button
               type="text"
               @click="closeOredr(scope)"
               v-if="scope.operStatus !== CONST.ORDER_PURCHASE_STATE.CANCEL"
               >关闭订单</el-button
             >
+            <el-popover
+              placement="bottom-start"
+              trigger="manual"
+              v-model="showRemarkInputMap[scope.id]"
+            >
+              <el-button
+                class="remark-btn"
+                type="text"
+                slot="reference"
+                @click="
+                  showRemarkInputMap = {};
+                  showRemarkInputMap[scope.id] = !showRemarkInputMap[scope.id];
+                "
+                >备注</el-button
+              >
+              <div class="addVal-input">
+                <el-input
+                  type="text"
+                  placeholder="请输入备注"
+                  class="input-small mr-10 mt-10"
+                  v-model="remarkInputMap[scope.id]"
+                />
+                <el-button
+                  type="primary"
+                  class="mt-10"
+                  @click="handleRemark(scope)"
+                  v-loading="isLoadingSetRemark"
+                  >保存</el-button
+                >
+                <el-button
+                  type="primary"
+                  class="mt-10"
+                  @click="showRemarkInputMap = {}"
+                  >取消</el-button
+                >
+              </div>
+            </el-popover>
           </div>
         </template>
       </TablePanel>
@@ -133,9 +169,12 @@ export default {
       total: 0,
       editInfo: "",
       selectDataMap: {},
+      remarkInputMap: {},
+      showRemarkInputMap: {},
       showDrawerPopup: false,
       showProcurementDetail: false,
       showProcurementGoods: false,
+      isLoadingSetRemark: false,
     };
   },
   computed: {
@@ -228,6 +267,24 @@ export default {
       this.showDrawerPopup = true;
       this.showProcurementDetail = true;
     },
+    async handleRemark({ id, pdOrderNo }) {
+      if (!this.remarkInputMap[id])
+        return this.$message.error("请输入备注后再试");
+      if (this.isLoadingSetRemark) return;
+      this.isLoadingSetRemark = true;
+      const [, res] = await this.$http.Order.AddPurchaseOrderRemark({
+        pdOrderNo,
+        remark: this.remarkInputMap[id],
+      });
+      this.isLoadingSetRemark = false;
+      this.$message[res ? "success" : "error"](
+        res?.msg || `保存${res ? "成功" : "失败"}`
+      );
+      if (res) {
+        this.showRemarkInputMap = {};
+        this.getList();
+      }
+    },
     close(isRefresh = false) {
       this.editInfo = "";
       this.showDrawerPopup = false;
@@ -245,8 +302,14 @@ export default {
         this.$message.error(res?.msg || "获取采购订单列表异常");
       }
       const data = res?.rows?.length ? res.rows : [];
-      data.forEach((item) => digits2Str(item, ["id", "serviceId"]));
+      this.remarkInputMap = {};
+      this.showRemarkInputMap = {};
+      data.forEach((item) => {
+        digits2Str(item, ["id", "serviceId"]);
+        this.$set(this.remarkInputMap, item.id, item?.remark || "");
+      });
       this.list = data;
+      console.log(data);
       this.total = res?.total || 0;
       this.initSelection();
     },
@@ -305,6 +368,13 @@ export default {
     @include overflow-eps(2);
   }
 }
+// .remark-btn {
+//   &:after {
+//     content: "|";
+//     color: $--color-primary;
+//     margin: 0 5px;
+//   }
+// }
 .activityTab {
   text-align: left;
 }

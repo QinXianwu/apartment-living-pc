@@ -68,8 +68,6 @@ export default {
           apiPrefix +
           "/apartment-product/product/atproductstockprice/putStorage",
         params,
-        isHeadersForm: true,
-        isHandleParams: true,
       })
     );
   },
@@ -79,7 +77,7 @@ export default {
       apiFetch({
         url:
           apiPrefix +
-          " /apartment-product/product/atproductprocurementorder/addRemark",
+          "/apartment-product/product/atproductprocurementorder/addRemark",
         params,
         isHeadersForm: true,
         isHandleParams: true,

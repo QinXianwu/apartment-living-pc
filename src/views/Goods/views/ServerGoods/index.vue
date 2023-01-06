@@ -1,5 +1,5 @@
 <template>
-  <div class="GoodsList view-container">
+  <div class="ServerGoods view-container">
     <div class="content">
       <SearchForm
         isReturnFormData
@@ -186,6 +186,7 @@ export default {
   computed: {
     ...mapGetters({
       isService: "user/isService",
+      serviceStationId: "user/serviceStationId",
       categoryAllOptions: "goods/CategoryAllOptions",
       supplierOptions: "accountRoleManage/supplierOptions",
     }),
@@ -321,6 +322,7 @@ export default {
       const query = {
         ...this.page,
         ...this.query,
+        stationId: this.serviceStationId,
       };
       const [, res] = await this.$http.Goods.GetServeGoodsList(query);
       if (res?.code !== this.AJAX_CODE.SUCCESS) {

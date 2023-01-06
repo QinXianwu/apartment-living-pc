@@ -116,29 +116,23 @@ export default {
       if (!res) return this.$message.error("获取订单详情异常");
       const keys1 = ["id", "serviceId"];
       digits2Str(res, keys1);
-      const keys2 = [
-        "id",
-        "productStockPriceId",
-        "specificationValueId1",
-        "specificationValueId2",
-      ];
+      const keys2 = ["id", "productStockPriceId"];
       this.orderInfo = { ...res };
       this.list = this.orderInfo?.orderDetailsList?.length
         ? this.orderInfo.orderDetailsList
         : [];
       this.list.forEach((item) => digits2Str(item, keys2));
+      console.log(this.list);
     },
     // 处理提交
     async handleSubmit() {
       this.isLoading = true;
       const queryData = this.list.map((item) => ({
-        id: item.id,
+        ...item,
         putNum: item?.putNum || 0,
-        productStockPriceId: item.productStockPriceId,
         pdOrderNo: this.editInfo.pdOrderNo,
-        orderNum: item?.orderNum || 0,
-        specificationValueName: "",
       }));
+      console.log(queryData);
       const [, res] = await this.$http.Order.ServiceStationStorageGoods(
         JSON.stringify(queryData)
       );
