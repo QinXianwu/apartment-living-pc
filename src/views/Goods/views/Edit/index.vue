@@ -171,7 +171,12 @@ export default {
       if (res) {
         this.$store.dispatch("tagsView/delView", this.$route);
         this.$router.push({
-          name: REVIEW_TYPE === "REFRESH_REVIEW" ? "Audit" : "GoodsList",
+          name:
+            REVIEW_TYPE === "REFRESH_REVIEW"
+              ? "Audit"
+              : this.isService
+              ? "ServerGoodsList"
+              : "GoodsList",
         });
       }
       this.isLoading = false;

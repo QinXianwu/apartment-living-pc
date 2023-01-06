@@ -6,8 +6,10 @@
         :formData="searchForm"
         @on-search="onSearch"
       />
-      <div class="action" v-if="!isService">
-        <el-button type="primary" @click="handleAdd">新增商品</el-button>
+      <div class="action">
+        <el-button type="primary" @click="handleAdd" v-if="!isService"
+          >新增商品</el-button
+        >
         <el-button
           type="primary"
           plain
@@ -105,18 +107,13 @@
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
-            <el-button type="text" @click="handleEdit(scope)">{{
-              !isService ? "编辑" : "查看"
-            }}</el-button>
+            <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
             <el-button
               type="text"
               @click="
                 changeStatus({ ids: [scope.id], operStatus: scope.operStatus })
               "
-              v-if="
-                !isService &&
-                scope.operStatus !== CONST.GOODS_OPER_STATE.NO_CHECK
-              "
+              v-if="scope.operStatus !== CONST.GOODS_OPER_STATE.NO_CHECK"
               >{{
                 scope.operStatus === CONST.GOODS_OPER_STATE.LISTING
                   ? CONST.GOODS_OPER_STATE_TEXT[CONST.GOODS_OPER_STATE.REMOVAL]
@@ -133,11 +130,7 @@
               "
               >采购</el-button
             >
-            <el-button
-              type="text"
-              @click="handleDelete([scope.id])"
-              v-if="!isService"
-            >
+            <el-button type="text" @click="handleDelete([scope.id])">
               删除
             </el-button>
           </div>
@@ -169,7 +162,7 @@ import ProcurementGoodsDiaog from "./components/ProcurementGoodsDiaog.vue";
 import { formData, column, activityTab } from "./config";
 
 export default {
-  name: "GoodsList",
+  name: "ServerGoodsList",
   components: { TagPage, ProcurementGoodsDiaog },
   data() {
     return {
@@ -226,7 +219,7 @@ export default {
       });
     },
     handleEdit({ productNo }) {
-      this.$store.commit("goods/SET_IS_DISABLE_FORM", this.isService ? 1 : 0);
+      this.$store.commit("goods/SET_IS_DISABLE_FORM", 0);
       this.$router.push({
         name: "GoodsEdit",
         query: { productNo: productNo || "" },
