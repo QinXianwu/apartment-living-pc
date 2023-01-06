@@ -8,14 +8,12 @@
       />
       <!-- <div class="action"></div> -->
       <TagPage :state.sync="query.operStatus" @getList="getList" />
-      <TablePanel
-        ref="TablePanel"
-        :tableData="list"
-        :tableHead="column"
+      <TablePanel ref="TablePanel" :tableData="list" :tableHead="column">
+        <!--
         :checkbox="true"
         :isShowTopCheck="false"
-        @selection-change="handleSelectionChange"
-      >
+        @selection-change="handleSelectionChange
+        -->
         <template #goodsInfo="{ scope }">
           <div class="goodsInfo">
             <ImageView customClass="table-img" :src="scope.mainImage" />
