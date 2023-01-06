@@ -32,20 +32,20 @@ export const formData = [
     options: [],
     placeholder: "请选择服务点",
   },
-  {
-    label: "收件用户名",
-    prop: "name",
-    type: "text",
-    value: "",
-    placeholder: "请输入收件用户名",
-  },
-  {
-    label: "收件联系电话",
-    prop: "phone",
-    type: "text",
-    value: "",
-    placeholder: "请输入商品名称",
-  },
+  // {
+  //   label: "收件用户名",
+  //   prop: "name",
+  //   type: "text",
+  //   value: "",
+  //   placeholder: "请输入收件用户名",
+  // },
+  // {
+  //   label: "收件联系电话",
+  //   prop: "phone",
+  //   type: "text",
+  //   value: "",
+  //   placeholder: "请输入商品名称",
+  // },
 ];
 
 // 表格头
@@ -68,17 +68,18 @@ export const column = [
   },
   {
     label: "采购总数量",
-    prop: "originalPrice",
+    prop: "procureTotalNum",
   },
   {
     label: "合计采购价",
-    prop: "sellPrice",
+    prop: "procureTotalPrice",
     type: "money",
   },
   {
     label: "收件信息",
     prop: "serveInfo",
     type: "custom",
+    minWidth: 150,
   },
   {
     label: "下单时间",
@@ -87,16 +88,17 @@ export const column = [
   },
   {
     label: "入库数量",
-    prop: "num",
+    prop: "putTotalNum",
   },
   {
     label: "入库总价",
-    prop: "purchaseAmount",
+    prop: "putTotalPrice",
     type: "money",
   },
   {
     label: "备注",
     prop: "remark",
+    showOverflowTooltip: true,
   },
   {
     label: "状态",

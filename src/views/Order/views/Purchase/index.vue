@@ -31,6 +31,18 @@
             </div>
           </div>
         </template>
+        <template #serveInfo="{ scope }">
+          <el-tooltip class="item" effect="dark" placement="right">
+            <div slot="content">
+              <div class="name">名称:{{ scope.serviceName || "-" }}</div>
+              <div class="address">地址:{{ scope.serviceAddress || "-" }}</div>
+            </div>
+            <div class="serveInfo">
+              <div class="name">名称:{{ scope.serviceName || "-" }}</div>
+              <div class="address">地址:{{ scope.serviceAddress || "-" }}</div>
+            </div>
+          </el-tooltip>
+        </template>
         <!-- 状态 -->
         <template #operStatus="{ scope }">
           <el-tag :type="scope | statusTabType">{{
@@ -97,10 +109,10 @@
 import { mapGetters } from "vuex";
 import CONST from "@/constants/index";
 import { digits2Str } from "@/utils/index";
-import TagPage from "./components/TagPage.vue";
-import ProcurementDetail from "./components/ProcurementDetail/index.vue";
-import StorageProcurement from "./components/StorageProcurement.vue";
 import { formData, column } from "./config";
+import TagPage from "./components/TagPage.vue";
+import StorageProcurement from "./components/StorageProcurement.vue";
+import ProcurementDetail from "./components/ProcurementDetail/index.vue";
 
 export default {
   name: "GoodsList",
@@ -295,6 +307,15 @@ export default {
 }
 .activityTab {
   text-align: left;
+}
+.serveInfo {
+  text-align: left;
+  .name {
+    @include overflow-eps(2);
+  }
+  .address {
+    @include overflow-eps(2);
+  }
 }
 .action {
   padding: 0 0 15px;

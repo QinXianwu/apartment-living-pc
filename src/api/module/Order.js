@@ -73,4 +73,17 @@ export default {
       })
     );
   },
+  // 添加采购订单备注
+  AddPurchaseOrderRemark(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url:
+          apiPrefix +
+          " /apartment-product/product/atproductprocurementorder/addRemark",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
 };

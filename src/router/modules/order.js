@@ -9,7 +9,7 @@ export default {
   alwaysShow: true,
   meta: {
     title: "订单管理",
-    icon: "data-user",
+    icon: "order_search",
     affix: true,
     // PermissionId: PERMISSION_ID.UserHub,
   },

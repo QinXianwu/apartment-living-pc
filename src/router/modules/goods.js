@@ -1,6 +1,7 @@
 import PERMISSION_ID from "@/permission/PERMISSION_ID";
 import MainLayout from "@/layouts/MainLayout/index";
 import List from "@/views/Goods/views/List/index.vue";
+import ServerGoodsList from "@/views/Goods/views/ServerGoods/index.vue";
 import Edit from "@/views/Goods/views/Edit/index.vue";
 import Audit from "@/views/Goods/views/Audit/index.vue";
 import GoodsCategory from "@/views/Goods/views/Category/index.vue";
@@ -25,6 +26,15 @@ export default {
       meta: {
         title: "商品列表",
         PermissionId: PERMISSION_ID.Goods_List,
+      },
+    },
+    {
+      path: "ServerGoodsList",
+      component: ServerGoodsList,
+      name: "ServerGoodsList",
+      meta: {
+        title: "商品列表(选购库)",
+        PermissionId: PERMISSION_ID.Goods_ServerGoodsList,
       },
     },
     {
