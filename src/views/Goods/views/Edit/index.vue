@@ -89,6 +89,7 @@ export default {
   computed: {
     ...mapState({
       isDisableForm: (state) => state.goods.isDisableForm,
+      isServerEdit: (state) => state.goods.isServerEdit,
     }),
     ...mapGetters({
       isService: "user/isService",
@@ -106,9 +107,16 @@ export default {
     async getGoodsInfo() {
       if (!this.productNo || this.isLoadingGoods) return;
       this.isLoadingGoods = true;
-      const [, res] = await this.$http.Goods.GetGoodsInfo({
+      const query = {
         productNo: this.productNo || "",
-      });
+      };
+      if (this.isServerEdit && this.serviceStationId)
+        query.serviceId = this.serviceStationId;
+      const [, res] = await this.$http.Goods[
+        this.isServerEdit && this.serviceStationId
+          ? "GetServerGoodsInfo"
+          : "GetGoodsInfo"
+      ](query);
       this.isLoadingGoods = false;
       if (!res) return this.$message.error("获取商品详情异常");
       const JSONbigKeyArr = ["id", "categoryId"];

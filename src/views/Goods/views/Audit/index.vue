@@ -192,6 +192,7 @@ export default {
       this.getList(true);
     },
     lookDetail({ productNo }) {
+      this.$store.commit("goods/SET_IS_SERVER_EDIT", 0);
       this.$store.commit("goods/SET_IS_DISABLE_FORM", 1);
       this.$router.push({
         name: "GoodsEdit",

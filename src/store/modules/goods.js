@@ -2,9 +2,11 @@ import api from "@/api/module";
 import JSONbig from "json-bigint"; // 解决超过 16 位数字精度丢失问题
 
 const disableForm = Number(localStorage.getItem("disableForm")) || 0;
+const isServerEdit = Number(localStorage.getItem("isServerEdit")) || 0;
 
 const state = {
   isDisableForm: !!disableForm, // 商品编辑是否禁用表单
+  isServerEdit: !!isServerEdit, // 服务点商品编辑 区分获取服务点或者平台 详情
   categoryListAll: [], // 商品分类级联
   specificaListAll: [], // 商品规格列表
 };
@@ -13,6 +15,10 @@ const mutations = {
   SET_IS_DISABLE_FORM(state, data) {
     state.isDisableForm = !!data;
     localStorage.setItem("disableForm", data);
+  },
+  SET_IS_SERVER_EDIT(state, data) {
+    state.isServerEdit = !!data;
+    localStorage.setItem("isServerEdit", data);
   },
   SET_CATEGORY_LIST_ALL(state, data) {
     state.categoryListAll = data;

@@ -47,6 +47,19 @@ export default {
       })
     );
   },
+  // 查询服务点商品详情
+  GetServerGoodsInfo(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url:
+          apiPrefix +
+          "/apartment-product/product/atproduct/queryByProductNoAndServiceId",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
   // 新增商品
   AddGoods(params) {
     return catchAsyncFun(
