@@ -1,16 +1,22 @@
 <template>
   <div class="ProcurementInfo">
     <div class="title">服务点收件信息</div>
-    <div class="content"></div>
+    <TableBlock :tableData="tableData" />
   </div>
 </template>
 
 <script>
+import TableBlock from "@/components/TableBlock";
 export default {
   name: "ProcurementInfo",
-  components: {},
+  components: { TableBlock },
   data() {
-    return {};
+    return {
+      tableData: [
+        { label: "1", value: "abc" },
+        { label: "2", value: "ABC" },
+      ],
+    };
   },
   computed: {},
   methods: {},
