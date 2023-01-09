@@ -1,7 +1,58 @@
 <template>
   <!-- 积分规则 -->
   <div class="PointsRules">
-    <Rules />
+    <div class="title">积分抵扣设置</div>
+    <div class="content">
+      <el-form ref="form" :model="formData" :rules="rules" inline>
+        <el-form-item label="" prop="consumeIntegral">
+          <span>每</span>
+          <el-input-number
+            class="input-mini"
+            v-model="formData.consumeIntegral"
+            :min="0"
+            :controls="false"
+            :precision="0"
+            :step="1"
+            placeholder="消费积分"
+          />
+          <span>积分</span>
+        </el-form-item>
+        <el-form-item label="" prop="discountAmount">
+          <span>可抵扣</span>
+          <el-input-number
+            class="input-mini"
+            v-model="formData.discountAmount"
+            :min="0"
+            :controls="false"
+            :precision="2"
+            placeholder="抵扣金额"
+            :step="1"
+          />
+          <span>元</span>
+        </el-form-item>
+        <div class="rate">
+          <span>最多可抵扣订单总额的</span>
+          <el-form-item label="" prop="discountOrderRate">
+            <el-input-number
+              class="input-mini"
+              v-model="formData.discountOrderRate"
+              :min="0"
+              :controls="false"
+              :precision="2"
+              placeholder="抵扣比例"
+              :step="1"
+            />
+            <span>%</span>
+          </el-form-item>
+        </div>
+      </el-form>
+    </div>
+    <!-- 抵扣规则规则 -->
+    <ActivityRules
+      :rule.sync="formData.discountRule"
+      title="抵扣规则设置"
+      formLabel="抵扣规则"
+    />
     <!-- 底部按钮 -->
     <FooterView :isShowSave="false" :cancelType="true" :showCancelBtn="false">
       <template>
@@ -12,18 +63,46 @@
 </template>
 
 <script>
-import Rules from "./Rules.vue";
-import FooterView from "@/components/Footer/";
+import ActivityRules from "../ActivityRules.vue";
+import FooterView from "@/components/Footer";
 export default {
   name: "PointsRules",
-  components: { Rules, FooterView },
+  components: { ActivityRules, FooterView },
   data() {
-    return {};
+    return {
+      integral: {},
+      formData: {
+        consumeStatus: 1, // 消费积分状态(1 => 设置了，2 => 未设置)
+      },
+      rules: {
+        consumeIntegral: [
+          { required: true, message: "请输入消费积分", trigger: "blur" },
+        ],
+        discountAmount: [
+          { required: true, message: "请输入抵扣金额", trigger: "blur" },
+        ],
+        discountOrderRate: [
+          { required: true, message: "请输入抵扣比例", trigger: "blur" },
+        ],
+      },
+    };
   },
   computed: {},
   methods: {
+    // 处理提交
     async handleSubmit() {
-      //
+      // 表单校验
+      try {
+        const valid = await this.$refs.form.validate();
+        if (!valid) {
+          return;
+        }
+      } catch (error) {
+        return;
+      }
+      this.isLoading = true;
+      this.isLoading = false;
+      // this.handleClose(true);
     },
   },
   mounted() {
@@ -31,4 +110,22 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.PointsRules {
+  .title {
+    font-size: 14px;
+    font-weight: bold;
+    color: $main-font-color;
+  }
+  .content {
+    padding: 20px;
+    .rate {
+      line-height: 30px;
+    }
+    span {
+      margin: 0 10px;
+      font-size: 14px;
+    }
+  }
+}
+</style>

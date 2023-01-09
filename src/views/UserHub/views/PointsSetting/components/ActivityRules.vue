@@ -1,9 +1,9 @@
 <template>
   <div class="ActivityRules">
-    <div class="title">签到规则设置</div>
+    <div class="title">{{ title }}</div>
     <div class="content">
       <el-form ref="form" label-width="120px">
-        <el-form-item label="签到规则:">
+        <el-form-item :label="formLabel">
           <Tinymce ref="Editor" v-model="rulesData" :height="500" />
         </el-form-item>
       </el-form>
@@ -20,6 +20,14 @@ export default {
     rule: {
       type: String,
       default: "",
+    },
+    title: {
+      type: String,
+      default: "规则设置",
+    },
+    formLabel: {
+      type: String,
+      default: "规则",
     },
   },
   data() {

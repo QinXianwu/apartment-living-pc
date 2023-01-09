@@ -9,7 +9,11 @@
       :signRewardList="signRewardList"
     />
     <!-- 签到活动规则 -->
-    <ActivityRules :rule.sync="sign.rule" />
+    <ActivityRules
+      :rule.sync="sign.rule"
+      title="签到规则设置"
+      formLabel="签到规则"
+    />
     <!-- 底部按钮 -->
     <FooterView :isShowSave="false" :cancelType="true" :showCancelBtn="false">
       <template>
@@ -22,7 +26,7 @@
 <script>
 import CONST from "@/constants/index";
 import SignIn from "./SignIn.vue";
-import ActivityRules from "./ActivityRules.vue";
+import ActivityRules from "../ActivityRules.vue";
 import FooterView from "@/components/Footer/";
 
 export default {
@@ -77,8 +81,8 @@ export default {
         item.signReward.couponIds = idsArr.join(",");
       });
       const [, res] = await this.$http.SignIn.UpdateSignInDetail(quert);
-      this.getDetail();
       if (res) {
+        this.getDetail();
         this.$message.success("保存成功");
       }
     },
