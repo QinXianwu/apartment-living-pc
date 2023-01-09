@@ -27,11 +27,14 @@
       </div>
       <div class="next-1" v-show="activeIndex === 1">
         <!-- 相似推荐 -->
-        <SimilarSuggest ref="SimilarSuggest" />
+        <SimilarSuggest ref="SimilarSuggest" :productInfo="productInfo" />
         <!-- 推荐购买 -->
-        <SuggestPurchase ref="SuggestPurchase" />
+        <SuggestPurchase ref="SuggestPurchase" :productInfo="productInfo" />
         <!-- 经常购买 -->
-        <FrequentlyPurchased ref="FrequentlyPurchased" />
+        <FrequentlyPurchased
+          ref="FrequentlyPurchased"
+          :productInfo="productInfo"
+        />
       </div>
     </div>
     <!-- 底部按钮 -->
@@ -82,6 +85,7 @@ export default {
       isLoadingGoods: false,
       discountIs: "",
       BaseInfo: {},
+      AssociationInfo: [],
       productNo: "", // 商品编码
       productInfo: {},
     };
@@ -144,14 +148,17 @@ export default {
         }
         this.activeIndex++;
       } else if (key === "association") {
-        //编辑详情
-        // const SpecificaData = await this.$refs.Specifica.getQuery();
-        // if (!SpecificaData) return;
-        // if (!SpecificaData.is_multiple_specs) {
-        //   SpecificaData.skus[0].sku_image = this.BaseInfo.image;
-        // }
-        // this.SpecificaData = SpecificaData;
-        // this.activeIndex++;
+        // 编辑商品关联信息
+        const associationData1 = await this.$refs.SimilarSuggest.getQuery();
+        const associationData2 = await this.$refs.SuggestPurchase.getQuery();
+        const associationData3 =
+          await this.$refs.FrequentlyPurchased.getQuery();
+        this.AssociationInfo = {
+          ...associationData1,
+          ...associationData2,
+          ...associationData3,
+        };
+        this.handleSubmit();
       }
     },
     goBack() {
@@ -163,6 +170,7 @@ export default {
       const query = {
         ...this.productInfo,
         ...this.BaseInfo,
+        ...this.AssociationInfo,
       };
       if (this.isService) query.stationId = this.serviceStationId;
       const { REVIEW_TYPE } = this.$route?.query || {};

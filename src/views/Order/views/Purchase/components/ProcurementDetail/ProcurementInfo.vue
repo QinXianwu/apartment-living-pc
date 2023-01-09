@@ -33,7 +33,15 @@
           )
         "
         :tableHead="column"
-      />
+      >
+        <!-- 入库总价 -->
+        <template #putNumTotalAmount="{ scope }">
+          {{
+            (Number(scope.originalPrice || 0) * Number(scope.putNum || 0))
+              | formatCurrency
+          }}
+        </template>
+      </TablePanel>
       <!-- 分页 -->
       <Pagination
         :fixed="false"

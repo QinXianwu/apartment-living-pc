@@ -20,16 +20,19 @@ export const formData = [
 export const column = [
   {
     label: "ID",
-    prop: "sellPrice",
+    prop: "id",
+    showOverflowTooltip: true,
   },
   {
-    label: "商品分类",
-    prop: "sellPrice",
+    label: "分类",
+    prop: "categoryName",
+    showOverflowTooltip: true,
   },
   {
-    label: "商品信息",
-    prop: "sellPrice",
+    label: "商品名称",
+    prop: "goodsInfo",
     type: "custom",
+    minWidth: 150,
   },
   {
     label: "操作",

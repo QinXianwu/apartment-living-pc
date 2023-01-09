@@ -51,6 +51,7 @@
         :sortable="item.sortable"
         :width="item.width"
         :min-width="item.minWidth"
+        :fixed="item.fixed || false"
         :show-overflow-tooltip="item.showOverflowTooltip"
       >
         <!-- fixed属性有些版本会导致数据渲染两次 -->

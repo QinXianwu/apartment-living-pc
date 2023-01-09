@@ -60,6 +60,48 @@ export default {
       })
     );
   },
+  // 查询经常购买商品
+  GetGoodsAndOftenProduct(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url:
+          apiPrefix +
+          "/apartment-product/product/atproduct/queryPageOftenProduct",
+        params,
+        isReturnAll: true,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 查询推荐购买商品
+  GetGoodsAndRecommendProduct(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url:
+          apiPrefix +
+          "/apartment-product/product/atproduct/queryPageRecommendProduct",
+        params,
+        isReturnAll: true,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 查询相似购买商品
+  GetGoodsAndSimilarProduct(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url:
+          apiPrefix +
+          "/apartment-product/product/atproduct/queryPageSimilarProduct",
+        params,
+        isReturnAll: true,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
   // 新增商品
   AddGoods(params) {
     return catchAsyncFun(

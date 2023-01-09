@@ -208,7 +208,7 @@ export const ProcurementDetailColumn = [
   },
   {
     label: "入库总价",
-    prop: "putTotalPrice",
-    type: "money",
+    prop: "putNumTotalAmount",
+    type: "custom",
   },
 ];

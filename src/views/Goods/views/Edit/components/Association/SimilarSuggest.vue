@@ -6,6 +6,21 @@
         <el-form-item label="相似推荐">
           <el-button type="text" @click="chooseGoods">选择商品</el-button>
           <TablePanel :tableData="list" :tableHead="column">
+            <template #goodsInfo="{ scope }">
+              <div class="goodsInfo">
+                <ImageView customClass="table-img" :src="scope.mainImage" />
+                <div class="name">
+                  <el-tooltip
+                    class="item"
+                    effect="dark"
+                    :content="scope.productName"
+                    placement="right"
+                  >
+                    <span>{{ scope.productName }}</span>
+                  </el-tooltip>
+                </div>
+              </div>
+            </template>
             <!-- 操作 -->
             <template #action="{ index }">
               <div class="action-groud">
@@ -28,32 +43,69 @@
         </el-form-item>
       </el-form>
     </div>
-    <ChooseServeGoodsDiaog :show.sync="showServeGoods" @close="close" />
+    <ChooseServeGoodsDiaog
+      :selectIds="selectIds"
+      :show.sync="showServeGoods"
+      @close="close"
+      @on-success="handleChooseGoods"
+    />
   </div>
 </template>
 
 <script>
 import { column } from "./config/index";
+import { isField, digits2Str } from "@/utils/index";
 import ChooseServeGoodsDiaog from "./ChooseServeGoodsDiaog.vue";
 export default {
   name: "SimilarSuggest",
   components: { ChooseServeGoodsDiaog },
-  props: {},
+  props: {
+    productInfo: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   data() {
     return {
       column,
       formData: {},
       list: [],
-      selectDataMap: {},
       page: {
         pageNum: 1,
         pageSize: 5,
       },
       showServeGoods: false,
+      productNo: "",
     };
   },
-  computed: {},
+  watch: {
+    productInfo(val) {
+      if (val) this.init();
+    },
+  },
+  computed: {
+    selectIds({ list }) {
+      return list.map((item) => item.id);
+    },
+  },
   methods: {
+    init() {
+      //
+    },
+    async getSelecteData() {
+      const [, res] = await this.$http.Goods.GetGoodsAndSimilarProduct({
+        productNo: this.productNo,
+      });
+      if (res?.code !== this.AJAX_CODE.SUCCESS) {
+        this.$message.error(res?.msg || "获取经常购买商品列表异常");
+      }
+      const data = res?.rows?.length ? res.rows : [];
+      data.forEach((item) => {
+        digits2Str(item, ["productId"]);
+        if (!isField(item, "id")) item.id = item.productId;
+      });
+      this.list = data;
+    },
     handleSizeChange(val) {
       this.page.pageSize = val;
       this.page.pageNum = 1;
@@ -66,6 +118,9 @@ export default {
     },
     handleDelete(index) {
       this.list.splice(index, 1);
+    },
+    handleChooseGoods(data) {
+      this.list = data?.length ? data : [];
     },
     close() {
       this.showServeGoods = false;
@@ -83,13 +138,21 @@ export default {
           //
         }
         resolve({
-          ...this.formData,
+          similarProductList: this.list.map((item) => ({
+            categoryName: item.categoryName,
+            productId: item.id,
+            productName: item.productName,
+            productNo: item.productNo,
+          })),
         });
       });
     },
   },
   mounted() {
-    //
+    const { query } = this.$route;
+    this.productNo = query?.productNo || "";
+    this.init();
+    this.getSelecteData();
   },
 };
 </script>
@@ -106,6 +169,18 @@ export default {
   }
   ::v-deep .el-radio-button__inner {
     padding: 9px 20px;
+  }
+  .goodsInfo {
+    display: flex;
+    align-items: center;
+    .table-img {
+      width: 60px;
+      height: 60px;
+    }
+    .name {
+      margin-left: 10px;
+      @include overflow-eps(2);
+    }
   }
 }
 </style>

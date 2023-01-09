@@ -72,7 +72,7 @@
             <el-button
               type="text"
               @click="closeOredr(scope)"
-              v-if="scope.operStatus !== CONST.ORDER_PURCHASE_STATE.CANCEL"
+              v-if="scope.operStatus === CONST.ORDER_PURCHASE_STATE.WAIT_SEND"
               >关闭订单</el-button
             >
             <el-popover
