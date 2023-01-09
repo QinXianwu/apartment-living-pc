@@ -84,4 +84,16 @@ export default {
       })
     );
   },
+  // 获取运营后台订单列表
+  GetOrderList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-order/order/atorder/listForAdmin",
+        params,
+        isReturnAll: true,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
 };
