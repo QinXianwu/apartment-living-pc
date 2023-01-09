@@ -70,6 +70,7 @@ export default {
   watch: {
     visible(val) {
       if (val) this.getList(val);
+      else this.selectDataMap = {};
     },
   },
   data() {
