@@ -9,10 +9,10 @@
             <div class="user-name">
               <el-tooltip
                 effect="dark"
-                :content="scope | filtersName"
+                :content="scope.nickName || ''"
                 placement="right-start"
               >
-                <span>{{ scope | filtersName }}</span>
+                <span>{{ scope.nickName || "-" }}</span>
               </el-tooltip>
             </div>
           </div>
@@ -21,12 +21,47 @@
         <template #action="{ scope }">
           <div class="action-groud">
             <el-button type="text" @click="lookDetail(scope)"> 查看 </el-button>
-            <el-button type="text" @click="handleRemark(scope)">
-              备注
-            </el-button>
             <el-button type="text" @click="retroactivePoints(scope)">
               补发积分
             </el-button>
+            <el-popover
+              placement="bottom-start"
+              trigger="manual"
+              v-model="showRemarkInputMap[scope.userId]"
+            >
+              <el-button
+                class="remark-btn"
+                type="text"
+                slot="reference"
+                @click="
+                  showRemarkInputMap = {};
+                  showRemarkInputMap[scope.userId] =
+                    !showRemarkInputMap[scope.userId];
+                "
+                >备注</el-button
+              >
+              <div class="addVal-input">
+                <el-input
+                  type="text"
+                  placeholder="请输入备注"
+                  class="input-small mr-10 mt-10"
+                  v-model="remarkInputMap[scope.userId]"
+                />
+                <el-button
+                  type="primary"
+                  class="mt-10"
+                  @click="handleRemark(scope)"
+                  v-loading="isLoadingSetRemark"
+                  >保存</el-button
+                >
+                <el-button
+                  type="primary"
+                  class="mt-10"
+                  @click="showRemarkInputMap = {}"
+                  >取消</el-button
+                >
+              </div>
+            </el-popover>
           </div>
         </template>
       </TablePanel>
@@ -63,6 +98,9 @@ export default {
       editInfo: {},
       total: 0,
       showUserDetail: false,
+      isLoadingSetRemark: false,
+      remarkInputMap: {},
+      showRemarkInputMap: {},
     };
   },
   computed: {},
@@ -86,8 +124,23 @@ export default {
       };
       this.showUserDetail = true;
     },
-    handleRemark() {
-      //
+    async handleRemark({ userId }) {
+      if (!this.remarkInputMap[userId])
+        return this.$message.error("请输入备注后再试");
+      if (this.isLoadingSetRemark) return;
+      this.isLoadingSetRemark = true;
+      const [, res] = await this.$http.UserHub.UpdateUserRemark({
+        userId,
+        remark: this.remarkInputMap[userId],
+      });
+      this.isLoadingSetRemark = false;
+      this.$message[res ? "success" : "error"](
+        res?.msg || `保存${res ? "成功" : "失败"}`
+      );
+      if (res) {
+        this.showRemarkInputMap = {};
+        this.getList();
+      }
     },
     retroactivePoints() {
       //
@@ -108,8 +161,11 @@ export default {
         this.$message.error(res?.msg || "获取用户列表异常");
       }
       const data = res?.rows?.length ? res?.rows : [];
+      this.remarkInputMap = {};
+      this.showRemarkInputMap = {};
       data.forEach((item) => {
         if (item?.userId) item.userId = this.$JSONbig.stringify(item.userId);
+        this.$set(this.remarkInputMap, item.userId, item?.remark || "");
       });
       this.list = data || [];
       this.total = res?.total || 0;

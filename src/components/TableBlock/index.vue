@@ -5,14 +5,17 @@
         <div>{{ item.label || "-" }}</div>
       </div>
       <div class="item-value" :style="itemStyle(item)">
-        <span v-if="item.type !== 'custom'">
-          {{ item[item.prop] || item.value || "-" }}
-        </span>
         <span v-if="item.type === 'image'">
           <ImageView
             customClass="table-img"
             :src="item[item.prop] || item.value || ''"
           />
+        </span>
+        <span v-else-if="item.type === 'money'">
+          ￥{{ item[item.prop] || item.value | formatCurrency }}
+        </span>
+        <span v-else-if="item.type !== 'custom'">
+          {{ item[item.prop] || item.value || "-" }}
         </span>
         <!-- 自定义插槽 -->
         <slot
@@ -35,6 +38,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    valueWidth: {
+      type: [String, Number],
+      default: "",
+    },
   },
   data() {
     return {};
@@ -51,6 +58,10 @@ export default {
         ? typeof data.width === "number"
           ? `${data.width}px`
           : data.width
+        : this.valueWidth
+        ? typeof this.valueWidth === "number"
+          ? `${this.valueWidth}px`
+          : this.valueWidth
         : "";
       return `min-width: ${minWidth};width: ${width}`;
     },
@@ -84,6 +95,8 @@ export default {
     border-right: 1px solid #eee;
   }
   .item-value {
+    display: flex;
+    align-items: center;
     min-width: 200px;
     color: $main-font-color;
     padding: 14px;

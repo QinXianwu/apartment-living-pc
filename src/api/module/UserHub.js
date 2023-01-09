@@ -30,4 +30,15 @@ export default {
       })
     );
   },
+  // 编辑用户备注
+  UpdateUserRemark(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-user/sysMoblieUser/updateRemark",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
 };

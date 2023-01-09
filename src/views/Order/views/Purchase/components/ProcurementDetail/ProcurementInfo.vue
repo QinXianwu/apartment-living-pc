@@ -2,7 +2,7 @@
   <div class="ProcurementInfo">
     <div class="title">服务点收件信息</div>
     <div class="content">
-      <TableBlock :tableData="tableData1">
+      <TableBlock :tableData="tableData1" :valueWidth="350">
         <template #address>
           <span>
             {{ (orderInfo?.atServiceStation || {}) | filtersAddress }}
@@ -12,11 +12,11 @@
     </div>
     <div class="title">供应商信息</div>
     <div class="content">
-      <TableBlock :tableData="tableData2" />
+      <TableBlock :tableData="tableData2" :valueWidth="350" />
     </div>
     <div class="title">采购信息</div>
     <div class="content">
-      <TableBlock :tableData="tableData3">
+      <TableBlock :tableData="tableData3" :valueWidth="350">
         <template #goodsInfo>
           <div class="goodsInfo">
             <ImageView customClass="table-img" :src="orderInfo.mainImage" />
@@ -81,11 +81,11 @@ export default {
     tableData1({ orderInfo }) {
       const serviceStationInfo = orderInfo?.atServiceStation || {};
       return [
-        { label: "服务点名称", value: serviceStationInfo?.name, minWidth: 350 },
-        { label: "联系人", value: serviceStationInfo?.manager, minWidth: 350 },
-        { label: "联系方式", value: serviceStationInfo?.phone, minWidth: 350 },
-        { label: "服务点地址", prop: "address", type: "custom", minWidth: 350 },
-        { label: "备注", value: orderInfo.remark, minWidth: 350 },
+        { label: "服务点名称", value: serviceStationInfo?.name },
+        { label: "联系人", value: serviceStationInfo?.manager },
+        { label: "联系方式", value: serviceStationInfo?.phone },
+        { label: "服务点地址", prop: "address", type: "custom" },
+        { label: "备注", value: orderInfo.remark },
       ];
     },
     tableData2({ orderInfo }) {
