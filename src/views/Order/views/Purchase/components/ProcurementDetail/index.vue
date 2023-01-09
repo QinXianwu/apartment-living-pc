@@ -2,7 +2,7 @@
   <div class="ProcurementDetail view-container">
     <div class="title">采购订单详情</div>
     <PriceBlock title="订单号" :value="editInfo.pdOrderNo || '-'" />
-    <ProcurementInfo />
+    <ProcurementInfo :orderInfo="orderInfo" />
     <FooterView :cancelType="true" @cancel="$emit('close', false)" />
   </div>
 </template>
@@ -25,8 +25,9 @@ export default {
   data() {
     return {
       isLoading: false,
-      list: [],
       orderInfo: {},
+      serviceStationInfo: {},
+      supplierInfo: {},
       page: {
         pageNum: 1,
         pageSize: 5,
@@ -50,17 +51,13 @@ export default {
       if (!res) return this.$message.error("获取订单详情异常");
       const keys1 = ["id", "serviceId"];
       digits2Str(res, keys1);
-      const keys2 = [
-        "id",
-        "productStockPriceId",
-        "specificationValueId1",
-        "specificationValueId2",
-      ];
+      const keys2 = ["id", "productStockPriceId"];
       this.orderInfo = { ...res };
-      this.list = this.orderInfo?.orderDetailsList?.length
+      const skuList = this.orderInfo?.orderDetailsList?.length
         ? this.orderInfo.orderDetailsList
         : [];
-      this.list.forEach((item) => digits2Str(item, keys2));
+      skuList.forEach((item) => digits2Str(item, keys2));
+      this.orderInfo.orderDetailsList = skuList;
     },
   },
   filters: {},

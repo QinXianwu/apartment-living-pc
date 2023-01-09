@@ -32,7 +32,7 @@ export default {
   display: inline-block;
   min-width: 180px;
   background: #f7f8fa;
-  border-radius: 8px;
+  // border-radius: 8px;
   padding: 10px 14px;
   box-sizing: border-box;
   margin-right: 16px;

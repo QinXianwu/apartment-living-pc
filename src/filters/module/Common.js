@@ -21,4 +21,14 @@ export default {
     if (!isPhone(val)) return val;
     return val.replace(/^(.{3})(.*)(.{4})$/, "$1 $2 $3");
   },
+  filtersAddress(data, keyStrArr = []) {
+    let address = "";
+    const keyArr = keyStrArr?.length
+      ? keyStrArr
+      : ["province", "city", "district", "detailAddress"];
+    keyArr.forEach((key) => {
+      if (data[key]) address += data[key];
+    });
+    return address;
+  },
 };

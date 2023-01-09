@@ -1,12 +1,18 @@
 <template>
   <div class="table">
     <div class="table-item" v-for="(item, index) in tableData" :key="index">
-      <div class="item-label" :style="itemStyle(item)">
-        <span>{{ item.label || "-" }}</span>
+      <div class="item-label">
+        <div>{{ item.label || "-" }}</div>
       </div>
       <div class="item-value" :style="itemStyle(item)">
         <span v-if="item.type !== 'custom'">
           {{ item[item.prop] || item.value || "-" }}
+        </span>
+        <span v-if="item.type === 'image'">
+          <ImageView
+            customClass="table-img"
+            :src="item[item.prop] || item.value || ''"
+          />
         </span>
         <!-- 自定义插槽 -->
         <slot
@@ -58,6 +64,7 @@ export default {
 .table {
   display: flex;
   flex-wrap: wrap;
+  margin: 0 0 20px;
   &-item {
     display: flex;
     flex-wrap: wrap;
@@ -68,6 +75,8 @@ export default {
     margin-bottom: 0px;
   }
   .item-label {
+    display: flex;
+    align-items: center;
     min-width: 180px;
     padding: 14px;
     color: $sub-font-color;
@@ -78,6 +87,10 @@ export default {
     min-width: 200px;
     color: $main-font-color;
     padding: 14px;
+  }
+  .table-img {
+    width: 60px;
+    height: 60px;
   }
 }
 </style>

@@ -109,6 +109,16 @@
           />
         </div>
       </el-form-item>
+      <el-form-item label="发放总数量" prop="totalLimitCount">
+        <el-input-number
+          class="input-medium"
+          v-model="formData.totalLimitCount"
+          placeholder="请输入发放总数量"
+          :controls="false"
+          :precision="0"
+          :min="0"
+        />
+      </el-form-item>
       <el-form-item label="优惠券规则" prop="rule">
         <Tinymce ref="Editor" v-model="formData.rule" :height="500" />
       </el-form-item>
@@ -180,6 +190,13 @@ export default {
         meetAmount: [
           { required: true, message: "请输入满足金额", trigger: "blur" },
           { validator: validateMeetAmount, trigger: "blur" },
+        ],
+        totalLimitCount: [
+          {
+            required: true,
+            message: "请输入优惠劵发放总数量",
+            trigger: "blur",
+          },
         ],
       },
     };

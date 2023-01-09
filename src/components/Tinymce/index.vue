@@ -12,6 +12,7 @@
         @successCBK="imageSuccessCBK"
       /> -->
     </div>
+    <span class="form-tip">富文本若加载失败请刷新页面后再试</span>
   </div>
 </template>
 

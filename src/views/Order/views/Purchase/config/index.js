@@ -165,3 +165,50 @@ export const ProcurementColumn = [
     showOverflowTooltip: true,
   },
 ];
+
+// 订单详情-规格表格头
+export const ProcurementDetailColumn = [
+  {
+    label: "规格1",
+    prop: "specificationValueName1",
+    showOverflowTooltip: true,
+  },
+  {
+    label: "规格2",
+    prop: "specificationValueName2",
+    showOverflowTooltip: true,
+  },
+  {
+    label: "规格图片",
+    prop: "images",
+    type: "image",
+  },
+  {
+    label: "销售价",
+    prop: "sellPrice",
+    type: "money",
+  },
+  {
+    label: "供应价(原价)",
+    prop: "originalPrice",
+    type: "money",
+  },
+  {
+    label: "采购数量",
+    prop: "orderNum",
+  },
+  {
+    label: "合计采购价",
+    prop: "totalPrice",
+    type: "money",
+  },
+  {
+    label: "入库数量",
+    prop: "putNum",
+  },
+  {
+    label: "入库总价",
+    prop: "putTotalPrice",
+    type: "money",
+  },
+];
