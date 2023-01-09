@@ -26,15 +26,20 @@
         <GoodsDetail ref="GoodsDetail" :productInfo="productInfo" />
       </div>
       <div class="next-1" v-show="activeIndex === 1">
-        <!-- 相似推荐 -->
-        <SimilarSuggest ref="SimilarSuggest" :productInfo="productInfo" />
-        <!-- 推荐购买 -->
-        <SuggestPurchase ref="SuggestPurchase" :productInfo="productInfo" />
-        <!-- 经常购买 -->
-        <FrequentlyPurchased
-          ref="FrequentlyPurchased"
-          :productInfo="productInfo"
-        />
+        <div
+          class="association"
+          v-if="isService && isServerEdit && isAssociation"
+        >
+          <!-- 相似推荐 -->
+          <SimilarSuggest ref="SimilarSuggest" :productInfo="productInfo" />
+          <!-- 推荐购买 -->
+          <SuggestPurchase ref="SuggestPurchase" :productInfo="productInfo" />
+          <!-- 经常购买 -->
+          <FrequentlyPurchased
+            ref="FrequentlyPurchased"
+            :productInfo="productInfo"
+          />
+        </div>
       </div>
     </div>
     <!-- 底部按钮 -->
@@ -88,6 +93,7 @@ export default {
       AssociationInfo: [],
       productNo: "", // 商品编码
       productInfo: {},
+      isAssociation: false,
     };
   },
   computed: {
@@ -99,12 +105,12 @@ export default {
       isService: "user/isService",
       serviceStationId: "user/serviceStationId",
     }),
-    setpList({ isService }) {
+    setpList({ isService, isServerEdit }) {
       const setpArr = [
         { label: "编辑商品信息", key: "base" },
         { label: "商品关联信息", key: "association" },
       ];
-      return isService ? setpArr : [setpArr[0]];
+      return isService && isServerEdit ? setpArr : [setpArr[0]];
     },
   },
   methods: {
@@ -147,6 +153,7 @@ export default {
           return;
         }
         this.activeIndex++;
+        this.isAssociation = true;
       } else if (key === "association") {
         // 编辑商品关联信息
         const associationData1 = await this.$refs.SimilarSuggest.getQuery();
