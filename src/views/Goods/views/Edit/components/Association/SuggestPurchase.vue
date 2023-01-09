@@ -91,16 +91,9 @@ export default {
   },
   methods: {
     init() {
-      //
-    },
-    async getSelecteData() {
-      const [, res] = await this.$http.Goods.GetGoodsAndRecommendProduct({
-        productNo: this.productNo,
-      });
-      if (res?.code !== this.AJAX_CODE.SUCCESS) {
-        this.$message.error(res?.msg || "获取经常购买商品列表异常");
-      }
-      const data = res?.rows?.length ? res.rows : [];
+      const data = this.productInfo?.recommendProductList?.length
+        ? this.productInfo.recommendProductList
+        : [];
       data.forEach((item) => {
         digits2Str(item, ["productId"]);
         if (!isField(item, "id")) item.id = item.productId;
@@ -142,6 +135,7 @@ export default {
           recommendProductList: this.list.map((item) => ({
             categoryName: item.categoryName,
             productId: item.id,
+            mainImage: item.mainImage,
             productName: item.productName,
             productNo: item.productNo,
           })),
@@ -153,7 +147,6 @@ export default {
     const { query } = this.$route;
     this.productNo = query?.productNo || "";
     this.init();
-    this.getSelecteData();
   },
 };
 </script>

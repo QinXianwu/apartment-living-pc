@@ -158,8 +158,8 @@ export default {
       val.forEach((item) => (this.selectDataMap[item.id] = { ...item }));
     },
     async handleSubmit() {
-      if (!Object.keys(this.selectDataMap).length)
-        return this.$message.error("请选择商品后再试");
+      // if (!Object.keys(this.selectDataMap).length)
+      //   return this.$message.error("请选择商品后再试");
       this.$emit("on-success", Object.values(this.selectDataMap));
       this.handleClose(true);
     },

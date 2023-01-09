@@ -26,10 +26,7 @@
         <GoodsDetail ref="GoodsDetail" :productInfo="productInfo" />
       </div>
       <div class="next-1" v-show="activeIndex === 1">
-        <div
-          class="association"
-          v-if="isService && isServerEdit && isAssociation"
-        >
+        <div class="association" v-if="isService && isServerEdit">
           <!-- 相似推荐 -->
           <SimilarSuggest ref="SimilarSuggest" :productInfo="productInfo" />
           <!-- 推荐购买 -->
@@ -93,7 +90,6 @@ export default {
       AssociationInfo: [],
       productNo: "", // 商品编码
       productInfo: {},
-      isAssociation: false,
     };
   },
   computed: {
@@ -153,7 +149,6 @@ export default {
           return;
         }
         this.activeIndex++;
-        this.isAssociation = true;
       } else if (key === "association") {
         // 编辑商品关联信息
         const associationData1 = await this.$refs.SimilarSuggest.getQuery();
