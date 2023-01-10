@@ -7,7 +7,7 @@
         <el-form-item label="" prop="consumeIntegral">
           <span>每</span>
           <el-input-number
-            class="input-mini"
+            class="input-small"
             v-model="formData.consumeIntegral"
             :min="0"
             :controls="false"
@@ -20,7 +20,7 @@
         <el-form-item label="" prop="discountAmount">
           <span>可抵扣</span>
           <el-input-number
-            class="input-mini"
+            class="input-small"
             v-model="formData.discountAmount"
             :min="0"
             :controls="false"
@@ -34,7 +34,7 @@
           <span>最多可抵扣订单总额的</span>
           <el-form-item label="" prop="discountOrderRate">
             <el-input-number
-              class="input-mini"
+              class="input-small"
               v-model="formData.discountOrderRate"
               :min="0"
               :max="10"
@@ -50,7 +50,7 @@
           <span>消费可获得订单总额</span>
           <el-form-item label="" prop="percentageTotalRate">
             <el-input-number
-              class="input-mini"
+              class="input-small"
               v-model="formData.percentageTotalRate"
               :min="0"
               :max="10"
@@ -76,7 +76,7 @@
     <FooterView :isShowSave="false" :cancelType="true" :showCancelBtn="false">
       <template>
         <el-button type="primary" @click="handleSubmit">保存</el-button>
-        <el-button type="primary" @click="getRuleDetail" plain>刷新</el-button>
+        <el-button type="primary" @click="getDetail" plain>刷新</el-button>
       </template>
     </FooterView>
   </div>
@@ -110,7 +110,7 @@ export default {
   },
   computed: {},
   methods: {
-    async getRuleDetail() {
+    async getDetail() {
       const [, res] = await this.$http.PointsSetting.GetIntegralRuleDetail();
       this.integral = res?.id ? res : {};
       this.formData = { ...this.integral };
@@ -133,14 +133,14 @@ export default {
       };
       const [, res] = await this.$http.PointsSetting.UpdateIntegralRule(quert);
       if (res) {
-        this.getRuleDetail();
+        this.getDetail();
         this.$message.success("保存成功");
       }
       this.isLoading = false;
     },
   },
   mounted() {
-    this.getRuleDetail();
+    this.getDetail();
   },
 };
 </script>

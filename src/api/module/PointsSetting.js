@@ -28,4 +28,28 @@ export default {
       })
     );
   },
+  // 获取积分瓜分详情
+  GetIntegralCarveDetail(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/integralCarve/detail",
+        params,
+        method: "GET",
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 更新积分瓜分
+  UpdateIntegralCarve(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/integralCarve/edit",
+        params,
+        method: "GET",
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
 };
