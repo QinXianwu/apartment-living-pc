@@ -5,10 +5,7 @@
     <div class="content">
       <el-form ref="form" :model="formData" label-width="150px" :rules="rules">
         <el-form-item label="活动类型" prop="limitTimeStatus">
-          <el-radio-group
-            v-model="formData.limitTimeStatus"
-            @change="changeActivityType"
-          >
+          <el-radio-group v-model="formData.limitTimeStatus">
             <el-radio
               v-for="item in CONST.ACTIVITY_TYPE_OPTIONS()"
               :label="item.value"
@@ -235,7 +232,7 @@ export default {
           : quert.activityDate[1];
       delete quert.activityTime;
       delete quert.activityDate;
-      const [, res] = await this.$http.PointsSetting.UpdateIntegralRule(quert);
+      const [, res] = await this.$http.PointsSetting.UpdateIntegralCarve(quert);
       if (res) {
         this.getDetail();
         this.$message.success("保存成功");

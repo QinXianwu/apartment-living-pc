@@ -46,9 +46,6 @@ export default {
       apiFetch({
         url: apiPrefix + "/apartment-activity/integralCarve/edit",
         params,
-        method: "GET",
-        isHeadersForm: true,
-        isHandleParams: true,
       })
     );
   },
