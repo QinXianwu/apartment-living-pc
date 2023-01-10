@@ -8,11 +8,11 @@
       :activityTime.sync="activityTime"
       :signRewardList="signRewardList"
     />
-    <!-- 签到活动规则 -->
+    <!-- 积分攻略设置 -->
     <ActivityRules
       :rule.sync="sign.rule"
-      title="签到规则设置"
-      formLabel="签到规则"
+      title="积分攻略设置"
+      formLabel="积分攻略"
     />
     <!-- 底部按钮 -->
     <FooterView :isShowSave="false" :cancelType="true" :showCancelBtn="false">

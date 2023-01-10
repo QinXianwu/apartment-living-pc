@@ -15,7 +15,6 @@
       <PointsSignIn v-if="activeName === 'PointsSignIn'" />
       <PointsRules v-if="activeName === 'PointsRules'" />
       <TeamSharePoints v-if="activeName === 'TeamSharePoints'" />
-      <PointsStrategy v-if="activeName === 'PointsStrategy'" />
     </div>
   </div>
   <Page401 v-else />
@@ -25,7 +24,6 @@ import Page401 from "@/views/ErrorPage/401";
 import PointsSignIn from "./components/PointsSignIn/index.vue";
 import PointsRules from "./components/PointsRules/index.vue";
 import TeamSharePoints from "./components/TeamSharePoints/index.vue";
-import PointsStrategy from "./components/PointsStrategy/index.vue";
 
 export default {
   name: "PointsSetting",
@@ -33,7 +31,6 @@ export default {
     PointsSignIn,
     PointsRules,
     TeamSharePoints,
-    PointsStrategy,
     Page401,
   },
   data() {
@@ -55,11 +52,6 @@ export default {
           label: "组队瓜分积分",
           name: "TeamSharePoints",
           permission: this.$PERMISSION_ID.UserHub_PointsSetting_TeamSharePoints,
-        },
-        {
-          label: "积分攻略",
-          name: "PointsStrategy",
-          permission: this.$PERMISSION_ID.UserHub_PointsSetting_PointsStrategy,
         },
       ],
     };
