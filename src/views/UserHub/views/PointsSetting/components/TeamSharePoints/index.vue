@@ -75,7 +75,7 @@
         <el-form-item label="每次开启活动后" prop="teamHour">
           <div class="input-flex">
             <div class="input-content input-small">
-              <el-input-number
+              <!-- <el-input-number
                 class="input-small"
                 v-model="formData.teamHour"
                 :min="0"
@@ -83,7 +83,20 @@
                 :precision="0"
                 :step="1"
                 placeholder="时长"
-              />
+              /> -->
+              <el-select
+                v-model="formData.teamHour"
+                class="input-small"
+                placeholder="时长"
+              >
+                <el-option
+                  v-for="item in teamHourOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
               <span class="append el-input-group__append">小时后</span>
             </div>
             <span class="ml-10 mr-10">自动结束</span>
@@ -166,7 +179,19 @@ export default {
       },
     };
   },
-  computed: {},
+  computed: {
+    teamHourOptions() {
+      const hourOptions = [];
+      const hourMax = 10;
+      for (let index = 0; index < hourMax; index++) {
+        hourOptions.push({
+          label: index + 1,
+          value: index + 1,
+        });
+      }
+      return hourOptions;
+    },
+  },
   methods: {
     async getDetail() {
       const [, res] = await this.$http.PointsSetting.GetIntegralCarveDetail();
