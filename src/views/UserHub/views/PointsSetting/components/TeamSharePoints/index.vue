@@ -209,12 +209,6 @@ export default {
           startTime && endTime ? [startTime, endTime] : [];
       }
     },
-    changeActivityType(val) {
-      // if (val === CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM) {
-      //   this.$set(this.formData, "activityDate", "");
-      // }
-      console.log(val);
-    },
     // 处理提交
     async handleSubmit() {
       // 表单校验
