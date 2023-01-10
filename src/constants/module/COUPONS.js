@@ -9,6 +9,17 @@ export const COUPONS_STATE_TEXT = {
   [COUPONS_STATE.HIDE]: "禁用",
 };
 
+export const COUPONS_STATE_OPTIONS = () => [
+  {
+    label: COUPONS_STATE_TEXT[COUPONS_STATE.SHOW],
+    value: COUPONS_STATE.SHOW,
+  },
+  {
+    label: COUPONS_STATE_TEXT[COUPONS_STATE.HIDE],
+    value: COUPONS_STATE.HIDE,
+  },
+];
+
 // 优惠券类型
 export const COUPONS_TYPE = {
   FULL_MINUS: 1, // 满减券

@@ -26,23 +26,10 @@ export default {
     return {
       isLoading: false,
       orderInfo: {},
-      serviceStationInfo: {},
-      supplierInfo: {},
-      page: {
-        pageNum: 1,
-        pageSize: 5,
-      },
     };
   },
   computed: {},
   methods: {
-    handleSizeChange(val) {
-      this.page.pageSize = val;
-      this.page.pageNum = 1;
-    },
-    handleCurrentChange(val) {
-      this.page.pageNum = val;
-    },
     async getOrderDetail() {
       if (!this.editInfo?.pdOrderNo) return;
       const [, res] = await this.$http.Order.GetPurchaseOrderDetail({
