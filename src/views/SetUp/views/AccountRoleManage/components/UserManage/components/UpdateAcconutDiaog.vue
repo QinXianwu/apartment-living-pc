@@ -13,12 +13,12 @@
       label-width="170px"
       v-loading="isLoadingUser"
     >
-      <el-form-item label="用户名称:" prop="userName">
+      <el-form-item label="登录账号:" prop="userName">
         <el-input
           class="input-medium"
           :disabled="!!editInfo.userId"
           v-model="formData.userName"
-          placeholder="请输入用户名称"
+          placeholder="请输入登录账号"
         />
       </el-form-item>
       <el-form-item label="用户昵称:" prop="nickName">
@@ -153,6 +153,7 @@
   </el-dialog>
 </template>
 <script>
+import { digits2Str } from "@/utils/index";
 import dialogMixin from "@/mixins/dialogMixin";
 import { selectFormData } from "../config/index";
 import { mapGetters } from "vuex";
@@ -190,11 +191,11 @@ export default {
       supplierList: [],
       rules: {
         userName: [
-          { required: true, message: "请输入用户名称", trigger: "blur" },
+          { required: true, message: "请输入登录账号", trigger: "blur" },
           {
             min: 2,
             max: 20,
-            message: "用户名称长度必须介于 2 和 20 之间",
+            message: "登录账号长度必须介于 2 和 20 之间",
             trigger: "blur",
           },
         ],
@@ -290,6 +291,7 @@ export default {
         roleIds: res?.roleIds?.length ? res?.roleIds[0] : [],
         password: "",
       };
+      digits2Str(this.formData, ["supplierId", "serviceStationId"]);
     },
     // 全选select
     selectAll(formKey) {

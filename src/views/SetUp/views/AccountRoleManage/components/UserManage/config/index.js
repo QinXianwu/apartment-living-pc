@@ -3,11 +3,11 @@ import CONST from "@/constants/index";
 // 搜索选项
 export const formData = [
   {
-    label: "用户名称",
+    label: "登录账号",
     prop: "userName",
     type: "text",
     value: "",
-    placeholder: "请输入用户名称",
+    placeholder: "请输入登录账号",
   },
   {
     label: "手机号码",
@@ -39,7 +39,7 @@ export const column = [
     prop: "userId",
   },
   {
-    label: "用户名称",
+    label: "登录账号",
     prop: "userName",
     showOverflowTooltip: true,
   },

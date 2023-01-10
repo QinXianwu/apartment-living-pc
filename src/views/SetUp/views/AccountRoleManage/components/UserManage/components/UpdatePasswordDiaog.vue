@@ -7,7 +7,7 @@
     @close="handleClose(false)"
   >
     <el-form ref="form" :model="formData" :rules="rules" label-width="150px">
-      <el-form-item label="用户名:" prop="userName">
+      <el-form-item label="登录账号:" prop="userName">
         <el-input
           v-model="formData.userName"
           class="input-medium"
@@ -65,7 +65,7 @@ export default {
         userName: [
           {
             required: true,
-            message: "请输入用户名",
+            message: "请输入登录账号",
             trigger: "blur",
           },
         ],
