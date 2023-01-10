@@ -18,6 +18,7 @@
     <FooterView :isShowSave="false" :cancelType="true" :showCancelBtn="false">
       <template>
         <el-button type="primary" @click="handleSubmit">保存</el-button>
+        <el-button type="primary" @click="getDetail" plain>刷新</el-button>
       </template>
     </FooterView>
   </div>
@@ -80,7 +81,7 @@ export default {
           .map((v) => v.id);
         item.signReward.couponIds = idsArr.join(",");
       });
-      const [, res] = await this.$http.SignIn.UpdateSignInDetail(quert);
+      const [, res] = await this.$http.SignIn.UpdateSignIn(quert);
       if (res) {
         this.getDetail();
         this.$message.success("保存成功");

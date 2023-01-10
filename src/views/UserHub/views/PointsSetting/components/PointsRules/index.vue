@@ -37,12 +37,31 @@
               class="input-mini"
               v-model="formData.discountOrderRate"
               :min="0"
+              :max="10"
               :controls="false"
-              :precision="2"
+              :precision="0"
               placeholder="抵扣比例"
               :step="1"
             />
             <span>%</span>
+          </el-form-item>
+        </div>
+        <div class="rate">
+          <span>消费可获得订单总额</span>
+          <el-form-item label="" prop="percentageTotalRate">
+            <el-input-number
+              class="input-mini"
+              v-model="formData.percentageTotalRate"
+              :min="0"
+              :max="10"
+              :controls="false"
+              :precision="0"
+              placeholder="积分比例"
+              :step="1"
+            />
+            <span>%的积分</span>
+            <i class="el-icon-warning" />
+            <span>获得等额订单总价比例积分</span>
           </el-form-item>
         </div>
       </el-form>
@@ -57,6 +76,7 @@
     <FooterView :isShowSave="false" :cancelType="true" :showCancelBtn="false">
       <template>
         <el-button type="primary" @click="handleSubmit">保存</el-button>
+        <el-button type="primary" @click="getRuleDetail" plain>刷新</el-button>
       </template>
     </FooterView>
   </div>
@@ -77,6 +97,7 @@ export default {
       rules: {
         consumeIntegral: [
           { required: true, message: "请输入消费积分", trigger: "blur" },
+          { min: 1, type: "number", message: "积分必须大于0", trigger: "blur" },
         ],
         discountAmount: [
           { required: true, message: "请输入抵扣金额", trigger: "blur" },
@@ -89,6 +110,11 @@ export default {
   },
   computed: {},
   methods: {
+    async getRuleDetail() {
+      const [, res] = await this.$http.PointsSetting.GetIntegralRuleDetail();
+      this.integral = res?.id ? res : {};
+      this.formData = { ...this.integral };
+    },
     // 处理提交
     async handleSubmit() {
       // 表单校验
@@ -101,12 +127,20 @@ export default {
         return;
       }
       this.isLoading = true;
+      const quert = {
+        ...this.integral,
+        ...this.formData,
+      };
+      const [, res] = await this.$http.PointsSetting.UpdateIntegralRule(quert);
+      if (res) {
+        this.getRuleDetail();
+        this.$message.success("保存成功");
+      }
       this.isLoading = false;
-      // this.handleClose(true);
     },
   },
   mounted() {
-    //
+    this.getRuleDetail();
   },
 };
 </script>

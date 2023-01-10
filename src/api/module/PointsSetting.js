@@ -3,15 +3,15 @@ import { createCatchAsyncFun } from "@/utils/index";
 // async 方法的处理
 const catchAsyncFun = createCatchAsyncFun((error) => {
   // 错误日志上报 todo
-  console.warn("签到相关接口网络请求出错", error);
+  console.warn("积分设置相关接口网络请求出错", error);
 });
 
 export default {
-  // 获取积分签到详情
-  GetSignInDetail(params) {
+  // 获取积分规则详情
+  GetIntegralRuleDetail(params) {
     return catchAsyncFun(
       apiFetch({
-        url: apiPrefix + "/apartment-activity/integralSign/detail",
+        url: apiPrefix + "/apartment-user/integralSet/detail",
         params,
         method: "GET",
         isHeadersForm: true,
@@ -19,11 +19,11 @@ export default {
       })
     );
   },
-  // 更新积分签到
-  UpdateSignIn(params) {
+  // 更新积分规则
+  UpdateIntegralRule(params) {
     return catchAsyncFun(
       apiFetch({
-        url: apiPrefix + "/apartment-activity/integralSign/edit",
+        url: apiPrefix + "/apartment-user/integralSet/addOrUpdate",
         params,
       })
     );
