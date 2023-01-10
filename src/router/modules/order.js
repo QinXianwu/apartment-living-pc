@@ -1,4 +1,4 @@
-// import PERMISSION_ID from "@/permission/PERMISSION_ID";
+import PERMISSION_ID from "@/permission/PERMISSION_ID";
 import MainLayout from "@/layouts/MainLayout/index";
 import PurchaseOrder from "@/views/Order/views/Purchase/index.vue";
 // import SendGoodsOrder from "@/views/Order/views/SendGoods/index.vue";
@@ -12,7 +12,7 @@ export default {
     title: "订单管理",
     icon: "order_search",
     affix: true,
-    // PermissionId: PERMISSION_ID.UserHub,
+    PermissionId: PERMISSION_ID.Order,
   },
   children: [
     {
@@ -21,7 +21,7 @@ export default {
       name: "PurchaseOrder",
       meta: {
         title: "采购订单",
-        // PermissionId: PERMISSION_ID.Goods_List,
+        PermissionId: PERMISSION_ID.Order_PurchaseOrder,
       },
     },
     // {

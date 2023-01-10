@@ -4,5 +4,4 @@ export default {
   UserHub_PointsSetting_PointsSignIn: 2011, // 用户中心-积分设置-积分签到
   UserHub_PointsSetting_PointsRules: 2012, // 用户中心-积分设置-积分规则
   UserHub_PointsSetting_TeamSharePoints: 2014, // 用户中心-积分设置-组队瓜分积分
-  UserHub_PointsSetting_PointsStrategy: 2015, // 用户中心-积分设置-积分攻略
 };
