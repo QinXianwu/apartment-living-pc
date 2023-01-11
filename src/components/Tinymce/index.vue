@@ -90,13 +90,11 @@ export default {
   },
   watch: {
     value(val) {
-      // if (!this.hasChange && this.hasInit) {
-      if (TinymceCase?.get) {
+      if (!this.hasChange && this.hasInit && TinymceCase?.get) {
         this.$nextTick(() => {
           TinymceCase.get(this.tinymceId).setContent(val || "");
         });
       }
-      // }
     },
   },
   mounted() {

@@ -33,6 +33,7 @@ export default {
   watch: {
     visible(val) {
       if (val) this.getActivityRule(val);
+      else this.activityRule = {};
     },
   },
   data() {
