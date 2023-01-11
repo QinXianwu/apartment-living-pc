@@ -65,7 +65,7 @@ import CONST from "@/constants/index";
 import { formData, column } from "./config";
 // import { digits2Str } from "@/utils/index";
 import TagPage from "./components/TagPage.vue";
-import CouponsDetail from "./components/CouponsDetail";
+import CouponsDetail from "../../components/CouponsDetail";
 
 export default {
   name: "Coupons",
