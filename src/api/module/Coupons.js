@@ -29,4 +29,33 @@ export default {
       })
     );
   },
+  // 新增优惠劵
+  AddCoupons(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-coupon/couponConfig/add",
+        params,
+      })
+    );
+  },
+  // 修改优惠劵
+  UpdateCoupons(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-coupon/couponConfig/update",
+        params,
+      })
+    );
+  },
+  // 删除优惠劵
+  DeleteCoupons(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-coupon/couponConfig/delete",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
 };

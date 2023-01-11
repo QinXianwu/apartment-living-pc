@@ -70,6 +70,12 @@
           </div>
           <span v-else>-</span>
         </template>
+        <!-- 供应价 -->
+        <template #originalPrice="{ scope }">
+          <span>{{
+            scope | priceRange("originalPriceMin", "originalPriceMax")
+          }}</span>
+        </template>
         <!-- 售价 -->
         <template #sellPrice="{ scope }">
           <span>{{ scope | priceRange("sellPriceMin", "sellPriceMax") }}</span>

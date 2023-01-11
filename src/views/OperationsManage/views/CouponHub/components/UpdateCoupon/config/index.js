@@ -42,3 +42,41 @@ export const column = [
     width: 250,
   },
 ];
+
+// 表格头
+export const StationColumn = [
+  {
+    label: "服务点名称",
+    prop: "name",
+  },
+  {
+    label: "地址",
+    prop: "address",
+    type: "custom",
+    // showOverflowTooltip: true,
+  },
+  {
+    label: "服务点联系方式",
+    prop: "phone",
+  },
+  {
+    label: "管理员",
+    prop: "manager",
+  },
+  {
+    label: "管理员手机号",
+    prop: "managePhone",
+  },
+  {
+    label: "状态",
+    prop: "status",
+    type: "custom",
+  },
+  {
+    label: "操作",
+    prop: "action",
+    type: "custom",
+    fixed: "right",
+    width: 250,
+  },
+];

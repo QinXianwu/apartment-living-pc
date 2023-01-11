@@ -7,7 +7,7 @@
       </div>
       <TablePanel :tableData="list" :tableHead="column">
         <template #address="{ scope }">
-          <span>{{ scope | addressFilter }}</span>
+          <span>{{ scope | filtersAddress }}</span>
         </template>
         <template #status="{ scope }">
           <el-tag
@@ -106,16 +106,6 @@ export default {
       const data = res?.rows?.length ? res?.rows : [];
       this.list = data || [];
       this.total = res?.total || 0;
-    },
-  },
-  filters: {
-    addressFilter(data) {
-      let address = "";
-      const keyArr = ["province", "city", "district", "detailAddress"];
-      keyArr.forEach((key) => {
-        if (data[key]) address += data[key];
-      });
-      return address;
     },
   },
   mounted() {

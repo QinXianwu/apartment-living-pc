@@ -11,10 +11,10 @@
             <el-tooltip
               class="item"
               effect="dark"
-              :content="scope | addressFilter"
+              :content="scope | filtersAddress"
               placement="right"
             >
-              <span>{{ scope | addressFilter }}</span>
+              <span>{{ scope | filtersAddress }}</span>
             </el-tooltip>
           </div>
         </template>
@@ -196,16 +196,6 @@ export default {
       this.total = res?.total || 0;
     },
   },
-  filters: {
-    addressFilter(data) {
-      let address = "";
-      const keyArr = ["province", "city", "district", "detailAddress"];
-      keyArr.forEach((key) => {
-        if (data[key]) address += data[key];
-      });
-      return address;
-    },
-  },
   mounted() {
     this.getList();
   },
@@ -214,17 +204,6 @@ export default {
 <style lang="scss" scoped>
 .VendorList {
   background: #fff;
-  .userInfo {
-    display: flex;
-    align-items: center;
-    .user-avatar {
-      width: 60px;
-      height: 60px;
-    }
-    .user-name {
-      @include overflow-eps(1);
-    }
-  }
   .address {
     @include overflow-eps(2);
   }

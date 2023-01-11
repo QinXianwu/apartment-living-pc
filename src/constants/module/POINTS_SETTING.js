@@ -20,26 +20,6 @@ export const REWARD_INTEGRAL_STATE_OPTIONS = () => [
   },
 ];
 
-// 商品类型
-export const APPLY_PRODUCT_TYPE = {
-  ALL: 1, // 全部商品
-  PART: 2, // 部分商品
-};
-export const APPLY_PRODUCT_TYPE_TEXT = {
-  [APPLY_PRODUCT_TYPE.ALL]: "全部商品",
-  [APPLY_PRODUCT_TYPE.PART]: "部分商品",
-};
-
-// 服务点类型
-export const SERVE_TYPE = {
-  ALL: 1, // 全部服务点
-  PART: 2, // 部分服务点
-};
-export const SERVE_TYPE_TEXT = {
-  [APPLY_PRODUCT_TYPE.ALL]: "全部服务点",
-  [APPLY_PRODUCT_TYPE.PART]: "部分服务点)",
-};
-
 // 活动限制日期类型
 export const ACTIVITY_LIMIT_DATE_TYPE = {
   LONG_ACTIVITY: 1, // 长期活动

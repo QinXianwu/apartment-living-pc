@@ -92,9 +92,9 @@
               CONST.COUPONS_EXPIRE_TYPE.DESIGNATE_DATE
             "
             v-model="formData.expireTime"
-            type="date"
+            type="datetime"
             :picker-options="datePickerOptions"
-            value-format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd HH:mm:ss"
             placeholder="选择日期"
           />
           <el-input-number

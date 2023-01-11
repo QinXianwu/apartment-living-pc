@@ -28,7 +28,7 @@ export default {
   },
   computed: {},
   methods: {
-    async getOrderDetail() {
+    async getDetail() {
       if (!this.editInfo?.id) return;
       const [, res] = await this.$http.Coupons.GetCouponsDetail({
         id: this.editInfo.id,
@@ -43,7 +43,7 @@ export default {
   mounted() {
     if (this.editInfo?.id) {
       this.couponsInfo = {};
-      this.getOrderDetail();
+      this.getDetail();
     }
   },
 };

@@ -70,7 +70,7 @@ export const column = [
   {
     label: "供应价",
     prop: "originalPrice",
-    type: "money",
+    type: "custom",
   },
   {
     label: "活动标签",

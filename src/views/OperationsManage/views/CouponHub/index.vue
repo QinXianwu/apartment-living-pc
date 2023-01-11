@@ -2,7 +2,9 @@
   <div class="Coupons view-container">
     <div class="content">
       <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
-      <!-- <div class="action"></div> -->
+      <div class="action">
+        <el-button type="primary" @click="handleAdd">新增优惠劵</el-button>
+      </div>
       <TagPage :state.sync="query.type" @getList="getList" />
       <TablePanel ref="TablePanel" :tableData="list" :tableHead="column">
         <template #applyProductType="{ scope }">
@@ -38,6 +40,8 @@
         <template #action="{ scope }">
           <div class="action-groud">
             <el-button type="text" @click="lookDetail(scope)">查看</el-button>
+            <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
+            <el-button type="text" @click="handleDelete(scope)">删除</el-button>
           </div>
         </template>
       </TablePanel>
@@ -50,11 +54,32 @@
         :total="total"
       />
     </div>
-    <DrawerPopup v-model="showCouponsDetail">
+    <ChooseGoodsDiaog
+      :selectIds="selectGoodsIds"
+      :show.sync="showGoodsDiaog"
+      @close="chooseClose"
+      @on-success="chooseGoodsSuccess"
+    />
+    <ChooseStationDiaog
+      :selectIds="selectStationIds"
+      :show.sync="showStationDiaog"
+      @close="chooseClose"
+      @on-success="chooseStationSuccess"
+    />
+    <DrawerPopup v-model="isDrawerPopup">
       <CouponsDetail
         v-if="showCouponsDetail"
         :editInfo="editInfo"
         @close="close"
+      />
+      <UpdateCoupon
+        v-if="showUpdateCoupon"
+        :editInfo="editInfo"
+        :selectGoods="selectGoods"
+        :selectStation="selectStation"
+        @close="close"
+        @chooseGoods="chooseGoods"
+        @chooseStation="chooseStation"
       />
     </DrawerPopup>
   </div>
@@ -65,27 +90,45 @@ import CONST from "@/constants/index";
 import { formData, column } from "./config";
 // import { digits2Str } from "@/utils/index";
 import TagPage from "../../components/TagPage.vue";
+import UpdateCoupon from "./components/UpdateCoupon";
 import CouponsDetail from "../../components/CouponsDetail";
+import ChooseGoodsDiaog from "@/components/ChooseGoodsDiaog";
+import ChooseStationDiaog from "@/components/ChooseStationDiaog";
 
 export default {
   name: "Coupons",
-  components: { TagPage, CouponsDetail },
+  components: {
+    TagPage,
+    UpdateCoupon,
+    CouponsDetail,
+    ChooseGoodsDiaog,
+    ChooseStationDiaog,
+  },
   data() {
     return {
       CONST,
       formData,
       column,
       list: [],
+      selectGoods: [],
+      selectGoodsIds: [],
+      selectStation: [],
+      selectStationIds: [],
       page: {
         pageNum: 1,
         pageSize: 10,
       },
       query: {
         type: String(CONST.COUPONS_TYPE.FULL_MINUS),
+        relationType: CONST.COUPONS_RELATION_TYPE.COLLECTION_ACTIVITY,
       },
       total: 0,
       editInfo: "",
+      isDrawerPopup: false,
       showCouponsDetail: false,
+      showUpdateCoupon: false,
+      showGoodsDiaog: false,
+      showStationDiaog: false,
     };
   },
   computed: {},
@@ -105,12 +148,65 @@ export default {
     },
     close(isRefresh = false) {
       this.editInfo = "";
+      this.isDrawerPopup = false;
       this.showCouponsDetail = false;
+      this.showUpdateCoupon = false;
+      this.showGoodsDiaog = false;
       if (isRefresh) this.getList();
     },
     lookDetail({ id }) {
       this.editInfo = { id };
+      this.isDrawerPopup = true;
       this.showCouponsDetail = true;
+    },
+    handleAdd() {
+      this.editInfo = {};
+      this.isDrawerPopup = true;
+      this.showUpdateCoupon = true;
+    },
+    handleEdit({ id }) {
+      this.editInfo = { id };
+      this.isDrawerPopup = true;
+      this.showUpdateCoupon = true;
+    },
+    async handleDelete({ id, name }) {
+      try {
+        await this.$confirm(`确定要删除‘${name}’优惠劵吗?`, "删除提示", {
+          type: "warning",
+          showClose: false,
+        });
+        const [, res] = await this.$http.Coupons.DeleteCoupons({
+          id,
+        });
+        const msg = res ? res?.msg || `删除成功` : `删除失败`;
+        this.$confirm(msg, "删除提示", {
+          showClose: false,
+          showCancelButton: false,
+          type: res ? "success" : "error",
+        }).then(() => {
+          if (res) this.getList();
+        });
+      } catch (error) {
+        error;
+      }
+    },
+    chooseGoods(data) {
+      this.showGoodsDiaog = true;
+      this.selectGoodsIds = data?.length ? data : [];
+    },
+    chooseStation(data) {
+      this.showStationDiaog = true;
+      this.selectStationIds = data?.length ? data : [];
+    },
+    chooseGoodsSuccess(data) {
+      this.selectGoods = data?.length ? data : [];
+    },
+    chooseStationSuccess(data) {
+      this.selectStation = data?.length ? data : [];
+    },
+    chooseClose() {
+      this.showGoodsDiaog = false;
+      this.showStationDiaog = false;
     },
     async getList(isClear) {
       if (isClear) this.page.pageNum = 1;

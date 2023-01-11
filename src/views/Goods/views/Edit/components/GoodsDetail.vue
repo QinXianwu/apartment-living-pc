@@ -74,9 +74,12 @@ export default {
       const keyStr = "mainImage,bannerImage";
       const keyArr = Object.keys(data);
       keyArr.forEach((key) => {
-        if (keyStr.includes(key) && this.productInfo[key])
-          data[key] = [{ url: this.productInfo[key] }];
-        else if (this.productInfo[key]) data[key] = this.productInfo[key];
+        if (keyStr.includes(key) && this.productInfo[key]) {
+          const imagesStr = this.productInfo[key] || "";
+          data[key] = imagesStr
+            ? imagesStr.split(",").map((url) => ({ url: url }))
+            : [];
+        } else if (this.productInfo[key]) data[key] = this.productInfo[key];
       });
       this.formData = { ...data };
     },

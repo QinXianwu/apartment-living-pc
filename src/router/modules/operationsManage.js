@@ -1,7 +1,7 @@
 // import PERMISSION_ID from "@/permission/PERMISSION_ID";
 import MainLayout from "@/layouts/MainLayout/index";
 import Coupons from "@/views/OperationsManage/views/Coupons/index.vue";
-// import SendGoodsOrder from "@/views/Order/views/SendGoods/index.vue";
+import CouponHub from "@/views/OperationsManage/views/CouponHub/index.vue";
 
 export default {
   path: "/OperationsManage",
@@ -21,6 +21,15 @@ export default {
       name: "Coupons",
       meta: {
         title: "优惠劵",
+        // PermissionId: PERMISSION_ID.Order_PurchaseOrder,
+      },
+    },
+    {
+      path: "CouponHub",
+      component: CouponHub,
+      name: "CouponHub",
+      meta: {
+        title: "领劵中心",
         // PermissionId: PERMISSION_ID.Order_PurchaseOrder,
       },
     },
