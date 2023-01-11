@@ -5,7 +5,13 @@
       <div class="action">
         <el-button type="primary" @click="handleAdd">新增优惠劵</el-button>
       </div>
-      <TagPage :state.sync="query.type" @getList="getList" />
+      <TagPage :state.sync="query.type" @getList="getList">
+        <template>
+          <el-button type="primary" @click="handleActivityRule"
+            >活动说明</el-button
+          >
+        </template>
+      </TagPage>
       <TablePanel ref="TablePanel" :tableData="list" :tableHead="column">
         <template #applyProductType="{ scope }">
           <span>
@@ -41,6 +47,11 @@
           <div class="action-groud">
             <el-button type="text" @click="lookDetail(scope)">查看</el-button>
             <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
+            <el-button type="text" @click="changeStatus(scope)">{{
+              scope.status === CONST.COUPONS_STATE.SHOW
+                ? CONST.COUPONS_STATE_TEXT[CONST.COUPONS_STATE.HIDE]
+                : CONST.COUPONS_STATE_TEXT[CONST.COUPONS_STATE.SHOW]
+            }}</el-button>
             <el-button type="text" @click="handleDelete(scope)">删除</el-button>
           </div>
         </template>
@@ -66,6 +77,7 @@
       @close="chooseClose"
       @on-success="chooseStationSuccess"
     />
+    <ActivityRuleDiaog :show.sync="showActivityRuleDiaog" @close="close" />
     <DrawerPopup v-model="isDrawerPopup">
       <CouponsDetail
         v-if="showCouponsDetail"
@@ -91,6 +103,7 @@ import { formData, column } from "./config";
 // import { digits2Str } from "@/utils/index";
 import TagPage from "../../components/TagPage.vue";
 import UpdateCoupon from "./components/UpdateCoupon";
+import ActivityRuleDiaog from "./components/ActivityRuleDiaog.vue";
 import CouponsDetail from "../../components/CouponsDetail";
 import ChooseGoodsDiaog from "@/components/ChooseGoodsDiaog";
 import ChooseStationDiaog from "@/components/ChooseStationDiaog";
@@ -101,6 +114,7 @@ export default {
     TagPage,
     UpdateCoupon,
     CouponsDetail,
+    ActivityRuleDiaog,
     ChooseGoodsDiaog,
     ChooseStationDiaog,
   },
@@ -129,6 +143,7 @@ export default {
       showUpdateCoupon: false,
       showGoodsDiaog: false,
       showStationDiaog: false,
+      showActivityRuleDiaog: false,
     };
   },
   computed: {},
@@ -152,12 +167,16 @@ export default {
       this.showCouponsDetail = false;
       this.showUpdateCoupon = false;
       this.showGoodsDiaog = false;
+      this.showActivityRuleDiaog = false;
       if (isRefresh) this.getList();
     },
     lookDetail({ id }) {
       this.editInfo = { id };
       this.isDrawerPopup = true;
       this.showCouponsDetail = true;
+    },
+    handleActivityRule() {
+      this.showActivityRuleDiaog = true;
     },
     handleAdd() {
       this.editInfo = {};
@@ -168,6 +187,40 @@ export default {
       this.editInfo = { id };
       this.isDrawerPopup = true;
       this.showUpdateCoupon = true;
+    },
+    async changeStatus({ id, name, status }) {
+      const title =
+        status === CONST.COUPONS_STATE.SHOW
+          ? CONST.COUPONS_STATE_TEXT[CONST.COUPONS_STATE.HIDE]
+          : CONST.COUPONS_STATE_TEXT[CONST.COUPONS_STATE.SHOW];
+      try {
+        await this.$confirm(
+          `是否确认‘${title}${name}‘优惠劵的数据项？`,
+          `${title}提示`,
+          {
+            type: "warning",
+            showClose: false,
+          }
+        );
+        const [, res] = await this.$http.Coupons[
+          status === CONST.COUPONS_STATE.SHOW
+            ? "DisabledCoupons"
+            : "EnableCoupons"
+        ]({
+          id,
+        });
+        const msg = res ? res?.msg || `${title}成功` : `${title}失败`;
+        this.$confirm(msg, `${title}提示`, {
+          showClose: false,
+          showCancelButton: false,
+          type: res ? "success" : "error",
+        }).then(() => {
+          if (res) this.getList();
+        });
+      } catch (error) {
+        console.error(error);
+        error;
+      }
     },
     async handleDelete({ id, name }) {
       try {

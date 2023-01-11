@@ -1,13 +1,20 @@
 <template>
-  <el-tabs type="card" v-model="tabValue" @tab-click="tabClick">
-    <el-tab-pane
-      v-for="(item, index) in tabList"
-      :key="index"
-      :label="item.label"
-      :name="String(item.value)"
-    />
-    <!-- v-permission="item.permission" -->
-  </el-tabs>
+  <div class="TagPage">
+    <div class="TagPage-l">
+      <el-tabs type="card" v-model="tabValue" @tab-click="tabClick">
+        <el-tab-pane
+          v-for="(item, index) in tabList"
+          :key="index"
+          :label="item.label"
+          :name="String(item.value)"
+        />
+        <!-- v-permission="item.permission" -->
+      </el-tabs>
+    </div>
+    <div class="TagPage-r">
+      <slot></slot>
+    </div>
+  </div>
 </template>
 <script>
 export default {
@@ -33,6 +40,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.TagPage {
+  display: flex;
+  justify-content: space-between;
+  &-r {
+    margin: 15px 0 28px;
+  }
+}
 .el-tabs {
   margin: 15px 0 28px;
   ::v-deep .el-tabs__header {

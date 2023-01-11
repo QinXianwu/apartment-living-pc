@@ -58,4 +58,47 @@ export default {
       })
     );
   },
+  // 禁用优惠劵
+  DisabledCoupons(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/receiveCoupon/disabled",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 启用优惠劵
+  EnableCoupons(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/receiveCoupon/enable",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 获取优惠劵活动规则
+  GetCouponsActivityRule(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/receiveCoupon/getRule",
+        params,
+        method: "GET",
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 更新优惠劵活动规则
+  UpdateCouponsActivityRule(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/receiveCoupon/editRule",
+        params,
+      })
+    );
+  },
 };
