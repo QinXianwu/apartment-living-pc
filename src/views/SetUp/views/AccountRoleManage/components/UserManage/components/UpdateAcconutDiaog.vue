@@ -71,13 +71,16 @@
           </el-select>
         </el-form-item>
       </div>
-      <el-form-item label="服务点:" prop="serviceStationId">
+      <el-form-item
+        label="服务点:"
+        prop="serviceStationId"
+        v-if="!formData.supplierId"
+      >
         <el-select
           class="input-medium"
           placeholder="请选择服务点"
           clearable
           v-model="formData.serviceStationId"
-          :disabled="!!formData.supplierId"
           @change="$forceUpdate()"
         >
           <el-option
@@ -89,13 +92,16 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="供应商:" prop="supplierId">
+      <el-form-item
+        label="供应商:"
+        prop="supplierId"
+        v-if="!formData.serviceStationId"
+      >
         <el-select
           clearable
           class="input-medium"
           placeholder="请选择供应商"
           v-model="formData.supplierId"
-          :disabled="!!formData.serviceStationId"
           @change="$forceUpdate()"
         >
           <el-option
