@@ -50,7 +50,7 @@ export default {
   UpdateSupplierl(params) {
     return catchAsyncFun(
       apiFetch({
-        url: apiPrefix + "/system/supplier/add",
+        url: apiPrefix + "/system/supplier/updateById",
         params,
         isReturnAll: true,
       })
