@@ -45,8 +45,8 @@ export default {
     const p2 = item[key2] || 0;
     if (!p1 && p1 !== 0) return "-";
     if ((!p2 && p2 !== 0) || p1 === p2) return "￥" + formatCurrency(p1);
-    const price1 = formatCurrency(item.sellPriceMin);
-    const price2 = formatCurrency(item.sellPriceMax);
+    const price1 = formatCurrency(p1);
+    const price2 = formatCurrency(p2);
     return "￥" + price1 + "~￥" + price2;
   },
 };
