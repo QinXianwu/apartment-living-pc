@@ -52,7 +52,7 @@
                 ? CONST.COUPONS_STATE_TEXT[CONST.COUPONS_STATE.HIDE]
                 : CONST.COUPONS_STATE_TEXT[CONST.COUPONS_STATE.SHOW]
             }}</el-button>
-            <el-button type="text" @click="handleDelete(scope)">删除</el-button>
+            <!-- <el-button type="text" @click="handleDelete(scope)">删除</el-button> -->
           </div>
         </template>
       </TablePanel>
