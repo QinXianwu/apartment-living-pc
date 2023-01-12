@@ -72,6 +72,7 @@
 <script>
 import CONST from "@/constants/index";
 import { column } from "./config/index";
+import { digits2Str } from "@/utils/index";
 export default {
   name: "ApplicableGoods",
   components: {},
@@ -97,7 +98,6 @@ export default {
     return {
       CONST,
       column,
-      selectIds: [],
       formData: {
         applyProductType: CONST.APPLY_PRODUCT_TYPE.ALL,
       },
@@ -109,11 +109,25 @@ export default {
       },
     };
   },
-  computed: {},
+  computed: {
+    ids({ list }) {
+      if (!list?.length) return [];
+      return list.map((item) => item.id);
+    },
+  },
   methods: {
     init() {
       this.formData.applyProductType =
         this.couponsInfo?.applyProductType || CONST.APPLY_PRODUCT_TYPE.ALL;
+      if (this.couponsInfo?.applyProductType === CONST.APPLY_PRODUCT_TYPE.ALL) {
+        this.list = [];
+        return;
+      }
+      const goodsList = this.couponsInfo?.productList || [];
+      goodsList.forEach((item) =>
+        digits2Str(item, ["id", "categoryId", "supplierId"])
+      );
+      this.list = [].concat(goodsList);
     },
     handleSizeChange(val) {
       this.page.pageSize = val;
@@ -123,7 +137,7 @@ export default {
       this.page.pageNum = val;
     },
     chooseGoods() {
-      this.$emit("chooseGoods", []);
+      this.$emit("chooseGoods", this.ids);
     },
     handleDelete(index) {
       this.list.splice(index, 1);
@@ -150,9 +164,7 @@ export default {
         resolve({
           ...this.formData,
           applyProductList:
-            applyProductType === CONST.APPLY_PRODUCT_TYPE.ALL
-              ? []
-              : this.list.map((item) => item.id),
+            applyProductType === CONST.APPLY_PRODUCT_TYPE.ALL ? [] : this.ids,
         });
       });
     },

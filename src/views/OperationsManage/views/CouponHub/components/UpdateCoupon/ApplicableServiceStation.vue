@@ -78,6 +78,7 @@
 
 <script>
 import CONST from "@/constants/index";
+// import { digits2Str } from "@/utils/index";
 import { StationColumn } from "./config/index";
 export default {
   name: "ApplicableServiceStation",
@@ -116,11 +117,25 @@ export default {
       },
     };
   },
-  computed: {},
+  computed: {
+    ids({ list }) {
+      if (!list?.length) return [];
+      return list.map((item) => item.id);
+    },
+  },
   methods: {
     init() {
       this.formData.applyStationStatus =
         this.couponsInfo?.applyStationStatus || CONST.SERVE_TYPE.ALL;
+      if (this.couponsInfo?.applyStationStatus === CONST.SERVE_TYPE.ALL) {
+        this.list = [];
+        return;
+      }
+      const stationList = this.couponsInfo?.stationList || [];
+      // stationList.forEach((item) =>
+      //   digits2Str(item, ["id"])
+      // );
+      this.list = [].concat(stationList);
     },
     handleSizeChange(val) {
       this.page.pageSize = val;
@@ -130,7 +145,7 @@ export default {
       this.page.pageNum = val;
     },
     chooseStation() {
-      this.$emit("chooseStation", []);
+      this.$emit("chooseStation", this.ids);
     },
     handleDelete(index) {
       this.list.splice(index, 1);
@@ -157,9 +172,7 @@ export default {
         resolve({
           ...this.formData,
           applyStationList:
-            applyStationStatus === CONST.SERVE_TYPE.ALL
-              ? []
-              : this.list.map((item) => item.id),
+            applyStationStatus === CONST.SERVE_TYPE.ALL ? [] : this.ids,
         });
       });
     },
