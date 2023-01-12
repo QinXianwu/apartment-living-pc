@@ -77,6 +77,7 @@ export default {
       },
       uploadTimeOut: null,
       removeFn: null,
+      valueInit: true,
     };
   },
   computed: {
@@ -90,12 +91,12 @@ export default {
   },
   watch: {
     value(val) {
-      // if (!this.hasChange && this.hasInit && TinymceCase?.get) {
-      //   this.$nextTick(() => {
-      //     TinymceCase.get(this.tinymceId).setContent(val || "");
-      //   });
-      // }
-      if (TinymceCase?.get) {
+      if (val && this.valueInit && TinymceCase?.get) {
+        this.$nextTick(() => {
+          this.valueInit = false; // 解决TinymceCase组件初始化是未检测到数据变化
+          TinymceCase.get(this.tinymceId).setContent(val || "");
+        });
+      } else if (!this.hasChange && this.hasInit && TinymceCase?.get) {
         this.$nextTick(() => {
           TinymceCase.get(this.tinymceId).setContent(val || "");
         });
@@ -168,6 +169,8 @@ export default {
           images_file_types: "jpeg,jpg,png,gif,bmp,webp", // 允许拖拽的图片类型
           init_instance_callback: (editor) => {
             if (this.value) {
+              // 解决TinymceCase组件初始化是未检测到数据变化
+              this.valueInit = false;
               editor.setContent(this.value);
             }
             this.hasInit = true;
