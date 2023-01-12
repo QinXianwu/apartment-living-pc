@@ -119,7 +119,7 @@
       </el-form>
     </div>
     <!-- 活动规则规则 -->
-    <ActivityRules
+    <RulesForm
       :rule.sync="formData.rule"
       title="活动规则设置"
       formLabel="活动规则"
@@ -137,11 +137,11 @@
 <script>
 import CONST from "@/constants/index";
 import FooterView from "@/components/Footer";
-import ActivityRules from "../ActivityRules.vue";
+import RulesForm from "@/components/RulesForm";
 
 export default {
   name: "TeamSharePoints",
-  components: { ActivityRules, FooterView },
+  components: { RulesForm, FooterView },
   data() {
     return {
       CONST,

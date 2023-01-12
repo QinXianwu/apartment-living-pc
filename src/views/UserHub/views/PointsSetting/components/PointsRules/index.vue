@@ -67,7 +67,7 @@
       </el-form>
     </div>
     <!-- 抵扣规则规则 -->
-    <ActivityRules
+    <RulesForm
       :rule.sync="formData.discountRule"
       title="抵扣规则设置"
       formLabel="抵扣规则"
@@ -83,11 +83,11 @@
 </template>
 
 <script>
-import ActivityRules from "../ActivityRules.vue";
 import FooterView from "@/components/Footer";
+import RulesForm from "@/components/RulesForm";
 export default {
   name: "PointsRules",
-  components: { ActivityRules, FooterView },
+  components: { RulesForm, FooterView },
   data() {
     return {
       integral: {},

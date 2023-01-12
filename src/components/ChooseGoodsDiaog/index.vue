@@ -32,6 +32,12 @@
             </div>
           </div>
         </template>
+        <!-- 新人价 -->
+        <template #couple="{ scope }">
+          <span>
+            {{ scope | priceRange("coupleMin", "coupleMax") }}
+          </span>
+        </template>
       </TablePanel>
       <!-- 分页 -->
       <Pagination
@@ -61,6 +67,7 @@ export default {
   mixins: [dialogMixin],
   components: {},
   props: {
+    // isShowCouple:{},
     selectIds: {
       type: Array,
       default: () => [],

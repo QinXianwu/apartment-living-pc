@@ -2,6 +2,7 @@
 import MainLayout from "@/layouts/MainLayout/index";
 import Coupons from "@/views/OperationsManage/views/Coupons/index.vue";
 import CouponHub from "@/views/OperationsManage/views/CouponHub/index.vue";
+import NewcomerActivities from "@/views/OperationsManage/views/NewcomerActivities/index.vue";
 
 export default {
   path: "/OperationsManage",
@@ -30,6 +31,15 @@ export default {
       name: "CouponHub",
       meta: {
         title: "领劵中心",
+        // PermissionId: PERMISSION_ID.Order_PurchaseOrder,
+      },
+    },
+    {
+      path: "NewcomerActivities",
+      component: NewcomerActivities,
+      name: "NewcomerActivities",
+      meta: {
+        title: "新人活动",
         // PermissionId: PERMISSION_ID.Order_PurchaseOrder,
       },
     },

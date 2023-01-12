@@ -1,5 +1,5 @@
 <template>
-  <div class="ActivityRules">
+  <div class="RulesForm">
     <div class="title">{{ title }}</div>
     <div class="content">
       <el-form ref="form" label-width="120px">
@@ -14,7 +14,7 @@
 <script>
 import Tinymce from "@/components/Tinymce";
 export default {
-  name: "ActivityRules",
+  name: "RulesForm",
   components: { Tinymce },
   props: {
     rule: {
@@ -48,7 +48,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.ActivityRules {
+.RulesForm {
   width: 1200px;
   .title {
     font-size: 14px;

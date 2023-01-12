@@ -203,7 +203,7 @@ export default {
     },
     close(isRefresh = false) {
       this.showAddCoupon = false;
-      if (isRefresh) this.$emit("refresh", true);
+      if (isRefresh) this.$emit("close", true);
     },
     init() {
       this.list = [];
@@ -315,6 +315,8 @@ export default {
       flex-direction: column;
       margin-left: 20px;
       color: #666;
+      font-size: 14px;
+      line-height: 32px;
     }
   }
 }

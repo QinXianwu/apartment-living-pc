@@ -9,7 +9,7 @@
       :signRewardList="signRewardList"
     />
     <!-- 积分攻略设置 -->
-    <ActivityRules
+    <RulesForm
       :rule.sync="sign.rule"
       title="积分攻略设置"
       formLabel="积分攻略"
@@ -27,12 +27,12 @@
 <script>
 import CONST from "@/constants/index";
 import SignIn from "./SignIn.vue";
-import ActivityRules from "../ActivityRules.vue";
-import FooterView from "@/components/Footer/";
+import FooterView from "@/components/Footer";
+import RulesForm from "@/components/RulesForm";
 
 export default {
   name: "PointsSignIn",
-  components: { SignIn, ActivityRules, FooterView },
+  components: { SignIn, RulesForm, FooterView },
   data() {
     return {
       CONST,
