@@ -2,6 +2,8 @@
   <div class="CouponsDetail view-container">
     <div class="title">优惠劵详情</div>
     <CouponsInfo :couponsInfo="couponsInfo" />
+    <ApplicableGoods :couponsInfo="couponsInfo" />
+    <ApplicableServiceStation :couponsInfo="couponsInfo" />
     <FooterView :cancelType="true" @cancel="$emit('close', false)" />
   </div>
 </template>
@@ -9,10 +11,17 @@
 // import { digits2Str } from "@/utils/index";
 import CouponsInfo from "./CouponsInfo.vue";
 import FooterView from "@/components/Footer";
+import ApplicableGoods from "./ApplicableGoods.vue";
+import ApplicableServiceStation from "./ApplicableServiceStation.vue";
 
 export default {
   name: "CouponsDetail",
-  components: { CouponsInfo, FooterView },
+  components: {
+    CouponsInfo,
+    ApplicableGoods,
+    ApplicableServiceStation,
+    FooterView,
+  },
   props: {
     editInfo: {
       type: [Object, String],

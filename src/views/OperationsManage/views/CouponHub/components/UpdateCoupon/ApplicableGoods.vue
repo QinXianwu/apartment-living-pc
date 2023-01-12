@@ -71,7 +71,7 @@
 
 <script>
 import CONST from "@/constants/index";
-import { column } from "./config/index";
+import { GoodsColumn } from "./config/index";
 import { digits2Str } from "@/utils/index";
 export default {
   name: "ApplicableGoods",
@@ -97,7 +97,7 @@ export default {
   data() {
     return {
       CONST,
-      column,
+      column: GoodsColumn,
       formData: {
         applyProductType: CONST.APPLY_PRODUCT_TYPE.ALL,
       },

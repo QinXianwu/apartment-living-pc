@@ -34,13 +34,6 @@ export const GoodsColumn = [
     type: "custom",
     minWidth: 150,
   },
-  {
-    label: "操作",
-    prop: "action",
-    type: "custom",
-    fixed: "right",
-    width: 250,
-  },
 ];
 
 // 表格头
@@ -71,12 +64,5 @@ export const StationColumn = [
     label: "状态",
     prop: "status",
     type: "custom",
-  },
-  {
-    label: "操作",
-    prop: "action",
-    type: "custom",
-    fixed: "right",
-    width: 250,
   },
 ];
