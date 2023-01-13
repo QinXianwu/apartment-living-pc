@@ -251,3 +251,24 @@ export const AUDIT_TYPE_OPTIONS = () => [
     value: AUDIT_TYPE.FAIL_CHECK,
   },
 ];
+
+// 商品赠送状态
+export const GOODS_GIVE_STATE = {
+  GIVE: 1, // 赠送
+  NOT_GIFTED: 2, // 不赠送
+};
+
+export const GOODS_GIVE_STATE_TEXT = {
+  [GOODS_GIVE_STATE.GIVE]: "赠送",
+  [GOODS_GIVE_STATE.NOT_GIFTED]: "不赠送",
+};
+export const GOODS_GIVE_STATE_OPTIONS = () => [
+  {
+    label: GOODS_GIVE_STATE_TEXT[GOODS_GIVE_STATE.GIVE],
+    value: GOODS_GIVE_STATE.GIVE,
+  },
+  {
+    label: GOODS_GIVE_STATE_TEXT[GOODS_GIVE_STATE.NOT_GIFTED],
+    value: GOODS_GIVE_STATE.NOT_GIFTED,
+  },
+];

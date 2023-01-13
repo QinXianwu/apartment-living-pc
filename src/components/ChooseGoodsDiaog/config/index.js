@@ -35,6 +35,11 @@ export const column = [
     minWidth: 150,
   },
   {
+    label: "新人价",
+    prop: "couple",
+    type: "custom",
+  },
+  {
     label: "操作",
     prop: "action",
     type: "custom",

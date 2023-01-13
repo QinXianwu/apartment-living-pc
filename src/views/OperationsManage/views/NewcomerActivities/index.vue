@@ -29,8 +29,8 @@
     </div>
     <div class="sub-content">
       <div class="title">新人好礼配置</div>
-      <NewcomerCoupon />
-      <NewcomerGoods />
+      <NewcomerCoupon ref="NewcomerCoupon" />
+      <NewcomerGoods ref="NewcomerGoods" />
     </div>
     <!-- 活动说明 -->
     <RulesForm
@@ -57,9 +57,20 @@ export default {
   name: "NewcomerActivities",
   components: { NewcomerCoupon, NewcomerGoods, RulesForm, FooterView },
   data() {
+    const validateShowDay = (rule, value, callback) => {
+      if (Number(value) !== 0 && !value) {
+        callback(new Error("请输入天数"));
+      } else if (Number(value) <= 0) {
+        callback(new Error("天数必须大于0"));
+      } else {
+        callback();
+      }
+    };
     return {
       newComerInfo: {},
       formData: {
+        startTime: "",
+        endTime: "",
         activityDate: [],
       },
       rules: {
@@ -68,7 +79,7 @@ export default {
         ],
         showDay: [
           { required: true, message: "请输入天数", trigger: "blur" },
-          { min: 1, type: "number", message: "天数必须大于0", trigger: "blur" },
+          { validator: validateShowDay, trigger: "blur" },
         ],
       },
       datePickerOptions: {
@@ -103,11 +114,19 @@ export default {
       } catch (error) {
         return;
       }
+
+      const CouponInfo = await this.$refs.NewcomerCoupon.getQuery();
+      const GoodsInfo = await this.$refs.NewcomerGoods.getQuery();
       this.isLoading = true;
       const quert = {
         ...this.newComerInfo,
         ...this.formData,
+        ...CouponInfo,
+        ...GoodsInfo,
       };
+      quert.startTime = quert.activityDate?.length ? quert.activityDate[0] : "";
+      quert.endTime = quert.activityDate?.length ? quert.activityDate[1] : "";
+      delete quert.activityDate;
       const [, res] = await this.$http.OperationsManage.GetNewcomerActivitie(
         quert
       );

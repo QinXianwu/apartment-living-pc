@@ -67,7 +67,11 @@ export default {
   mixins: [dialogMixin],
   components: {},
   props: {
-    // isShowCouple:{},
+    // 显示新人价
+    showCouple: {
+      type: Boolean,
+      default: false,
+    },
     selectIds: {
       type: Array,
       default: () => [],
@@ -96,8 +100,8 @@ export default {
     };
   },
   computed: {
-    tableHead({ column }) {
-      const filterPropStr = "action";
+    tableHead({ column, showCouple }) {
+      const filterPropStr = `action,${showCouple ? "" : "couple"}`;
       return column.filter((item) => !filterPropStr.includes(item.prop));
     },
   },
@@ -125,7 +129,7 @@ export default {
       const [, res] = await this.$http.Goods.GetList(query);
       this.isLoadingList = false;
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
-        this.$message.error(res?.msg || "获取服务点商品列表异常");
+        this.$message.error(res?.msg || "获取商品列表异常");
       }
       const data = res?.rows?.length ? res.rows : [];
       data.forEach((item) =>

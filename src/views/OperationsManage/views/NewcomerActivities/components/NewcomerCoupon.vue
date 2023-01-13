@@ -1,10 +1,23 @@
 <template>
   <div class="NewcomerCoupon">
-    <span class="sub-title">第一重好礼（指定添加满减券与配送券）</span>
-    <div class="action">
+    <div class="sub-title">第一重好礼（指定添加满减券与配送券）</div>
+    <div class="form">
+      <div class="el-form-item" style="margin-bottom: 0">
+        <div class="el-form-item__label">是否赠送优惠劵</div>
+        <el-radio-group v-model="couponStatus" style="line-height: 50px">
+          <el-radio
+            :label="item.value"
+            v-for="item in CONST.REWARD_COUPONS_STATE_OPTIONS()"
+            :key="item.value"
+            >{{ item.label }}</el-radio
+          >
+        </el-radio-group>
+      </div>
+    </div>
+    <div class="action" v-if="couponStatus === CONST.REWARD_COUPONS_STATE.GIVE">
       <el-button type="primary" @click="handleAddCoupon">添加优惠券</el-button>
     </div>
-    <div class="coupon">
+    <div class="coupon" v-if="couponStatus === CONST.REWARD_COUPONS_STATE.GIVE">
       <div
         class="coupon-item"
         v-for="(item, index) in couponConfigList"
@@ -55,6 +68,7 @@ export default {
     return {
       CONST,
       showAddCoupon: false,
+      couponStatus: CONST.REWARD_COUPONS_STATE.GIVE,
       couponConfigList: [],
     };
   },
@@ -74,6 +88,32 @@ export default {
     close(isRefresh = false) {
       this.showAddCoupon = false;
       if (isRefresh) this.$emit("close", true);
+    },
+    async getQuery() {
+      // eslint-disable-next-line
+      return new Promise(async (resolve) => {
+        // 表单校验
+        // try {
+        //   const valid = await this.$refs.form.validate();
+        //   if (!valid) {
+        //     return null;
+        //   }
+        // } catch (error) {
+        //   return error;
+        // }
+        if (
+          this.couponStatus === CONST.REWARD_COUPONS_STATE.GIVE &&
+          !this.couponConfigList?.length
+        )
+          return this.$message.error("请添加优惠券后再试");
+        resolve({
+          couponStatus: this.couponStatus,
+          couponConfigList:
+            this.couponStatus === CONST.REWARD_COUPONS_STATE.NOT_GIVE
+              ? []
+              : this.couponConfigList,
+        });
+      });
     },
   },
   filters: {
@@ -112,10 +152,10 @@ export default {
     font-size: 13px;
     font-weight: bold;
     color: $sub-font-color;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
   .action {
-    padding: 10px 0 0;
+    padding: 10px 0 20px;
   }
 }
 
