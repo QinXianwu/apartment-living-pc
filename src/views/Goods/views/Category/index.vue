@@ -156,6 +156,12 @@ export default {
           type: res ? "success" : "error",
         }).then(() => {
           if (res) this.getList();
+          else {
+            item.status =
+              item?.status === this.$CONST.CATEGORY_STATE.ON
+                ? this.$CONST.CATEGORY_STATE.OFF
+                : this.$CONST.CATEGORY_STATE.ON;
+          }
         });
       } catch (error) {
         item.status =

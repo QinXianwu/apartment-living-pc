@@ -193,6 +193,12 @@ export default {
           type: res ? "success" : "error",
         }).then(() => {
           if (res) this.getList();
+          else {
+            item.status =
+              item?.status === this.$CONST.JOB_STATE.ON
+                ? this.$CONST.JOB_STATE.OFF
+                : this.$CONST.JOB_STATE.ON;
+          }
         });
       } catch (error) {
         item.status =

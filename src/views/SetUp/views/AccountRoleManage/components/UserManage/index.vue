@@ -8,7 +8,7 @@
         @on-search="onSearch"
         @on-export="onExport"
       >
-        <template #buttonR>
+        <template #buttonRright>
           <el-button @click="onImport">导入</el-button>
         </template>
       </SearchForm>
@@ -30,7 +30,7 @@
         </template>
         <!-- 操作 -->
         <template #action="{ scope }">
-          <div class="action-groud" v-if="scope.userId !== 1">
+          <div class="action-groud" v-if="scope.id !== 1">
             <el-button type="text" @click="handleEdit(scope)"> 编辑 </el-button>
             <el-button type="text" @click="handleDelete(scope)">
               删除
@@ -182,8 +182,8 @@ export default {
           type: "warning",
           showClose: false,
         });
-        const [, res] = await this.$http.AccountRoleManage.UpdateUserStatus({
-          userId: item?.userId || "",
+        const [, res] = await this.$http.FastDeals.UpdateSessionCountStatus({
+          id: item?.id || "",
           status: item?.status,
         });
         const msg = res ? res?.msg || `${tipText}成功` : `${tipText}失败`;
@@ -193,6 +193,12 @@ export default {
           type: res ? "success" : "error",
         }).then(() => {
           if (res) this.getList();
+          else {
+            item.status =
+              item?.status === this.$CONST.USER_STATE.ON
+                ? this.$CONST.USER_STATE.OFF
+                : this.$CONST.USER_STATE.ON;
+          }
         });
       } catch (error) {
         item.status =
@@ -210,14 +216,14 @@ export default {
       this.editInfo = item;
       this.isAssignRole = true;
     },
-    async handleDelete({ userId }) {
+    async handleDelete({ id }) {
       try {
         await this.$confirm("确定要删除该账号吗?", "删除提示", {
           type: "warning",
           showClose: false,
         });
         const [, res] = await this.$http.AccountRoleManage.DeleteUser({
-          userId,
+          id,
         });
         const msg = res ? res?.msg || `删除成功` : `删除失败`;
         this.$confirm(msg, "删除提示", {

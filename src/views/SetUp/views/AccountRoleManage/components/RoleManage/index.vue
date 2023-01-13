@@ -183,6 +183,12 @@ export default {
           type: res ? "success" : "error",
         }).then(() => {
           if (res) this.getList();
+          else {
+            item.status =
+              item?.status === this.$CONST.ROLE_STATE.ON
+                ? this.$CONST.ROLE_STATE.OFF
+                : this.$CONST.ROLE_STATE.ON;
+          }
         });
       } catch (error) {
         item.status =

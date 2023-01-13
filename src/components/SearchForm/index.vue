@@ -249,7 +249,7 @@
           <el-button v-if="isShowExportPass" size="mini" @click="exportPassFn">
             导出证件
           </el-button>
-          <slot name="buttonR"></slot>
+          <slot name="buttonRright"></slot>
           <el-button
             v-if="isShowExport && isShowExportList"
             type="text"
@@ -279,7 +279,7 @@
         <el-button v-if="isShowExportPass" @click="exportPassFn"
           >导出证件</el-button
         >
-        <slot name="buttonR"></slot>
+        <slot name="buttonRright"></slot>
         <el-button
           v-if="isShowExport && isShowExportList"
           type="text"
