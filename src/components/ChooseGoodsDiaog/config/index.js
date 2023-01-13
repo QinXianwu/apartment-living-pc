@@ -19,6 +19,12 @@ export const formData = [
 // 表格头
 export const column = [
   {
+    label: "",
+    prop: "custom_checkbox",
+    type: "custom",
+    width: "55",
+  },
+  {
     label: "商品编码",
     prop: "productNo",
     showOverflowTooltip: true,

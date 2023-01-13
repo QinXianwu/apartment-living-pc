@@ -12,11 +12,21 @@
         ref="TablePanel"
         :tableData="list"
         :tableHead="tableHead"
-        :checkbox="true"
+        :checkbox="!isRadio"
         :isShowTopCheck="false"
         v-loading="isLoadingList"
         @selection-change="handleSelectionChange"
       >
+        <!-- 复选框(只允许选中一个) -->
+        <template #custom_checkbox="{ scope }">
+          <div class="checkbox">
+            <el-checkbox
+              :value="!!selectDataMap[scope[onlyKey]]"
+              @change="handleRadioChange(scope)"
+            >
+            </el-checkbox>
+          </div>
+        </template>
         <template #goodsInfo="{ scope }">
           <div class="goodsInfo">
             <ImageView customClass="table-img" :src="scope.mainImage" />
@@ -73,6 +83,16 @@ export default {
       type: Boolean,
       default: false,
     },
+    // 选中的唯一标识key
+    onlyKey: {
+      type: String,
+      default: "id",
+    },
+    // 是否是单选
+    isRadio: {
+      type: Boolean,
+      default: false, // 默认多选
+    },
     // 显示新人价
     showCouple: {
       type: Boolean,
@@ -106,8 +126,10 @@ export default {
     };
   },
   computed: {
-    tableHead({ column, showCouple }) {
-      const filterPropStr = `action,${showCouple ? "" : "couple"}`;
+    tableHead({ isRadio, column, showCouple }) {
+      const filterPropStr = `action,${showCouple ? "" : "couple"},${
+        isRadio ? "" : "custom_checkbox"
+      }`;
       return column.filter((item) => !filterPropStr.includes(item.prop));
     },
     ...mapGetters({
@@ -153,27 +175,46 @@ export default {
     },
     initSelection() {
       if (!this.list?.length) return;
-      const ids = this.selectIds?.length ? this.selectIds : [];
+      const ids = this.selectIds?.length
+        ? this.isRadio
+          ? [this.selectIds[0]]
+          : this.selectIds
+        : [];
       ids.forEach((id) => {
-        const item = this.list.find((item) => item.id === id);
+        const item = this.list.find((item) => item[this.onlyKey] === id);
         if (!this.selectDataMap[id] && item) this.selectDataMap[id] = item;
       });
       this.list.forEach((item) => {
-        if (this.selectDataMap[item?.id]) {
+        if (this.selectDataMap[item[this.onlyKey]]) {
           this.$nextTick(() => {
             this.$refs.TablePanel.setSelection(item, true);
           });
         }
       });
     },
+    // 单选
+    handleRadioChange(item) {
+      if (!this.isRadio) return;
+      if (this.selectDataMap[item[this.onlyKey]]) {
+        this.selectDataMap = {};
+      } else {
+        this.selectDataMap = { [item[this.onlyKey]]: item };
+      }
+    },
+    // 多选
     handleSelectionChange(val) {
+      if (this.isRadio) return;
       this.list.forEach((item) => {
         // 存在于当前页以及map 但不存在 val -> 去掉
-        const index = val.findIndex((vItem) => vItem?.id === item.id);
-        if (this.selectDataMap[item.id] && index < 0)
-          delete this.selectDataMap[item.id];
+        const index = val.findIndex(
+          (vItem) => vItem[this.onlyKey] === item[this.onlyKey]
+        );
+        if (this.selectDataMap[item[this.onlyKey]] && index < 0)
+          delete this.selectDataMap[item[this.onlyKey]];
       });
-      val.forEach((item) => (this.selectDataMap[item.id] = { ...item }));
+      val.forEach(
+        (item) => (this.selectDataMap[item[this.onlyKey]] = { ...item })
+      );
     },
     async handleSubmit() {
       // if (!Object.keys(this.selectDataMap).length)
