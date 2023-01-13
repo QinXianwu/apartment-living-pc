@@ -58,6 +58,7 @@
   </el-dialog>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import { digits2Str } from "@/utils/index";
 import { column, formData } from "./config";
 import dialogMixin from "@/mixins/dialogMixin";
@@ -67,6 +68,11 @@ export default {
   mixins: [dialogMixin],
   components: {},
   props: {
+    // 选择服务点商品
+    isStation: {
+      type: Boolean,
+      default: false,
+    },
     // 显示新人价
     showCouple: {
       type: Boolean,
@@ -104,6 +110,9 @@ export default {
       const filterPropStr = `action,${showCouple ? "" : "couple"}`;
       return column.filter((item) => !filterPropStr.includes(item.prop));
     },
+    ...mapGetters({
+      serviceStationId: "user/serviceStationId",
+    }),
   },
   methods: {
     handleSizeChange(val) {
@@ -126,7 +135,10 @@ export default {
         ...this.page,
         ...this.query,
       };
-      const [, res] = await this.$http.Goods.GetList(query);
+      if (this.isStation) query.stationId = this.serviceStationId;
+      const [, res] = await this.$http.Goods[
+        this.isStation ? "GetServeGoodsList" : "GetList"
+      ](query);
       this.isLoadingList = false;
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
         this.$message.error(res?.msg || "获取商品列表异常");

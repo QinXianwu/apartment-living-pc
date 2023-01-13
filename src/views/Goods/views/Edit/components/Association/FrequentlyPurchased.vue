@@ -43,7 +43,8 @@
         </el-form-item>
       </el-form>
     </div>
-    <ChooseServeGoodsDiaog
+    <ChooseGoodsDiaog
+      isStation
       :selectIds="selectIds"
       :show.sync="showServeGoods"
       @close="close"
@@ -55,10 +56,11 @@
 <script>
 import { column } from "./config/index";
 import { isField, digits2Str } from "@/utils/index";
-import ChooseServeGoodsDiaog from "./ChooseServeGoodsDiaog.vue";
+import ChooseGoodsDiaog from "@/components/ChooseGoodsDiaog";
+
 export default {
   name: "FrequentlyPurchased",
-  components: { ChooseServeGoodsDiaog },
+  components: { ChooseGoodsDiaog },
   props: {
     productInfo: {
       type: Object,
