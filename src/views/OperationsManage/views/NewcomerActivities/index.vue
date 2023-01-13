@@ -72,6 +72,7 @@ export default {
         startTime: "",
         endTime: "",
         activityDate: [],
+        rule: "",
       },
       rules: {
         activityDate: [
@@ -98,13 +99,14 @@ export default {
       });
     },
     async getDetail() {
+      this.newComerInfo = {};
       const [, res] =
         await this.$http.OperationsManage.GetNewcomerActivitieDetail();
       this.newComerInfo = res?.id ? res : {};
       const startTime = this.newComerInfo?.startTime || "";
       const endTime = this.newComerInfo?.endTime || "";
       const activityDate = startTime && endTime ? [startTime, endTime] : [];
-      this.formData = { ...this.newComerInfo, activityDate };
+      this.formData = { ...this.formData, ...this.newComerInfo, activityDate };
     },
     // 处理提交
     async handleSubmit() {

@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       rulesData: "",
+      initRules: true,
     };
   },
   computed: {},
@@ -40,10 +41,16 @@ export default {
     rulesData(val) {
       this.$emit("update:rule", val);
     },
+    rule(val) {
+      if (val && this.initRules) {
+        this.rulesData = val;
+        this.initRules = false;
+      }
+    },
   },
   methods: {},
   mounted() {
-    //
+    this.rulesData = this.rule;
   },
 };
 </script>
