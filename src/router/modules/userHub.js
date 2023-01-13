@@ -31,6 +31,11 @@ export default {
       meta: {
         title: "积分设置",
         notPassPermissionVerify: true,
+        PermissionIds: [
+          PERMISSION_ID.UserHub_PointsSetting_PointsSignIn,
+          PERMISSION_ID.UserHub_PointsSetting_PointsRules,
+          PERMISSION_ID.UserHub_PointsSetting_TeamSharePoints,
+        ],
       },
     },
   ],

@@ -1,3 +1,4 @@
+// import hasPermission from "@/permission/hasPermission";
 import Page401 from "@/views/ErrorPage/401";
 
 export function filterAsyncRoutes(routes) {
@@ -14,6 +15,29 @@ export function filterAsyncRoutes(routes) {
       tmp.hidden = true; // 隐藏
       tmp.component = Page401; // 无权限
     }
+
+    // 配置 PermissionIds以及tmp?.meta?.notPassPermissionVerify 为 true
+    // 校验ids中的权限是否存在 全部不存在 则不显示该路由在侧边菜单中
+    // const PermissionIds = tmp?.meta?.PermissionIds?.length
+    //   ? tmp.meta.PermissionIds
+    //   : [];
+    // if (tmp?.path === "FastDeals") {
+    //   console.log(tmp);
+    // }
+    // if (PermissionIds.length && tmp?.meta?.notPassPermissionVerify) {
+    //   let isPush = false;
+    //   try {
+    //     PermissionIds.forEach((PermissionId) => {
+    //       if (hasPermission(PermissionId)) {
+    //         isPush = true;
+    //         throw new Error();
+    //       }
+    //     });
+    //   } catch (error) {
+    //     //
+    //   }
+    //   if (isPush) res.push(tmp);
+    // } else res.push(tmp);
     res.push(tmp);
   });
   return res;

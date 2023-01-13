@@ -23,7 +23,14 @@ export default {
       path: "AccountRoleManage",
       component: AccountRoleManage,
       name: "AccountRoleManage",
-      meta: { title: "账号角色管理", notPassPermissionVerify: true },
+      meta: {
+        title: "账号角色管理",
+        notPassPermissionVerify: true,
+        PermissionIds: [
+          PERMISSION_ID.SetUp_AccountManage,
+          PERMISSION_ID.SetUp_RoleManage,
+        ],
+      },
     },
     {
       path: "MenuManage",
@@ -38,7 +45,14 @@ export default {
       path: "DepartmentPostManage",
       component: DepartmentPostManage,
       name: "DepartmentPostManage",
-      meta: { title: "部门岗位管理", notPassPermissionVerify: true },
+      meta: {
+        title: "部门岗位管理",
+        notPassPermissionVerify: true,
+        PermissionIds: [
+          PERMISSION_ID.SetUp_DeptManage,
+          PERMISSION_ID.SetUp_PostManage,
+        ],
+      },
     },
     {
       path: "DictionaryManage",

@@ -1,8 +1,9 @@
-// import PERMISSION_ID from "@/permission/PERMISSION_ID";
+import PERMISSION_ID from "@/permission/PERMISSION_ID";
 import MainLayout from "@/layouts/MainLayout/index";
 import Coupons from "@/views/OperationsManage/views/Coupons/index.vue";
 import CouponHub from "@/views/OperationsManage/views/CouponHub/index.vue";
 import NewcomerActivities from "@/views/OperationsManage/views/NewcomerActivities/index.vue";
+import FastDeals from "@/views/OperationsManage/views/FastDeals/index.vue";
 
 export default {
   path: "/OperationsManage",
@@ -13,7 +14,7 @@ export default {
     title: "运营管理",
     icon: "operations",
     affix: true,
-    // PermissionId: PERMISSION_ID.Order,
+    PermissionId: PERMISSION_ID.OperationsManage,
   },
   children: [
     {
@@ -22,7 +23,7 @@ export default {
       name: "Coupons",
       meta: {
         title: "优惠劵",
-        // PermissionId: PERMISSION_ID.Order_PurchaseOrder,
+        PermissionId: PERMISSION_ID.OperationsManage_Coupons,
       },
     },
     {
@@ -31,7 +32,7 @@ export default {
       name: "CouponHub",
       meta: {
         title: "领劵中心",
-        // PermissionId: PERMISSION_ID.Order_PurchaseOrder,
+        PermissionId: PERMISSION_ID.OperationsManage_CouponHub,
       },
     },
     {
@@ -40,7 +41,20 @@ export default {
       name: "NewcomerActivities",
       meta: {
         title: "新人活动",
-        // PermissionId: PERMISSION_ID.Order_PurchaseOrder,
+        PermissionId: PERMISSION_ID.OperationsManage_NewcomerActivities,
+      },
+    },
+    {
+      path: "FastDeals",
+      component: FastDeals,
+      name: "FastDeals",
+      meta: {
+        title: "秒杀活动",
+        notPassPermissionVerify: true,
+        PermissionIds: [
+          PERMISSION_ID.OperationsManage_FastDeals_SessionCount,
+          PERMISSION_ID.OperationsManage_FastDeals_ActivityList,
+        ],
       },
     },
   ],

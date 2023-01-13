@@ -23,7 +23,6 @@ const routerList = [
   setUp,
   error,
 ];
-
 // 打包正式环境 返回仅配置权限ID的路由
 export default process.env.VITE_APP_ENVIRONMENT === "prod"
   ? filterAsyncRoutes(routerList)

@@ -22,7 +22,27 @@ export function filterAsyncRoutes(routes, permissionHash) {
     }
     // if (p?.MenuName) tmp.meta.title = p.MenuName;
     tmp.OrderNum = p ? p.OrderNum : 9999; // 如果没有对应的权限，默认设置成大值
-    res.push(tmp);
+
+    // 配置 PermissionIds以及tmp?.meta?.notPassPermissionVerify 为 true
+    // 校验ids中的权限是否存在 全部不存在 则不显示该路由在侧边菜单中
+    const PermissionIds = tmp?.meta?.PermissionIds?.length
+      ? tmp.meta.PermissionIds
+      : [];
+    if (PermissionIds.length && tmp?.meta?.notPassPermissionVerify) {
+      let isPush = false;
+      try {
+        PermissionIds.forEach((PermissionId) => {
+          if (permissionHash.get(PermissionId)) {
+            isPush = true;
+            throw new Error();
+          }
+        });
+      } catch (error) {
+        //
+      }
+      if (isPush) res.push(tmp);
+    } else res.push(tmp);
+    // res.push(tmp);
   });
   // 根据后台返回的顺序进行排序
   return res.sort((a, b) => a.OrderNum - b.OrderNum);
