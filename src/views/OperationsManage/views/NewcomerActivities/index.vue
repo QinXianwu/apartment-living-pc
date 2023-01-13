@@ -29,8 +29,8 @@
     </div>
     <div class="sub-content">
       <div class="title">新人好礼配置</div>
-      <NewcomerCoupon ref="NewcomerCoupon" />
-      <NewcomerGoods ref="NewcomerGoods" />
+      <NewcomerCoupon ref="NewcomerCoupon" :newComerInfo="newComerInfo" />
+      <NewcomerGoods ref="NewcomerGoods" :newComerInfo="newComerInfo" />
     </div>
     <!-- 活动说明 -->
     <RulesForm
@@ -101,7 +101,10 @@ export default {
       const [, res] =
         await this.$http.OperationsManage.GetNewcomerActivitieDetail();
       this.newComerInfo = res?.id ? res : {};
-      this.formData = { ...this.newComerInfo };
+      const startTime = this.newComerInfo?.startTime || "";
+      const endTime = this.newComerInfo?.endTime || "";
+      const activityDate = startTime && endTime ? [startTime, endTime] : [];
+      this.formData = { ...this.newComerInfo, activityDate };
     },
     // 处理提交
     async handleSubmit() {

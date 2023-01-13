@@ -80,14 +80,25 @@
 </template>
 
 <script>
-import { GoodsColumn } from "../config";
 import CONST from "@/constants/index";
-// import { digits2Str } from "@/utils/index";
+import { GoodsColumn } from "../config";
+import { digits2Str } from "@/utils/index";
 import ChooseGoodsDiaog from "@/components/ChooseGoodsDiaog";
 
 export default {
   name: "NewcomerGoods",
   components: { ChooseGoodsDiaog },
+  props: {
+    newComerInfo: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+  watch: {
+    newComerInfo(val) {
+      if (val) this.init();
+    },
+  },
   data() {
     return {
       CONST,
@@ -108,19 +119,19 @@ export default {
     },
   },
   methods: {
-    // init() {
-    //   this.formData.applyProductType =
-    //     this.couponsInfo?.applyProductType || CONST.APPLY_PRODUCT_TYPE.ALL;
-    //   if (this.couponsInfo?.applyProductType === CONST.APPLY_PRODUCT_TYPE.ALL) {
-    //     this.list = [];
-    //     return;
-    //   }
-    //   const goodsList = this.couponsInfo?.productList || [];
-    //   goodsList.forEach((item) =>
-    //     digits2Str(item, ["id", "categoryId", "supplierId"])
-    //   );
-    //   this.list = [].concat(goodsList);
-    // },
+    init() {
+      this.productStatus =
+        this.newComerInfo?.productStatus || CONST.GOODS_GIVE_STATE.GIVE;
+      if (this.productStatus === CONST.GOODS_GIVE_STATE.NOT_GIVE) {
+        this.list = [];
+        return;
+      }
+      const goodsList = this.newComerInfo?.productList || [];
+      goodsList.forEach((item) =>
+        digits2Str(item, ["id", "categoryId", "supplierId"])
+      );
+      this.list = [].concat(goodsList);
+    },
     handleSizeChange(val) {
       this.page.pageSize = val;
       this.page.pageNum = 1;
@@ -172,7 +183,7 @@ export default {
   },
   filters: {},
   mounted() {
-    //
+    this.init();
   },
 };
 </script>

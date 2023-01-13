@@ -64,6 +64,17 @@ import AddCouponDiaog from "./AddCouponDiaog.vue";
 export default {
   name: "NewcomerCoupon",
   components: { AddCouponDiaog },
+  props: {
+    newComerInfo: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+  watch: {
+    newComerInfo(val) {
+      if (val) this.init();
+    },
+  },
   data() {
     return {
       CONST,
@@ -74,6 +85,11 @@ export default {
   },
   computed: {},
   methods: {
+    init() {
+      this.couponStatus =
+        this.newComerInfo?.couponStatus || CONST.REWARD_COUPONS_STATE.GIVE;
+      this.couponConfigList = this.newComerInfo?.couponConfigList || [];
+    },
     handleDeleteCoupon(index) {
       this.couponConfigList.splice(index, 1);
     },
@@ -135,7 +151,7 @@ export default {
     },
   },
   mounted() {
-    //
+    this.init();
   },
 };
 </script>
