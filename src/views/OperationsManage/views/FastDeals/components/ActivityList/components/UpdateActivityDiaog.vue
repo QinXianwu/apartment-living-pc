@@ -8,13 +8,13 @@
   >
     <div class="content">
       <el-form ref="form" :model="formData" :rules="rules" label-width="120px">
-        <el-form-item label="活动名称" prop="name">
+        <!-- <el-form-item label="活动名称" prop="name">
           <el-input
             class="input-medium"
             v-model="formData.name"
             placeholder="请输入活动名称"
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="活动时间" prop="activityDate">
           <el-date-picker
             v-model="formData.activityDate"
@@ -53,16 +53,8 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-radio-group v-model="formData.status">
-            <el-radio-button
-              v-for="(item, index) in $CONST.ACT_STATUS_OPTIONS()"
-              :label="item.value"
-              :value="item.value"
-              :key="index"
-              >{{ item.label }}</el-radio-button
-            >
-          </el-radio-group>
+        <el-form-item label="适用商品">
+          <el-button @click="chooseGoods">选择商品</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -111,6 +103,9 @@ export default {
         activityDate: [
           { required: true, message: "请选择活动时间", trigger: "blur" },
         ],
+        secKillSessionIds: [
+          { required: true, message: "请选择活动活动场次", trigger: "blur" },
+        ],
       },
     };
   },
@@ -133,6 +128,9 @@ export default {
         return;
       }
       this.formData[formKey] = options.map((item) => item.value);
+    },
+    chooseGoods() {
+      //
     },
     async getDetail() {
       if (!this.editInfo?.id) return;

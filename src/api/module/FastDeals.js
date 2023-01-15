@@ -14,7 +14,6 @@ export default {
         url: apiPrefix + "/apartment-activity/secKillSession/page",
         params,
         isReturnAll: true,
-        isHandleParams: true,
       })
     );
   },
