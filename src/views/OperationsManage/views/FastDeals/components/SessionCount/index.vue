@@ -19,9 +19,6 @@
         <template #action="{ scope }">
           <div class="action-groud">
             <el-button type="text" @click="handleEdit(scope)"> 编辑 </el-button>
-            <el-button type="text" @click="handleDelete(scope)">
-              删除
-            </el-button>
           </div>
         </template>
       </TablePanel>

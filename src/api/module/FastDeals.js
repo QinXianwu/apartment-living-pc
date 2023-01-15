@@ -59,4 +59,15 @@ export default {
       })
     );
   },
+  // 获取秒杀活动列表
+  GetActivityList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/secKillActivity/page",
+        params,
+        isReturnAll: true,
+        isHandleParams: true,
+      })
+    );
+  },
 };

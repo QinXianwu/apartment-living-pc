@@ -3,12 +3,12 @@ import CONST from "@/constants/index";
 // 搜索选项
 export const formData = [
   {
-    label: "场次状态",
+    label: "活动状态",
     prop: "status",
     type: "select",
     value: "",
-    options: CONST.SESSION_COUNT_STATE_OPTIONS(),
-    placeholder: "请选择场次状态",
+    options: CONST.ACT_STATUS_OPTIONS(),
+    placeholder: "请选择活动状态",
   },
 ];
 // 表格头
