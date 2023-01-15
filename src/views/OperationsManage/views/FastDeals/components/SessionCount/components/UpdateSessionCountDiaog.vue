@@ -48,6 +48,7 @@
   </el-dialog>
 </template>
 <script>
+import filters from "@/filters";
 import dialogMixin from "@/mixins/dialogMixin";
 
 export default {
@@ -67,6 +68,34 @@ export default {
     },
   },
   data() {
+    const validateStartTime = (rule, value, callback) => {
+      const curDate = filters.formatDate(Date.now());
+      const startTime = new Date(`${curDate} ${value}`).getTime();
+      const endTime = new Date(
+        `${curDate} ${this.formData?.endTime || ""}`
+      ).getTime();
+      if (!value) {
+        callback(new Error("请选择开始时间"));
+      } else if (endTime < startTime) {
+        callback(new Error("开始时间需早于结束时间"));
+      } else {
+        callback();
+      }
+    };
+    const validateEndTime = (rule, value, callback) => {
+      const curDate = filters.formatDate(Date.now());
+      const startTime = new Date(
+        `${curDate} ${this.formData?.startTime || ""}`
+      ).getTime();
+      const endTime = new Date(`${curDate} ${value}`).getTime();
+      if (!value) {
+        callback(new Error("请选择开始时间"));
+      } else if (endTime < startTime) {
+        callback(new Error("结束时间需晚于开始时间"));
+      } else {
+        callback();
+      }
+    };
     return {
       formData: {
         status: this.$CONST.SESSION_COUNT_STATE.ON,
@@ -77,9 +106,11 @@ export default {
       rules: {
         startTime: [
           { required: true, message: "请选择开始时间", trigger: "blur" },
+          { validator: validateStartTime, trigger: "blur" },
         ],
         endTime: [
           { required: true, message: "请选择结束时间", trigger: "blur" },
+          { validator: validateEndTime, trigger: "blur" },
         ],
       },
     };
