@@ -4,6 +4,7 @@ import Coupons from "@/views/OperationsManage/views/Coupons/index.vue";
 import CouponHub from "@/views/OperationsManage/views/CouponHub/index.vue";
 import NewcomerActivities from "@/views/OperationsManage/views/NewcomerActivities/index.vue";
 import FastDeals from "@/views/OperationsManage/views/FastDeals/index.vue";
+import DiscountActivity from "@/views/OperationsManage/views/DiscountActivity/index.vue";
 
 export default {
   path: "/OperationsManage",
@@ -55,6 +56,15 @@ export default {
           PERMISSION_ID.OperationsManage_FastDeals_SessionCount,
           PERMISSION_ID.OperationsManage_FastDeals_ActivityList,
         ],
+      },
+    },
+    {
+      path: "DiscountActivity",
+      component: DiscountActivity,
+      name: "DiscountActivity",
+      meta: {
+        title: "折扣活动",
+        // PermissionId: PERMISSION_ID.OperationsManage_DiscountActivity,
       },
     },
   ],

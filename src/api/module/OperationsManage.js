@@ -28,4 +28,14 @@ export default {
       })
     );
   },
+  // 获取商品件折扣活动列表
+  GetPieceDiscountActivityList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/pieceDiscountActivity/page",
+        params,
+        isReturnAll: true,
+      })
+    );
+  },
 };
