@@ -24,6 +24,8 @@
       />
     </div>
     <ChooseGoodsDiaog
+      isRadio
+      :isStation="isService"
       :selectIds="selectGoodsIds"
       :show.sync="showGoodsDiaog"
       @close="chooseClose"
@@ -39,6 +41,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import { column, formData } from "./config";
 import TagPage from "./components/TagPage.vue";
 import ChooseGoodsDiaog from "@/components/ChooseGoodsDiaog";
@@ -67,7 +70,11 @@ export default {
       showActivityDiaog: false,
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      isService: "user/isService",
+    }),
+  },
   methods: {
     handleSizeChange(val) {
       this.page.pageSize = val;
@@ -122,6 +129,7 @@ export default {
   },
   mounted() {
     this.getList();
+    this.$store.dispatch("fastDeals/GetSecKillSessionAllAction");
   },
 };
 </script>

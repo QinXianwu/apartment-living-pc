@@ -127,11 +127,11 @@ export default {
         return;
       }
       this.isLoading = true;
-      const quert = {
+      const query = {
         ...this.integral,
         ...this.formData,
       };
-      const [, res] = await this.$http.PointsSetting.UpdateIntegralRule(quert);
+      const [, res] = await this.$http.PointsSetting.UpdateIntegralRule(query);
       if (res) {
         this.getDetail();
         this.$message.success("保存成功");

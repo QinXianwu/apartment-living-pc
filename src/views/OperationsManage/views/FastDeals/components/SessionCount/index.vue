@@ -102,8 +102,9 @@ export default {
           showCancelButton: false,
           type: res ? "success" : "error",
         }).then(() => {
-          if (res) this.getList();
-          else {
+          if (res) {
+            this.getList();
+          } else {
             item.status =
               item?.status === this.$CONST.SESSION_COUNT_STATE.ON
                 ? this.$CONST.SESSION_COUNT_STATE.OFF

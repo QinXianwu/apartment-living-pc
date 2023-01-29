@@ -66,22 +66,22 @@ export default {
       ) {
         return this.$message.error("请选择活动时间区间");
       }
-      const quert = {
+      const query = {
         nextSignDay: this.nextSignDay,
         sign: { ...this.sign },
         signRewardList: this.$refs.SignIn.list,
       };
       if (this.activityTime?.length >= 2) {
-        quert.sign.startTime = this.activityTime[0];
-        quert.sign.endTime = this.activityTime[1];
+        query.sign.startTime = this.activityTime[0];
+        query.sign.endTime = this.activityTime[1];
       }
-      quert.signRewardList.map((item) => {
+      query.signRewardList.map((item) => {
         const idsArr = item.couponConfigList
           .filter((ele) => ele?.id)
           .map((v) => v.id);
         item.signReward.couponIds = idsArr.join(",");
       });
-      const [, res] = await this.$http.SignIn.UpdateSignIn(quert);
+      const [, res] = await this.$http.SignIn.UpdateSignIn(query);
       if (res) {
         this.getDetail();
         this.$message.success("保存成功");

@@ -158,7 +158,9 @@ export default {
       this.$message[res ? "success" : "error"](
         res?.message || res ? `${title}成功` : `${title}失败`
       );
-      if (res) this.handleClose(true);
+      if (res) {
+        this.handleClose(true);
+      }
     },
   },
   mounted() {

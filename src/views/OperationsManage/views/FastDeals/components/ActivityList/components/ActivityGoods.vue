@@ -133,9 +133,12 @@ export default {
           return error;
         }
         if (!this.list?.length) return this.$message.error("请选择商品后再试");
+        const product = this.list[0];
         resolve({
           ...this.formData,
-          productList: this.ids,
+          product,
+          productId: product.id,
+          productNo: product.productNo,
         });
       });
     },

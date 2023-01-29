@@ -377,7 +377,7 @@ export default {
   }
 }
 .select-all {
-  padding: 0 20px;
+  padding: 0 20px 5px;
   text-align: right;
 }
 </style>

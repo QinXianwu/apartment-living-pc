@@ -123,17 +123,17 @@ export default {
       const CouponInfo = await this.$refs.NewcomerCoupon.getQuery();
       const GoodsInfo = await this.$refs.NewcomerGoods.getQuery();
       this.isLoading = true;
-      const quert = {
+      const query = {
         ...this.newComerInfo,
         ...this.formData,
         ...CouponInfo,
         ...GoodsInfo,
       };
-      quert.startTime = quert.activityDate?.length ? quert.activityDate[0] : "";
-      quert.endTime = quert.activityDate?.length ? quert.activityDate[1] : "";
-      delete quert.activityDate;
+      query.startTime = query.activityDate?.length ? query.activityDate[0] : "";
+      query.endTime = query.activityDate?.length ? query.activityDate[1] : "";
+      delete query.activityDate;
       const [, res] = await this.$http.OperationsManage.GetNewcomerActivitie(
-        quert
+        query
       );
       if (res) {
         this.getDetail();

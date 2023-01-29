@@ -8,13 +8,6 @@
   >
     <div class="content">
       <el-form ref="form" :model="formData" :rules="rules" label-width="120px">
-        <!-- <el-form-item label="活动名称" prop="name">
-          <el-input
-            class="input-medium"
-            v-model="formData.name"
-            placeholder="请输入活动名称"
-          />
-        </el-form-item> -->
         <el-form-item label="活动时间" prop="activityDate">
           <el-date-picker
             v-model="formData.activityDate"
@@ -53,6 +46,17 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="库存数量" prop="stockCount">
+          <el-input-number
+            class="input-medium"
+            v-model="formData.stockCount"
+            placeholder="库存数量"
+            :min="0"
+            :controls="false"
+            :precision="0"
+            :step="1"
+          />
+        </el-form-item>
       </el-form>
     </div>
     <ActivityGoods
@@ -70,6 +74,7 @@
   </el-dialog>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import dialogMixin from "@/mixins/dialogMixin";
 import ActivityGoods from "./ActivityGoods.vue";
 
@@ -96,8 +101,8 @@ export default {
   data() {
     return {
       formData: {
+        activityDate: [],
         secKillSessionIds: [],
-        status: this.$CONST.SESSION_COUNT_STATE.ON,
       },
       isLoading: false,
       isLoadingInfo: false,
@@ -114,22 +119,31 @@ export default {
         secKillSessionIds: [
           { required: true, message: "请选择活动活动场次", trigger: "blur" },
         ],
+        stockCount: [
+          { required: true, message: "请输入库存数量", trigger: "blur" },
+          {
+            type: "number",
+            min: 1,
+            message: "库存数量必须大于0",
+            trigger: "blur",
+          },
+        ],
       },
     };
   },
   computed: {
-    secKillSessionOptions() {
-      return [];
-    },
+    ...mapGetters({
+      isService: "user/isService",
+      serviceStationId: "user/serviceStationId",
+      secKillSessionOptions: "fastDeals/secKillSessionOptions",
+    }),
   },
   methods: {
     // 全选select
     selectAll(formKey) {
       let options = [];
       if (formKey === "secKillSessionIds") {
-        options = this.secKillSessionOptions.map((item) => ({
-          value: item.postId,
-        }));
+        options = this.secKillSessionOptions;
       }
       if (this.formData[formKey]?.length === options.length) {
         this.formData[formKey] = [];
@@ -158,16 +172,22 @@ export default {
         return error;
       }
       const GoodsInfo = await this.$refs.ActivityGoods.getQuery();
-      console.log(GoodsInfo);
       if (this.isLoading) return;
       this.isLoading = true;
       const query = {
         ...this.activityInfo,
         ...this.formData,
+        ...GoodsInfo,
       };
+      if (this.isService) query.serviceStationId = this.serviceStationId;
+      if (this.formData?.activityDate?.length >= 2) {
+        query.startTime = this.formData.activityDate[0];
+        query.endTime = this.formData.activityDate[1];
+      }
+      delete query.activityDate;
       const id = this.editInfo?.id || "";
       const [, res] = await this.$http.FastDeals[
-        id ? "UpdateSessionCount" : "AddSessionCount"
+        id ? "UpdateActivity" : "AddActivity"
       ](query);
       this.isLoading = false;
       this.$message[res ? "success" : "error"](
@@ -189,5 +209,9 @@ export default {
   ::v-deep .pagination {
     border-top: none;
   }
+}
+.select-all {
+  padding: 0 20px 5px;
+  text-align: right;
 }
 </style>

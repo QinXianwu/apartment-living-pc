@@ -218,21 +218,21 @@ export default {
         return;
       }
       this.isLoading = true;
-      const quert = {
+      const query = {
         ...this.integralCarve,
         ...this.formData,
       };
-      quert.startTime =
-        quert.limitTimeStatus === CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM
-          ? quert.activityTime
-          : quert.activityDate[0];
-      quert.endTime =
-        quert.limitTimeStatus === CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM
+      query.startTime =
+        query.limitTimeStatus === CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM
+          ? query.activityTime
+          : query.activityDate[0];
+      query.endTime =
+        query.limitTimeStatus === CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM
           ? ""
-          : quert.activityDate[1];
-      delete quert.activityTime;
-      delete quert.activityDate;
-      const [, res] = await this.$http.PointsSetting.UpdateIntegralCarve(quert);
+          : query.activityDate[1];
+      delete query.activityTime;
+      delete query.activityDate;
+      const [, res] = await this.$http.PointsSetting.UpdateIntegralCarve(query);
       if (res) {
         this.getDetail();
         this.$message.success("保存成功");

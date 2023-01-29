@@ -143,7 +143,7 @@ export default {
       }
     },
     retroactivePoints() {
-      //
+      this.$message.info("功能开发中...");
     },
     close(isRefresh = false) {
       this.editInfo = "";

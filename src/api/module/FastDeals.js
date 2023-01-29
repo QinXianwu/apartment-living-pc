@@ -17,6 +17,15 @@ export default {
       })
     );
   },
+  // 获取秒杀场次列表(启用状态) 不分页
+  GetSessionCountListAll(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/secKillSession/list",
+        params,
+      })
+    );
+  },
   // 获取秒杀场次详情
   GetSessionCountDetail(params) {
     return catchAsyncFun(
@@ -77,6 +86,24 @@ export default {
         method: "GET",
         isHeadersForm: true,
         isHandleParams: true,
+      })
+    );
+  },
+  // 新增秒杀活动
+  AddActivity(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/secKillActivity/add",
+        params,
+      })
+    );
+  },
+  // 修改秒杀活动
+  UpdateActivity(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/secKillActivity/update",
+        params,
       })
     );
   },
