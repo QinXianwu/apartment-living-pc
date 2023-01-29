@@ -120,14 +120,12 @@ export default {
       });
       this.isLoadingGoods = false;
       if (!res) return this.$message.error("获取商品详情异常");
-      const keys1 = ["id", "categoryId"];
+      const keys1 = ["categoryId"];
       digits2Str(res, keys1);
-      const keys2 = ["id", "specificationValueId1", "specificationValueId2"];
       this.productInfo = { ...res };
       this.list = this.productInfo?.productStockPriceList?.length
         ? this.productInfo.productStockPriceList
         : [];
-      this.list.forEach((item) => digits2Str(item, keys2));
     },
     // 处理提交
     async handleSubmit() {

@@ -64,9 +64,7 @@ export default {
       const data1 = this.productInfo?.productSpecificationList || [];
       const ids = ["specificationId"];
       const valIds1 = ["productSpecificationId"];
-      // const valIds1 = ["id", "productSpecificationId", "specificationValueId"];
       const valIds2 = ["id"];
-      // const valIds2 = ["id", "specificationValueId1", "specificationValueId2"];
       data1.map((item) => {
         digits2Str(item, ids);
         if (!item?.productSpecificationValueList?.length) return;

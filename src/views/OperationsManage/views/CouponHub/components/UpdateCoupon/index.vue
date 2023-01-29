@@ -73,8 +73,6 @@ export default {
         id: this.editInfo.id,
       });
       if (!res) return this.$message.error("获取优惠劵详情异常");
-      // const keys1 = ["id"];
-      // digits2Str(res, keys1);
       this.couponsInfo = { ...res };
     },
     // 处理提交

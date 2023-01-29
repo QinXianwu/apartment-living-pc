@@ -100,7 +100,6 @@
 <script>
 import CONST from "@/constants/index";
 import { formData, column } from "./config";
-// import { digits2Str } from "@/utils/index";
 import TagPage from "../../components/TagPage.vue";
 import UpdateCoupon from "./components/UpdateCoupon";
 import ActivityRuleDiaog from "./components/ActivityRuleDiaog.vue";
@@ -272,7 +271,6 @@ export default {
         this.$message.error(res?.msg || "获取优惠劵列表异常");
       }
       const data = res?.rows?.length ? res.rows : [];
-      // data.forEach((item) => digits2Str(item, ["id"]));
       this.list = data;
       this.total = res?.total || 0;
     },
