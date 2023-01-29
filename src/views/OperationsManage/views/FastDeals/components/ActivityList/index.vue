@@ -7,6 +7,11 @@
       </div>
       <TagPage :state.sync="query.status" @getList="getList" />
       <TablePanel :tableData="list" :tableHead="column">
+        <template #status="{ scope }">
+          <el-tag :type="getActivityTab(scope)">{{
+            $CONST.ACT_STATUS_TEXT[scope.status]
+          }}</el-tag>
+        </template>
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
@@ -42,7 +47,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { column, formData } from "./config";
+import { column, formData, activityTab } from "./config";
 import TagPage from "./components/TagPage.vue";
 import ChooseGoodsDiaog from "@/components/ChooseGoodsDiaog";
 import UpdateActivityDiaog from "./components/UpdateActivityDiaog.vue";
@@ -85,6 +90,11 @@ export default {
       this.page.pageNum = val;
       this.getList(false);
     },
+    getActivityTab(data) {
+      const keyArr = [...activityTab()];
+      const tabTypeItem = keyArr.find((item) => item.is === data?.status);
+      return tabTypeItem?.tabType || "";
+    },
     onSearch(data) {
       this.query = { ...data };
       if (data?.activityDate?.length) {
@@ -96,6 +106,10 @@ export default {
     },
     handleAdd() {
       this.editInfo = "";
+      this.showActivityDiaog = true;
+    },
+    handleEdit(data) {
+      this.editInfo = { id: data.id };
       this.showActivityDiaog = true;
     },
     chooseGoods(data) {

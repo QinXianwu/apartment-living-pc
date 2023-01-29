@@ -236,7 +236,7 @@ export default {
           ? `${id ? "编辑" : "新增"}成功`
           : `${id ? "编辑" : "新增"}失败`
       );
-      if (res) this.handleClose(false);
+      if (res) this.handleClose(true);
     },
   },
   mounted() {

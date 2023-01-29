@@ -1,4 +1,4 @@
-// import CONST from "@/constants/index";
+import CONST from "@/constants/index";
 
 // 搜索选项
 export const formData = [
@@ -49,5 +49,29 @@ export const column = [
     type: "custom",
     fixed: "right",
     width: 250,
+  },
+];
+
+// 活动标签
+export const activityTab = () => [
+  {
+    value: "",
+    tabType: "",
+    is: CONST.ACT_STATUS.NOT_START,
+  },
+  {
+    value: "",
+    tabType: "success",
+    is: CONST.ACT_STATUS.HAVE_IN_HAND,
+  },
+  {
+    value: "",
+    tabType: "danger",
+    is: CONST.ACT_STATUS.HAS_ENDED,
+  },
+  {
+    value: "",
+    tabType: "warning",
+    is: CONST.ACT_STATUS.STOP,
   },
 ];
