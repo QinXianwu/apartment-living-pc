@@ -47,7 +47,6 @@
 <script>
 import CONST from "@/constants/index";
 import { StationColumn } from "./config/index";
-// import { digits2Str } from "@/utils/index";
 import TableBlock from "@/components/TableBlock";
 
 export default {
@@ -83,7 +82,6 @@ export default {
     list({ couponsInfo, page }) {
       if (couponsInfo?.applyStationStatus === CONST.SERVE_TYPE.ALL) return [];
       const stationList = couponsInfo?.stationList || [];
-      // goodsList.forEach((item) => digits2Str(item, ["id"]));
       return stationList.slice(
         (page.pageNum - 1) * page.pageSize,
         page.pageNum * page.pageSize

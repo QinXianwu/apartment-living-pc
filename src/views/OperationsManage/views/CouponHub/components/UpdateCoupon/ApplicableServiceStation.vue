@@ -78,7 +78,6 @@
 
 <script>
 import CONST from "@/constants/index";
-// import { digits2Str } from "@/utils/index";
 import { StationColumn } from "./config/index";
 export default {
   name: "ApplicableServiceStation",
@@ -132,9 +131,6 @@ export default {
         return;
       }
       const stationList = this.couponsInfo?.stationList || [];
-      // stationList.forEach((item) =>
-      //   digits2Str(item, ["id"])
-      // );
       this.list = [].concat(stationList);
     },
     handleSizeChange(val) {

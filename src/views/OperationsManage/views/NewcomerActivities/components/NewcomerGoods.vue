@@ -128,7 +128,7 @@ export default {
       }
       const goodsList = this.newComerInfo?.productList || [];
       goodsList.forEach((item) =>
-        digits2Str(item, ["id", "categoryId", "supplierId"])
+        digits2Str(item, ["categoryId", "supplierId"])
       );
       this.list = [].concat(goodsList);
     },

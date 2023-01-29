@@ -80,7 +80,7 @@ export default {
         return [];
       const goodsList = couponsInfo?.productList || [];
       goodsList.forEach((item) =>
-        digits2Str(item, ["id", "categoryId", "supplierId"])
+        digits2Str(item, ["categoryId", "supplierId"])
       );
       return goodsList.slice(
         (page.pageNum - 1) * page.pageSize,

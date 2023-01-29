@@ -174,6 +174,7 @@ export default {
       if (!this.productSpecificationList?.length) return;
       this.list = [];
       const tempArr = simpleCloneDeep(this.productSpecificationList);
+      console.log(tempArr);
       tempArr.forEach(async (item) => {
         const specificationId = item?.specificationId || "";
         item.specificationId = specificationId;
@@ -275,11 +276,10 @@ export default {
       );
       const data = res?.length ? res : [];
       data.forEach((item) => {
-        if (item?.id)
-          item.specificationValueId = this.$JSONbig.stringify(item.id);
-        if (item?.specificationId) {
-          item.specificationId = this.$JSONbig.stringify(item.specificationId);
-        }
+        if (item?.id) item.specificationValueId = item.id;
+        // if (item?.specificationId) {
+        //   item.specificationId = this.$JSONbig.stringify(item.specificationId);
+        // }
         if (this.productNo) item.productNo = this.productNo;
         this.$set(this.specificaValInputMap, id, "");
         if (isUpdateCheckboxMap)

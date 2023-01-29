@@ -137,7 +137,6 @@
 <script>
 import { mapGetters } from "vuex";
 import CONST from "@/constants/index";
-import { digits2Str } from "@/utils/index";
 import { formData, column } from "./config";
 import TagPage from "./components/TagPage.vue";
 import AuditFailDialog from "./components/AuditFailDialog.vue";
@@ -304,7 +303,6 @@ export default {
         this.$message.error(res?.msg || "获取审核商品列表异常");
       }
       const data = res?.rows?.length ? res.rows : [];
-      data.forEach((item) => digits2Str(item, ["id"]));
       this.list = data;
       this.total = res?.total || 0;
     },

@@ -8,7 +8,6 @@
   </div>
 </template>
 <script>
-// import { digits2Str } from "@/utils/index";
 import CouponsInfo from "./CouponsInfo.vue";
 import FooterView from "@/components/Footer";
 import ApplicableGoods from "./ApplicableGoods.vue";
@@ -43,8 +42,6 @@ export default {
         id: this.editInfo.id,
       });
       if (!res) return this.$message.error("获取优惠劵详情异常");
-      // const keys1 = ["id"];
-      // digits2Str(res, keys1);
       this.couponsInfo = { ...res };
     },
   },

@@ -125,7 +125,7 @@ export default {
       ](query);
       this.isLoadingGoods = false;
       if (!res) return this.$message.error("获取商品详情异常");
-      const JSONbigKeyArr = ["id", "categoryId", "supplierId"];
+      const JSONbigKeyArr = ["categoryId", "supplierId"];
       JSONbigKeyArr.forEach((key) => {
         if (res[key]) res[key] = this.$JSONbig.stringify(res[key]);
       });

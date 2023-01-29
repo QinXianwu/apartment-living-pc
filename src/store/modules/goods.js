@@ -1,5 +1,5 @@
 import api from "@/api/module";
-import JSONbig from "json-bigint"; // 解决超过 16 位数字精度丢失问题
+// import JSONbig from "json-bigint"; // 解决超过 16 位数字精度丢失问题
 
 const disableForm = Number(localStorage.getItem("disableForm")) || 0;
 const isServerEdit = Number(localStorage.getItem("isServerEdit")) || 0;
@@ -43,7 +43,7 @@ const actions = {
       return state.specificaListAll;
     const [, data] = await api.GoodsSpecification.GetListAll();
     const list = data?.length ? data : [];
-    list.forEach((item) => (item.id = JSONbig.stringify(item.id)));
+    // list.forEach((item) => (item.id = JSONbig.stringify(item.id)));
     commit("SET_SPECIFICA_LIST_ALL", list);
     return list;
   },

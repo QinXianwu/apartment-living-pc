@@ -57,7 +57,6 @@
   </el-dialog>
 </template>
 <script>
-// import { digits2Str } from "@/utils/index";
 import CONST from "@/constants/index";
 import { column, formData } from "./config";
 import dialogMixin from "@/mixins/dialogMixin";
@@ -130,9 +129,6 @@ export default {
         this.$message.error(res?.msg || "获取服务点列表异常");
       }
       const data = res?.rows?.length ? res.rows : [];
-      // data.forEach((item) =>
-      //   digits2Str(item, ["id", "categoryId", "stationId", "supplierId"])
-      // );
       this.list = data;
       this.total = res?.total || 0;
       this.initSelection();

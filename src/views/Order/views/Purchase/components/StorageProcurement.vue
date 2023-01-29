@@ -114,9 +114,9 @@ export default {
         pdOrderNo: this.editInfo.pdOrderNo || "",
       });
       if (!res) return this.$message.error("获取订单详情异常");
-      const keys1 = ["id", "serviceId"];
+      const keys1 = ["serviceId"];
       digits2Str(res, keys1);
-      const keys2 = ["id", "productStockPriceId"];
+      const keys2 = ["productStockPriceId"];
       this.orderInfo = { ...res };
       this.list = this.orderInfo?.orderDetailsList?.length
         ? this.orderInfo.orderDetailsList
