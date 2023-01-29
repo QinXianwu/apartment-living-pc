@@ -1,14 +1,20 @@
-import CONST from "@/constants/index";
+// import CONST from "@/constants/index";
 
 // 搜索选项
 export const formData = [
+  // {
+  //   label: "商品名称",
+  //   prop: "name",
+  //   type: "text",
+  //   value: "",
+  //   placeholder: "请输入商品名称",
+  // },
   {
-    label: "活动状态",
-    prop: "status",
-    type: "select",
+    label: "活动时间",
+    prop: "activityDate",
+    type: "datetimerange",
     value: "",
-    options: CONST.ACT_STATUS_OPTIONS(),
-    placeholder: "请选择活动状态",
+    placeholder: "请选择活动时间",
   },
 ];
 // 表格头

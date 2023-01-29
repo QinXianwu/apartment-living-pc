@@ -3,18 +3,10 @@
     <div class="content">
       <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
       <div class="action">
-        <el-button type="primary" @click="handleAdd"> 新增场次 </el-button>
+        <el-button type="primary" @click="handleAdd"> 新增秒杀活动 </el-button>
       </div>
+      <TagPage :state.sync="query.status" @getList="getList" />
       <TablePanel :tableData="list" :tableHead="column">
-        <!-- <template #status="{ scope }">
-          <el-switch
-            v-model="scope.status"
-            :active-value="$CONST.SESSION_COUNT_STATE.ON"
-            :inactive-value="$CONST.SESSION_COUNT_STATE.OFF"
-            @change="handleStatusChange(scope)"
-          >
-          </el-switch>
-        </template> -->
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
@@ -31,20 +23,30 @@
         :total="total"
       />
     </div>
+    <ChooseGoodsDiaog
+      :selectIds="selectGoodsIds"
+      :show.sync="showGoodsDiaog"
+      @close="chooseClose"
+      @on-success="chooseGoodsSuccess"
+    />
     <UpdateActivityDiaog
       :editInfo="editInfo"
+      :selectGoods="selectGoods"
       :show.sync="showActivityDiaog"
+      @chooseGoods="chooseGoods"
       @close="close"
     />
   </div>
 </template>
 <script>
 import { column, formData } from "./config";
+import TagPage from "./components/TagPage.vue";
+import ChooseGoodsDiaog from "@/components/ChooseGoodsDiaog";
 import UpdateActivityDiaog from "./components/UpdateActivityDiaog.vue";
 
 export default {
   name: "ActivityList",
-  components: { UpdateActivityDiaog },
+  components: { TagPage, ChooseGoodsDiaog, UpdateActivityDiaog },
   data() {
     return {
       formData,
@@ -56,7 +58,12 @@ export default {
         pageSize: 10,
       },
       total: 0,
-      query: {}, //过滤规则
+      query: {
+        status: "",
+      }, //过滤规则
+      selectGoodsIds: [],
+      selectGoods: [],
+      showGoodsDiaog: false,
       showActivityDiaog: false,
     };
   },
@@ -73,11 +80,26 @@ export default {
     },
     onSearch(data) {
       this.query = { ...data };
+      if (data?.activityDate?.length) {
+        this.query["startTime"] = data.activityDate[0];
+        this.query["endTime"] = data.activityDate[1];
+      }
+      delete this.query.activityDate;
       this.getList(true);
     },
     handleAdd() {
       this.editInfo = "";
       this.showActivityDiaog = true;
+    },
+    chooseGoods(data) {
+      this.showGoodsDiaog = true;
+      this.selectGoodsIds = data?.length ? data : [];
+    },
+    chooseClose() {
+      this.showGoodsDiaog = false;
+    },
+    chooseGoodsSuccess(data) {
+      this.selectGoods = data?.length ? data : [];
     },
     close(isRefresh = false) {
       this.editInfo = "";

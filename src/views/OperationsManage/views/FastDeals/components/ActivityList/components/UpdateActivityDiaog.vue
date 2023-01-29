@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    width="750px"
+    width="1050px"
     :title="`${editInfo && editInfo.id ? '编辑' : '新增'}秒杀活动`"
     :visible.sync="visible"
     v-loading="isLoading"
@@ -53,11 +53,14 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="适用商品">
-          <el-button @click="chooseGoods">选择商品</el-button>
-        </el-form-item>
       </el-form>
     </div>
+    <ActivityGoods
+      ref="ActivityGoods"
+      :activityInfo="activityInfo"
+      :selectGoods="selectGoods"
+      @chooseGoods="(val) => $emit('chooseGoods', val)"
+    />
     <span slot="footer">
       <el-button type="primary" :loading="isLoading" @click="handleSubmit">
         保存
@@ -68,21 +71,26 @@
 </template>
 <script>
 import dialogMixin from "@/mixins/dialogMixin";
+import ActivityGoods from "./ActivityGoods.vue";
 
 export default {
   name: "UpdateActivityDiaog",
   mixins: [dialogMixin],
-  components: {},
+  components: { ActivityGoods },
   props: {
     editInfo: {
       type: [Object, String],
       default: () => ({}),
     },
+    selectGoods: {
+      type: Array,
+      default: () => [],
+    },
   },
   watch: {
     visible(val) {
       if (val) this.getDetail(val);
-      else this.sessionInfo = {};
+      else this.activityInfo = {};
     },
   },
   data() {
@@ -93,7 +101,7 @@ export default {
       },
       isLoading: false,
       isLoadingInfo: false,
-      sessionInfo: {},
+      activityInfo: {},
       datePickerOptions: {
         disabledDate(time) {
           return time.getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天的
@@ -129,18 +137,15 @@ export default {
       }
       this.formData[formKey] = options.map((item) => item.value);
     },
-    chooseGoods() {
-      //
-    },
     async getDetail() {
       if (!this.editInfo?.id) return;
       this.isLoadingInfo = true;
-      const [, res] = await this.$http.FastDeals.GetSessionCountDetail({
+      const [, res] = await this.$http.FastDeals.GetActivityDetail({
         id: this.editInfo.id,
       });
       this.isLoadingInfo = false;
-      this.sessionInfo = { ...(res || {}) };
-      this.formData = { ...this.formData, ...this.sessionInfo };
+      this.activityInfo = { ...(res || {}) };
+      this.formData = { ...this.formData, ...this.activityInfo };
     },
     async handleSubmit() {
       // 表单校验
@@ -152,10 +157,12 @@ export default {
       } catch (error) {
         return error;
       }
+      const GoodsInfo = await this.$refs.ActivityGoods.getQuery();
+      console.log(GoodsInfo);
       if (this.isLoading) return;
       this.isLoading = true;
       const query = {
-        ...this.sessionInfo,
+        ...this.activityInfo,
         ...this.formData,
       };
       const id = this.editInfo?.id || "";
@@ -178,6 +185,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .content {
+  margin: 0 0 40px;
   ::v-deep .pagination {
     border-top: none;
   }

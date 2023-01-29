@@ -12,8 +12,8 @@
           <el-time-picker
             v-model="formData.startTime"
             placeholder="开始时间"
-            format="HH:mm"
-            value-format="HH:mm"
+            format="HH:mm:ss"
+            value-format="HH:mm:ss"
           >
           </el-time-picker>
         </el-form-item>
@@ -21,8 +21,8 @@
           <el-time-picker
             v-model="formData.endTime"
             placeholder="结束时间"
-            format="HH:mm"
-            value-format="HH:mm"
+            format="HH:mm:ss"
+            value-format="HH:mm:ss"
           >
           </el-time-picker>
         </el-form-item>
@@ -64,7 +64,12 @@ export default {
   watch: {
     visible(val) {
       if (val) this.getDetail(val);
-      else this.sessionInfo = {};
+      else {
+        this.sessionInfo = {};
+        this.formData = {
+          status: this.$CONST.SESSION_COUNT_STATE.ON,
+        };
+      }
     },
   },
   data() {
@@ -142,18 +147,18 @@ export default {
       const query = {
         ...this.sessionInfo,
         ...this.formData,
+        delFlag: 1,
       };
       const id = this.editInfo?.id || "";
       const [, res] = await this.$http.FastDeals[
         id ? "UpdateSessionCount" : "AddSessionCount"
       ](query);
       this.isLoading = false;
+      const title = id ? "编辑" : "新增";
       this.$message[res ? "success" : "error"](
-        res?.message || res
-          ? `${id ? "编辑" : "新增"}成功`
-          : `${id ? "编辑" : "新增"}失败`
+        res?.message || res ? `${title}成功` : `${title}失败`
       );
-      if (res) this.handleClose(false);
+      if (res) this.handleClose(true);
     },
   },
   mounted() {

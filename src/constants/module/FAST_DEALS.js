@@ -22,6 +22,7 @@ export const SESSION_COUNT_STATE_OPTIONS = () => [
 
 // 秒杀活动状态
 export const ACT_STATUS = {
+  ALL: 0, // 所有
   NOT_START: 1, // 未开始
   HAVE_IN_HAND: 2, // 进行中
   HAS_ENDED: 3, // 已结束
