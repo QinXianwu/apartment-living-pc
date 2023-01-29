@@ -130,6 +130,7 @@ export default {
   mounted() {
     this.getList();
     this.$store.dispatch("fastDeals/GetSecKillSessionAllAction");
+    this.$store.dispatch("accountRoleManage/GetServiceStationListAction");
   },
 };
 </script>

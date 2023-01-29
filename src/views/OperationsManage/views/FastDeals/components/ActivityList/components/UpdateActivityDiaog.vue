@@ -24,7 +24,7 @@
             collapse-tags
             class="input-medium"
             value-key="id"
-            placeholder="请选择活动活动场次"
+            placeholder="请选择活动场次"
             v-model="formData.secKillSessionIds"
           >
             <div class="select-all">
@@ -42,6 +42,38 @@
               :label="ele.label"
               :value="ele.value"
               v-for="(ele, index) in secKillSessionOptions"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          label="适用服务点"
+          prop="serviceStationIds"
+          v-if="!isService"
+        >
+          <el-select
+            :multiple="true"
+            collapse-tags
+            class="input-medium"
+            value-key="id"
+            placeholder="请选择适用服务点"
+            v-model="formData.serviceStationIds"
+          >
+            <div class="select-all">
+              <el-checkbox
+                :value="
+                  formData.serviceStationIds.length ===
+                  serviceStationOptions.length
+                "
+                @change="selectAll('serviceStationIds')"
+                >全选</el-checkbox
+              >
+            </div>
+            <el-option
+              :key="index"
+              :label="ele.label"
+              :value="ele.value"
+              v-for="(ele, index) in serviceStationOptions"
             >
             </el-option>
           </el-select>
@@ -103,6 +135,7 @@ export default {
       formData: {
         activityDate: [],
         secKillSessionIds: [],
+        serviceStationIds: [],
       },
       isLoading: false,
       isLoadingInfo: false,
@@ -117,7 +150,10 @@ export default {
           { required: true, message: "请选择活动时间", trigger: "blur" },
         ],
         secKillSessionIds: [
-          { required: true, message: "请选择活动活动场次", trigger: "blur" },
+          { required: true, message: "请选择活动场次", trigger: "blur" },
+        ],
+        serviceStationIds: [
+          { required: true, message: "请选择适用服务点", trigger: "blur" },
         ],
         stockCount: [
           { required: true, message: "请输入库存数量", trigger: "blur" },
@@ -136,6 +172,7 @@ export default {
       isService: "user/isService",
       serviceStationId: "user/serviceStationId",
       secKillSessionOptions: "fastDeals/secKillSessionOptions",
+      serviceStationOptions: "accountRoleManage/serviceStationOptions",
     }),
   },
   methods: {
@@ -144,6 +181,8 @@ export default {
       let options = [];
       if (formKey === "secKillSessionIds") {
         options = this.secKillSessionOptions;
+      } else if (formKey === "serviceStationIds") {
+        options = this.serviceStationOptions;
       }
       if (this.formData[formKey]?.length === options.length) {
         this.formData[formKey] = [];
@@ -180,11 +219,13 @@ export default {
         ...GoodsInfo,
       };
       if (this.isService) query.serviceStationId = this.serviceStationId;
+      else query.serviceStationId = this.formData.serviceStationIds.join(",");
       if (this.formData?.activityDate?.length >= 2) {
         query.startTime = this.formData.activityDate[0];
         query.endTime = this.formData.activityDate[1];
       }
       delete query.activityDate;
+      delete query.serviceStationIds;
       const id = this.editInfo?.id || "";
       const [, res] = await this.$http.FastDeals[
         id ? "UpdateActivity" : "AddActivity"
