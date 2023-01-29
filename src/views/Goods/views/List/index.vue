@@ -169,7 +169,7 @@
 <script>
 import { mapGetters } from "vuex";
 import CONST from "@/constants/index";
-import { digits2Str } from "@/utils/index";
+// import { digits2Str } from "@/utils/index";
 import TagPage from "./components/TagPage.vue";
 import ProcurementGoodsDiaog from "./components/ProcurementGoodsDiaog.vue";
 import { formData, column, activityTab } from "./config";
@@ -342,7 +342,7 @@ export default {
         this.$message.error(res?.msg || "获取商品列表异常");
       }
       const data = res?.rows?.length ? res.rows : [];
-      data.forEach((item) => digits2Str(item, ["id"]));
+      // data.forEach((item) => digits2Str(item, ["id"]));
       this.list = data;
       this.total = res?.total || 0;
       this.initSelection();

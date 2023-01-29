@@ -167,7 +167,7 @@ export default {
       }
       const data = res?.rows?.length ? res.rows : [];
       data.forEach((item) =>
-        digits2Str(item, ["id", "categoryId", "stationId", "supplierId"])
+        digits2Str(item, ["categoryId", "stationId", "supplierId"])
       );
       this.list = data;
       this.total = res?.total || 0;
