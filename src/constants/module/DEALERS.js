@@ -80,7 +80,7 @@ export const WITHDRAWALS_TYPE_OPTIONS = () => [
 export const WITHDRAWALS_STATE = {
   NO_CHECK: 1, // 待审核
   NOT_PAY: 2, // 待打款(审核通过)
-  SUCCESS_CHECK: 3, // 已打款
+  SUCCESS_CHECK: 3, // 已打款(确认打款)
   FAIL_CHECK: 4, // 打款失败 - 驳回
 };
 
