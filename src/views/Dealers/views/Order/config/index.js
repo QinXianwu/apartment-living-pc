@@ -11,7 +11,7 @@ export const formData = [
   },
   {
     label: "手机号",
-    prop: "phone",
+    prop: "userPhone",
     type: "text",
     value: "",
     placeholder: "请输入手机号",
@@ -29,11 +29,6 @@ export const formData = [
 // 表格头
 export const column = [
   {
-    label: "ID",
-    prop: "id",
-    showOverflowTooltip: true,
-  },
-  {
     label: "订单号",
     prop: "orderNo",
     showOverflowTooltip: true,
@@ -46,7 +41,7 @@ export const column = [
   },
   {
     label: "手机号",
-    prop: "phone",
+    prop: "userPhone",
   },
   {
     label: "分销信息",

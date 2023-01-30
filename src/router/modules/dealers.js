@@ -2,6 +2,7 @@
 import MainLayout from "@/layouts/MainLayout/index";
 import DealersList from "@/views/Dealers/views/DealersList/index.vue";
 import Order from "@/views/Dealers/views/Order/index.vue";
+import WithdrawalsManage from "@/views/Dealers/views/WithdrawalsManage/index.vue";
 
 export default {
   path: "/Dealers",
@@ -31,6 +32,15 @@ export default {
       meta: {
         title: "分销订单",
         // PermissionId: PERMISSION_ID.Dealers_Order,
+      },
+    },
+    {
+      path: "WithdrawalsManage",
+      component: WithdrawalsManage,
+      name: "WithdrawalsManage",
+      meta: {
+        title: "提现管理",
+        // PermissionId: PERMISSION_ID.Dealers_WithdrawalsManage,
       },
     },
   ],

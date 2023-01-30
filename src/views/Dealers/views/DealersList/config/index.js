@@ -22,11 +22,6 @@ export const formData = [
 // 表格头
 export const column = [
   {
-    label: "ID",
-    prop: "id",
-    showOverflowTooltip: true,
-  },
-  {
     label: "用户信息",
     prop: "info",
     type: "custom",

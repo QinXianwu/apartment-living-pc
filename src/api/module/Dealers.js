@@ -38,4 +38,26 @@ export default {
       })
     );
   },
+  // 分销商提现列表
+  GetWithdrawalsList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-distribution/distributorRemit/page",
+        params,
+        isReturnAll: true,
+      })
+    );
+  },
+  // 更新分销商提现状态
+  UpdateDealersWithdrawals(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url:
+          apiPrefix + "/apartment-distribution/distributorRemit/updateStatus",
+        params,
+        isHandleParams: true,
+        isHeadersForm: true,
+      })
+    );
+  },
 };

@@ -20,11 +20,6 @@ export const formData = [
 // 表格头
 export const column = [
   {
-    label: "ID",
-    prop: "id",
-    showOverflowTooltip: true,
-  },
-  {
     label: "活动开始时间",
     prop: "startTime",
     width: 160,
