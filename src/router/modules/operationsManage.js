@@ -64,7 +64,7 @@ export default {
       name: "DiscountActivity",
       meta: {
         title: "折扣活动",
-        // PermissionId: PERMISSION_ID.OperationsManage_DiscountActivity,
+        PermissionId: PERMISSION_ID.OperationsManage_DiscountActivity,
       },
     },
   ],

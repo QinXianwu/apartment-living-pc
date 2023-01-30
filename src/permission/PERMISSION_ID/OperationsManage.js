@@ -5,4 +5,5 @@ export default {
   OperationsManage_NewcomerActivities: 2026, // 运营管理-新人活动
   OperationsManage_FastDeals_SessionCount: 2027, // 运营管理-秒杀活动-秒杀活动场次
   OperationsManage_FastDeals_ActivityList: 2028, // 运营管理-秒杀活动-秒杀活动列表
+  OperationsManage_DiscountActivity: 2029, // 运营管理-折扣活动
 };
