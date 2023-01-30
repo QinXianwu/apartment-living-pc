@@ -31,6 +31,9 @@
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
+            <el-button type="text" @click="lookDetails(scope)"
+              >查看详情</el-button
+            >
             <el-button
               type="text"
               @click="handleFeedback(scope)"
@@ -49,9 +52,9 @@
         :total="total"
       />
     </div>
-    <UpdateActivityDiaog
+    <FeedbackDetailsDiaog
       :editInfo="editInfo"
-      :show.sync="showActivityDiaog"
+      :show.sync="showDetailsDiaog"
       @close="close"
     />
   </div>
@@ -59,11 +62,11 @@
 <script>
 import { digits2Str } from "@/utils";
 import { column, formData } from "./config";
-import UpdateActivityDiaog from "./components/UpdateActivityDiaog.vue";
+import FeedbackDetailsDiaog from "./components/FeedbackDetailsDiaog.vue";
 
 export default {
   name: "FeedbackList",
-  components: { UpdateActivityDiaog },
+  components: { FeedbackDetailsDiaog },
   data() {
     return {
       formData,
@@ -76,7 +79,7 @@ export default {
       },
       total: 0,
       query: {}, //过滤规则
-      showActivityDiaog: false,
+      showDetailsDiaog: false,
     };
   },
   computed: {},
@@ -99,9 +102,9 @@ export default {
       delete this.query.activityDate;
       this.getList(true);
     },
-    handleEdit(data) {
-      this.editInfo = { id: data.id };
-      this.showActivityDiaog = true;
+    lookDetails(data) {
+      this.editInfo = { ...data };
+      this.showDetailsDiaog = true;
     },
     async handleFeedback({ id }) {
       try {
@@ -128,7 +131,7 @@ export default {
     },
     close(isRefresh = false) {
       this.editInfo = "";
-      this.showActivityDiaog = false;
+      this.showDetailsDiaog = false;
       if (isRefresh) this.getList();
     },
     async getList(isClear) {
