@@ -17,6 +17,14 @@
             </div>
           </div>
         </template>
+        <template #cumulativeCommissions="{ scope }">
+          <span
+            >￥{{
+              (parseFloat(scope.firstAmount) + parseFloat(scope.secondAmount))
+                | formatCurrency
+            }}</span
+          >
+        </template>
         <template #status="{ scope }">
           <el-tag :type="getActivityTab(scope)">{{
             CONST.DEALERS_AUDIT_STATE_TEXT[scope.status]

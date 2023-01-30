@@ -18,6 +18,7 @@ export const formData = [
     placeholder: "请选择状态",
   },
 ];
+
 // 表格头
 export const column = [
   {
@@ -34,6 +35,15 @@ export const column = [
   {
     label: "授权手机号",
     prop: "phone",
+  },
+  {
+    label: "下级用户",
+    prop: "distributorNumber",
+  },
+  {
+    label: "累计佣金",
+    prop: "cumulativeCommissions",
+    type: "custom",
   },
   {
     label: "可提现佣金",

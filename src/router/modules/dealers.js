@@ -9,7 +9,7 @@ export default {
   alwaysShow: true,
   meta: {
     title: "分销中心",
-    icon: "order_search",
+    icon: "dealers",
     affix: true,
     // PermissionId: PERMISSION_ID.Dealers,
   },
