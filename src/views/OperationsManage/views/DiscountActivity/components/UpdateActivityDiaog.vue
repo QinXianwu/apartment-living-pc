@@ -40,7 +40,7 @@
     </div>
     <ActivityGoods
       ref="ActivityGoods"
-      :activityInfo="activityInfo"
+      :goodsList="goodsList"
       :selectGoods="selectGoods"
       @chooseGoods="(val) => $emit('chooseGoods', val)"
     />
@@ -54,7 +54,7 @@
 </template>
 <script>
 import dialogMixin from "@/mixins/dialogMixin";
-import ActivityGoods from "./ActivityGoods.vue";
+import ActivityGoods from "@/views/OperationsManage/components/ActivityGoods";
 
 export default {
   name: "UpdateActivityDiaog",
@@ -84,6 +84,7 @@ export default {
       isLoading: false,
       isLoadingInfo: false,
       activityInfo: {},
+      goodsList: [],
       datePickerOptions: {
         disabledDate(time) {
           return time.getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天的

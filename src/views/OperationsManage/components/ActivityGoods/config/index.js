@@ -17,13 +17,7 @@ export const formData = [
 ];
 
 // 表格头
-export const column = [
-  {
-    label: "",
-    prop: "custom_checkbox",
-    type: "custom",
-    width: "55",
-  },
+export const GoodsColumn = [
   {
     label: "商品编码",
     prop: "productNo",
@@ -39,11 +33,6 @@ export const column = [
     prop: "goodsInfo",
     type: "custom",
     minWidth: 150,
-  },
-  {
-    label: "新人价",
-    prop: "couple",
-    type: "custom",
   },
   {
     label: "秒杀价",

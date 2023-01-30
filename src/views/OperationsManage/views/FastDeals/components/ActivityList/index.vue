@@ -15,7 +15,13 @@
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
-            <el-button type="text" @click="handleEdit(scope)"> 编辑 </el-button>
+            <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
+            <el-button
+              type="text"
+              @click="stopActivity(scope)"
+              v-if="scope.status === $CONST.ACT_STATUS.HAVE_IN_HAND"
+              >停止</el-button
+            >
           </div>
         </template>
       </TablePanel>
@@ -30,6 +36,7 @@
     </div>
     <ChooseGoodsDiaog
       isRadio
+      showSpikePrice
       :isStation="isService"
       :selectIds="selectGoodsIds"
       :show.sync="showGoodsDiaog"
@@ -111,6 +118,28 @@ export default {
     handleEdit(data) {
       this.editInfo = { id: data.id };
       this.showActivityDiaog = true;
+    },
+    async stopActivity({ id }) {
+      try {
+        await this.$confirm(`是否确认停止ID为'${id}'的秒杀活动？`, "停止活动", {
+          type: "warning",
+          showClose: false,
+        });
+        const [, res] = await this.$http.FastDeals.StopSecKillActivity({
+          id,
+        });
+        const msg = res ? res?.msg || `停止成功` : `停止失败`;
+        this.$confirm(msg, "停止活动", {
+          showClose: false,
+          showCancelButton: false,
+          type: res ? "success" : "error",
+        }).then(() => {
+          if (res) this.getList();
+        });
+      } catch (error) {
+        console.error(error);
+        error;
+      }
     },
     chooseGoods(data) {
       this.showGoodsDiaog = true;

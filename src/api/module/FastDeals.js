@@ -107,4 +107,15 @@ export default {
       })
     );
   },
+  // 停止秒杀活动
+  StopSecKillActivity(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/secKillActivity/stop",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
 };

@@ -23,7 +23,7 @@ export const column = [
     width: 160,
   },
   {
-    label: "活动结算时间",
+    label: "活动结束时间",
     prop: "endTime",
     width: 160,
   },

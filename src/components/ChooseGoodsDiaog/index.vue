@@ -48,6 +48,12 @@
             {{ scope | priceRange("coupleMin", "coupleMax") }}
           </span>
         </template>
+        <!-- 秒杀价 -->
+        <template #spikePrice="{ scope }">
+          <span>
+            {{ scope | priceRange("spikePriceMin", "spikePriceMax") }}
+          </span>
+        </template>
       </TablePanel>
       <!-- 分页 -->
       <Pagination
@@ -98,6 +104,11 @@ export default {
       type: Boolean,
       default: false,
     },
+    // 显示秒杀价
+    showSpikePrice: {
+      type: Boolean,
+      default: false,
+    },
     selectIds: {
       type: Array,
       default: () => [],
@@ -126,10 +137,10 @@ export default {
     };
   },
   computed: {
-    tableHead({ isRadio, column, showCouple }) {
+    tableHead({ isRadio, column, showCouple, showSpikePrice }) {
       const filterPropStr = `action,${showCouple ? "" : "couple"},${
-        isRadio ? "" : "custom_checkbox"
-      }`;
+        showSpikePrice ? "" : "spikePrice"
+      },${isRadio ? "" : "custom_checkbox"}`;
       return column.filter((item) => !filterPropStr.includes(item.prop));
     },
     ...mapGetters({

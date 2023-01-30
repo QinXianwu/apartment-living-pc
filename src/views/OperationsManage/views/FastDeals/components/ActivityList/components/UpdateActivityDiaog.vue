@@ -108,7 +108,7 @@
 <script>
 import { mapGetters } from "vuex";
 import dialogMixin from "@/mixins/dialogMixin";
-import ActivityGoods from "./ActivityGoods.vue";
+import ActivityGoods from "@/views/OperationsManage/components/ActivityGoods";
 
 export default {
   name: "UpdateActivityDiaog",
@@ -126,8 +126,15 @@ export default {
   },
   watch: {
     visible(val) {
-      if (val) this.getDetail(val);
-      else this.activityInfo = {};
+      if (val) {
+        this.activityInfo = {};
+        this.formData = {
+          activityDate: [],
+          secKillSessionIds: [],
+          serviceStationIds: [],
+        };
+        this.getDetail(val);
+      }
     },
   },
   data() {

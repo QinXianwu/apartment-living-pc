@@ -30,6 +30,12 @@
                 </div>
               </div>
             </template>
+            <!-- 秒杀价 -->
+            <template #spikePrice="{ scope }">
+              <span>
+                {{ scope | priceRange("spikePriceMin", "spikePriceMax") }}
+              </span>
+            </template>
             <!-- 操作 -->
             <template #action="{ index }">
               <div class="action-groud">
@@ -67,16 +73,16 @@ export default {
       type: Array,
       default: () => [],
     },
-    activityInfo: {
-      type: Object,
-      default: () => ({}),
+    goodsList: {
+      type: Array,
+      default: () => [],
     },
   },
   watch: {
     selectGoods(val) {
       this.list = val?.length ? val : [];
     },
-    activityInfo(val) {
+    goodsList(val) {
       if (val) this.init();
     },
   },
@@ -101,7 +107,7 @@ export default {
   },
   methods: {
     init() {
-      const goodsList = this.activityInfo?.productList || [];
+      const goodsList = this.goodsList?.length ? this.goodsList : [];
       goodsList.forEach((item) =>
         digits2Str(item, ["categoryId", "supplierId"])
       );
