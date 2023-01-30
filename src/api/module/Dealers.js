@@ -28,4 +28,14 @@ export default {
       })
     );
   },
+  // 分销商订单列表
+  GetDealersOrderList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-distribution/distributorOrder/page",
+        params,
+        isReturnAll: true,
+      })
+    );
+  },
 };
