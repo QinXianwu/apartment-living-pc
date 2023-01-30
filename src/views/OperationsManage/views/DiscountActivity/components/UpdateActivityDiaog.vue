@@ -29,12 +29,34 @@
           <el-input-number
             class="input-medium"
             v-model="formData.productCount"
-            placeholder="请输入商品数量"
+            placeholder="请输入购买商品数量"
             :min="0"
             :controls="false"
             :precision="0"
             :step="1"
           />
+          <div class="form-tip">
+            <span>第{{ formData.productCount || "N" }}件，可享受折扣</span>
+          </div>
+        </el-form-item>
+        <el-form-item label="商品折扣" prop="discount">
+          <el-input-number
+            class="input-medium"
+            v-model="formData.discount"
+            placeholder="请输入商品折扣"
+            :min="0"
+            :max="10"
+            :controls="false"
+            :precision="1"
+            :step="1"
+          />
+          <div class="form-tip">
+            <span
+              >第{{ formData.productCount || "N" }}件可享受{{
+                formData.discount || "N"
+              }}折扣</span
+            >
+          </div>
         </el-form-item>
       </el-form>
     </div>
@@ -72,8 +94,13 @@ export default {
   },
   watch: {
     visible(val) {
-      if (val) this.getDetail(val);
-      else this.activityInfo = {};
+      if (val) {
+        this.activityInfo = {};
+        this.formData = {
+          activityDate: [],
+        };
+        this.getDetail(val);
+      }
     },
   },
   data() {
@@ -96,11 +123,20 @@ export default {
           { required: true, message: "请选择活动时间", trigger: "blur" },
         ],
         productCount: [
-          { required: true, message: "请输入商品数量", trigger: "blur" },
+          { required: true, message: "请输入购买商品数量", trigger: "blur" },
           {
             type: "number",
             min: 1,
-            message: "商品数量必须大于0",
+            message: "购买商品数量必须大于0",
+            trigger: "blur",
+          },
+        ],
+        discount: [
+          { required: true, message: "请输入商品折扣", trigger: "blur" },
+          {
+            type: "number",
+            min: 0.1,
+            message: "商品折扣必须大于0.0",
             trigger: "blur",
           },
         ],
@@ -112,12 +148,18 @@ export default {
     async getDetail() {
       if (!this.editInfo?.id) return;
       this.isLoadingInfo = true;
-      const [, res] = await this.$http.FastDeals.GetActivityDetail({
-        id: this.editInfo.id,
-      });
+      const [, res] =
+        await this.$http.OperationsManage.GetDiscountActivityDetail({
+          id: this.editInfo.id,
+        });
       this.isLoadingInfo = false;
       this.activityInfo = { ...(res || {}) };
       this.formData = { ...this.formData, ...this.activityInfo };
+      if (this.activityInfo?.startTime && this.activityInfo?.endTime)
+        this.formData.activityDate = [
+          this.activityInfo.startTime,
+          this.activityInfo.endTime,
+        ];
     },
     async handleSubmit() {
       // 表单校验
@@ -135,16 +177,18 @@ export default {
       const query = {
         ...this.activityInfo,
         ...this.formData,
-        ...GoodsInfo,
       };
       if (this.formData?.activityDate?.length >= 2) {
         query.startTime = this.formData.activityDate[0];
         query.endTime = this.formData.activityDate[1];
       }
+      query.productIds = GoodsInfo.productIds?.length
+        ? GoodsInfo.productIds.join(",")
+        : "";
       delete query.activityDate;
       const id = this.editInfo?.id || "";
-      const [, res] = await this.$http.FastDeals[
-        id ? "UpdateActivity" : "AddActivity"
+      const [, res] = await this.$http.OperationsManage[
+        id ? "UpdateDiscountActivity" : "AddDiscountActivity"
       ](query);
       this.isLoading = false;
       this.$message[res ? "success" : "error"](
@@ -152,7 +196,7 @@ export default {
           ? `${id ? "编辑" : "新增"}成功`
           : `${id ? "编辑" : "新增"}失败`
       );
-      if (res) this.handleClose(false);
+      if (res) this.handleClose(true);
     },
   },
   mounted() {

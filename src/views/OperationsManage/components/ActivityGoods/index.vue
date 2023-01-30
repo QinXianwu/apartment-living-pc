@@ -69,6 +69,16 @@ export default {
   name: "ActivityGoods",
   components: {},
   props: {
+    // 是否是单选
+    isRadio: {
+      type: Boolean,
+      default: false, // 默认多选
+    },
+    // 显示秒杀价
+    showSpikePrice: {
+      type: Boolean,
+      default: false,
+    },
     selectGoods: {
       type: Array,
       default: () => [],
@@ -89,7 +99,7 @@ export default {
   data() {
     return {
       CONST,
-      column: GoodsColumn,
+      GoodsColumn,
       formData: {},
       rules: {},
       list: [],
@@ -103,6 +113,10 @@ export default {
     ids({ list }) {
       if (!list?.length) return [];
       return list.map((item) => item.id);
+    },
+    column({ showSpikePrice, GoodsColumn }) {
+      const filterPropStr = `action,${showSpikePrice ? "" : "spikePrice"}`;
+      return GoodsColumn.filter((item) => !filterPropStr.includes(item.prop));
     },
   },
   methods: {
@@ -140,11 +154,19 @@ export default {
         }
         if (!this.list?.length) return this.$message.error("请选择商品后再试");
         const product = this.list[0];
-        resolve({
-          ...this.formData,
+        const radioData = {
           product,
           productId: product.id,
           productNo: product.productNo,
+        };
+        const noRadioData = {
+          productIds: this.ids,
+          productList: this.list,
+        };
+
+        resolve({
+          ...this.formData,
+          ...(this.isRadio ? radioData : noRadioData),
         });
       });
     },

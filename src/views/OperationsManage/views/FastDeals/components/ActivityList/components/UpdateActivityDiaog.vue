@@ -92,6 +92,8 @@
       </el-form>
     </div>
     <ActivityGoods
+      isRadio
+      showSpikePrice
       ref="ActivityGoods"
       :goodsList="goodsList"
       :selectGoods="selectGoods"

@@ -38,4 +38,45 @@ export default {
       })
     );
   },
+  // 获取折扣活动详情
+  GetDiscountActivityDetail(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/pieceDiscountActivity/detail",
+        params,
+        method: "GET",
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 新增折扣活动
+  AddDiscountActivity(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/pieceDiscountActivity/add",
+        params,
+      })
+    );
+  },
+  // 修改折扣活动
+  UpdateDiscountActivity(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/pieceDiscountActivity/update",
+        params,
+      })
+    );
+  },
+  // 删除商品件折扣活动
+  DeleteDiscountActivity(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/pieceDiscountActivity/delete",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
 };
