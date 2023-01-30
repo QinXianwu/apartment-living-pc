@@ -93,7 +93,7 @@
     </div>
     <ActivityGoods
       ref="ActivityGoods"
-      :activityInfo="activityInfo"
+      :goodsList="goodsList"
       :selectGoods="selectGoods"
       @chooseGoods="(val) => $emit('chooseGoods', val)"
     />
@@ -140,6 +140,7 @@ export default {
       isLoading: false,
       isLoadingInfo: false,
       activityInfo: {},
+      goodsList: [],
       datePickerOptions: {
         disabledDate(time) {
           return time.getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天的
@@ -199,6 +200,16 @@ export default {
       this.isLoadingInfo = false;
       this.activityInfo = { ...(res || {}) };
       this.formData = { ...this.formData, ...this.activityInfo };
+      if (this.activityInfo?.startTime && this.activityInfo?.endTime)
+        this.formData.activityDate = [
+          this.activityInfo.startTime,
+          this.activityInfo.endTime,
+        ];
+      if (this.activityInfo?.serviceStationId)
+        this.formData.serviceStationIds =
+          typeof this.activityInfo?.serviceStationId === "string"
+            ? this.activityInfo.serviceStationId.split(",")
+            : [];
     },
     async handleSubmit() {
       // 表单校验

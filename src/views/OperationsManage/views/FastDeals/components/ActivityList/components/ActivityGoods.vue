@@ -67,16 +67,16 @@ export default {
       type: Array,
       default: () => [],
     },
-    activityInfo: {
-      type: Object,
-      default: () => ({}),
+    goodsList: {
+      type: Array,
+      default: () => [],
     },
   },
   watch: {
     selectGoods(val) {
       this.list = val?.length ? val : [];
     },
-    activityInfo(val) {
+    goodsList(val) {
       if (val) this.init();
     },
   },
@@ -101,7 +101,7 @@ export default {
   },
   methods: {
     init() {
-      const goodsList = this.activityInfo?.productList || [];
+      const goodsList = this.goodsList?.length ? this.goodsList : [];
       goodsList.forEach((item) =>
         digits2Str(item, ["categoryId", "supplierId"])
       );

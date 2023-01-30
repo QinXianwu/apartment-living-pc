@@ -20,7 +20,7 @@ export const formData = [
 // 表格头
 export const column = [
   {
-    label: "序号",
+    label: "ID",
     prop: "id",
   },
   {
