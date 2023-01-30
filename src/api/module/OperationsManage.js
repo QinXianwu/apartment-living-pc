@@ -79,4 +79,14 @@ export default {
       })
     );
   },
+  // 获取问题反馈列表
+  GetFeedbackList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-user/feedback/page",
+        params,
+        isReturnAll: true,
+      })
+    );
+  },
 };

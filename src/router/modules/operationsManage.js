@@ -5,6 +5,7 @@ import CouponHub from "@/views/OperationsManage/views/CouponHub/index.vue";
 import NewcomerActivities from "@/views/OperationsManage/views/NewcomerActivities/index.vue";
 import FastDeals from "@/views/OperationsManage/views/FastDeals/index.vue";
 import DiscountActivity from "@/views/OperationsManage/views/DiscountActivity/index.vue";
+import FeedbackList from "@/views/OperationsManage/views/FeedbackList/index.vue";
 
 export default {
   path: "/OperationsManage",
@@ -65,6 +66,15 @@ export default {
       meta: {
         title: "折扣活动",
         PermissionId: PERMISSION_ID.OperationsManage_DiscountActivity,
+      },
+    },
+    {
+      path: "FeedbackList",
+      component: FeedbackList,
+      name: "FeedbackList",
+      meta: {
+        title: "意见反馈",
+        // PermissionId: PERMISSION_ID.OperationsManage_FeedbackList,
       },
     },
   ],

@@ -11,7 +11,7 @@ export const formData = [
   },
   {
     label: "手机号",
-    prop: "phone",
+    prop: "userPhone",
     type: "text",
     value: "",
     placeholder: "请输入手机号",
