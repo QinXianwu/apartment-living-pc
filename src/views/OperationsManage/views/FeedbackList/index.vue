@@ -31,7 +31,12 @@
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
-            <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
+            <el-button
+              type="text"
+              @click="handleFeedback(scope)"
+              v-if="scope.status === $CONST.FEED_BACK_STATE.A_S_HANDLE"
+              >标记完成</el-button
+            >
           </div>
         </template>
       </TablePanel>
@@ -52,6 +57,7 @@
   </div>
 </template>
 <script>
+import { digits2Str } from "@/utils";
 import { column, formData } from "./config";
 import UpdateActivityDiaog from "./components/UpdateActivityDiaog.vue";
 
@@ -97,17 +103,18 @@ export default {
       this.editInfo = { id: data.id };
       this.showActivityDiaog = true;
     },
-    async stopActivity({ id }) {
+    async handleFeedback({ id }) {
       try {
-        await this.$confirm(`是否确认停止ID为'${id}'的秒杀活动？`, "停止活动", {
+        await this.$confirm(`是否确认处理该问题？`, "确认处理", {
           type: "warning",
           showClose: false,
         });
-        const [, res] = await this.$http.FastDeals.StopSecKillActivity({
+        const [, res] = await this.$http.OperationsManage.UpdateFeedbackStatus({
           id,
+          status: this.$CONST.FEED_BACK_STATE.A_S_PROCESSED,
         });
-        const msg = res ? res?.msg || `停止成功` : `停止失败`;
-        this.$confirm(msg, "停止活动", {
+        const msg = res ? res?.msg || `处理成功` : `处理失败`;
+        this.$confirm(msg, "处理活动", {
           showClose: false,
           showCancelButton: false,
           type: res ? "success" : "error",
@@ -135,11 +142,11 @@ export default {
         this.$message.error(res?.msg || "获取问题反馈列表异常");
       }
       this.list = res?.rows || [];
-      this.list.forEach(
-        (item) =>
-          (item.imageList =
-            typeof item?.images === "string" ? item.images.split(",") : [])
-      );
+      this.list.forEach((item) => {
+        item.imageList =
+          typeof item?.images === "string" ? item.images.split(",") : [];
+        digits2Str(item, ["id", "userId"]);
+      });
       this.total = res?.total || 0;
     },
   },

@@ -22,10 +22,15 @@ export const formData = [
 export const column = [
   {
     label: "用户信息",
-    prop: "info",
-    type: "custom",
-    minWidth: 150,
+    prop: "userName",
+    showOverflowTooltip: true,
   },
+  // {
+  //   label: "用户信息",
+  //   prop: "info",
+  //   type: "custom",
+  //   minWidth: 150,
+  // },
   {
     label: "联系方式",
     prop: "contactWay",

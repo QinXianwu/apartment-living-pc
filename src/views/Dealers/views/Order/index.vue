@@ -25,6 +25,20 @@
             }}</span
           >
         </template>
+        <template #firstDistributor="{ scope }">
+          <div class="dealers-info" v-if="scope.firstDistributor">
+            <span>用户：{{ scope.firstDistributor.userName || "-" }}</span>
+            <span>可得佣金：{{ scope.firstAmount | formatCurrency }}</span>
+          </div>
+          <span v-else>-</span>
+        </template>
+        <template #secondDistributor="{ scope }">
+          <div class="dealers-info" v-if="scope.secondDistributor">
+            <span>用户：{{ scope.secondDistributor.userName || "-" }}</span>
+            <span>可得佣金：{{ scope.secondAmount | formatCurrency }}</span>
+          </div>
+          <span v-else>-</span>
+        </template>
         <template #status="{ scope }">
           <el-tag :type="getActivityTab(scope)">{{
             CONST.DEALERS_ORDER_STATE_TEXT[scope.status]
@@ -120,6 +134,14 @@ export default {
   }
   .user-name {
     @include overflow-eps(1);
+  }
+}
+.dealers-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  span {
+    @include overflow-eps(2);
   }
 }
 .action {

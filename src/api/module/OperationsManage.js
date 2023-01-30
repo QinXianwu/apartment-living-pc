@@ -89,4 +89,15 @@ export default {
       })
     );
   },
+  // 更新问题反馈状态
+  UpdateFeedbackStatus(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-user/feedback/updateStatus",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
 };

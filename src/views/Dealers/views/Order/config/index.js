@@ -44,8 +44,13 @@ export const column = [
     prop: "userPhone",
   },
   {
-    label: "分销信息",
-    prop: "aaa",
+    label: "一级分销信息",
+    prop: "firstDistributor",
+    type: "custom",
+  },
+  {
+    label: "二级分销信息",
+    prop: "secondDistributor",
     type: "custom",
   },
   {
