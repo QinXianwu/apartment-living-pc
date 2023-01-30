@@ -22,6 +22,7 @@ export const column = [
   {
     label: "ID",
     prop: "id",
+    showOverflowTooltip: true,
   },
   {
     label: "活动开始时间",
