@@ -17,8 +17,18 @@ export const formData = [
     placeholder: "请选择活动时间",
   },
 ];
+
 // 表格头
 export const column = [
+  {
+    label: "活动标题",
+    prop: "name",
+  },
+  {
+    label: "优惠内容",
+    prop: "text",
+    type: "custom",
+  },
   {
     label: "活动开始时间",
     prop: "startTime",
@@ -53,21 +63,21 @@ export const activityTab = () => [
   {
     value: "",
     tabType: "",
-    is: CONST.ACT_STATUS.NOT_START,
+    is: CONST.DISCOUNT_STATUS.NOT_START,
   },
   {
     value: "",
     tabType: "success",
-    is: CONST.ACT_STATUS.HAVE_IN_HAND,
+    is: CONST.DISCOUNT_STATUS.HAVE_IN_HAND,
   },
   {
     value: "",
     tabType: "danger",
-    is: CONST.ACT_STATUS.HAS_ENDED,
+    is: CONST.DISCOUNT_STATUS.HAS_ENDED,
   },
   {
     value: "",
     tabType: "warning",
-    is: CONST.ACT_STATUS.STOP,
+    is: CONST.DISCOUNT_STATUS.STOP,
   },
 ];

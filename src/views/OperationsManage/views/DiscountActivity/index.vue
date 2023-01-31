@@ -5,9 +5,16 @@
         <el-button type="primary" @click="handleAdd"> 新增折扣活动 </el-button>
       </div>
       <TablePanel :tableData="list" :tableHead="column">
+        <template #text="{ scope }">
+          <span
+            >{{ scope.productCount || "-" }}件{{
+              scope.discount || "-"
+            }}折</span
+          >
+        </template>
         <template #status="{ scope }">
           <el-tag :type="getActivityTab(scope)">{{
-            $CONST.ACT_STATUS_TEXT[scope.status]
+            $CONST.DISCOUNT_STATUS_TEXT[scope.status]
           }}</el-tag>
         </template>
         <!-- 操作 -->
@@ -96,9 +103,9 @@ export default {
       this.editInfo = { id: data.id };
       this.showActivityDiaog = true;
     },
-    async handleDelete({ id }) {
+    async handleDelete({ id, name }) {
       try {
-        await this.$confirm(`是否确认删除ID为'${id}'的折扣活动？`, "删除活动", {
+        await this.$confirm(`是否确认删除'${name}'的折扣活动？`, "删除活动", {
           type: "warning",
           showClose: false,
         });
