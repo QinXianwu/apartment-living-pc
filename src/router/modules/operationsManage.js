@@ -7,6 +7,7 @@ import FastDeals from "@/views/OperationsManage/views/FastDeals/index.vue";
 import DiscountActivity from "@/views/OperationsManage/views/DiscountActivity/index.vue";
 import FeedbackList from "@/views/OperationsManage/views/FeedbackList/index.vue";
 import RecruiterList from "@/views/OperationsManage/views/RecruiterList/index.vue";
+import CourierManage from "@/views/OperationsManage/views/CourierManage/index.vue";
 
 export default {
   path: "/OperationsManage",
@@ -67,6 +68,15 @@ export default {
       meta: {
         title: "折扣活动",
         PermissionId: PERMISSION_ID.OperationsManage_DiscountActivity,
+      },
+    },
+    {
+      path: "CourierManage",
+      component: CourierManage,
+      name: "CourierManage",
+      meta: {
+        title: "配送员列表",
+        // PermissionId: PERMISSION_ID.OperationsManage_CourierManage,
       },
     },
     {

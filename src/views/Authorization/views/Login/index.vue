@@ -14,12 +14,11 @@
             <el-form ref="form" :model="formData" :rules="rules">
               <el-form-item label="" prop="username">
                 <el-input
-                  class=""
                   clearable
                   placeholder="账号"
                   v-model="formData.username"
                   @keyup.enter.native="onSumbit"
-                ></el-input>
+                />
               </el-form-item>
               <el-form-item label="" prop="password">
                 <el-input
@@ -28,7 +27,7 @@
                   placeholder="密码"
                   v-model="formData.password"
                   @keyup.enter.native="onSumbit"
-                ></el-input>
+                />
               </el-form-item>
               <el-form-item label="" prop="code">
                 <div class="code">
@@ -37,7 +36,7 @@
                     placeholder="验证码"
                     v-model="formData.code"
                     @keyup.enter.native="onSumbit"
-                  ></el-input>
+                  />
                   <div class="code" @click="getVerifyCode">
                     <ImageView
                       :src="codeUrl"
