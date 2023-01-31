@@ -154,8 +154,8 @@ export default {
         });
       this.isLoadingInfo = false;
       this.activityInfo = { ...(res || {}) };
-      this.goodsList = this.activityInfo?.product?.id
-        ? [this.activityInfo.product]
+      this.goodsList = this.activityInfo?.productList?.length
+        ? [...this.activityInfo.productList]
         : [];
       this.formData = { ...this.formData, ...this.activityInfo };
       if (this.activityInfo?.startTime && this.activityInfo?.endTime)

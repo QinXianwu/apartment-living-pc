@@ -12,6 +12,11 @@
             }}折</span
           >
         </template>
+        <template #goods-list="{ scope }">
+          <span>
+            {{ (scope.productList && scope.productList.length) || "-" }}
+          </span>
+        </template>
         <template #status="{ scope }">
           <el-tag :type="getActivityTab(scope)">{{
             $CONST.DISCOUNT_STATUS_TEXT[scope.status]

@@ -30,6 +30,11 @@ export const column = [
     type: "custom",
   },
   {
+    label: "活动商品",
+    prop: "goods-list",
+    type: "custom",
+  },
+  {
     label: "活动开始时间",
     prop: "startTime",
     width: 160,
