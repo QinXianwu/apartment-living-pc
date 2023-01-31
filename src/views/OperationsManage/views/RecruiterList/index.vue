@@ -1,5 +1,5 @@
 <template>
-  <div class="FeedbackList view-container">
+  <div class="RecruiterList view-container">
     <div class="content">
       <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
       <!-- <div class="action"></div> -->
@@ -21,11 +21,11 @@
         <template #status="{ scope }">
           <el-tag
             :type="
-              scope.status === $CONST.FEED_BACK_STATE.A_S_HANDLE
+              scope.status === $CONST.RECRUITER_STATE.A_S_HANDLE
                 ? 'danger'
                 : 'success'
             "
-            >{{ $CONST.FEED_BACK_STATE_TEXT[scope.status] }}</el-tag
+            >{{ $CONST.RECRUITER_STATE_TEXT[scope.status] }}</el-tag
           >
         </template>
         <!-- 操作 -->
@@ -37,7 +37,7 @@
             <el-button
               type="text"
               @click="handleFeedback(scope)"
-              v-if="scope.status === $CONST.FEED_BACK_STATE.A_S_HANDLE"
+              v-if="scope.status === $CONST.RECRUITER_STATE.A_S_HANDLE"
               >标记完成</el-button
             >
           </div>
@@ -52,7 +52,7 @@
         :total="total"
       />
     </div>
-    <FeedbackDetailsDiaog
+    <RecruiterDetailsDiaog
       :editInfo="editInfo"
       :show.sync="showDetailsDiaog"
       @close="close"
@@ -60,13 +60,13 @@
   </div>
 </template>
 <script>
-import { digits2Str } from "@/utils";
+// import { digits2Str } from "@/utils";
 import { column, formData } from "./config";
-import FeedbackDetailsDiaog from "./components/FeedbackDetailsDiaog.vue";
+import RecruiterDetailsDiaog from "./components/RecruiterDetailsDiaog.vue";
 
 export default {
-  name: "FeedbackList",
-  components: { FeedbackDetailsDiaog },
+  name: "RecruiterList",
+  components: { RecruiterDetailsDiaog },
   data() {
     return {
       formData,
@@ -109,7 +109,7 @@ export default {
         });
         const [, res] = await this.$http.OperationsManage.UpdateFeedbackStatus({
           id,
-          status: this.$CONST.FEED_BACK_STATE.A_S_PROCESSED,
+          status: this.$CONST.RECRUITER_STATE.A_S_PROCESSED,
         });
         const msg = res ? res?.msg || `处理成功` : `处理失败`;
         this.$confirm(msg, "处理结果", {
@@ -135,16 +135,14 @@ export default {
         ...this.page,
         ...this.query,
       };
-      const [, res] = await this.$http.OperationsManage.GetFeedbackList(query);
+      const [, res] = await this.$http.OperationsManage.GetRecruiterList(query);
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
-        this.$message.error(res?.msg || "获取问题反馈列表异常");
+        this.$message.error(res?.msg || "获取招聘记录列表异常");
       }
       this.list = res?.rows || [];
-      this.list.forEach((item) => {
-        item.imageList =
-          typeof item?.images === "string" ? item.images.split(",") : [];
-        digits2Str(item, ["id", "userId"]);
-      });
+      // this.list.forEach((item) => {
+      //   digits2Str(item, ["id", "userId"]);
+      // });
       this.total = res?.total || 0;
     },
   },

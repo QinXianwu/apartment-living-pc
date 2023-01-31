@@ -53,3 +53,24 @@ export const FEED_BACK_STATE_OPTIONS = () => [
     value: FEED_BACK_STATE.A_S_PROCESSED,
   },
 ];
+
+// 招聘状态
+export const RECRUITER_STATE = {
+  A_S_HANDLE: 1, // 待处理
+  A_S_PROCESSED: 2, // 已处理
+};
+export const RECRUITER_STATE_TEXT = {
+  [RECRUITER_STATE.A_S_HANDLE]: "待处理",
+  [RECRUITER_STATE.A_S_PROCESSED]: "已处理",
+};
+// options
+export const RECRUITER_STATE_OPTIONS = () => [
+  {
+    label: RECRUITER_STATE_TEXT[FEED_BACK_STATE.A_S_HANDLE],
+    value: FEED_BACK_STATE.A_S_HANDLE,
+  },
+  {
+    label: RECRUITER_STATE_TEXT[FEED_BACK_STATE.A_S_PROCESSED],
+    value: FEED_BACK_STATE.A_S_PROCESSED,
+  },
+];

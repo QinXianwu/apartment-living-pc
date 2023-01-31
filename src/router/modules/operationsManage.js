@@ -6,6 +6,7 @@ import NewcomerActivities from "@/views/OperationsManage/views/NewcomerActivitie
 import FastDeals from "@/views/OperationsManage/views/FastDeals/index.vue";
 import DiscountActivity from "@/views/OperationsManage/views/DiscountActivity/index.vue";
 import FeedbackList from "@/views/OperationsManage/views/FeedbackList/index.vue";
+import RecruiterList from "@/views/OperationsManage/views/RecruiterList/index.vue";
 
 export default {
   path: "/OperationsManage",
@@ -75,6 +76,15 @@ export default {
       meta: {
         title: "意见反馈",
         // PermissionId: PERMISSION_ID.OperationsManage_FeedbackList,
+      },
+    },
+    {
+      path: "RecruiterList",
+      component: RecruiterList,
+      name: "RecruiterList",
+      meta: {
+        title: "招聘记录",
+        // PermissionId: PERMISSION_ID.OperationsManage_RecruiterList,
       },
     },
   ],

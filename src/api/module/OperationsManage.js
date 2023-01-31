@@ -100,4 +100,25 @@ export default {
       })
     );
   },
+  // 获取招聘记录列表
+  GetRecruiterList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-user/recruiter/page",
+        params,
+        isReturnAll: true,
+      })
+    );
+  },
+  // 更新招聘记录状态
+  UpdateRecruiterStatus(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-user/recruiter/updateStatus",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
 };

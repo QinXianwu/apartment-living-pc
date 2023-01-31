@@ -14,7 +14,7 @@ export const formData = [
     prop: "status",
     type: "select",
     value: "",
-    options: CONST.FEED_BACK_STATE_OPTIONS(),
+    options: CONST.RECRUITER_STATE_OPTIONS(),
     placeholder: "请选择状态",
   },
 ];
@@ -33,18 +33,17 @@ export const column = [
   // },
   {
     label: "联系方式",
-    prop: "contactWay",
+    prop: "phone",
   },
   {
-    label: "反馈内容",
-    prop: "text",
+    label: "招募类型",
+    prop: "aaa",
+  },
+  {
+    label: "备注",
+    prop: "remark",
     showOverflowTooltip: true,
     minWidth: 150,
-  },
-  {
-    label: "截图",
-    prop: "imageList",
-    type: "image-list",
   },
   {
     label: "提交时间",
