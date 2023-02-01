@@ -9,6 +9,7 @@
         <div class="el-card box-card is-always-shadow">
           <div class="el-card__body">
             <div class="head">
+              <SlideVerify />
               <span class="title">密码登录</span>
             </div>
             <el-form ref="form" :model="formData" :rules="rules">
@@ -59,10 +60,11 @@
 
 <script>
 import { mapState } from "vuex";
+import SlideVerify from "./components/SlideVerify";
 import backgroundImage from "./images/backgroundImage.jpg";
 export default {
   name: "Login",
-  components: {},
+  components: { SlideVerify },
   data() {
     return {
       backgroundImage,
