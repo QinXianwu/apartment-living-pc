@@ -290,3 +290,29 @@
 .input-mini {
   width: 180px;
 }
+
+.nb-spinner {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  background: transparent;
+  border-top-width: 4px;
+  border-top-style: solid;
+  border-right: 4px solid transparent;
+  border-radius: 50%;
+  animation: 1s spin linear infinite;
+  margin-left: 10px;
+}
+
+// 加载效果 转圈
+@keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

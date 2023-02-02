@@ -9,6 +9,7 @@
       <div
         ref="SliderBlock"
         class="slider-block"
+        :class="{ 'not-allowed': isVerifyLoading }"
         :style="sliderMainStyle"
         @mousedown="holdDown"
         @mouseup="holdUp"
@@ -23,39 +24,53 @@
 export default {
   name: "SliderVerifyBlock",
   components: {},
+  props: {
+    blockMoveX: {
+      type: [Number, String],
+      default: 0,
+    },
+    blockRadius: {
+      type: [Number, String],
+      default: 0,
+    },
+    isVerifyLoading: {
+      type: Boolean,
+      default: false,
+    },
+    isVerifyResult: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
+      verifyTime: 1000,
       originX: 0,
       originY: 0,
       tipText: "向右滑动滑块填充拼图",
       isDownUp: false,
-      isVerifyResult: false,
-      isVerifyLoading: false,
-      isVerifyResultError: false,
+      isVerifySucceed: false,
+      isVerifyError: false,
       sliderBlockStyle: {},
     };
   },
   computed: {
-    sliderBlockIconClass({ isVerifyResult, isVerifyResultError }) {
-      return `icon-arrow-${
-        isVerifyResult ? "succeed" : isVerifyResultError ? "close" : "right"
-      }`;
+    sliderBlockIconClass({ isVerifySucceed, isVerifyError }) {
+      const iconClass = `icon-${
+        isVerifySucceed ? "succeed" : isVerifyError ? "close" : "right"
+      } `;
+      return iconClass;
     },
-    sliderStyle({
-      isDownUp,
-      isVerifyLoading,
-      isVerifyResult,
-      isVerifyResultError,
-    }) {
+    sliderStyle({ isDownUp, isVerifyLoading, isVerifySucceed, isVerifyError }) {
       const styleObj = {};
       if (isDownUp || isVerifyLoading) {
         styleObj["background"] = "#d4e6fb";
         styleObj["border-color"] = "#2b6fe5";
       }
-      if (isVerifyResult && isVerifyLoading) {
+      if (isVerifySucceed && isVerifyLoading) {
         styleObj["background"] = "#C1F5F0";
         styleObj["border-color"] = "#40E0D0";
-      } else if (isVerifyResultError && isVerifyLoading) {
+      } else if (isVerifyError && isVerifyLoading) {
         styleObj["background"] = "#f56c6c5c";
         styleObj["border-color"] = "#f56c6c";
       }
@@ -64,17 +79,17 @@ export default {
     sliderMainStyle({
       isDownUp,
       isVerifyLoading,
-      isVerifyResult,
-      isVerifyResultError,
+      isVerifySucceed,
+      isVerifyError,
       sliderBlockStyle,
     }) {
       const styleObj = { ...sliderBlockStyle };
       if (isDownUp || isVerifyLoading) {
         styleObj["background"] = "#2b6fe5";
       }
-      if (isVerifyResult && isVerifyLoading) {
+      if (isVerifySucceed && isVerifyLoading) {
         styleObj["background"] = "#40E0D0";
-      } else if (isVerifyResultError && isVerifyLoading) {
+      } else if (isVerifyError && isVerifyLoading) {
         styleObj["background"] = "#f56c6c";
       }
       return styleObj;
@@ -85,10 +100,12 @@ export default {
       this.originX = 0;
       this.originY = 0;
       this.isDownUp = false;
-      this.isVerifyResult = false;
-      this.isVerifyLoading = false;
-      this.isVerifyResultError = false;
+      this.isVerifySucceed = false;
+      this.isVerifyError = false;
       this.sliderBlockStyle = {};
+      this.$emit("update:blockMoveX", 0);
+      this.$emit("update:isVerifyLoading", false);
+      this.$emit("update:isVerifyResult", false);
     },
     //鼠标按下
     holdDown(event) {
@@ -96,34 +113,41 @@ export default {
       this.originX = event.clientX || event.touches[0].clientX;
       this.originY = event.clientY || event.touches[0].clientY;
       this.isDownUp = true;
-      this.isVerifyLoading = false;
       document.onmousemove = (ev) => {
-        if (!this.isDownUp) return false;
-        const maxMoveX = this.$refs.SliderVerify.offsetWidth;
+        if (!this.isDownUp || this.isVerifyLoading) return false;
+        this.$emit("update:isVerifyLoading", false);
+        const blockRadius = (parseInt(this.blockRadius) || 0) * 2;
+        const maxMoveX = this.$refs.SliderVerify.offsetWidth - blockRadius;
         // 获取拖拽移动的距离
         const eventX = ev.clientX || ev.touches[0].clientX;
         const moveX = eventX - this.originX;
         if (moveX < 0 || moveX + 40 >= maxMoveX) return false;
+        this.$emit("update:blockMoveX", moveX);
         this.sliderBlockStyle = {
           "margin-left": moveX + "px",
         };
       };
       document.onmouseup = () => {
-        if (this.isDownUp) this.holdUp();
+        if (this.isDownUp && !this.isVerifyLoading) this.holdUp();
       };
     },
     //鼠标松开
     holdUp() {
       this.isDownUp = false;
-      this.isVerifyLoading = true;
+      this.$emit("update:isVerifyLoading", true);
+      this.$emit("changeVerify", true);
+    },
+    // 处理校验结果
+    handleVerifyResult() {
       setTimeout(() => {
-        const result = false;
-        this.isVerifyResult = result;
-        this.isVerifyResultError = !result;
-        setTimeout(() => {
-          this.init();
-        }, 2000);
-      }, 2000);
+        this.isVerifyError = !this.isVerifyResult;
+        this.isVerifySucceed = this.isVerifyResult;
+      }, this.verifyTime);
+      if (this.isVerifyResult) console.log("校验通过");
+      setTimeout(() => {
+        this.$emit("changeResult", this.isVerifyResult);
+        this.init();
+      }, 1500);
     },
   },
   mounted() {
@@ -189,23 +213,26 @@ export default {
     &-block:hover {
       background: #2b6fe5;
     }
+    &-block.not-allowed {
+      cursor: not-allowed;
+    }
   }
 }
 .slider-block-icon {
-  &.icon-arrow-right {
+  &.icon-right {
     &::before {
       content: "\279C";
       color: #eee;
     }
   }
-  &.icon-arrow-succeed {
+  &.icon-succeed {
     margin: 0 0 0 0;
     &::before {
       content: "\2714";
       color: #eee;
     }
   }
-  &.icon-arrow-close {
+  &.icon-close {
     margin: 0 0 0 0;
     &::before {
       content: "\2716";
