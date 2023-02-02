@@ -18,7 +18,7 @@
       <div
         class="pic-block-icon icon-refresh"
         :class="{ 'not-allowed': isVerifyLoading }"
-        @click="initPic"
+        @click="refreshPic"
       />
       <canvas
         ref="PicImg"
@@ -115,10 +115,6 @@ export default {
       this.ctxPicBlock = this.$refs["PicBlock"]?.getContext("2d", {
         willReadFrequently: true,
       });
-      this.blockRectPosition.r = this.blockWidth / 4;
-      this.blockRectPosition.w = this.blockWidth + (2 * this.blockWidth) / 4;
-      this.bgImgDom = document.createElement("img");
-
       this.initPicImg();
       this.initBlockPostion();
     },
@@ -135,7 +131,7 @@ export default {
         this.ctxPicImg.drawImage(this.bgImgDom, 0, 0, ImageW, ImageH);
         // 先绘制背景再绘制凹凸块
         this.draw(this.ctxPicImg, "fill"); // 填充
-        this.draw(this.ctxPicBlock, "clip"); // 裁剪
+        this.draw(this.ctxPicBlock, "clip"); // 剪切
         this.ctxPicBlock.drawImage(this.bgImgDom, 0, 0, ImageW, ImageH);
 
         const _yPos = this.blockRectPosition.y - 2 * this.blockRectPosition.r;
@@ -165,10 +161,14 @@ export default {
       this.blockRectPosition.y = yPos;
     },
     // 刷新
-    initPic() {
+    refreshPic() {
       this.isRefresh = true;
-      this.initBlockPostion();
-      this.initPicImg();
+      const width = parseInt(this.realWidth) || 340;
+      const height = parseInt(this.realHeight) || 340;
+      this.$refs["PicBlock"].width = width;
+      this.ctxPicImg.clearRect(0, 0, width, height);
+      this.ctxPicBlock.clearRect(0, 0, width, height);
+      this.init();
       setTimeout(() => {
         this.$nextTick(() => {
           this.isRefresh = false;
@@ -219,6 +219,9 @@ export default {
     },
   },
   mounted() {
+    this.blockRectPosition.r = this.blockWidth / 4;
+    this.blockRectPosition.w = this.blockWidth + (2 * this.blockWidth) / 4;
+    this.bgImgDom = document.createElement("img");
     this.init();
   },
 };
@@ -246,6 +249,7 @@ export default {
   }
 }
 .pic-block-icon {
+  font-size: 20px;
   &.icon-refresh {
     cursor: pointer;
     position: absolute;

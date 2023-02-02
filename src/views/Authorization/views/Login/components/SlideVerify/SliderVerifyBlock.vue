@@ -138,16 +138,20 @@ export default {
       this.$emit("changeVerify", true);
     },
     // 处理校验结果
-    handleVerifyResult() {
-      setTimeout(() => {
-        this.isVerifyError = !this.isVerifyResult;
-        this.isVerifySucceed = this.isVerifyResult;
-      }, this.verifyTime);
-      if (this.isVerifyResult) console.log("校验通过");
-      setTimeout(() => {
-        this.$emit("changeResult", this.isVerifyResult);
-        this.init();
-      }, 1500);
+    async handleVerifyResult() {
+      // eslint-disable-next-line
+      return new Promise(async (resolve) => {
+        setTimeout(() => {
+          this.isVerifyError = !this.isVerifyResult;
+          this.isVerifySucceed = this.isVerifyResult;
+        }, this.verifyTime);
+        if (this.isVerifyResult) console.log("校验通过");
+        setTimeout(() => {
+          this.$emit("changeResult", this.isVerifyResult);
+          this.init();
+          resolve(true);
+        }, 1500);
+      });
     },
   },
   mounted() {

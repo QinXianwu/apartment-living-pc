@@ -37,9 +37,9 @@ export default {
     async changeVerify() {
       const result = await this.$refs.SliderVerifyContainer.handleVerify();
       this.isVerifyResult = !!result;
-      this.$nextTick(() => {
-        this.$refs.SliderVerifyBlock.handleVerifyResult();
-      });
+      const res = await this.$refs.SliderVerifyBlock.handleVerifyResult();
+      if (!res) this.$refs.SliderVerifyContainer.refreshPic();
+      // this.$nextTick(async () => {});
     },
     changeResult(val) {
       console.log(val);
