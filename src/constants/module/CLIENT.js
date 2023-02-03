@@ -1,4 +1,4 @@
-import { getOpitonsByText } from "@/utils/constants";
+import { getOpitonsByText } from "../utils";
 
 // 客户模块
 // 账号类型
