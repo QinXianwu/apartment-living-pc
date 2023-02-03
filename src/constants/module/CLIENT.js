@@ -1,3 +1,5 @@
+import { getOpitonsByText } from "@/utils/constants";
+
 // 客户模块
 // 账号类型
 export const ACCOUNT_TYPE = {
@@ -18,20 +20,7 @@ export const GENDER_TEXT = {
   [GENDER.UNCERTAIN]: "未知",
 };
 // 用户性别options
-export const GENDER_OPTIONS = () => [
-  {
-    label: GENDER_TEXT[GENDER.MALE],
-    value: GENDER.MALE,
-  },
-  {
-    label: GENDER_TEXT[GENDER.FEMALE],
-    value: GENDER.FEMALE,
-  },
-  {
-    label: GENDER_TEXT[GENDER.UNCERTAIN],
-    value: GENDER.UNCERTAIN,
-  },
-];
+export const GENDER_OPTIONS = () => getOpitonsByText(GENDER_TEXT);
 
 // 状态
 export const USER_STATE = {
