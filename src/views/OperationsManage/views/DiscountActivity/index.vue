@@ -2,6 +2,7 @@
   <div class="ActivityList view-container">
     <div class="content">
       <div class="action">
+        <el-button @click="getList(true)"> 刷新 </el-button>
         <el-button type="primary" @click="handleAdd"> 新增折扣活动 </el-button>
       </div>
       <TablePanel :tableData="list" :tableHead="column">
