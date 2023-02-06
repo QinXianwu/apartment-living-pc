@@ -22,7 +22,7 @@ export const formData = [
     type: "select",
     value: "",
     options: [],
-    placeholder: "请选择活动时间",
+    placeholder: "请选择适用服务点",
   },
   {
     label: "状态",

@@ -1,7 +1,11 @@
 <template>
   <div class="CourierManage view-container">
     <div class="content">
-      <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
+      <SearchForm
+        isReturnFormData
+        :formData="searchForm"
+        @on-search="onSearch"
+      />
       <div class="action">
         <el-button type="primary" @click="handleAdd"> 新增配送员 </el-button>
       </div>
@@ -41,6 +45,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import { column, formData, activityTab } from "./config";
 import UpdateCourierDiaog from "./components/UpdateCourierDiaog.vue";
 
@@ -62,7 +67,18 @@ export default {
       showActivityDiaog: false,
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      serviceStationOptions: "accountRoleManage/serviceStationOptions",
+    }),
+    searchForm({ serviceStationOptions }) {
+      const serviceItem = formData.find(
+        (item) => item.prop === "serviceStationId"
+      );
+      if (serviceItem) serviceItem.options = serviceStationOptions;
+      return formData;
+    },
+  },
   methods: {
     handleSizeChange(val) {
       this.page.pageSize = val;

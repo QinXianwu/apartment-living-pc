@@ -42,7 +42,7 @@ export default {
   UpdateCourier(params) {
     return catchAsyncFun(
       apiFetch({
-        url: apiPrefix + "/apartment-user/courier/edit",
+        url: apiPrefix + "/apartment-user/courier/updateById",
         params,
       })
     );
