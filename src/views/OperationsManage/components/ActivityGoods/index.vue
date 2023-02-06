@@ -116,7 +116,7 @@ export default {
       return list.map((item) => item.id);
     },
     column({ showSpikePrice, GoodsColumn }) {
-      const filterPropStr = `action,${showSpikePrice ? "" : "spikePrice"}`;
+      const filterPropStr = `${showSpikePrice ? "" : "spikePrice"}`;
       return GoodsColumn.filter((item) => !filterPropStr.includes(item.prop));
     },
   },
@@ -140,6 +140,7 @@ export default {
     },
     handleDelete(index) {
       this.list.splice(index, 1);
+      this.$emit("updateList", this.list);
     },
     async getQuery() {
       // eslint-disable-next-line

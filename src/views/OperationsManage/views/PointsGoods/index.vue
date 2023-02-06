@@ -51,7 +51,7 @@
     />
     <UpdatePointsGoodsDiaog
       :editInfo="editInfo"
-      :selectGoods="selectGoods"
+      :selectGoods.sync="selectGoods"
       :selectSpecs="selectSpecs"
       :show.sync="showActivityDiaog"
       @chooseGoods="chooseGoods"
@@ -97,6 +97,13 @@ export default {
       showSpecsDiaog: false,
       showActivityDiaog: false,
     };
+  },
+  watch: {
+    selectGoods(val) {
+      const id = val?.length ? val[0].id : "";
+      const oldId = this.selectGoodsIds?.length ? this.selectGoodsIds[0] : "";
+      if (id !== oldId) this.selectSpecs = [];
+    },
   },
   computed: {
     productNo({ selectGoods }) {
