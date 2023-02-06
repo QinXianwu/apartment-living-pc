@@ -47,7 +47,7 @@ export const column = [
   },
   {
     label: "适用服务点",
-    prop: "serviceStationId",
+    prop: "serviceStationName",
   },
   {
     label: "状态",
