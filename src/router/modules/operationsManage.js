@@ -76,7 +76,7 @@ export default {
       name: "CourierManage",
       meta: {
         title: "配送员列表",
-        // PermissionId: PERMISSION_ID.OperationsManage_CourierManage,
+        PermissionId: PERMISSION_ID.OperationsManage_CourierManage,
       },
     },
     {
@@ -85,7 +85,7 @@ export default {
       name: "FeedbackList",
       meta: {
         title: "意见反馈",
-        // PermissionId: PERMISSION_ID.OperationsManage_FeedbackList,
+        PermissionId: PERMISSION_ID.OperationsManage_FeedbackList,
       },
     },
     {
@@ -94,7 +94,7 @@ export default {
       name: "RecruiterList",
       meta: {
         title: "招聘记录",
-        // PermissionId: PERMISSION_ID.OperationsManage_RecruiterList,
+        PermissionId: PERMISSION_ID.OperationsManage_RecruiterList,
       },
     },
   ],

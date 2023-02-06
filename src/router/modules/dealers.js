@@ -1,4 +1,4 @@
-// import PERMISSION_ID from "@/permission/PERMISSION_ID";
+import PERMISSION_ID from "@/permission/PERMISSION_ID";
 import MainLayout from "@/layouts/MainLayout/index";
 import DealersList from "@/views/Dealers/views/DealersList/index.vue";
 import Order from "@/views/Dealers/views/Order/index.vue";
@@ -13,7 +13,7 @@ export default {
     title: "分销中心",
     icon: "dealers",
     affix: true,
-    // PermissionId: PERMISSION_ID.Dealers,
+    PermissionId: PERMISSION_ID.Dealers,
   },
   children: [
     {
@@ -22,7 +22,7 @@ export default {
       name: "DealersList",
       meta: {
         title: "分销商",
-        // PermissionId: PERMISSION_ID.Dealers_DealersList,
+        PermissionId: PERMISSION_ID.Dealers_DealersList,
       },
     },
     {
@@ -31,7 +31,7 @@ export default {
       name: "Order",
       meta: {
         title: "分销订单",
-        // PermissionId: PERMISSION_ID.Dealers_Order,
+        PermissionId: PERMISSION_ID.Dealers_DealersOrder,
       },
     },
     {
@@ -40,7 +40,7 @@ export default {
       name: "WithdrawalsManage",
       meta: {
         title: "提现管理",
-        // PermissionId: PERMISSION_ID.Dealers_WithdrawalsManage,
+        PermissionId: PERMISSION_ID.Dealers_WithdrawalsManage,
       },
     },
   ],
