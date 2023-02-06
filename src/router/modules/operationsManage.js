@@ -5,6 +5,7 @@ import CouponHub from "@/views/OperationsManage/views/CouponHub/index.vue";
 import NewcomerActivities from "@/views/OperationsManage/views/NewcomerActivities/index.vue";
 import FastDeals from "@/views/OperationsManage/views/FastDeals/index.vue";
 import DiscountActivity from "@/views/OperationsManage/views/DiscountActivity/index.vue";
+import PointsGoods from "@/views/OperationsManage/views/PointsGoods/index.vue";
 import FeedbackList from "@/views/OperationsManage/views/FeedbackList/index.vue";
 import RecruiterList from "@/views/OperationsManage/views/RecruiterList/index.vue";
 import CourierManage from "@/views/OperationsManage/views/CourierManage/index.vue";
@@ -68,6 +69,15 @@ export default {
       meta: {
         title: "折扣活动",
         PermissionId: PERMISSION_ID.OperationsManage_DiscountActivity,
+      },
+    },
+    {
+      path: "PointsGoods",
+      component: PointsGoods,
+      name: "PointsGoods",
+      meta: {
+        title: "积分商品",
+        // PermissionId: PERMISSION_ID.OperationsManage_PointsGoods,
       },
     },
     {

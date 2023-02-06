@@ -64,7 +64,7 @@ export default {
       const data1 = this.productInfo?.productSpecificationList || [];
       const ids = ["specificationId"];
       const valIds1 = ["productSpecificationId"];
-      const valIds2 = ["id"];
+      // const valIds2 = ["id"];
       data1.map((item) => {
         digits2Str(item, ids);
         if (!item?.productSpecificationValueList?.length) return;
@@ -75,7 +75,7 @@ export default {
       this.productSpecificationList = data1;
 
       const data2 = this.productInfo?.productStockPriceList || [];
-      data2.forEach((item) => digits2Str(item, valIds2));
+      // data2.forEach((item) => digits2Str(item, valIds2));
       this.productStockPriceList = data2;
     },
     async getQuery() {

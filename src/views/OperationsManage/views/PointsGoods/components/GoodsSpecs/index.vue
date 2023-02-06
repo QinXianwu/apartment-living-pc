@@ -1,50 +1,19 @@
 <template>
-  <div class="ActivityGoods">
-    <div class="title">适用商品</div>
+  <div class="GoodsSpecs">
+    <div class="title">商品规格</div>
     <div class="content">
       <el-form ref="form" :model="formData" :rules="rules" label-width="110px">
-        <el-form-item label="适用商品">
-          <el-button type="text" @click="chooseGoods">选择商品</el-button>
+        <el-form-item label="商品规格">
+          <el-button type="text" @click="chooseSpecs">选择商品规格</el-button>
           <TablePanel
-            ref="TablePanel"
             :tableData="
               list.slice(
                 (page.pageNum - 1) * page.pageSize,
                 page.pageNum * page.pageSize
               )
             "
-            :tableHead="column"
-          >
-            <template #goodsInfo="{ scope }">
-              <div class="goodsInfo">
-                <ImageView customClass="table-img" :src="scope.mainImage" />
-                <div class="name">
-                  <el-tooltip
-                    class="item"
-                    effect="dark"
-                    :content="scope.productName"
-                    placement="right"
-                  >
-                    <span>{{ scope.productName }}</span>
-                  </el-tooltip>
-                </div>
-              </div>
-            </template>
-            <!-- 秒杀价 -->
-            <template #spikePrice="{ scope }">
-              <span>
-                {{ scope | priceRange("spikePriceMin", "spikePriceMax") }}
-              </span>
-            </template>
-            <!-- 操作 -->
-            <template #action="{ index }">
-              <div class="action-groud">
-                <el-button type="text" @click="handleDelete(index)">
-                  删除
-                </el-button>
-              </div>
-            </template>
-          </TablePanel>
+            :tableHead="tableHead"
+          />
           <!-- 分页 -->
           <Pagination
             v-if="!isRadio"
@@ -64,43 +33,43 @@
 
 <script>
 import CONST from "@/constants/index";
-import { GoodsColumn } from "./config/index";
-import { digits2Str } from "@/utils/index";
+import { column } from "./config/index";
+// import { digits2Str } from "@/utils/index";
+
 export default {
-  name: "ActivityGoods",
+  name: "GoodsSpecs",
   components: {},
   props: {
+    productNo: {
+      type: String,
+      default: "",
+    },
     // 是否是单选
     isRadio: {
       type: Boolean,
       default: false, // 默认多选
     },
-    // 显示秒杀价
-    showSpikePrice: {
-      type: Boolean,
-      default: false,
-    },
-    selectGoods: {
+    selectSpecs: {
       type: Array,
       default: () => [],
     },
-    goodsList: {
+    specsList: {
       type: Array,
       default: () => [],
     },
   },
   watch: {
-    selectGoods(val) {
+    selectSpecs(val) {
       this.list = val?.length ? val : [];
     },
-    goodsList(val) {
+    specsList(val) {
       if (val) this.init();
     },
   },
   data() {
     return {
       CONST,
-      GoodsColumn,
+      column,
       formData: {},
       rules: {},
       list: [],
@@ -111,22 +80,35 @@ export default {
     };
   },
   computed: {
+    tableHead({ column, list }) {
+      let isDeleteId2 = true;
+      try {
+        list.forEach((item) => {
+          if (item?.specificationValueName2) {
+            isDeleteId2 = false;
+            throw new Error();
+          }
+        });
+      } catch (error) {
+        //
+      }
+      const filterPropStr = `action,custom_checkbox,${
+        isDeleteId2 ? "specificationValueName2" : ""
+      }`;
+      return column.filter((item) => !filterPropStr.includes(item.prop));
+    },
     ids({ list }) {
       if (!list?.length) return [];
       return list.map((item) => item.id);
     },
-    column({ showSpikePrice, GoodsColumn }) {
-      const filterPropStr = `action,${showSpikePrice ? "" : "spikePrice"}`;
-      return GoodsColumn.filter((item) => !filterPropStr.includes(item.prop));
-    },
   },
   methods: {
     init() {
-      const goodsList = this.goodsList?.length ? this.goodsList : [];
-      goodsList.forEach((item) =>
-        digits2Str(item, ["categoryId", "supplierId"])
-      );
-      this.list = [].concat(goodsList);
+      const specsList = this.specsList?.length ? this.specsList : [];
+      // specsList.forEach((item) =>
+      //   digits2Str(item, ["categoryId", "supplierId"])
+      // );
+      this.list = [].concat(specsList);
     },
     handleSizeChange(val) {
       this.page.pageSize = val;
@@ -135,8 +117,9 @@ export default {
     handleCurrentChange(val) {
       this.page.pageNum = val;
     },
-    chooseGoods() {
-      this.$emit("chooseGoods", this.ids);
+    chooseSpecs() {
+      if (!this.productNo) return this.$message.error("请选择商品后再试");
+      this.$emit("chooseSpecs", { ids: this.ids, productNo: this.productNo });
     },
     handleDelete(index) {
       this.list.splice(index, 1);
@@ -153,21 +136,11 @@ export default {
         } catch (error) {
           return error;
         }
-        if (!this.list?.length) return this.$message.error("请选择商品后再试");
-        const product = this.list[0];
-        const radioData = {
-          product,
-          productId: product.id,
-          productNo: product.productNo,
-        };
-        const noRadioData = {
-          productIds: this.ids,
-          productList: this.list,
-        };
-
+        if (!this.list?.length) return this.$message.error("请选择规格后再试");
+        const specsData = this.list[0];
         resolve({
           ...this.formData,
-          ...(this.isRadio ? radioData : noRadioData),
+          productStockPriceId: specsData.id,
         });
       });
     },
@@ -178,7 +151,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.ActivityGoods {
+.GoodsSpecs {
   background: #fff;
   padding: 0 10px;
   margin: 0 0 60px;

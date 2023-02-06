@@ -135,4 +135,55 @@ export default {
       })
     );
   },
+  // 获取积分商品列表
+  GetIntegralGoodsList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/integralProduct/page",
+        params,
+        isReturnAll: true,
+      })
+    );
+  },
+  // 获取积分商品详情
+  GetIntegralGoodsDetail(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/integralProduct/detail",
+        params,
+        method: "GET",
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 新增积分商品
+  AddIntegralGoods(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/integralProduct/add",
+        params,
+      })
+    );
+  },
+  // 更新积分商品
+  UpdateIntegralGoods(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/integralProduct/update",
+        params,
+      })
+    );
+  },
+  // 删除积分商品
+  DeleteIntegralGoods(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/integralProduct/delete",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
 };
