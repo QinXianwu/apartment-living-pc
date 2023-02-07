@@ -9,4 +9,6 @@ export default {
   OperationsManage_CourierManage: 2034, // 运营管理-配送员管理
   OperationsManage_FeedbackList: 2035, // 运营管理-意见反馈
   OperationsManage_RecruiterList: 2036, // 运营管理-招聘记录
+  OperationsManage_GroupActivity: 2037, // 运营管理-拼团活动
+  OperationsManage_PointsGoods: 2038, // 运营管理-积分商品
 };

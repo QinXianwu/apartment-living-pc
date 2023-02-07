@@ -53,6 +53,8 @@ export default {
       apiFetch({
         url: apiPrefix + "/apartment-user/courier/updateStatus",
         params,
+        isHeadersForm: true,
+        isHandleParams: true,
       })
     );
   },

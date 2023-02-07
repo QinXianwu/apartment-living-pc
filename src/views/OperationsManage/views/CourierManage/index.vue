@@ -12,19 +12,46 @@
       <TablePanel :tableData="list" :tableHead="column">
         <template #status="{ scope }">
           <el-tag :type="getActivityTab(scope)">{{
-            $CONST.COURIER_AUDIT_STATE_TEXT[scope.status]
+            CONST.COURIER_AUDIT_STATE_TEXT[scope.status]
           }}</el-tag>
         </template>
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
             <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
-            <!-- <el-button
+            <el-button
               type="text"
-              @click="stopActivity(scope)"
-              v-if="scope.status === $CONST.ACTIVITY_STATUS.HAVE_IN_HAND"
-              >停止</el-button
-            > -->
+              @click="
+                handleReview({
+                  id: scope.id,
+                  status: CONST.COURIER_AUDIT_STATE.SUCCESS_CHECK,
+                })
+              "
+              v-if="scope.status === CONST.COURIER_AUDIT_STATE.NO_CHECK"
+              >审核通过</el-button
+            >
+            <el-button
+              type="text"
+              @click="
+                handleReview({
+                  id: scope.id,
+                  status: CONST.COURIER_AUDIT_STATE.INTERDICTED,
+                })
+              "
+              v-if="scope.status === CONST.COURIER_AUDIT_STATE.SUCCESS_CHECK"
+              >停职</el-button
+            >
+            <el-button
+              type="text"
+              @click="
+                handleReview({
+                  id: scope.id,
+                  status: CONST.COURIER_AUDIT_STATE.FAIL_CHECK,
+                })
+              "
+              v-if="scope.status === CONST.COURIER_AUDIT_STATE.NO_CHECK"
+              >驳回</el-button
+            >
           </div>
         </template>
       </TablePanel>
@@ -46,6 +73,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import CONST from "@/constants/index";
 import { column, formData, activityTab } from "./config";
 import UpdateCourierDiaog from "./components/UpdateCourierDiaog.vue";
 
@@ -54,6 +82,7 @@ export default {
   components: { UpdateCourierDiaog },
   data() {
     return {
+      CONST,
       formData,
       column, //表格头
       editInfo: "",
@@ -106,22 +135,31 @@ export default {
       this.editInfo = { id: data.id };
       this.showActivityDiaog = true;
     },
-    async stopActivity({ id }) {
+    async handleReview({ id, status }) {
+      const title =
+        status === CONST.COURIER_AUDIT_STATE.SUCCESS_CHECK
+          ? "通过"
+          : status === CONST.COURIER_AUDIT_STATE.INTERDICTED
+          ? "停职"
+          : "驳回";
       try {
-        await this.$confirm(`是否确认停止ID为'${id}'的秒杀活动？`, "停止活动", {
+        await this.$confirm(`是否确认'${title}'该配送员？`, `${title}提示`, {
           type: "warning",
           showClose: false,
         });
-        const [, res] = await this.$http.FastDeals.StopSecKillActivity({
+        const [, res] = await this.$http.Courier.UpdateCourierStatus({
           id,
+          status,
         });
-        const msg = res ? res?.msg || `停止成功` : `停止失败`;
-        this.$confirm(msg, "停止活动", {
+        const msg = res ? res?.msg || `${title}成功` : `${title}失败`;
+        this.$confirm(msg, `${title}提示`, {
           showClose: false,
           showCancelButton: false,
           type: res ? "success" : "error",
         }).then(() => {
-          if (res) this.getList();
+          if (res) {
+            this.getList();
+          }
         });
       } catch (error) {
         console.error(error);

@@ -78,7 +78,7 @@ export default {
       name: "GroupActivity",
       meta: {
         title: "拼团活动",
-        // PermissionId: PERMISSION_ID.OperationsManage_GroupGoods,
+        PermissionId: PERMISSION_ID.OperationsManage_GroupActivity,
       },
     },
     {
@@ -87,7 +87,7 @@ export default {
       name: "PointsGoods",
       meta: {
         title: "积分商品",
-        // PermissionId: PERMISSION_ID.OperationsManage_PointsGoods,
+        PermissionId: PERMISSION_ID.OperationsManage_PointsGoods,
       },
     },
     {
