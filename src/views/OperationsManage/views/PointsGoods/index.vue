@@ -7,10 +7,41 @@
       </div>
       <TagPage :state.sync="query.status" @getList="getList" />
       <TablePanel :tableData="list" :tableHead="column">
+        <template #goodsInfo="{ scope }">
+          <div class="goodsInfo">
+            <ImageView
+              customClass="table-img"
+              :src="scope.product && scope.product.mainImage"
+            />
+            <div class="name">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                :content="scope.product && scope.product.productName"
+                placement="right"
+              >
+                <span>{{ scope.product && scope.product.productName }}</span>
+              </el-tooltip>
+            </div>
+          </div>
+        </template>
+        <template #categoryName="{ scope }">
+          <span>{{
+            (scope.product && scope.product.categoryName) || "-"
+          }}</span>
+        </template>
+        <template #supplierName="{ scope }">
+          <span>{{
+            (scope.product && scope.product.supplierName) || "-"
+          }}</span>
+        </template>
         <template #status="{ scope }">
-          <el-tag :type="getActivityTab(scope)">{{
-            $CONST.ACT_STATUS_TEXT[scope.status]
-          }}</el-tag>
+          <el-tag
+            :type="
+              scope.status === $CONST.GOODS_OPER_STATE.REMOVAL ? 'danger' : ''
+            "
+            >{{ $CONST.GOODS_OPER_STATE_TEXT[scope.status] }}</el-tag
+          >
         </template>
         <!-- 操作 -->
         <template #action="{ scope }">
@@ -61,7 +92,7 @@
   </div>
 </template>
 <script>
-import { column, activityTab } from "./config";
+import { column } from "./config";
 import TagPage from "./components/TagPage.vue";
 import ChooseSpecsDiaog from "./components/ChooseSpecsDiaog.vue";
 import ChooseGoodsDiaog from "@/components/ChooseGoodsDiaog";
@@ -99,10 +130,12 @@ export default {
     };
   },
   watch: {
-    selectGoods(val) {
-      const id = val?.length ? val[0].id : "";
-      const oldId = this.selectGoodsIds?.length ? this.selectGoodsIds[0] : "";
-      if (id !== oldId) this.selectSpecs = [];
+    selectGoods() {
+      // console.log(val);
+      // const id = val?.length ? val[0].id : "";
+      // const oldId = this.selectGoodsIds?.length ? this.selectGoodsIds[0] : "";
+      // if (id !== oldId)
+      this.selectSpecs = [];
     },
   },
   computed: {
@@ -120,11 +153,6 @@ export default {
     handleCurrentChange(val) {
       this.page.pageNum = val;
       this.getList(false);
-    },
-    getActivityTab(data) {
-      const keyArr = [...activityTab()];
-      const tabTypeItem = keyArr.find((item) => item.is === data?.status);
-      return tabTypeItem?.tabType || "";
     },
     handleAdd() {
       this.editInfo = "";
@@ -180,6 +208,18 @@ export default {
 <style lang="scss" scoped>
 .PointsGoods {
   background: #fff;
+}
+.goodsInfo {
+  display: flex;
+  align-items: center;
+  .table-img {
+    width: 60px;
+    height: 60px;
+  }
+  .name {
+    margin-left: 10px;
+    @include overflow-eps(2);
+  }
 }
 .action {
   padding: 0 0 15px;

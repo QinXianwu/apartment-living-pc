@@ -140,7 +140,7 @@ export default {
     },
     handleDelete(index) {
       this.list.splice(index, 1);
-      this.$emit("updateList", this.list);
+      this.$emit("updateSelectList", this.list);
     },
     async getQuery() {
       // eslint-disable-next-line

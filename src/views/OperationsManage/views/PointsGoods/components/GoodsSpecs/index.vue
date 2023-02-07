@@ -13,7 +13,16 @@
               )
             "
             :tableHead="tableHead"
-          />
+          >
+            <!-- 操作 -->
+            <template #action="{ index }">
+              <div class="action-groud">
+                <el-button type="text" @click="handleDelete(index)">
+                  删除
+                </el-button>
+              </div>
+            </template>
+          </TablePanel>
           <!-- 分页 -->
           <Pagination
             v-if="!isRadio"
@@ -92,7 +101,7 @@ export default {
       } catch (error) {
         //
       }
-      const filterPropStr = `action,custom_checkbox,${
+      const filterPropStr = `custom_checkbox,${
         isDeleteId2 ? "specificationValueName2" : ""
       }`;
       return column.filter((item) => !filterPropStr.includes(item.prop));
@@ -119,10 +128,11 @@ export default {
     },
     chooseSpecs() {
       if (!this.productNo) return this.$message.error("请选择商品后再试");
-      this.$emit("chooseSpecs", { ids: this.ids, productNo: this.productNo });
+      this.$emit("chooseSpecs", this.ids);
     },
     handleDelete(index) {
       this.list.splice(index, 1);
+      this.$emit("updateSelectList", this.list);
     },
     async getQuery() {
       // eslint-disable-next-line

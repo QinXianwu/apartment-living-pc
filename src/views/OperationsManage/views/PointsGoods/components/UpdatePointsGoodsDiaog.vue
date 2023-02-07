@@ -48,6 +48,7 @@
       ref="ActivityGoods"
       :goodsList="goodsList"
       :selectGoods="selectGoods"
+      @updateSelectList="$emit('update:selectGoods', $event)"
       @chooseGoods="(val) => $emit('chooseGoods', val)"
     />
     <GoodsSpecs
@@ -56,6 +57,7 @@
       :productNo="productNo"
       :specsList="specsList"
       :selectSpecs="selectSpecs"
+      @updateSelectList="$emit('update:selectSpecs', $event)"
       @chooseSpecs="(val) => $emit('chooseSpecs', val)"
     />
     <span slot="footer">
@@ -94,6 +96,8 @@ export default {
       if (val) {
         this.detailInfo = {};
         this.formData = {};
+        this.goodsList = [];
+        this.specsList = [];
         this.getDetail(val);
       }
     },
@@ -147,15 +151,17 @@ export default {
   methods: {
     async getDetail() {
       if (!this.editInfo?.id) return;
-      this.isLoadingInfo = true;
+      this.isLoading = true;
       const [, res] = await this.$http.Goods.GetIntegralGoodsDetail({
         id: this.editInfo.id,
       });
-      this.isLoadingInfo = false;
+      this.isLoading = false;
       this.detailInfo = { ...(res || {}) };
       this.goodsList = this.detailInfo?.product?.id
         ? [this.detailInfo.product]
         : [];
+      this.$emit("update:selectGoods", this.goodsList);
+      this.specsList = this.detailInfo?.product?.productStockPriceList || [];
       this.formData = { ...this.formData, ...this.detailInfo };
     },
     async handleSubmit() {

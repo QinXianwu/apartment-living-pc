@@ -93,4 +93,11 @@ export const column = [
     prop: "secondDistributionAmount",
     type: "money",
   },
+  {
+    label: "操作",
+    prop: "action",
+    type: "custom",
+    fixed: "right",
+    width: 250,
+  },
 ];

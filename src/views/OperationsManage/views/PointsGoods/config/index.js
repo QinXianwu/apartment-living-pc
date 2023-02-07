@@ -1,4 +1,4 @@
-import CONST from "@/constants/index";
+// import CONST from "@/constants/index";
 
 // 搜索选项
 export const formData = [
@@ -41,17 +41,12 @@ export const column = [
   {
     label: "分类",
     prop: "categoryName",
-    showOverflowTooltip: true,
-  },
-  {
-    label: "商品标签",
-    prop: "goodsTab",
     type: "custom",
   },
   {
     label: "供应商",
     prop: "supplierName",
-    showOverflowTooltip: true,
+    type: "custom",
   },
   {
     label: "商品名称",
@@ -60,19 +55,20 @@ export const column = [
     minWidth: 150,
   },
   {
-    label: "供应价",
-    prop: "originalPrice",
-    type: "custom",
+    label: "积分",
+    prop: "integral",
   },
   {
-    label: "活动标签",
-    prop: "activityTab",
-    type: "custom",
-    width: 125,
+    label: "库存",
+    prop: "serviceStationStock",
+  },
+  {
+    label: "销量",
+    prop: "aaa",
   },
   {
     label: "状态",
-    prop: "operStatus",
+    prop: "status",
     type: "custom",
     width: 100,
   },
@@ -122,37 +118,5 @@ export const ProcurementColumn = [
     prop: "procurementNum",
     type: "custom",
     width: 160,
-  },
-];
-
-// 活动标签
-export const activityTab = () => [
-  {
-    key: "bargainIs",
-    label: "特价",
-    value: "",
-    tabType: "",
-    is: CONST.SPECIALS_TYPE.YES,
-  },
-  {
-    key: "discountIs",
-    label: "折扣",
-    value: "",
-    tabType: "success",
-    is: CONST.DISCOUNTED_TYPE.YES,
-  },
-  {
-    key: "isLimit",
-    label: "限购",
-    value: "",
-    tabType: "danger",
-    is: CONST.RESTRICTED_TYPE.YES,
-  },
-  {
-    key: "isPre",
-    label: "预售",
-    value: "",
-    tabType: "warning",
-    is: CONST.PRE_SALE_TYPE.YES,
   },
 ];
