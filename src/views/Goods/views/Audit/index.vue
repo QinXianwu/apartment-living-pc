@@ -43,11 +43,11 @@
         </template>
         <!-- 商品标签 -->
         <template #goodsTab="{ scope }">
-          <span v-if="!scope.activeLabels">-</span>
+          <span v-if="!scope.productTag">-</span>
           <el-tag
             v-else
             class="mr-10 mb-10"
-            v-for="(item, index) in scope.activeLabels.split(',') || []"
+            v-for="(item, index) in scope.productTag.split(',') || []"
             :key="index"
             >{{ item }}</el-tag
           >

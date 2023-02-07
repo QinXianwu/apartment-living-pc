@@ -152,7 +152,7 @@ export default {
       const props = "discount,discountPrice";
       return column.filter((item) => !props.includes(item.prop));
     },
-    tableHead({ skuList, dynamic_column, actionHead }) {
+    tableHead({ isDisableForm, skuList, dynamic_column, actionHead }) {
       let tempHead1 = [];
       if (skuList?.length <= 1) {
         tempHead1 = dynamic_column.filter(
@@ -161,7 +161,7 @@ export default {
       } else {
         tempHead1 = dynamic_column;
       }
-      return [].concat(
+      const arr = [].concat(
         tempHead1,
         [
           {
@@ -171,17 +171,18 @@ export default {
             minWidth: 100,
           },
         ],
-        actionHead,
-        [
-          {
-            label: "操作",
-            prop: "action",
-            type: "custom",
-            fixed: "right",
-            width: 250,
-          },
-        ]
+        actionHead
       );
+      if (!isDisableForm) {
+        arr.push({
+          label: "操作",
+          prop: "action",
+          type: "custom",
+          fixed: "right",
+          width: 250,
+        });
+      }
+      return arr;
     },
     initData({ column }) {
       const obj = {

@@ -1,5 +1,5 @@
 <template>
-  <div class="GoodsList view-container">
+  <div class="Purchase view-container">
     <div class="content">
       <SearchForm
         isReturnFormData
@@ -149,7 +149,7 @@ import StorageProcurement from "./components/StorageProcurement.vue";
 import ProcurementDetail from "./components/ProcurementDetail/index.vue";
 
 export default {
-  name: "GoodsList",
+  name: "Purchase",
   components: { TagPage, ProcurementDetail, StorageProcurement },
   data() {
     return {
