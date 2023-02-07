@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     width="1050px"
-    :title="`${editInfo && editInfo.id ? '编辑' : '新增'}秒杀活动`"
+    :title="`${editInfo && editInfo.id ? '编辑' : '新增'}拼团活动`"
     :visible.sync="visible"
     v-loading="isLoading"
     @close="handleClose(false)"
@@ -17,34 +17,6 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
           />
-        </el-form-item>
-        <el-form-item label="活动场次" prop="secKillSessionIds">
-          <el-select
-            :multiple="true"
-            collapse-tags
-            class="input-medium"
-            value-key="id"
-            placeholder="请选择活动场次"
-            v-model="formData.secKillSessionIds"
-          >
-            <div class="select-all">
-              <el-checkbox
-                :value="
-                  formData.secKillSessionIds.length ===
-                  secKillSessionOptions.length
-                "
-                @change="selectAll('secKillSessionIds')"
-                >全选</el-checkbox
-              >
-            </div>
-            <el-option
-              :key="index"
-              :label="ele.label"
-              :value="ele.value"
-              v-for="(ele, index) in secKillSessionOptions"
-            >
-            </el-option>
-          </el-select>
         </el-form-item>
         <el-form-item
           label="适用服务点"
@@ -93,7 +65,7 @@
     </div>
     <ActivityGoods
       isRadio
-      showSpikePrice
+      showGroupPrice
       ref="ActivityGoods"
       :goodsList="goodsList"
       :selectGoods="selectGoods"
@@ -132,7 +104,6 @@ export default {
         this.activityInfo = {};
         this.formData = {
           activityDate: [],
-          secKillSessionIds: [],
           serviceStationIds: [],
         };
         this.getDetail(val);
@@ -143,7 +114,6 @@ export default {
     return {
       formData: {
         activityDate: [],
-        secKillSessionIds: [],
         serviceStationIds: [],
       },
       isLoading: false,
@@ -158,9 +128,6 @@ export default {
       rules: {
         activityDate: [
           { required: true, message: "请选择活动时间", trigger: "blur" },
-        ],
-        secKillSessionIds: [
-          { required: true, message: "请选择活动场次", trigger: "blur" },
         ],
         serviceStationIds: [
           { required: true, message: "请选择适用服务点", trigger: "blur" },
@@ -181,7 +148,6 @@ export default {
     ...mapGetters({
       isService: "user/isService",
       serviceStationId: "user/serviceStationId",
-      secKillSessionOptions: "fastDeals/secKillSessionOptions",
       serviceStationOptions: "accountRoleManage/serviceStationOptions",
     }),
   },
@@ -189,9 +155,7 @@ export default {
     // 全选select
     selectAll(formKey) {
       let options = [];
-      if (formKey === "secKillSessionIds") {
-        options = this.secKillSessionOptions;
-      } else if (formKey === "serviceStationIds") {
+      if (formKey === "serviceStationIds") {
         options = this.serviceStationOptions;
       }
       if (this.formData[formKey]?.length === options.length) {

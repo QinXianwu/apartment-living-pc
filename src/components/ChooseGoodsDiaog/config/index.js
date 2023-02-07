@@ -51,6 +51,11 @@ export const column = [
     type: "custom",
   },
   {
+    label: "拼团价",
+    prop: "groupPrice",
+    type: "custom",
+  },
+  {
     label: "操作",
     prop: "action",
     type: "custom",

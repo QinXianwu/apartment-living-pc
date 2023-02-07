@@ -36,6 +36,12 @@
                 {{ scope | priceRange("spikePriceMin", "spikePriceMax") }}
               </span>
             </template>
+            <!-- 拼团价 -->
+            <template #groupPrice="{ scope }">
+              <span>
+                {{ scope | priceRange("groupPriceMin", "groupPriceMax") }}
+              </span>
+            </template>
             <!-- 操作 -->
             <template #action="{ index }">
               <div class="action-groud">
@@ -80,6 +86,11 @@ export default {
       type: Boolean,
       default: false,
     },
+    // 显示拼团价
+    showGroupPrice: {
+      type: Boolean,
+      default: false,
+    },
     selectGoods: {
       type: Array,
       default: () => [],
@@ -115,8 +126,10 @@ export default {
       if (!list?.length) return [];
       return list.map((item) => item.id);
     },
-    column({ showSpikePrice, GoodsColumn }) {
-      const filterPropStr = `${showSpikePrice ? "" : "spikePrice"}`;
+    column({ showSpikePrice, showGroupPrice, GoodsColumn }) {
+      const filterPropStr = `${showSpikePrice ? "" : "spikePrice"},${
+        showGroupPrice ? "" : "groupPrice"
+      }`;
       return GoodsColumn.filter((item) => !filterPropStr.includes(item.prop));
     },
   },

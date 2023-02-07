@@ -79,6 +79,16 @@ export default {
       })
     );
   },
+  // 获取拼团活动列表
+  GetGroupActivityList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/groupActivity/page",
+        params,
+        isReturnAll: true,
+      })
+    );
+  },
   // 获取问题反馈列表
   GetFeedbackList(params) {
     return catchAsyncFun(

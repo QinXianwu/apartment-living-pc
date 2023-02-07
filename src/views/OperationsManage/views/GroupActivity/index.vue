@@ -3,7 +3,7 @@
     <div class="content">
       <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
       <div class="action">
-        <el-button type="primary" @click="handleAdd"> 新增秒杀活动 </el-button>
+        <el-button type="primary" @click="handleAdd"> 新增拼团活动 </el-button>
       </div>
       <TagPage :state.sync="query.status" @getList="getList" />
       <TablePanel :tableData="list" :tableHead="column">
@@ -36,7 +36,7 @@
     </div>
     <ChooseGoodsDiaog
       isRadio
-      showSpikePrice
+      showGroupPrice
       :isStation="isService"
       :selectIds="selectGoodsIds"
       :show.sync="showGoodsDiaog"
@@ -121,7 +121,7 @@ export default {
     },
     async stopActivity({ id }) {
       try {
-        await this.$confirm(`是否确认停止ID为'${id}'的秒杀活动？`, "停止活动", {
+        await this.$confirm(`是否确认停止ID为'${id}'的拼团活动？`, "停止活动", {
           type: "warning",
           showClose: false,
         });
@@ -162,9 +162,9 @@ export default {
         ...this.page,
         ...this.query,
       };
-      const [, res] = await this.$http.FastDeals.GetActivityList(query);
+      const [, res] = await this.$http.FastDeals.GetGroupActivityList(query);
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
-        this.$message.error(res?.msg || "获取秒杀活动列表异常");
+        this.$message.error(res?.msg || "获取拼团活动列表异常");
       }
       this.list = res?.rows || [];
       this.total = res?.total || 0;
@@ -172,7 +172,6 @@ export default {
   },
   mounted() {
     this.getList();
-    this.$store.dispatch("fastDeals/GetSecKillSessionAllAction");
     this.$store.dispatch("accountRoleManage/GetServiceStationListAction");
   },
 };

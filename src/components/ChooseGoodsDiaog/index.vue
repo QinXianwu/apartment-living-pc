@@ -54,6 +54,12 @@
             {{ scope | priceRange("spikePriceMin", "spikePriceMax") }}
           </span>
         </template>
+        <!-- 拼团价 -->
+        <template #groupPrice="{ scope }">
+          <span>
+            {{ scope | priceRange("groupPriceMin", "groupPriceMax") }}
+          </span>
+        </template>
       </TablePanel>
       <!-- 分页 -->
       <Pagination
@@ -109,6 +115,11 @@ export default {
       type: Boolean,
       default: false,
     },
+    // 显示拼团价
+    showGroupPrice: {
+      type: Boolean,
+      default: false,
+    },
     selectIds: {
       type: Array,
       default: () => [],
@@ -137,10 +148,12 @@ export default {
     };
   },
   computed: {
-    tableHead({ isRadio, column, showCouple, showSpikePrice }) {
+    tableHead({ isRadio, column, showCouple, showSpikePrice, showGroupPrice }) {
       const filterPropStr = `action,${showCouple ? "" : "couple"},${
         showSpikePrice ? "" : "spikePrice"
-      },${isRadio ? "" : "custom_checkbox"}`;
+      },${showGroupPrice ? "" : "groupPrice"},${
+        isRadio ? "" : "custom_checkbox"
+      }`;
       return column.filter((item) => !filterPropStr.includes(item.prop));
     },
     ...mapGetters({
