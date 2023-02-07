@@ -43,11 +43,11 @@ export const column = [
     prop: "categoryName",
     type: "custom",
   },
-  {
-    label: "供应商",
-    prop: "supplierName",
-    type: "custom",
-  },
+  // {
+  //   label: "供应商",
+  //   prop: "supplierName",
+  //   type: "custom",
+  // },
   {
     label: "商品名称",
     prop: "goodsInfo",
