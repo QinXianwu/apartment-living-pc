@@ -9,7 +9,7 @@
       <TablePanel :tableData="list" :tableHead="column">
         <template #status="{ scope }">
           <el-tag :type="getActivityTab(scope)">{{
-            $CONST.ACT_STATUS_TEXT[scope.status]
+            $CONST.ACTIVITY_STATUS_TEXT[scope.status]
           }}</el-tag>
         </template>
         <!-- 操作 -->
@@ -19,7 +19,7 @@
             <el-button
               type="text"
               @click="stopActivity(scope)"
-              v-if="scope.status === $CONST.ACT_STATUS.HAVE_IN_HAND"
+              v-if="scope.status === $CONST.ACTIVITY_STATUS.HAVE_IN_HAND"
               >停止</el-button
             >
           </div>

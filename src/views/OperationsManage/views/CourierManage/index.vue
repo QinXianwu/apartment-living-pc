@@ -22,7 +22,7 @@
             <!-- <el-button
               type="text"
               @click="stopActivity(scope)"
-              v-if="scope.status === $CONST.ACT_STATUS.HAVE_IN_HAND"
+              v-if="scope.status === $CONST.ACTIVITY_STATUS.HAVE_IN_HAND"
               >停止</el-button
             > -->
           </div>

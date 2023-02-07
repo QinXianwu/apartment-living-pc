@@ -68,21 +68,21 @@ export const activityTab = () => [
   {
     value: "",
     tabType: "",
-    is: CONST.DISCOUNT_STATUS.NOT_START,
+    is: CONST.ACTIVITY_STATUS.NOT_START,
   },
   {
     value: "",
     tabType: "success",
-    is: CONST.DISCOUNT_STATUS.HAVE_IN_HAND,
+    is: CONST.ACTIVITY_STATUS.HAVE_IN_HAND,
   },
   {
     value: "",
     tabType: "danger",
-    is: CONST.DISCOUNT_STATUS.HAS_ENDED,
+    is: CONST.ACTIVITY_STATUS.HAS_ENDED,
   },
   {
     value: "",
     tabType: "warning",
-    is: CONST.DISCOUNT_STATUS.STOP,
+    is: CONST.ACTIVITY_STATUS.STOP,
   },
 ];

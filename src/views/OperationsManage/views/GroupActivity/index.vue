@@ -1,23 +1,12 @@
 <template>
-  <div class="ActivityList view-container">
+  <div class="GroupActivity view-container">
     <div class="content">
+      <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
       <div class="action">
-        <el-button @click="getList(true)"> 刷新 </el-button>
-        <el-button type="primary" @click="handleAdd"> 新增折扣活动 </el-button>
+        <el-button type="primary" @click="handleAdd"> 新增秒杀活动 </el-button>
       </div>
+      <TagPage :state.sync="query.status" @getList="getList" />
       <TablePanel :tableData="list" :tableHead="column">
-        <template #text="{ scope }">
-          <span
-            >{{ scope.productCount || "-" }}件{{
-              scope.discount || "-"
-            }}折</span
-          >
-        </template>
-        <template #goods-list="{ scope }">
-          <span>
-            {{ (scope.productList && scope.productList.length) || "-" }}
-          </span>
-        </template>
         <template #status="{ scope }">
           <el-tag :type="getActivityTab(scope)">{{
             $CONST.ACTIVITY_STATUS_TEXT[scope.status]
@@ -27,7 +16,12 @@
         <template #action="{ scope }">
           <div class="action-groud">
             <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
-            <el-button type="text" @click="handleDelete(scope)">删除</el-button>
+            <el-button
+              type="text"
+              @click="stopActivity(scope)"
+              v-if="scope.status === $CONST.ACTIVITY_STATUS.HAVE_IN_HAND"
+              >停止</el-button
+            >
           </div>
         </template>
       </TablePanel>
@@ -41,6 +35,9 @@
       />
     </div>
     <ChooseGoodsDiaog
+      isRadio
+      showSpikePrice
+      :isStation="isService"
       :selectIds="selectGoodsIds"
       :show.sync="showGoodsDiaog"
       @close="chooseClose"
@@ -57,15 +54,17 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { column, activityTab } from "./config";
+import { column, formData, activityTab } from "./config";
+import TagPage from "./components/TagPage.vue";
 import ChooseGoodsDiaog from "@/components/ChooseGoodsDiaog";
 import UpdateActivityDiaog from "./components/UpdateActivityDiaog.vue";
 
 export default {
-  name: "ActivityList",
-  components: { ChooseGoodsDiaog, UpdateActivityDiaog },
+  name: "GroupActivity",
+  components: { TagPage, ChooseGoodsDiaog, UpdateActivityDiaog },
   data() {
     return {
+      formData,
       column, //表格头
       editInfo: "",
       list: [],
@@ -74,7 +73,9 @@ export default {
         pageSize: 10,
       },
       total: 0,
-      query: {}, //过滤规则
+      query: {
+        status: "",
+      }, //过滤规则
       selectGoodsIds: [],
       selectGoods: [],
       showGoodsDiaog: false,
@@ -101,6 +102,15 @@ export default {
       const tabTypeItem = keyArr.find((item) => item.is === data?.status);
       return tabTypeItem?.tabType || "";
     },
+    onSearch(data) {
+      this.query = { ...data };
+      if (data?.activityDate?.length) {
+        this.query["startTime"] = data.activityDate[0];
+        this.query["endTime"] = data.activityDate[1];
+      }
+      delete this.query.activityDate;
+      this.getList(true);
+    },
     handleAdd() {
       this.editInfo = "";
       this.showActivityDiaog = true;
@@ -109,18 +119,17 @@ export default {
       this.editInfo = { id: data.id };
       this.showActivityDiaog = true;
     },
-    async handleDelete({ id, name }) {
+    async stopActivity({ id }) {
       try {
-        await this.$confirm(`是否确认删除'${name}'的折扣活动？`, "删除活动", {
+        await this.$confirm(`是否确认停止ID为'${id}'的秒杀活动？`, "停止活动", {
           type: "warning",
           showClose: false,
         });
-        const [, res] =
-          await this.$http.OperationsManage.DeleteDiscountActivity({
-            id,
-          });
-        const msg = res ? res?.msg || `删除成功` : `删除失败`;
-        this.$confirm(msg, "删除活动", {
+        const [, res] = await this.$http.FastDeals.StopSecKillActivity({
+          id,
+        });
+        const msg = res ? res?.msg || `停止成功` : `停止失败`;
+        this.$confirm(msg, "停止活动", {
           showClose: false,
           showCancelButton: false,
           type: res ? "success" : "error",
@@ -153,10 +162,9 @@ export default {
         ...this.page,
         ...this.query,
       };
-      const [, res] =
-        await this.$http.OperationsManage.GetPieceDiscountActivityList(query);
+      const [, res] = await this.$http.FastDeals.GetActivityList(query);
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
-        this.$message.error(res?.msg || "获取折扣活动列表异常");
+        this.$message.error(res?.msg || "获取秒杀活动列表异常");
       }
       this.list = res?.rows || [];
       this.total = res?.total || 0;
@@ -164,6 +172,8 @@ export default {
   },
   mounted() {
     this.getList();
+    this.$store.dispatch("fastDeals/GetSecKillSessionAllAction");
+    this.$store.dispatch("accountRoleManage/GetServiceStationListAction");
   },
 };
 </script>

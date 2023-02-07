@@ -5,6 +5,7 @@ import CouponHub from "@/views/OperationsManage/views/CouponHub/index.vue";
 import NewcomerActivities from "@/views/OperationsManage/views/NewcomerActivities/index.vue";
 import FastDeals from "@/views/OperationsManage/views/FastDeals/index.vue";
 import DiscountActivity from "@/views/OperationsManage/views/DiscountActivity/index.vue";
+import GroupActivity from "@/views/OperationsManage/views/GroupActivity/index.vue";
 import PointsGoods from "@/views/OperationsManage/views/PointsGoods/index.vue";
 import FeedbackList from "@/views/OperationsManage/views/FeedbackList/index.vue";
 import RecruiterList from "@/views/OperationsManage/views/RecruiterList/index.vue";
@@ -69,6 +70,15 @@ export default {
       meta: {
         title: "折扣活动",
         PermissionId: PERMISSION_ID.OperationsManage_DiscountActivity,
+      },
+    },
+    {
+      path: "GroupActivity",
+      component: GroupActivity,
+      name: "GroupActivity",
+      meta: {
+        title: "拼团活动",
+        // PermissionId: PERMISSION_ID.OperationsManage_GroupGoods,
       },
     },
     {
