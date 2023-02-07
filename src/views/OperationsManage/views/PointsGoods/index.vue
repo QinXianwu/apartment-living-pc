@@ -47,12 +47,7 @@
         <template #action="{ scope }">
           <div class="action-groud">
             <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
-            <el-button
-              type="text"
-              @click="stopActivity(scope)"
-              v-if="scope.status === $CONST.ACT_STATUS.HAVE_IN_HAND"
-              >停止</el-button
-            >
+            <el-button type="text" @click="handleDelete(scope)">删除</el-button>
           </div>
         </template>
       </TablePanel>
@@ -161,6 +156,29 @@ export default {
     handleEdit(data) {
       this.editInfo = { id: data.id };
       this.showActivityDiaog = true;
+    },
+    async handleDelete({ id }) {
+      try {
+        await this.$confirm(`是否确认删除商品ID为${id}的数据项？`, "删除提示", {
+          type: "warning",
+          showClose: false,
+        });
+        const [, res] = await this.$http.Goods.DeleteIntegralGoods({ id });
+        const msg = res ? res?.msg || `删除成功` : `删除失败`;
+        this.$confirm(msg, "删除提示", {
+          showClose: false,
+          showCancelButton: false,
+          type: res ? "success" : "error",
+        }).then(() => {
+          if (res) {
+            this.selectDataMap = {};
+            this.getList();
+          }
+        });
+      } catch (error) {
+        console.error(error);
+        error;
+      }
     },
     chooseGoods(data) {
       this.showGoodsDiaog = true;

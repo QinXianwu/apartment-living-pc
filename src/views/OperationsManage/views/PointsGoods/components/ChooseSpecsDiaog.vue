@@ -141,7 +141,7 @@ export default {
       const data = res?.productStockPriceList || [];
       // data.forEach((item) => digits2Str(item, ["id"]));
       this.list = data;
-      this.total = data?.total || 0;
+      this.total = data?.length || 0;
       this.initSelection();
     },
     initSelection() {
