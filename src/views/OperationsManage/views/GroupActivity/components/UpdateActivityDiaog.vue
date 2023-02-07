@@ -1,7 +1,9 @@
 <template>
   <el-dialog
     width="1050px"
-    :title="`${editInfo && editInfo.id ? '编辑' : '新增'}拼团活动`"
+    :title="`${
+      editInfo && editInfo.id ? (editInfo.write ? '编辑' : '查看') : '新增'
+    }拼团活动`"
     :visible.sync="visible"
     v-loading="isLoading"
     @close="handleClose(false)"
@@ -113,7 +115,12 @@
       @chooseGoods="(val) => $emit('chooseGoods', val)"
     />
     <span slot="footer">
-      <el-button type="primary" :loading="isLoading" @click="handleSubmit">
+      <el-button
+        type="primary"
+        v-if="editInfo && editInfo.write"
+        :loading="isLoading"
+        @click="handleSubmit"
+      >
         保存
       </el-button>
       <el-button @click="handleClose(false)"> 取消 </el-button>
