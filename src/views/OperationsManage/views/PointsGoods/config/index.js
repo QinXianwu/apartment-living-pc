@@ -60,11 +60,11 @@ export const column = [
   },
   {
     label: "库存",
-    prop: "serviceStationStock",
+    prop: "stockCount",
   },
   {
     label: "销量",
-    prop: "aaa",
+    prop: "exchangeCount",
   },
   {
     label: "状态",
