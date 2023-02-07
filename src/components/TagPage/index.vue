@@ -20,19 +20,24 @@
 export default {
   props: {
     state: [String, Number], //状态
+    tabs: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
-      tabValue: String(this.$CONST.COUPONS_TYPE.FULL_MINUS),
-      tabList: this.$CONST.COUPONS_TYPE_OPTIONS(),
+      tabValue: 0,
     };
+  },
+  computed: {
+    tabList({ tabs }) {
+      return tabs;
+    },
   },
   methods: {
     tabClick() {
-      const state =
-        Number(this.tabValue) === this.$CONST.COUPONS_TYPE.ALL
-          ? ""
-          : this.tabValue;
+      const state = !Number(this.tabValue) ? "" : this.tabValue;
       this.$emit("update:state", state);
       this.$emit("getList");
     },
@@ -41,9 +46,16 @@ export default {
 </script>
 <style lang="scss" scoped>
 .TagPage {
+  width: 100%;
   display: flex;
   justify-content: space-between;
+  position: relative;
+  &-l {
+    width: 100%;
+  }
   &-r {
+    position: absolute;
+    right: 0;
     margin: 15px 0 28px;
   }
 }

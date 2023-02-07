@@ -70,3 +70,5 @@ export const column = [
     width: 250,
   },
 ];
+
+export const tabs = CONST.COUPONS_TYPE_OPTIONS();

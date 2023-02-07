@@ -5,14 +5,14 @@
       <div class="action">
         <el-button type="primary" @click="handleAdd">新增优惠劵</el-button>
       </div>
-      <TagPage :state.sync="query.type" @getList="getList">
+      <TagPage :tabs="tabs" :state.sync="query.type" @getList="getList">
         <template>
           <el-button type="primary" @click="handleActivityRule"
             >活动说明</el-button
           >
         </template>
       </TagPage>
-      <TablePanel ref="TablePanel" :tableData="list" :tableHead="column">
+      <TablePanel :tableData="list" :tableHead="column">
         <template #applyProductType="{ scope }">
           <span>
             {{ CONST.APPLY_PRODUCT_TYPE_TEXT[scope.applyProductType] }}
@@ -99,8 +99,8 @@
 
 <script>
 import CONST from "@/constants/index";
-import { formData, column } from "./config";
-import TagPage from "../../components/TagPage.vue";
+import { formData, column, tabs } from "./config";
+import TagPage from "@/components/TagPage";
 import UpdateCoupon from "./components/UpdateCoupon";
 import ActivityRuleDiaog from "./components/ActivityRuleDiaog.vue";
 import CouponsDetail from "../../components/CouponsDetail";
@@ -122,6 +122,7 @@ export default {
       CONST,
       formData,
       column,
+      tabs,
       list: [],
       selectGoods: [],
       selectGoodsIds: [],

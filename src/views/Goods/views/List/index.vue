@@ -22,7 +22,7 @@
         >
         <el-button type="danger" @click="handleBatchDelete">批量删除</el-button>
       </div>
-      <TagPage :state.sync="query.operStatus" @getList="getList" />
+      <TagPage :tabs="tabs" :state.sync="query.operStatus" @getList="getList" />
       <TablePanel
         ref="TablePanel"
         :tableData="list"
@@ -169,9 +169,9 @@
 <script>
 import { mapGetters } from "vuex";
 import CONST from "@/constants/index";
-import TagPage from "./components/TagPage.vue";
+import TagPage from "@/components/TagPage";
 import ProcurementGoodsDiaog from "./components/ProcurementGoodsDiaog.vue";
-import { formData, column, activityTab } from "./config";
+import { formData, column, tabs, activityTab } from "./config";
 
 export default {
   name: "GoodsList",
@@ -180,6 +180,7 @@ export default {
     return {
       CONST,
       formData,
+      tabs,
       column,
       list: [],
       page: {

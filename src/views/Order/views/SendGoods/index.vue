@@ -7,7 +7,7 @@
         @on-search="onSearch"
       />
       <!-- <div class="action"></div> -->
-      <TagPage :state.sync="query.operStatus" @getList="getList" />
+      <TagPage :tabs="tabs" :state.sync="query.operStatus" @getList="getList" />
       <TablePanel ref="TablePanel" :tableData="list" :tableHead="column">
         <!--
         :checkbox="true"
@@ -143,8 +143,8 @@
 import { mapGetters } from "vuex";
 import CONST from "@/constants/index";
 import { digits2Str } from "@/utils/index";
-import { formData, column } from "./config";
-import TagPage from "./components/TagPage.vue";
+import { formData, column, tabs } from "./config";
+import TagPage from "@/components/TagPage";
 import StorageProcurement from "./components/StorageProcurement.vue";
 import ProcurementDetail from "./components/ProcurementDetail/index.vue";
 
@@ -156,6 +156,7 @@ export default {
       CONST,
       formData,
       column,
+      tabs,
       list: [],
       page: {
         pageNum: 1,

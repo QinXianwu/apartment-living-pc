@@ -5,7 +5,7 @@
       <div class="action">
         <el-button type="primary" @click="handleAdd"> 新增拼团活动 </el-button>
       </div>
-      <TagPage :state.sync="query.status" @getList="getList" />
+      <TagPage :tabs="tabs" :state.sync="query.status" @getList="getList" />
       <TablePanel :tableData="list" :tableHead="column">
         <template #status="{ scope }">
           <el-tag :type="getActivityTab(scope)">{{
@@ -49,8 +49,8 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { column, formData, activityTab } from "./config";
-import TagPage from "./components/TagPage.vue";
+import { column, formData, tabs, activityTab } from "./config";
+import TagPage from "@/components/TagPage";
 import ChooseGoodsDiaog from "@/components/ChooseGoodsDiaog";
 import UpdateActivityDiaog from "./components/UpdateActivityDiaog.vue";
 
@@ -60,7 +60,8 @@ export default {
   data() {
     return {
       formData,
-      column, //表格头
+      column,
+      tabs,
       editInfo: "",
       list: [],
       page: {

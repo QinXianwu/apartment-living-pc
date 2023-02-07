@@ -1,4 +1,4 @@
-// import CONST from "@/constants/index";
+import CONST from "@/constants/index";
 
 // 搜索选项
 export const formData = [
@@ -46,6 +46,29 @@ export const formData = [
   //   value: "",
   //   placeholder: "请输入商品名称",
   // },
+];
+
+export const tabs = [
+  {
+    label: "全部",
+    value: CONST.ORDER_PURCHASE_STATE.ALL,
+  },
+  {
+    label: "待发货",
+    value: CONST.ORDER_PURCHASE_STATE.WAIT_SEND,
+  },
+  {
+    label: "待收货",
+    value: CONST.ORDER_PURCHASE_STATE.WAIT_DELIVERY,
+  },
+  {
+    label: "已完成",
+    value: CONST.ORDER_PURCHASE_STATE.FINISH,
+  },
+  {
+    label: "已取消",
+    value: CONST.ORDER_PURCHASE_STATE.CANCEL,
+  },
 ];
 
 // 表格头

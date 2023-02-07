@@ -18,7 +18,11 @@
           >审核驳回</el-button
         >
       </div>
-      <TagPage :state.sync="query.approvalStatus" @getList="getList" />
+      <TagPage
+        :tabs="tabs"
+        :state.sync="query.approvalStatus"
+        @getList="getList"
+      />
       <TablePanel
         :tableData="list"
         :tableHead="column"
@@ -137,8 +141,8 @@
 <script>
 import { mapGetters } from "vuex";
 import CONST from "@/constants/index";
-import { formData, column } from "./config";
-import TagPage from "./components/TagPage.vue";
+import { formData, column, tabs } from "./config";
+import TagPage from "@/components/TagPage";
 import AuditFailDialog from "./components/AuditFailDialog.vue";
 
 export default {
@@ -148,6 +152,7 @@ export default {
     return {
       CONST,
       formData,
+      tabs,
       column,
       list: [],
       page: {

@@ -20,7 +20,7 @@
           >批量下架</el-button
         >
       </div>
-      <TagPage :state.sync="query.operStatus" @getList="getList" />
+      <TagPage :tabs="tabs" :state.sync="query.operStatus" @getList="getList" />
       <TablePanel
         ref="TablePanel"
         :tableData="list"
@@ -155,9 +155,9 @@
 <script>
 import { mapGetters } from "vuex";
 import CONST from "@/constants/index";
-import TagPage from "./components/TagPage.vue";
+import TagPage from "@/components/TagPage";
 import ProcurementGoodsDiaog from "./components/ProcurementGoodsDiaog.vue";
-import { formData, column, activityTab } from "./config";
+import { formData, column, tabs, activityTab } from "./config";
 
 export default {
   name: "ServerGoodsList",
@@ -167,6 +167,7 @@ export default {
       CONST,
       formData,
       column,
+      tabs,
       list: [],
       page: {
         pageNum: 1,

@@ -96,4 +96,15 @@ export default {
       })
     );
   },
+  // 获取运营后台订单详情
+  GetOrderDetail(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-order/order/atorder/infoByAdmin",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
 };

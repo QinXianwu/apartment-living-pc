@@ -5,7 +5,7 @@
         <el-button @click="getList(true)"> 刷新 </el-button>
         <el-button type="primary" @click="handleAdd"> 新增积分商品 </el-button>
       </div>
-      <TagPage :state.sync="query.status" @getList="getList" />
+      <TagPage :tabs="tabs" :state.sync="query.status" @getList="getList" />
       <TablePanel :tableData="list" :tableHead="column">
         <template #goodsInfo="{ scope }">
           <div class="goodsInfo">
@@ -87,8 +87,8 @@
   </div>
 </template>
 <script>
-import { column } from "./config";
-import TagPage from "./components/TagPage.vue";
+import { column, tabs } from "./config";
+import TagPage from "@/components/TagPage";
 import ChooseSpecsDiaog from "./components/ChooseSpecsDiaog.vue";
 import ChooseGoodsDiaog from "@/components/ChooseGoodsDiaog";
 import UpdatePointsGoodsDiaog from "./components/UpdatePointsGoodsDiaog.vue";
@@ -103,7 +103,8 @@ export default {
   },
   data() {
     return {
-      column, //表格头
+      column,
+      tabs,
       editInfo: "",
       list: [],
       page: {

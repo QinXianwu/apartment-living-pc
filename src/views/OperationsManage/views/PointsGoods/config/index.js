@@ -1,4 +1,4 @@
-// import CONST from "@/constants/index";
+import CONST from "@/constants/index";
 
 // 搜索选项
 export const formData = [
@@ -29,6 +29,21 @@ export const formData = [
   //   options: [],
   //   placeholder: "请选择供应商",
   // },
+];
+
+export const tabs = [
+  {
+    label: "全部",
+    value: CONST.GOODS_OPER_STATE.ALL,
+  },
+  {
+    label: "上架",
+    value: CONST.GOODS_OPER_STATE.LISTING,
+  },
+  {
+    label: "下架",
+    value: CONST.GOODS_OPER_STATE.REMOVAL,
+  },
 ];
 
 // 表格头

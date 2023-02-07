@@ -48,6 +48,29 @@ export const column = [
   },
 ];
 
+export const tabs = [
+  {
+    label: "全部",
+    value: CONST.ACTIVITY_STATUS.ALL,
+  },
+  {
+    label: "未开始",
+    value: CONST.ACTIVITY_STATUS.NOT_START,
+  },
+  {
+    label: "进行中",
+    value: CONST.ACTIVITY_STATUS.HAVE_IN_HAND,
+  },
+  {
+    label: "已结束",
+    value: CONST.ACTIVITY_STATUS.HAS_ENDED,
+  },
+  {
+    label: "已停止",
+    value: CONST.ACTIVITY_STATUS.STOP,
+  },
+];
+
 // 活动标签
 export const activityTab = () => [
   {

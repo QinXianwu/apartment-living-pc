@@ -3,7 +3,7 @@
     <div class="content">
       <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
       <!-- <div class="action"></div> -->
-      <TagPage :state.sync="query.type" @getList="getList" />
+      <TagPage :tabs="tabs" :state.sync="query.type" @getList="getList" />
       <TablePanel ref="TablePanel" :tableData="list" :tableHead="column">
         <template #applyProductType="{ scope }">
           <span>
@@ -62,8 +62,8 @@
 
 <script>
 import CONST from "@/constants/index";
-import { formData, column } from "./config";
-import TagPage from "../../components/TagPage.vue";
+import { formData, column, tabs } from "./config";
+import TagPage from "@/components/TagPage";
 import CouponsDetail from "../../components/CouponsDetail";
 
 export default {
@@ -74,6 +74,7 @@ export default {
       CONST,
       formData,
       column,
+      tabs,
       list: [],
       page: {
         pageNum: 1,

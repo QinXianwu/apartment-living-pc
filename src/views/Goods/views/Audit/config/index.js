@@ -1,4 +1,4 @@
-// import CONST from "@/constants/index";
+import CONST from "@/constants/index";
 
 // 搜索选项
 export const formData = [
@@ -85,5 +85,24 @@ export const column = [
     type: "custom",
     fixed: "right",
     width: 250,
+  },
+];
+
+export const tabs = [
+  {
+    label: "全部",
+    value: CONST.AUDIT_TYPE.ALL,
+  },
+  {
+    label: "待审核",
+    value: CONST.AUDIT_TYPE.NO_CHECK,
+  },
+  {
+    label: "审核成功",
+    value: CONST.AUDIT_TYPE.SUCCESS_CHECK,
+  },
+  {
+    label: "审核失败",
+    value: CONST.AUDIT_TYPE.FAIL_CHECK,
   },
 ];

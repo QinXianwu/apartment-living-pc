@@ -170,6 +170,25 @@ export const ProcurementColumn = [
   },
 ];
 
+export const tabs = [
+  {
+    label: "全部",
+    value: CONST.GOODS_OPER_STATE.ALL,
+  },
+  {
+    label: "上架",
+    value: CONST.GOODS_OPER_STATE.LISTING,
+  },
+  {
+    label: "下架",
+    value: CONST.GOODS_OPER_STATE.REMOVAL,
+  },
+  {
+    label: "待审核",
+    value: CONST.GOODS_OPER_STATE.NO_CHECK,
+  },
+];
+
 // 活动标签
 export const activityTab = () => [
   {
