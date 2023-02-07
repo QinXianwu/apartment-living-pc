@@ -1,3 +1,4 @@
+import { getOpitonsByText } from "../utils";
 // 运营管理模块
 
 // 活动状态
@@ -14,24 +15,8 @@ export const ACTIVITY_STATUS_TEXT = {
   [ACTIVITY_STATUS.HAS_ENDED]: "已结束",
   [ACTIVITY_STATUS.STOP]: "已停止",
 };
-export const ACTIVITY_STATUS_OPTIONS = () => [
-  {
-    label: ACTIVITY_STATUS_TEXT[ACTIVITY_STATUS.NOT_START],
-    value: ACTIVITY_STATUS.NOT_START,
-  },
-  {
-    label: ACTIVITY_STATUS_TEXT[ACTIVITY_STATUS.HAVE_IN_HAND],
-    value: ACTIVITY_STATUS.HAVE_IN_HAND,
-  },
-  {
-    label: ACTIVITY_STATUS_TEXT[ACTIVITY_STATUS.HAS_ENDED],
-    value: ACTIVITY_STATUS.HAS_ENDED,
-  },
-  {
-    label: ACTIVITY_STATUS_TEXT[ACTIVITY_STATUS.STOP],
-    value: ACTIVITY_STATUS.STOP,
-  },
-];
+export const ACTIVITY_STATUS_OPTIONS = () =>
+  getOpitonsByText(ACTIVITY_STATUS_TEXT);
 
 // 反馈状态
 export const FEED_BACK_STATE = {
@@ -43,16 +28,8 @@ export const FEED_BACK_STATE_TEXT = {
   [FEED_BACK_STATE.A_S_PROCESSED]: "已处理",
 };
 // options
-export const FEED_BACK_STATE_OPTIONS = () => [
-  {
-    label: FEED_BACK_STATE_TEXT[FEED_BACK_STATE.A_S_HANDLE],
-    value: FEED_BACK_STATE.A_S_HANDLE,
-  },
-  {
-    label: FEED_BACK_STATE_TEXT[FEED_BACK_STATE.A_S_PROCESSED],
-    value: FEED_BACK_STATE.A_S_PROCESSED,
-  },
-];
+export const FEED_BACK_STATE_OPTIONS = () =>
+  getOpitonsByText(FEED_BACK_STATE_TEXT);
 
 // 招聘状态
 export const RECRUITER_STATE = {
@@ -64,16 +41,8 @@ export const RECRUITER_STATE_TEXT = {
   [RECRUITER_STATE.A_S_PROCESSED]: "已处理",
 };
 // options
-export const RECRUITER_STATE_OPTIONS = () => [
-  {
-    label: RECRUITER_STATE_TEXT[FEED_BACK_STATE.A_S_HANDLE],
-    value: FEED_BACK_STATE.A_S_HANDLE,
-  },
-  {
-    label: RECRUITER_STATE_TEXT[FEED_BACK_STATE.A_S_PROCESSED],
-    value: FEED_BACK_STATE.A_S_PROCESSED,
-  },
-];
+export const RECRUITER_STATE_OPTIONS = () =>
+  getOpitonsByText(RECRUITER_STATE_TEXT);
 
 // 配送员状态
 export const COURIER_AUDIT_STATE = {
@@ -89,24 +58,8 @@ export const COURIER_AUDIT_STATE_TEXT = {
   [COURIER_AUDIT_STATE.INTERDICTED]: "停职",
 };
 // 审核options
-export const COURIER_AUDIT_STATE_OPTIONS = () => [
-  {
-    label: COURIER_AUDIT_STATE_TEXT[COURIER_AUDIT_STATE.NO_CHECK],
-    value: COURIER_AUDIT_STATE.NO_CHECK,
-  },
-  {
-    label: COURIER_AUDIT_STATE_TEXT[COURIER_AUDIT_STATE.SUCCESS_CHECK],
-    value: COURIER_AUDIT_STATE.SUCCESS_CHECK,
-  },
-  {
-    label: COURIER_AUDIT_STATE_TEXT[COURIER_AUDIT_STATE.FAIL_CHECK],
-    value: COURIER_AUDIT_STATE.FAIL_CHECK,
-  },
-  {
-    label: COURIER_AUDIT_STATE_TEXT[COURIER_AUDIT_STATE.INTERDICTED],
-    value: COURIER_AUDIT_STATE.INTERDICTED,
-  },
-];
+export const COURIER_AUDIT_STATE_OPTIONS = () =>
+  getOpitonsByText(COURIER_AUDIT_STATE_TEXT);
 
 // 限制时间类型
 export const GROUP_LIMIT_TYPE = {
@@ -117,13 +70,5 @@ export const GROUP_LIMIT_TYPE_TEXT = {
   [GROUP_LIMIT_TYPE.HOUR]: "小时",
   [GROUP_LIMIT_TYPE.DAYS]: "天",
 };
-export const GROUP_LIMIT_OPTIONS = () => [
-  {
-    label: GROUP_LIMIT_TYPE_TEXT[GROUP_LIMIT_TYPE.HOUR],
-    value: GROUP_LIMIT_TYPE.HOUR,
-  },
-  {
-    label: GROUP_LIMIT_TYPE_TEXT[GROUP_LIMIT_TYPE.DAYS],
-    value: GROUP_LIMIT_TYPE.DAYS,
-  },
-];
+export const GROUP_LIMIT_OPTIONS = () =>
+  getOpitonsByText(GROUP_LIMIT_TYPE_TEXT);

@@ -32,13 +32,4 @@ export const USER_STATE_TEXT = {
   [USER_STATE.OFF]: "停用",
 };
 // 用户options类型
-export const USER_STATE_OPTIONS = () => [
-  {
-    label: USER_STATE_TEXT[USER_STATE.ON],
-    value: USER_STATE.ON,
-  },
-  {
-    label: USER_STATE_TEXT[USER_STATE.OFF],
-    value: USER_STATE.OFF,
-  },
-];
+export const USER_STATE_OPTIONS = () => getOpitonsByText(USER_STATE_TEXT);

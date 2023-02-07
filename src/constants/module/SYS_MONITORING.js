@@ -1,3 +1,5 @@
+import { getOpitonsByText } from "../utils";
+
 // 任务组状态
 export const JOB_GROUP = {
   DEFAULT: "DEFAULT", // 默认
@@ -8,16 +10,7 @@ export const JOB_GROUP_TEXT = {
   [JOB_GROUP.SYSTEM]: "系统",
 };
 // 任务组options类型
-export const JOB_GROUP_OPTIONS = () => [
-  {
-    label: JOB_GROUP_TEXT[JOB_GROUP.DEFAULT],
-    value: JOB_GROUP.DEFAULT,
-  },
-  {
-    label: JOB_GROUP_TEXT[JOB_GROUP.SYSTEM],
-    value: JOB_GROUP.SYSTEM,
-  },
-];
+export const JOB_GROUP_OPTIONS = () => getOpitonsByText(JOB_GROUP_TEXT);
 
 // 定时任务状态
 export const JOB_STATE = {
@@ -29,16 +22,7 @@ export const JOB_STATE_TEXT = {
   [JOB_STATE.OFF]: "停用",
 };
 // 定时任务状态options类型
-export const JOB_STATE_OPTIONS = () => [
-  {
-    label: JOB_STATE_TEXT[JOB_STATE.ON],
-    value: JOB_STATE.ON,
-  },
-  {
-    label: JOB_STATE_TEXT[JOB_STATE.OFF],
-    value: JOB_STATE.OFF,
-  },
-];
+export const JOB_STATE_OPTIONS = () => getOpitonsByText(JOB_STATE_TEXT);
 
 // 执行策略
 export const EXECUTE_POLICY = {
@@ -54,20 +38,8 @@ export const EXECUTE_POLICY_TEXT = {
   [EXECUTE_POLICY.ABANDON_EXECUTION]: "放弃执行",
 };
 // 执行策略options类型
-export const EXECUTE_POLICY_OPTIONS = () => [
-  {
-    label: EXECUTE_POLICY_TEXT[EXECUTE_POLICY.EXECUTE_IMMEDIATELY],
-    value: EXECUTE_POLICY.EXECUTE_IMMEDIATELY,
-  },
-  {
-    label: EXECUTE_POLICY_TEXT[EXECUTE_POLICY.EXECUTE_ONCE],
-    value: EXECUTE_POLICY.EXECUTE_ONCE,
-  },
-  {
-    label: EXECUTE_POLICY_TEXT[EXECUTE_POLICY.ABANDON_EXECUTION],
-    value: EXECUTE_POLICY.ABANDON_EXECUTION,
-  },
-];
+export const EXECUTE_POLICY_OPTIONS = () =>
+  getOpitonsByText(EXECUTE_POLICY_TEXT);
 
 // 并发类型
 export const CONCURRENCY = {
@@ -79,13 +51,4 @@ export const CONCURRENCY_TEXT = {
   [CONCURRENCY.FORBID]: "禁止",
 };
 // 并发options类型
-export const CONCURRENCY_OPTIONS = () => [
-  {
-    label: CONCURRENCY_TEXT[CONCURRENCY.ALLOW],
-    value: CONCURRENCY.ALLOW,
-  },
-  {
-    label: CONCURRENCY_TEXT[CONCURRENCY.FORBID],
-    value: CONCURRENCY.FORBID,
-  },
-];
+export const CONCURRENCY_OPTIONS = () => getOpitonsByText(CONCURRENCY_TEXT);

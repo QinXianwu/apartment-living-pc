@@ -1,3 +1,5 @@
+import { getOpitonsByText } from "../utils";
+
 // 角色状态
 export const ROLE_STATE = {
   ON: "0", // 正常
@@ -8,16 +10,7 @@ export const ROLE_STATE_TEXT = {
   [ROLE_STATE.OFF]: "停用",
 };
 // 角色options类型
-export const ROLE_STATE_OPTIONS = () => [
-  {
-    label: ROLE_STATE_TEXT[ROLE_STATE.ON],
-    value: ROLE_STATE.ON,
-  },
-  {
-    label: ROLE_STATE_TEXT[ROLE_STATE.OFF],
-    value: ROLE_STATE.OFF,
-  },
-];
+export const ROLE_STATE_OPTIONS = () => getOpitonsByText(ROLE_STATE_TEXT);
 
 // 菜单状态
 export const MENU_STATE = {
@@ -29,16 +22,7 @@ export const MENU_STATE_TEXT = {
   [MENU_STATE.OFF]: "停用",
 };
 // 菜单options类型
-export const MENU_STATE_OPTIONS = () => [
-  {
-    label: MENU_STATE_TEXT[MENU_STATE.ON],
-    value: MENU_STATE.ON,
-  },
-  {
-    label: MENU_STATE_TEXT[MENU_STATE.OFF],
-    value: MENU_STATE.OFF,
-  },
-];
+export const MENU_STATE_OPTIONS = () => getOpitonsByText(MENU_STATE_TEXT);
 
 // 菜单类型
 export const MENU_TYPE = {
@@ -52,20 +36,7 @@ export const MENU_TYPE_TEXT = {
   [MENU_TYPE.BUTTON]: "按钮",
 };
 // 菜单类型options类型
-export const MENU_TYPE_OPTIONS = () => [
-  {
-    label: MENU_TYPE_TEXT[MENU_TYPE.DIRECTORY],
-    value: MENU_TYPE.DIRECTORY,
-  },
-  {
-    label: MENU_TYPE_TEXT[MENU_TYPE.MENU],
-    value: MENU_TYPE.MENU,
-  },
-  {
-    label: MENU_TYPE_TEXT[MENU_TYPE.BUTTON],
-    value: MENU_TYPE.BUTTON,
-  },
-];
+export const MENU_TYPE_OPTIONS = () => getOpitonsByText(MENU_TYPE_TEXT);
 
 // 菜单显示状态
 export const MENU_SHOW_STATE = {
@@ -77,16 +48,8 @@ export const MENU_SHOW_STATE_TEXT = {
   [MENU_SHOW_STATE.HIDE]: "隐藏",
 };
 // 菜单options类型
-export const MENU_SHOW_STATE_OPTIONS = () => [
-  {
-    label: MENU_SHOW_STATE_TEXT[MENU_SHOW_STATE.SHOW],
-    value: MENU_SHOW_STATE.SHOW,
-  },
-  {
-    label: MENU_SHOW_STATE_TEXT[MENU_SHOW_STATE.HIDE],
-    value: MENU_SHOW_STATE.HIDE,
-  },
-];
+export const MENU_SHOW_STATE_OPTIONS = () =>
+  getOpitonsByText(MENU_SHOW_STATE_TEXT);
 
 // 菜单是否为外链
 export const MENU_BACKLINKS = {
@@ -110,16 +73,7 @@ export const DEPT_STATE_TEXT = {
   [DEPT_STATE.OFF]: "停用",
 };
 // 部门options类型
-export const DEPT_STATE_OPTIONS = () => [
-  {
-    label: DEPT_STATE_TEXT[DEPT_STATE.ON],
-    value: DEPT_STATE.ON,
-  },
-  {
-    label: DEPT_STATE_TEXT[DEPT_STATE.OFF],
-    value: DEPT_STATE.OFF,
-  },
-];
+export const DEPT_STATE_OPTIONS = () => getOpitonsByText(DEPT_STATE_TEXT);
 
 // 岗位状态
 export const POST_STATE = {
@@ -131,16 +85,7 @@ export const POST_STATE_TEXT = {
   [POST_STATE.OFF]: "停用",
 };
 // 岗位options类型
-export const POST_STATE_OPTIONS = () => [
-  {
-    label: POST_STATE_TEXT[POST_STATE.ON],
-    value: POST_STATE.ON,
-  },
-  {
-    label: POST_STATE_TEXT[POST_STATE.OFF],
-    value: POST_STATE.OFF,
-  },
-];
+export const POST_STATE_OPTIONS = () => getOpitonsByText(POST_STATE_TEXT);
 
 // 字典状态
 export const DICT_STATE = {
@@ -152,16 +97,7 @@ export const DICT_STATE_TEXT = {
   [DICT_STATE.OFF]: "停用",
 };
 // 字典options类型
-export const DICT_STATE_OPTIONS = () => [
-  {
-    label: DICT_STATE_TEXT[DICT_STATE.ON],
-    value: DICT_STATE.ON,
-  },
-  {
-    label: DICT_STATE_TEXT[DICT_STATE.OFF],
-    value: DICT_STATE.OFF,
-  },
-];
+export const DICT_STATE_OPTIONS = () => getOpitonsByText(DICT_STATE_TEXT);
 
 // 系统日志操作状态
 export const SYS_ACTION_STATE = {
@@ -173,16 +109,8 @@ export const SYS_ACTION_STATE_TEXT = {
   [SYS_ACTION_STATE.FAIL]: "失败",
 };
 // 系统日志操作状态options类型
-export const SYS_ACTION_STATE_OPTIONS = () => [
-  {
-    label: SYS_ACTION_STATE_TEXT[SYS_ACTION_STATE.SUCCESS],
-    value: SYS_ACTION_STATE.SUCCESS,
-  },
-  {
-    label: SYS_ACTION_STATE_TEXT[SYS_ACTION_STATE.FAIL],
-    value: SYS_ACTION_STATE.FAIL,
-  },
-];
+export const SYS_ACTION_STATE_OPTIONS = () =>
+  getOpitonsByText(SYS_ACTION_STATE_TEXT);
 
 // 系统日志操作类型
 export const SYS_ACTION_TYPE = {
@@ -208,44 +136,8 @@ export const SYS_ACTION_TYPE_TEXT = {
   [SYS_ACTION_TYPE.CLEAR_DATA]: "清空数据",
 };
 // 系统日志操作类型options类型
-export const SYS_ACTION_TYPE_OPTIONS = () => [
-  {
-    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.ADD],
-    value: SYS_ACTION_TYPE.ADD,
-  },
-  {
-    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.UPDATE],
-    value: SYS_ACTION_TYPE.UPDATE,
-  },
-  {
-    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.DELETE],
-    value: SYS_ACTION_TYPE.DELETE,
-  },
-  {
-    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.LICENSING],
-    value: SYS_ACTION_TYPE.LICENSING,
-  },
-  {
-    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.EXPORT],
-    value: SYS_ACTION_TYPE.EXPORT,
-  },
-  {
-    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.IMPORT],
-    value: SYS_ACTION_TYPE.IMPORT,
-  },
-  {
-    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.FORCE_OUT],
-    value: SYS_ACTION_TYPE.FORCE_OUT,
-  },
-  {
-    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.GENERATE_CODE],
-    value: SYS_ACTION_TYPE.GENERATE_CODE,
-  },
-  {
-    label: SYS_ACTION_TYPE_TEXT[SYS_ACTION_TYPE.CLEAR_DATA],
-    value: SYS_ACTION_TYPE.CLEAR_DATA,
-  },
-];
+export const SYS_ACTION_TYPE_OPTIONS = () =>
+  getOpitonsByText(SYS_ACTION_TYPE_TEXT);
 
 // 协议类型
 export const PROTOCOL_TYPE = {
@@ -258,13 +150,4 @@ export const PROTOCOL_TYPE_TEXT = {
   [PROTOCOL_TYPE.PRIVACY_AGREEMENT]: "隐私协议",
 };
 
-export const PROTOCOL_TYPE_OPTIONS = [
-  {
-    label: PROTOCOL_TYPE_TEXT[PROTOCOL_TYPE.USER_AGREEMENT],
-    value: PROTOCOL_TYPE.USER_AGREEMENT,
-  },
-  {
-    label: PROTOCOL_TYPE_TEXT[PROTOCOL_TYPE.PRIVACY_AGREEMENT],
-    value: PROTOCOL_TYPE.PRIVACY_AGREEMENT,
-  },
-];
+export const PROTOCOL_TYPE_OPTIONS = getOpitonsByText(PROTOCOL_TYPE_TEXT);
