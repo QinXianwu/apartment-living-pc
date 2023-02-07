@@ -6,7 +6,7 @@
     v-loading="isLoading"
     @close="handleClose(false)"
   >
-    <div class="content">
+    <div class="content" v-loading="isLoadingInfo">
       <el-form ref="form" :model="formData" :rules="rules" label-width="120px">
         <el-form-item label="活动名称" prop="name">
           <el-input

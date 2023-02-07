@@ -6,7 +6,7 @@
     v-loading="isLoading"
     @close="handleClose(false)"
   >
-    <div class="content">
+    <div class="content" v-loading="isLoadingInfo">
       <el-form ref="form" :model="formData" :rules="rules" label-width="120px">
         <el-form-item label="积分" prop="integral">
           <el-input-number
@@ -151,11 +151,11 @@ export default {
   methods: {
     async getDetail() {
       if (!this.editInfo?.id) return;
-      this.isLoading = true;
+      this.isLoadingInfo = true;
       const [, res] = await this.$http.Goods.GetIntegralGoodsDetail({
         id: this.editInfo.id,
       });
-      this.isLoading = false;
+      this.isLoadingInfo = false;
       this.detailInfo = { ...(res || {}) };
       this.goodsList = this.detailInfo?.product?.id
         ? [this.detailInfo.product]

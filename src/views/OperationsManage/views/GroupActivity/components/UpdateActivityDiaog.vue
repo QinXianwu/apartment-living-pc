@@ -8,7 +8,7 @@
     v-loading="isLoading"
     @close="handleClose(false)"
   >
-    <div class="content">
+    <div class="content" v-loading="isLoadingInfo">
       <el-form
         ref="form"
         :model="formData"
