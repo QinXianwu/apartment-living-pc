@@ -115,28 +115,26 @@ export default {
       this.showActivityDiaog = true;
     },
     async stopActivity({ id }) {
-      console.log(id);
-      return this.$message.info("功能开发中");
-      // try {
-      //   await this.$confirm(`是否确认停止ID为'${id}'的拼团活动？`, "停止活动", {
-      //     type: "warning",
-      //     showClose: false,
-      //   });
-      //   const [, res] = await this.$http.FastDeals.StopSecKillActivity({
-      //     id,
-      //   });
-      //   const msg = res ? res?.msg || `停止成功` : `停止失败`;
-      //   this.$confirm(msg, "停止活动", {
-      //     showClose: false,
-      //     showCancelButton: false,
-      //     type: res ? "success" : "error",
-      //   }).then(() => {
-      //     if (res) this.getList();
-      //   });
-      // } catch (error) {
-      //   console.error(error);
-      //   error;
-      // }
+      try {
+        await this.$confirm(`是否确认停止ID为'${id}'的拼团活动？`, "停止活动", {
+          type: "warning",
+          showClose: false,
+        });
+        const [, res] = await this.$http.OperationsManage.StopGroupActivity({
+          id,
+        });
+        const msg = res ? res?.msg || `停止成功` : `停止失败`;
+        this.$confirm(msg, "停止活动", {
+          showClose: false,
+          showCancelButton: false,
+          type: res ? "success" : "error",
+        }).then(() => {
+          if (res) this.getList();
+        });
+      } catch (error) {
+        console.error(error);
+        error;
+      }
     },
     chooseGoods(data) {
       this.showGoodsDiaog = true;
