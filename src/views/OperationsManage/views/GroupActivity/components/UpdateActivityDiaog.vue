@@ -50,16 +50,49 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="库存数量" prop="stockCount">
+        <el-form-item label="成团人数" prop="groupCount">
           <el-input-number
             class="input-medium"
-            v-model="formData.stockCount"
-            placeholder="库存数量"
+            v-model="formData.groupCount"
+            placeholder="成团人数"
             :min="0"
             :controls="false"
             :precision="0"
             :step="1"
           />
+        </el-form-item>
+        <el-form-item label="拼团库存" prop="stockCount">
+          <el-input-number
+            class="input-medium"
+            v-model="formData.stockCount"
+            placeholder="拼团库存"
+            :min="0"
+            :controls="false"
+            :precision="0"
+            :step="1"
+          />
+        </el-form-item>
+        <el-form-item label="成团限制时间" prop="timeCount">
+          <el-input
+            placeholder="请输入限制时间值"
+            v-model="formData.timeCount"
+            class="input-medium"
+            @input="timeCountInput"
+          >
+            <el-select
+              slot="prepend"
+              placeholder="请选择限制类型"
+              v-model="formData.timeType"
+              class="input-select-type"
+            >
+              <el-option
+                v-for="item in $CONST.GROUP_LIMIT_OPTIONS()"
+                :label="item.label"
+                :key="item.value"
+                :value="item.value"
+              />
+            </el-select>
+          </el-input>
         </el-form-item>
       </el-form>
     </div>
@@ -101,11 +134,7 @@ export default {
   watch: {
     visible(val) {
       if (val) {
-        this.activityInfo = {};
-        this.formData = {
-          activityDate: [],
-          serviceStationIds: [],
-        };
+        this.init();
         this.getDetail(val);
       }
     },
@@ -115,6 +144,7 @@ export default {
       formData: {
         activityDate: [],
         serviceStationIds: [],
+        timeType: this.$CONST.GROUP_LIMIT_TYPE.HOUR,
       },
       isLoading: false,
       isLoadingInfo: false,
@@ -132,14 +162,26 @@ export default {
         serviceStationIds: [
           { required: true, message: "请选择适用服务点", trigger: "blur" },
         ],
-        stockCount: [
-          { required: true, message: "请输入库存数量", trigger: "blur" },
+        groupCount: [
+          { required: true, message: "请输入成团人数", trigger: "blur" },
           {
             type: "number",
             min: 1,
-            message: "库存数量必须大于0",
+            message: "成团人数必须大于0",
             trigger: "blur",
           },
+        ],
+        stockCount: [
+          { required: true, message: "请输入拼团库存", trigger: "blur" },
+          {
+            type: "number",
+            min: 1,
+            message: "拼团库存必须大于0",
+            trigger: "blur",
+          },
+        ],
+        timeCount: [
+          { required: true, message: "请输入限制时间值", trigger: "blur" },
         ],
       },
     };
@@ -152,6 +194,21 @@ export default {
     }),
   },
   methods: {
+    timeCountInput(val) {
+      val = val.match(/^\d*(\d{0})/g)[0];
+      this.$nextTick(() => {
+        this.formData.timeCount = val;
+      });
+      this.$forceUpdate();
+    },
+    init() {
+      this.activityInfo = {};
+      this.formData = {
+        activityDate: [],
+        serviceStationIds: [],
+        timeType: this.$CONST.GROUP_LIMIT_TYPE.HOUR,
+      };
+    },
     // 全选select
     selectAll(formKey) {
       let options = [];
@@ -167,7 +224,7 @@ export default {
     async getDetail() {
       if (!this.editInfo?.id) return;
       this.isLoadingInfo = true;
-      const [, res] = await this.$http.FastDeals.GetActivityDetail({
+      const [, res] = await this.$http.OperationsManage.GetGroupActivityDetail({
         id: this.editInfo.id,
       });
       this.isLoadingInfo = false;
@@ -214,8 +271,8 @@ export default {
       delete query.activityDate;
       delete query.serviceStationIds;
       const id = this.editInfo?.id || "";
-      const [, res] = await this.$http.FastDeals[
-        id ? "UpdateActivity" : "AddActivity"
+      const [, res] = await this.$http.OperationsManage[
+        id ? "UpdateGroupActivity" : "AddGroupActivity"
       ](query);
       this.isLoading = false;
       this.$message[res ? "success" : "error"](
@@ -227,7 +284,7 @@ export default {
     },
   },
   mounted() {
-    //
+    this.init();
   },
 };
 </script>
@@ -241,5 +298,8 @@ export default {
 .select-all {
   padding: 0 20px 5px;
   text-align: right;
+}
+.input-select-type {
+  width: 80px;
 }
 </style>

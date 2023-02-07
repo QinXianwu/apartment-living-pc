@@ -62,7 +62,7 @@
               slot="prepend"
               placeholder="请选择限制类型"
               v-model="formData.unitLimitType"
-              class="input-unitLimitType"
+              class="input-select-type"
               @change="changeUnitLimitType"
             >
               <el-option
@@ -280,7 +280,7 @@ export default {
     color: $main-font-color;
     margin-bottom: 20px;
   }
-  .input-unitLimitType {
+  .input-select-type {
     width: 80px;
   }
 }

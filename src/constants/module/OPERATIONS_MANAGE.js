@@ -107,3 +107,23 @@ export const COURIER_AUDIT_STATE_OPTIONS = () => [
     value: COURIER_AUDIT_STATE.INTERDICTED,
   },
 ];
+
+// 限制时间类型
+export const GROUP_LIMIT_TYPE = {
+  HOUR: 1, // 小时
+  DAYS: 2, // 天
+};
+export const GROUP_LIMIT_TYPE_TEXT = {
+  [GROUP_LIMIT_TYPE.HOUR]: "小时",
+  [GROUP_LIMIT_TYPE.DAYS]: "天",
+};
+export const GROUP_LIMIT_OPTIONS = () => [
+  {
+    label: GROUP_LIMIT_TYPE_TEXT[GROUP_LIMIT_TYPE.HOUR],
+    value: GROUP_LIMIT_TYPE.HOUR,
+  },
+  {
+    label: GROUP_LIMIT_TYPE_TEXT[GROUP_LIMIT_TYPE.DAYS],
+    value: GROUP_LIMIT_TYPE.DAYS,
+  },
+];

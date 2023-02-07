@@ -89,6 +89,47 @@ export default {
       })
     );
   },
+  // 获取拼团活动详情
+  GetGroupActivityDetail(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/groupActivity/detail",
+        params,
+        method: "GET",
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 新增拼团活动
+  AddGroupActivity(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/groupActivity/add",
+        params,
+      })
+    );
+  },
+  // 修改拼团活动
+  UpdateGroupActivity(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/groupActivity/update",
+        params,
+      })
+    );
+  },
+  // 停止拼团活动
+  StopGroupActivity(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/groupActivity/stop",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
   // 获取问题反馈列表
   GetFeedbackList(params) {
     return catchAsyncFun(

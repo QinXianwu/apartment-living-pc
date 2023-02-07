@@ -16,12 +16,7 @@
         <template #action="{ scope }">
           <div class="action-groud">
             <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
-            <el-button
-              type="text"
-              @click="stopActivity(scope)"
-              v-if="scope.status === $CONST.ACTIVITY_STATUS.HAVE_IN_HAND"
-              >停止</el-button
-            >
+            <el-button type="text" @click="stopActivity(scope)">停止</el-button>
           </div>
         </template>
       </TablePanel>
@@ -120,26 +115,28 @@ export default {
       this.showActivityDiaog = true;
     },
     async stopActivity({ id }) {
-      try {
-        await this.$confirm(`是否确认停止ID为'${id}'的拼团活动？`, "停止活动", {
-          type: "warning",
-          showClose: false,
-        });
-        const [, res] = await this.$http.FastDeals.StopSecKillActivity({
-          id,
-        });
-        const msg = res ? res?.msg || `停止成功` : `停止失败`;
-        this.$confirm(msg, "停止活动", {
-          showClose: false,
-          showCancelButton: false,
-          type: res ? "success" : "error",
-        }).then(() => {
-          if (res) this.getList();
-        });
-      } catch (error) {
-        console.error(error);
-        error;
-      }
+      console.log(id);
+      return this.$message.info("功能开发中");
+      // try {
+      //   await this.$confirm(`是否确认停止ID为'${id}'的拼团活动？`, "停止活动", {
+      //     type: "warning",
+      //     showClose: false,
+      //   });
+      //   const [, res] = await this.$http.FastDeals.StopSecKillActivity({
+      //     id,
+      //   });
+      //   const msg = res ? res?.msg || `停止成功` : `停止失败`;
+      //   this.$confirm(msg, "停止活动", {
+      //     showClose: false,
+      //     showCancelButton: false,
+      //     type: res ? "success" : "error",
+      //   }).then(() => {
+      //     if (res) this.getList();
+      //   });
+      // } catch (error) {
+      //   console.error(error);
+      //   error;
+      // }
     },
     chooseGoods(data) {
       this.showGoodsDiaog = true;
@@ -162,7 +159,9 @@ export default {
         ...this.page,
         ...this.query,
       };
-      const [, res] = await this.$http.FastDeals.GetGroupActivityList(query);
+      const [, res] = await this.$http.OperationsManage.GetGroupActivityList(
+        query
+      );
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
         this.$message.error(res?.msg || "获取拼团活动列表异常");
       }
