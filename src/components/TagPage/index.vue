@@ -42,6 +42,9 @@ export default {
       this.$emit("getList");
     },
   },
+  mounted() {
+    if (this.state) this.tabValue = this.state;
+  },
 };
 </script>
 <style lang="scss" scoped>
