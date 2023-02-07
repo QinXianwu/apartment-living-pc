@@ -388,6 +388,7 @@ export default {
         const data = this.list.map((item) => ({
           ...item,
           images: item.images[0].url,
+          specificationValueId2: item.specificationValueId2 || "",
         }));
         resolve({
           productStockPriceList: data,

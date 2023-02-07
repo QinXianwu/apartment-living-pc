@@ -30,6 +30,21 @@ export const column = [
     width: 160,
   },
   {
+    label: "商品名称",
+    prop: "goodsInfo",
+    type: "custom",
+    minWidth: 150,
+  },
+  {
+    label: "拼团价",
+    prop: "groupPrice",
+    type: "custom",
+  },
+  {
+    label: "库存",
+    prop: "stockCount",
+  },
+  {
     label: "状态",
     prop: "status",
     type: "custom",

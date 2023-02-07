@@ -7,7 +7,13 @@
     @close="handleClose(false)"
   >
     <div class="content">
-      <el-form ref="form" :model="formData" :rules="rules" label-width="120px">
+      <el-form
+        ref="form"
+        :model="formData"
+        :rules="rules"
+        label-width="120px"
+        :disabled="!(editInfo && editInfo.write)"
+      >
         <el-form-item label="活动时间" prop="activityDate">
           <el-date-picker
             v-model="formData.activityDate"
@@ -34,7 +40,8 @@
             <div class="select-all">
               <el-checkbox
                 :value="
-                  formData.serviceStationIds.length ===
+                  (formData.serviceStationIds &&
+                    formData.serviceStationIds.length) ===
                   serviceStationOptions.length
                 "
                 @change="selectAll('serviceStationIds')"
@@ -98,6 +105,7 @@
     </div>
     <ActivityGoods
       isRadio
+      :isAction="editInfo && editInfo.write"
       showGroupPrice
       ref="ActivityGoods"
       :goodsList="goodsList"
@@ -136,6 +144,8 @@ export default {
       if (val) {
         this.init();
         this.getDetail(val);
+      } else {
+        this.goodsList = [];
       }
     },
   },
@@ -238,10 +248,10 @@ export default {
           this.activityInfo.startTime,
           this.activityInfo.endTime,
         ];
-      if (this.activityInfo?.serviceStationId)
+      if (this.activityInfo?.serviceStationIds)
         this.formData.serviceStationIds =
-          typeof this.activityInfo?.serviceStationId === "string"
-            ? this.activityInfo.serviceStationId.split(",")
+          typeof this.activityInfo?.serviceStationIds === "string"
+            ? this.activityInfo.serviceStationIds.split(",")
             : [];
     },
     async handleSubmit() {
@@ -262,14 +272,13 @@ export default {
         ...this.formData,
         ...GoodsInfo,
       };
-      if (this.isService) query.serviceStationId = this.serviceStationId;
-      else query.serviceStationId = this.formData.serviceStationIds.join(",");
+      if (this.isService) query.serviceStationIds = this.serviceStationId;
+      else query.serviceStationIds = this.formData.serviceStationIds.join(",");
       if (this.formData?.activityDate?.length >= 2) {
         query.startTime = this.formData.activityDate[0];
         query.endTime = this.formData.activityDate[1];
       }
       delete query.activityDate;
-      delete query.serviceStationIds;
       const id = this.editInfo?.id || "";
       const [, res] = await this.$http.OperationsManage[
         id ? "UpdateGroupActivity" : "AddGroupActivity"

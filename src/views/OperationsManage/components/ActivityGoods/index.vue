@@ -4,7 +4,9 @@
     <div class="content">
       <el-form ref="form" :model="formData" :rules="rules" label-width="110px">
         <el-form-item label="适用商品">
-          <el-button type="text" @click="chooseGoods">选择商品</el-button>
+          <el-button type="text" @click="chooseGoods" v-if="isAction"
+            >选择商品</el-button
+          >
           <TablePanel
             ref="TablePanel"
             :tableData="
@@ -76,6 +78,10 @@ export default {
   name: "ActivityGoods",
   components: {},
   props: {
+    isAction: {
+      type: Boolean,
+      default: true,
+    },
     // 是否是单选
     isRadio: {
       type: Boolean,
@@ -126,10 +132,10 @@ export default {
       if (!list?.length) return [];
       return list.map((item) => item.id);
     },
-    column({ showSpikePrice, showGroupPrice, GoodsColumn }) {
-      const filterPropStr = `${showSpikePrice ? "" : "spikePrice"},${
-        showGroupPrice ? "" : "groupPrice"
-      }`;
+    column({ isAction, showSpikePrice, showGroupPrice, GoodsColumn }) {
+      const filterPropStr = `${isAction ? "" : "action"},${
+        showSpikePrice ? "" : "spikePrice"
+      },${showGroupPrice ? "" : "groupPrice"}`;
       return GoodsColumn.filter((item) => !filterPropStr.includes(item.prop));
     },
   },

@@ -7,6 +7,30 @@
       </div>
       <TagPage :tabs="tabs" :state.sync="query.status" @getList="getList" />
       <TablePanel :tableData="list" :tableHead="column">
+        <template #goodsInfo="{ scope }">
+          <div class="goodsInfo">
+            <ImageView
+              customClass="table-img"
+              :src="scope.product && scope.product.mainImage"
+            />
+            <div class="name">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                :content="scope.product && scope.product.productName"
+                placement="right"
+              >
+                <span>{{ scope.product && scope.product.productName }}</span>
+              </el-tooltip>
+            </div>
+          </div>
+        </template>
+        <!-- 拼团价 -->
+        <template #groupPrice="{ scope }">
+          <span>
+            {{ scope.product | priceRange("groupPriceMin", "groupPriceMax") }}
+          </span>
+        </template>
         <template #status="{ scope }">
           <el-tag :type="getActivityTab(scope)">{{
             $CONST.ACTIVITY_STATUS_TEXT[scope.status]
@@ -15,8 +39,15 @@
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
-            <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
-            <el-button type="text" @click="stopActivity(scope)">停止</el-button>
+            <el-button type="text" @click="handleEdit(scope)">{{
+              scope.status === $CONST.ACTIVITY_STATUS.STOP ? "查看" : "编辑"
+            }}</el-button>
+            <el-button
+              type="text"
+              @click="stopActivity(scope)"
+              v-if="scope.status === $CONST.ACTIVITY_STATUS.HAVE_IN_HAND"
+              >停止</el-button
+            >
           </div>
         </template>
       </TablePanel>
@@ -108,11 +139,14 @@ export default {
       this.getList(true);
     },
     handleAdd() {
-      this.editInfo = "";
+      this.editInfo = { write: true };
       this.showActivityDiaog = true;
     },
     handleEdit(data) {
-      this.editInfo = { id: data.id };
+      this.editInfo = {
+        id: data.id,
+        write: data?.status !== this.$CONST.ACTIVITY_STATUS.STOP,
+      };
       this.showActivityDiaog = true;
     },
     async stopActivity({ id }) {
@@ -177,6 +211,18 @@ export default {
 <style lang="scss" scoped>
 .view-container {
   background: #fff;
+}
+.goodsInfo {
+  display: flex;
+  align-items: center;
+  .table-img {
+    width: 60px;
+    height: 60px;
+  }
+  .name {
+    margin-left: 10px;
+    @include overflow-eps(2);
+  }
 }
 .action {
   padding: 0 0 15px;

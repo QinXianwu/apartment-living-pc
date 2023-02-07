@@ -41,8 +41,9 @@ export default {
   },
   // 价格区间过滤
   priceRange(item, key1, key2) {
-    const p1 = item[key1] || 0;
-    const p2 = item[key2] || 0;
+    const itemData = item || {};
+    const p1 = itemData[key1] || 0;
+    const p2 = itemData[key2] || 0;
     if (!p1 && p1 !== 0) return "-";
     if ((!p2 && p2 !== 0) || p1 === p2) return "￥" + formatCurrency(p1);
     const price1 = formatCurrency(p1);
