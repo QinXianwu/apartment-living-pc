@@ -33,7 +33,7 @@
         >
           <el-select
             :multiple="true"
-            collapse-tags
+            :collapse-tags="editInfo && editInfo.write"
             class="input-medium"
             value-key="id"
             placeholder="请选择适用服务点"
@@ -107,11 +107,11 @@
     </div>
     <ActivityGoods
       isRadio
-      :isAction="editInfo && editInfo.write"
       showGroupPrice
       ref="ActivityGoods"
       :goodsList="goodsList"
       :selectGoods="selectGoods"
+      :isAction="editInfo && editInfo.write"
       @chooseGoods="(val) => $emit('chooseGoods', val)"
     />
     <span slot="footer">

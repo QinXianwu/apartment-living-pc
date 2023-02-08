@@ -15,7 +15,15 @@
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
-            <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
+            <el-button
+              type="text"
+              @click="handleEdit(scope)"
+              v-if="scope.status === $CONST.ACTIVITY_STATUS.NOT_START"
+              >编辑</el-button
+            >
+            <el-button type="text" @click="handleEdit(scope)" v-else
+              >查看</el-button
+            >
             <el-button
               type="text"
               @click="stopActivity(scope)"
@@ -117,7 +125,10 @@ export default {
       this.showActivityDiaog = true;
     },
     handleEdit(data) {
-      this.editInfo = { id: data.id };
+      this.editInfo = {
+        id: data.id,
+        write: data?.status === this.$CONST.ACTIVITY_STATUS.NOT_START,
+      };
       this.showActivityDiaog = true;
     },
     async stopActivity({ id }) {

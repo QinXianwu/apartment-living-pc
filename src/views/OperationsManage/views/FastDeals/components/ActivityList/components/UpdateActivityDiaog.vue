@@ -1,13 +1,21 @@
 <template>
   <el-dialog
     width="1050px"
-    :title="`${editInfo && editInfo.id ? '编辑' : '新增'}秒杀活动`"
+    :title="`${
+      editInfo && editInfo.id ? (editInfo.write ? '编辑' : '查看') : '新增'
+    }秒杀活动`"
     :visible.sync="visible"
     v-loading="isLoading"
     @close="handleClose(false)"
   >
     <div class="content" v-loading="isLoadingInfo">
-      <el-form ref="form" :model="formData" :rules="rules" label-width="120px">
+      <el-form
+        ref="form"
+        :model="formData"
+        :rules="rules"
+        label-width="120px"
+        :disabled="!(editInfo && editInfo.write)"
+      >
         <el-form-item label="活动时间" prop="activityDate">
           <el-date-picker
             v-model="formData.activityDate"
@@ -21,7 +29,7 @@
         <el-form-item label="活动场次" prop="secKillSessionIds">
           <el-select
             :multiple="true"
-            collapse-tags
+            :collapse-tags="editInfo && editInfo.write"
             class="input-medium"
             value-key="id"
             placeholder="请选择活动场次"
@@ -53,7 +61,7 @@
         >
           <el-select
             :multiple="true"
-            collapse-tags
+            :collapse-tags="editInfo && editInfo.write"
             class="input-medium"
             value-key="id"
             placeholder="请选择适用服务点"
@@ -97,10 +105,16 @@
       ref="ActivityGoods"
       :goodsList="goodsList"
       :selectGoods="selectGoods"
+      :isAction="editInfo && editInfo.write"
       @chooseGoods="(val) => $emit('chooseGoods', val)"
     />
     <span slot="footer">
-      <el-button type="primary" :loading="isLoading" @click="handleSubmit">
+      <el-button
+        type="primary"
+        v-if="editInfo && editInfo.write"
+        :loading="isLoading"
+        @click="handleSubmit"
+      >
         保存
       </el-button>
       <el-button @click="handleClose(false)"> 取消 </el-button>
@@ -222,6 +236,12 @@ export default {
           typeof this.activityInfo?.serviceStationId === "string"
             ? this.activityInfo.serviceStationId.split(",")
             : [];
+      if (this.activityInfo?.secKillSessionIds?.length) {
+        this.activityInfo.secKillSessionIds.forEach((id, index) => {
+          this.activityInfo.secKillSessionIds[index] =
+            this.$JSONbig.stringify(id);
+        });
+      }
     },
     async handleSubmit() {
       // 表单校验

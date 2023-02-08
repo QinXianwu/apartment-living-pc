@@ -85,4 +85,14 @@ export const activityTab = () => [
     tabType: "warning",
     is: CONST.ACTIVITY_STATUS.STOP,
   },
+  {
+    value: "",
+    tabType: "",
+    is: CONST.ACTIVITY_STATUS.NO_CHECK,
+  },
+  {
+    value: "",
+    tabType: "danger",
+    is: CONST.ACTIVITY_STATUS.FAIL_CHECK,
+  },
 ];

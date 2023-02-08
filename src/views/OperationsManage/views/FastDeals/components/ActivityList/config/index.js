@@ -54,6 +54,10 @@ export const tabs = [
     value: CONST.ACTIVITY_STATUS.ALL,
   },
   {
+    label: "待审核",
+    value: CONST.ACTIVITY_STATUS.NO_CHECK,
+  },
+  {
     label: "未开始",
     value: CONST.ACTIVITY_STATUS.NOT_START,
   },
@@ -68,6 +72,10 @@ export const tabs = [
   {
     label: "已停止",
     value: CONST.ACTIVITY_STATUS.STOP,
+  },
+  {
+    label: "审核失败",
+    value: CONST.ACTIVITY_STATUS.FAIL_CHECK,
   },
 ];
 
@@ -92,5 +100,15 @@ export const activityTab = () => [
     value: "",
     tabType: "warning",
     is: CONST.ACTIVITY_STATUS.STOP,
+  },
+  {
+    value: "",
+    tabType: "",
+    is: CONST.ACTIVITY_STATUS.NO_CHECK,
+  },
+  {
+    value: "",
+    tabType: "danger",
+    is: CONST.ACTIVITY_STATUS.FAIL_CHECK,
   },
 ];

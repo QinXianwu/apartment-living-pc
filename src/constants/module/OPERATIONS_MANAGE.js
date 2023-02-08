@@ -8,12 +8,16 @@ export const ACTIVITY_STATUS = {
   HAVE_IN_HAND: 2, // 进行中
   HAS_ENDED: 3, // 已结束
   STOP: 4, // 已停止
+  NO_CHECK: 5, // 待审核
+  FAIL_CHECK: 6, // 驳回
 };
 export const ACTIVITY_STATUS_TEXT = {
   [ACTIVITY_STATUS.NOT_START]: "未开始",
   [ACTIVITY_STATUS.HAVE_IN_HAND]: "进行中",
   [ACTIVITY_STATUS.HAS_ENDED]: "已结束",
   [ACTIVITY_STATUS.STOP]: "已停止",
+  [ACTIVITY_STATUS.NO_CHECK]: "待审核",
+  [ACTIVITY_STATUS.FAIL_CHECK]: "审核失败",
 };
 export const ACTIVITY_STATUS_OPTIONS = () =>
   getOpitonsByText(ACTIVITY_STATUS_TEXT);
