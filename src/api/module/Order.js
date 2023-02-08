@@ -107,4 +107,33 @@ export default {
       })
     );
   },
+  // 获取配送设置
+  GetSendSettingDetail(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-order/order/atsendsetting/getSendSetting",
+        params,
+        isReturnAll: true,
+      })
+    );
+  },
+  // 新增配送设置
+  AddSendSetting(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-order/order/atsendsetting/svaeSendSetting",
+        params,
+      })
+    );
+  },
+  // 更新配送设置
+  UpdateSendSetting(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url:
+          apiPrefix + "/apartment-order/order/atsendsetting/updateSendSetting",
+        params,
+      })
+    );
+  },
 };

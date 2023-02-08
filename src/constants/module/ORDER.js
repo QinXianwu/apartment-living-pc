@@ -1,3 +1,5 @@
+import { getOpitonsByText } from "../utils";
+
 // 收货类型
 export const DELIVERY_TYPE = {
   HOME_DELIVERY: 1, // 配送上门
@@ -44,3 +46,17 @@ export const ORDER_PURCHASE_STATE_TEXT = {
   [ORDER_PURCHASE_STATE.FINISH]: "已完成",
   [ORDER_PURCHASE_STATE.CANCEL]: "已取消",
 };
+
+// 配送设置类型
+export const SEND_SETTING_TYPE = {
+  FREE_SHIPPING: 1, // 免费
+  FIXED_FEE: 2, // 固定费用
+};
+
+export const SEND_SETTING_TYPE_TEXT = {
+  [SEND_SETTING_TYPE.FREE_SHIPPING]: "免配送费",
+  [SEND_SETTING_TYPE.FIXED_FEE]: "固定费用",
+};
+
+export const SEND_SETTING_TYPE_OPTIONS = () =>
+  getOpitonsByText(SEND_SETTING_TYPE_TEXT);

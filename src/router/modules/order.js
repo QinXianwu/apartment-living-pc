@@ -2,6 +2,7 @@ import PERMISSION_ID from "@/permission/PERMISSION_ID";
 import MainLayout from "@/layouts/MainLayout/index";
 import PurchaseOrder from "@/views/Order/views/Purchase/index.vue";
 // import SendGoodsOrder from "@/views/Order/views/SendGoods/index.vue";
+import SendSetUp from "@/views/Order/views/SendSetUp/index.vue";
 
 export default {
   path: "/Order",
@@ -33,5 +34,14 @@ export default {
     //     // PermissionId: PERMISSION_ID.Goods_List,
     //   },
     // },
+    {
+      path: "SendSetUp",
+      component: SendSetUp,
+      name: "SendSetUp",
+      meta: {
+        title: "配送设置",
+        // PermissionId: PERMISSION_ID.Order_SendGoodsSetUp,
+      },
+    },
   ],
 };
