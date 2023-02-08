@@ -130,6 +130,15 @@ export default {
       })
     );
   },
+  // 审核拼团活动
+  AuditActivity(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/groupActivity/audit",
+        params,
+      })
+    );
+  },
   // 获取问题反馈列表
   GetFeedbackList(params) {
     return catchAsyncFun(

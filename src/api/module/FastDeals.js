@@ -107,6 +107,15 @@ export default {
       })
     );
   },
+  // 审核秒杀活动
+  AuditActivity(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/secKillActivity/audit",
+        params,
+      })
+    );
+  },
   // 停止秒杀活动
   StopSecKillActivity(params) {
     return catchAsyncFun(
