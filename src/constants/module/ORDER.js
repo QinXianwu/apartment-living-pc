@@ -5,6 +5,11 @@ export const DELIVERY_TYPE = {
   HOME_DELIVERY: 1, // 配送上门
   ARRIVE_AT_PICKED: 2, // 站点自提
 };
+export const DELIVERY_TYPE_TEXT = {
+  [DELIVERY_TYPE.HOME_DELIVERY]: "配送上门",
+  [DELIVERY_TYPE.ARRIVE_AT_PICKED]: "站点自提",
+};
+export const DELIVERY_TYPE_OPTIONS = () => getOpitonsByText(DELIVERY_TYPE_TEXT);
 
 // 订单来源
 export const SOURCE_ORDER = {
@@ -17,19 +22,34 @@ export const SOURCE_ORDER = {
 export const ORDER_STATE = {
   ALL: 0, // 所有 0转->字符串空
   WAIT_PAY: 1, // 待付款
-  // TO_PICKED_UP: 1500, // 待到店自提
-  // TO_BE_AUDITED: 1600, // 待审核
-  // WAIT_SEND: 1700, // 待发货
   IN_TRANSIT: 2, // 配送中
   WAIT_DELIVERY: 3, // 待收货
   FINISH: 4, // 已完成
-  // AFTER_SALE: 6900, // 售后
   CANCEL: 5, // 用户取消
   EXPIRED_CANCEL: 6, // 过期取消
   PLATFORM_CANCEL: 7, // 平台取消
   TO_BE_SHIPPED: 8, // 待出货
   TO_BE_WRITTEN_OFF: 9, // 待核销
+  AFTER_SALE: 99, // 售后
+  // TO_PICKED_UP: 1500, // 待到店自提
+  // TO_BE_AUDITED: 1600, // 待审核
+  // WAIT_SEND: 1700, // 待发货
 };
+
+export const ORDER_STATE_TEXT = {
+  [ORDER_STATE.ALL]: "所有",
+  [ORDER_STATE.WAIT_PAY]: "待付款",
+  [ORDER_STATE.IN_TRANSIT]: "配送中",
+  [ORDER_STATE.WAIT_DELIVERY]: "待收货",
+  [ORDER_STATE.FINISH]: "已完成",
+  [ORDER_STATE.CANCEL]: "已取消",
+  [ORDER_STATE.EXPIRED_CANCEL]: "过期取消",
+  [ORDER_STATE.PLATFORM_CANCEL]: "平台取消",
+  [ORDER_STATE.TO_BE_SHIPPED]: "待出货",
+  [ORDER_STATE.TO_BE_WRITTEN_OFF]: "待核销",
+  [ORDER_STATE.AFTER_SALE]: "售后",
+};
+export const ORDER_STATE_OPTIONS = () => getOpitonsByText(ORDER_STATE_TEXT);
 
 // 采购订单状态
 export const ORDER_PURCHASE_STATE = {
