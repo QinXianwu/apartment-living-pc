@@ -183,8 +183,8 @@ export default {
           { required: true, message: "请输入成团人数", trigger: "blur" },
           {
             type: "number",
-            min: 1,
-            message: "成团人数必须大于0",
+            min: 2,
+            message: "成团人数必须大于1",
             trigger: "blur",
           },
         ],
