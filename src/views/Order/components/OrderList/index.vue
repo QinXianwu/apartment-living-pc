@@ -1,15 +1,15 @@
 <template>
   <div class="OrderList view-container">
-    <OrderSearchForm :orderType="orderType" @on-search="onSearch" />
+    <OrderSearchForm :orderTypeData="orderTypeData" @on-search="onSearch" />
     <OrderStatusTabs
       :orderStatus.sync="query.orderStatus"
-      :orderType="orderType"
+      :orderTypeData="orderTypeData"
       @getList="getList"
     />
     <ListMain
       ref="ListMain"
       :orderList="list"
-      :orderType="orderType"
+      :orderTypeData="orderTypeData"
       :isShowCheckbox="isShowCheckbox"
     />
     <Pagination
@@ -34,7 +34,7 @@ export default {
   components: { OrderSearchForm, OrderStatusTabs, ListMain },
   props: {
     isShowCheckbox: Boolean,
-    orderType: {
+    orderTypeData: {
       type: Object,
       default: () => ({}),
     },
@@ -54,20 +54,19 @@ export default {
     };
   },
   computed: {
-    // 订单类型
-    receiveWay({ orderType }) {
+    receiveWay({ orderTypeData }) {
       // 配送订单
-      if (orderType?.isSendOrder) return CONST.DELIVERY_TYPE.HOME_DELIVERY;
-      // 配送订单
-      if (orderType?.isSelfPickupOrder)
+      if (orderTypeData?.isSendOrder) return CONST.DELIVERY_TYPE.HOME_DELIVERY;
+      // 自提订单
+      if (orderTypeData?.isSelfPickupOrder)
         return CONST.DELIVERY_TYPE.ARRIVE_AT_PICKED;
       return "";
     },
-    source({ orderType }) {
+    source({ orderTypeData }) {
       // 积分订单
-      if (orderType?.isPointsOrder) return CONST.SOURCE_ORDER.POINTS_ORDER;
+      if (orderTypeData?.isPointsOrder) return CONST.SOURCE_ORDER.POINTS_ORDER;
       // 拼团订单
-      if (orderType?.isGroupOrder) return CONST.SOURCE_ORDER.GROUP_ORDER;
+      if (orderTypeData?.isGroupOrder) return CONST.SOURCE_ORDER.GROUP_ORDER;
       return "";
     },
   },

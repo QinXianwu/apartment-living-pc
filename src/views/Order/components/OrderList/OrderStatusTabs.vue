@@ -23,7 +23,7 @@ export default {
   name: "OrderStatusTabs",
   props: {
     orderStatus: [String, Number], //状态
-    orderType: {
+    orderTypeData: {
       type: Object,
       default: () => ({}),
     },
@@ -46,13 +46,13 @@ export default {
       selfPickupTabList,
       afterSaleTabList,
       groupTabList,
-      orderType,
+      orderTypeData,
     }) {
-      if (orderType?.isSendOrder || orderType?.isPointsOrder)
+      if (orderTypeData?.isSendOrder || orderTypeData?.isPointsOrder)
         return sendTabList;
-      if (orderType.isSelfPickupOrder) return selfPickupTabList;
-      if (orderType.isAfterSale) return afterSaleTabList;
-      if (orderType.isGroupOrder) return groupTabList;
+      if (orderTypeData.isSelfPickupOrder) return selfPickupTabList;
+      if (orderTypeData.isAfterSale) return afterSaleTabList;
+      if (orderTypeData.isGroupOrder) return groupTabList;
       return defaultTabList;
     },
     defaultTabList() {

@@ -1,6 +1,6 @@
 <template>
   <div class="SendGoods">
-    <OrderData :orderType="{ isSendOrder: true }" />
+    <OrderData :orderTypeData="{ isSendOrder: true }" />
   </div>
 </template>
 

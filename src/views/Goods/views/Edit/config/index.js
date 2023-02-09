@@ -1,3 +1,5 @@
+import CONST from "@/constants/index";
+
 export const dynamic_column = [
   {
     label: "规格",
@@ -85,5 +87,37 @@ export const column = [
     btnText: "二级分销佣金",
     prop: "secondDistributionAmount",
     type: "money",
+  },
+];
+
+// 活动标签
+export const activityTab = () => [
+  {
+    key: "bargainIs",
+    label: "特价",
+    value: "",
+    tabType: "",
+    is: CONST.SPECIALS_TYPE.YES,
+  },
+  {
+    key: "discountIs",
+    label: "折扣",
+    value: "",
+    tabType: "success",
+    is: CONST.DISCOUNTED_TYPE.YES,
+  },
+  {
+    key: "isLimit",
+    label: "限购",
+    value: "",
+    tabType: "danger",
+    is: CONST.RESTRICTED_TYPE.YES,
+  },
+  {
+    key: "isPre",
+    label: "预售",
+    value: "",
+    tabType: "warning",
+    is: CONST.PRE_SALE_TYPE.YES,
   },
 ];

@@ -54,6 +54,7 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
+import { activityTab } from "./config";
 import GoodsStep from "./components/GoodsStep.vue";
 import GoodsInfo from "./components/GoodsInfo.vue";
 import GoodsPreSale from "./components/GoodsPreSale.vue";
@@ -82,6 +83,7 @@ export default {
   props: {},
   data() {
     return {
+      activityTab,
       activeIndex: 0, // 当前进度
       isLoading: false,
       isLoadingGoods: false,
@@ -166,6 +168,12 @@ export default {
     goBack() {
       this.activeIndex--;
     },
+    getActivityTab(data) {
+      const keyArr = [...activityTab()];
+      return keyArr
+        .filter((item) => data[item.key] === item.is && item.label)
+        .map((item) => item.label);
+    },
     async handleSubmit() {
       // 表单校验
       this.isLoading = true;
@@ -174,6 +182,7 @@ export default {
         ...this.BaseInfo,
         ...this.AssociationInfo,
       };
+      query.activeLabels = this.getActivityTab(query).join(",");
       if (this.isService) query.stationId = this.serviceStationId;
       const { REVIEW_TYPE } = this.$route?.query || {};
       const [, res] = await this.$http.Goods[

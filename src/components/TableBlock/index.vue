@@ -76,6 +76,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   margin: 0 0 20px;
+  font-size: 14px;
   &-item {
     display: flex;
     flex-wrap: wrap;

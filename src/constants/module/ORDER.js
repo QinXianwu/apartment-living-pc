@@ -1,5 +1,21 @@
 import { getOpitonsByText } from "../utils";
 
+// 查看订单类型(前端判断)
+export const LOOK_ORDER_TYPE = {
+  AFTER_SALE_ORDER: "AFTER_SALE_ORDER", // 售后
+  SEND_ORDER: "SEND_ORDER", // 配送单
+  SELF_PICKUP_ORDER: "SELF_PICKUP_ORDER", // 自提单
+  GROUP_ORDER: "GROUP_ORDER", // 拼团订单
+  POINTS_ORDER: "POINTS_ORDER", // 积分订单
+};
+export const LOOK_ORDER_TYPE_TEXT = {
+  [LOOK_ORDER_TYPE.AFTER_SALE_ORDER]: "售后订单",
+  [LOOK_ORDER_TYPE.SEND_ORDER]: "配送订单",
+  [LOOK_ORDER_TYPE.SELF_PICKUP_ORDER]: "自提订单",
+  [LOOK_ORDER_TYPE.GROUP_ORDER]: "拼团订单",
+  [LOOK_ORDER_TYPE.POINTS_ORDER]: "积分订单",
+};
+
 // 收货类型
 export const DELIVERY_TYPE = {
   HOME_DELIVERY: 1, // 配送上门

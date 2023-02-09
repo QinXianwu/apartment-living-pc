@@ -11,7 +11,7 @@ export default {
   props: {
     // 默认的搜索数据
     default: Object,
-    orderType: {
+    orderTypeData: {
       type: Object,
       default: () => ({}),
     },
@@ -26,9 +26,9 @@ export default {
       supplierOptions: "accountRoleManage/supplierOptions",
       serviceStationOptions: "accountRoleManage/serviceStationOptions",
     }),
-    formData({ defaultFormData, afterFormData, sendFormData, orderType }) {
-      if (orderType?.isAfterSale) return afterFormData;
-      if (orderType?.isSendOrder) return sendFormData;
+    formData({ defaultFormData, afterFormData, sendFormData, orderTypeData }) {
+      if (orderTypeData?.isAfterSale) return afterFormData;
+      if (orderTypeData?.isSendOrder) return sendFormData;
       return defaultFormData;
     },
     // 默认表单

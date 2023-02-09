@@ -71,7 +71,7 @@ export default {
       type: Array,
       default: () => [],
     },
-    orderType: {
+    orderTypeData: {
       type: Object,
       default: () => ({}),
     },
@@ -96,19 +96,36 @@ export default {
     },
   },
   computed: {
-    tableHead({ column, orderType, afterSaleColumn }) {
-      if (orderType?.isAfterSale) return afterSaleColumn;
+    tableHead({ column, orderTypeData, afterSaleColumn }) {
+      if (orderTypeData?.isAfterSale) return afterSaleColumn;
       const filterPropStr = `${
-        orderType?.isSendOrder ? "" : "userInfo,cccc1,cccc2"
-      },${orderType?.isPointsOrder ? "" : "iiii"},${
-        orderType?.isSelfPickupOrder ? "" : "cccData,cccTime"
+        orderTypeData?.isSendOrder ? "" : "userInfo,cccc1,cccc2"
+      },${orderTypeData?.isPointsOrder ? "" : "iiii"},${
+        orderTypeData?.isSelfPickupOrder ? "" : "cccData,cccTime"
       }`;
       return column.filter((item) => !filterPropStr.includes(item.prop));
     },
+    // 订单类型
+    orderType({ orderTypeData }) {
+      // 配送订单
+      if (orderTypeData?.isSendOrder) return CONST.LOOK_ORDER_TYPE.SEND_ORDER;
+      // 自提订单
+      if (orderTypeData?.isSelfPickupOrder)
+        return CONST.LOOK_ORDER_TYPE.SELF_PICKUP_ORDER;
+      // 积分订单
+      if (orderTypeData?.isPointsOrder)
+        return CONST.LOOK_ORDER_TYPE.POINTS_ORDER;
+      // 拼团订单
+      if (orderTypeData?.isGroupOrder) return CONST.LOOK_ORDER_TYPE.GROUP_ORDER;
+      return "";
+    },
   },
   methods: {
-    lookDetail() {
-      this.$message.info("功能开发中");
+    lookDetail({ orderNo }) {
+      this.$router.push({
+        name: "OrderDetail",
+        query: { orderNo: orderNo || "", orderType: this.orderType },
+      });
     },
     initSelection() {
       if (!this.orderList?.length) return;

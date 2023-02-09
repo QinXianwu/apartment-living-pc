@@ -1,6 +1,7 @@
 import PERMISSION_ID from "@/permission/PERMISSION_ID";
 import MainLayout from "@/layouts/MainLayout/index";
 import PurchaseOrder from "@/views/Order/views/Purchase/index.vue";
+import OrderDetail from "@/views/Order/views/OrderDetail/index.vue";
 import SendGoodsOrder from "@/views/Order/views/SendGoods/index.vue";
 import SendSetUp from "@/views/Order/views/SendSetUp/index.vue";
 
@@ -23,6 +24,16 @@ export default {
       meta: {
         title: "采购订单",
         PermissionId: PERMISSION_ID.Order_PurchaseOrder,
+      },
+    },
+    {
+      path: "OrderDetail",
+      component: OrderDetail,
+      name: "OrderDetail",
+      hidden: true,
+      meta: {
+        title: "订单详情",
+        // PermissionId: PERMISSION_ID.Order_OrderDetail,
       },
     },
     {

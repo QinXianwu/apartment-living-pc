@@ -86,7 +86,7 @@ export default {
     },
     async handleStatusChange(item) {
       const tipText =
-        item?.statas === this.$CONST.SESSION_COUNT_STATE.ON ? "启用" : "停用";
+        item?.status === this.$CONST.SESSION_COUNT_STATE.ON ? "启用" : "停用";
       try {
         await this.$confirm(`确定要${tipText}该场次吗?`, tipText, {
           type: "warning",

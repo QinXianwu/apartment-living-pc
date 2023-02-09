@@ -71,7 +71,7 @@
             >
             <el-button
               type="text"
-              @click="closeOredr(scope)"
+              @click="closeOrder(scope)"
               v-if="scope.operStatus === CONST.ORDER_PURCHASE_STATE.WAIT_SEND"
               >关闭订单</el-button
             >
@@ -235,7 +235,7 @@ export default {
       this.showDrawerPopup = true;
       this.showProcurementGoods = true;
     },
-    async closeOredr({ pdOrderNo }) {
+    async closeOrder({ pdOrderNo }) {
       try {
         await this.$confirm(
           `是否确认关闭订单号为${pdOrderNo}的数据项？`,
