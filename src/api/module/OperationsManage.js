@@ -131,7 +131,7 @@ export default {
     );
   },
   // 审核拼团活动
-  AuditActivity(params) {
+  AuditGroupActivity(params) {
     return catchAsyncFun(
       apiFetch({
         url: apiPrefix + "/apartment-activity/groupActivity/audit",

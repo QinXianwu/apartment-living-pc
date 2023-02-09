@@ -196,7 +196,7 @@ export default {
     },
     async handleReview({ id, status }) {
       const title =
-        status === this.$CONST.WITHDRAWALS_STATE.NOT_START ? "通过" : "驳回";
+        status === this.$CONST.ACTIVITY_STATUS.NOT_START ? "通过" : "驳回";
       try {
         await this.$confirm(`是否确认'${title}'该活动？`, `${title}提示`, {
           type: "warning",
