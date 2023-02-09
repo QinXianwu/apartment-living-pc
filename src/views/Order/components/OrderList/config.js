@@ -39,12 +39,12 @@ export const column = [
   },
   {
     label: "自提信息",
-    prop: "cccData",
+    prop: "pickingAddress",
     type: "custom",
   },
   {
     label: "自提时间",
-    prop: "cccTime",
+    prop: "pickingTime",
     width: 160,
   },
   {

@@ -41,6 +41,9 @@
           </div>
         </el-tooltip>
       </template>
+      <template #pickingAddress="scope">
+        <span>{{ scope.pickingAddress }}</span>
+      </template>
       <!-- 状态 -->
       <template #orderStatus="{ scope }">
         <el-tag :type="scope | statusTabType">{{
@@ -101,7 +104,7 @@ export default {
       const filterPropStr = `${
         orderTypeData?.isSendOrder ? "" : "userInfo,cccc1,cccc2"
       },${orderTypeData?.isPointsOrder ? "" : "iiii"},${
-        orderTypeData?.isSelfPickupOrder ? "" : "cccData,cccTime"
+        orderTypeData?.isSelfPickupOrder ? "" : "pickingAddress,pickingTime"
       }`;
       return column.filter((item) => !filterPropStr.includes(item.prop));
     },
