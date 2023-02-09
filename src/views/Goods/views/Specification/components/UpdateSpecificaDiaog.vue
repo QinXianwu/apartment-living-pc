@@ -77,6 +77,12 @@ export default {
             message: "请输入规格名称",
             trigger: "blur",
           },
+          {
+            min: 1,
+            max: 10,
+            message: "长度在 1 到 10 个字符",
+            trigger: "blur",
+          },
         ],
         sort: [
           {
