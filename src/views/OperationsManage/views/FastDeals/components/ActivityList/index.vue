@@ -26,6 +26,28 @@
             >
             <el-button
               type="text"
+              @click="
+                handleReview({
+                  id: scope.id,
+                  status: $CONST.ACTIVITY_STATUS.NOT_START,
+                })
+              "
+              v-if="isAdmin && scope.status === $CONST.ACTIVITY_STATUS.NO_CHECK"
+              >审核通过</el-button
+            >
+            <el-button
+              type="text"
+              @click="
+                handleReviewFail({
+                  id: scope.id,
+                  status: $CONST.ACTIVITY_STATUS.FAIL_CHECK,
+                })
+              "
+              v-if="isAdmin && scope.status === $CONST.ACTIVITY_STATUS.NO_CHECK"
+              >审核驳回</el-button
+            >
+            <el-button
+              type="text"
               @click="stopActivity(scope)"
               v-if="scope.status === $CONST.ACTIVITY_STATUS.HAVE_IN_HAND"
               >停止</el-button
@@ -58,6 +80,11 @@
       @chooseGoods="chooseGoods"
       @close="close"
     />
+    <AuditFailDialog
+      :editInfo="editInfo"
+      :show.sync="showAuditFail"
+      @close="close"
+    />
   </div>
 </template>
 <script>
@@ -65,11 +92,17 @@ import { mapGetters } from "vuex";
 import { column, formData, tabs, activityTab } from "./config";
 import TagPage from "@/components/TagPage";
 import ChooseGoodsDiaog from "@/components/ChooseGoodsDiaog";
+import AuditFailDialog from "./components/AuditFailDialog.vue";
 import UpdateActivityDiaog from "./components/UpdateActivityDiaog.vue";
 
 export default {
   name: "ActivityList",
-  components: { TagPage, ChooseGoodsDiaog, UpdateActivityDiaog },
+  components: {
+    TagPage,
+    ChooseGoodsDiaog,
+    UpdateActivityDiaog,
+    AuditFailDialog,
+  },
   data() {
     return {
       formData,
@@ -89,10 +122,12 @@ export default {
       selectGoods: [],
       showGoodsDiaog: false,
       showActivityDiaog: false,
+      showAuditFail: false,
     };
   },
   computed: {
     ...mapGetters({
+      isAdmin: "user/isAdmin",
       isService: "user/isService",
     }),
   },
@@ -121,7 +156,9 @@ export default {
       this.getList(true);
     },
     handleAdd() {
-      this.editInfo = "";
+      this.editInfo = {
+        write: true,
+      };
       this.showActivityDiaog = true;
     },
     handleEdit(data) {
@@ -153,6 +190,37 @@ export default {
         error;
       }
     },
+    handleReviewFail({ id, status }) {
+      this.editInfo = { id, status };
+      this.showAuditFail = true;
+    },
+    async handleReview({ id, status }) {
+      const title =
+        status === this.$CONST.WITHDRAWALS_STATE.NOT_START ? "通过" : "驳回";
+      try {
+        await this.$confirm(`是否确认'${title}'该活动？`, `${title}提示`, {
+          type: "warning",
+          showClose: false,
+        });
+        const [, res] = await this.$http.FastDeals.AuditActivity({
+          id,
+          status,
+        });
+        const msg = res ? res?.msg || `${title}成功` : `${title}失败`;
+        this.$confirm(msg, `${title}提示`, {
+          showClose: false,
+          showCancelButton: false,
+          type: res ? "success" : "error",
+        }).then(() => {
+          if (res) {
+            this.getList();
+          }
+        });
+      } catch (error) {
+        console.error(error);
+        error;
+      }
+    },
     chooseGoods(data) {
       this.showGoodsDiaog = true;
       this.selectGoodsIds = data?.length ? data : [];
@@ -166,6 +234,7 @@ export default {
     close(isRefresh = false) {
       this.editInfo = "";
       this.showActivityDiaog = false;
+      this.showAuditFail = false;
       if (isRefresh) this.getList();
     },
     async getList(isClear) {

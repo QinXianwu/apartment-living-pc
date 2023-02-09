@@ -143,6 +143,7 @@ export default {
   watch: {
     visible(val) {
       if (val) {
+        this.goodsList = [];
         this.activityInfo = {};
         this.formData = {
           activityDate: [],
