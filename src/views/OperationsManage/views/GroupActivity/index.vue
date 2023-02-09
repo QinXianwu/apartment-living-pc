@@ -32,9 +32,20 @@
           </span>
         </template>
         <template #status="{ scope }">
-          <el-tag :type="getActivityTab(scope)">{{
-            $CONST.ACTIVITY_STATUS_TEXT[scope.status]
-          }}</el-tag>
+          <div>
+            <el-tag :type="getActivityTab(scope)">
+              <span>{{ $CONST.ACTIVITY_STATUS_TEXT[scope.status] }}</span>
+              <el-tooltip
+                class="item"
+                effect="dark"
+                :content="scope.reject"
+                placement="right"
+                v-if="scope.status === $CONST.ACTIVITY_STATUS.FAIL_CHECK"
+              >
+                <i class="el-icon-warning" style="color: #ff4949" />
+              </el-tooltip>
+            </el-tag>
+          </div>
         </template>
         <!-- 操作 -->
         <template #action="{ scope }">
@@ -146,6 +157,7 @@ export default {
       selectGoods: [],
       showGoodsDiaog: false,
       showActivityDiaog: false,
+      showAuditFail: false,
     };
   },
   computed: {
