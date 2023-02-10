@@ -9,19 +9,7 @@
       @selection-change="handleSelectionChange"
     >
       <template #goodsInfo="{ scope }">
-        <div class="goodsInfo">
-          <ImageView customClass="table-img" :src="scope.mainImage" />
-          <div class="name">
-            <el-tooltip
-              class="item"
-              effect="dark"
-              :content="scope.productName"
-              placement="right"
-            >
-              <span>{{ scope.productName }}</span>
-            </el-tooltip>
-          </div>
-        </div>
+        <GoodsList :goodsList="scope.atOrderDetailVoList" />
       </template>
       <template #userInfo="{ scope }">
         <el-tooltip class="item" effect="dark" placement="right">
@@ -63,10 +51,11 @@
 <script>
 import CONST from "@/constants/index";
 import { column, afterSaleColumn } from "./config";
+import GoodsList from "./GoodsList.vue";
 
 export default {
   name: "ListMain",
-  components: {},
+  components: { GoodsList },
   props: {
     isShowCheckbox: Boolean,
     // 订单列表
@@ -161,18 +150,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.goodsInfo {
-  display: flex;
-  align-items: center;
-  .table-img {
-    width: 60px;
-    height: 60px;
-  }
-  .name {
-    margin-left: 10px;
-    @include overflow-eps(2);
-  }
-}
 .userInfo {
   text-align: left;
   .name {

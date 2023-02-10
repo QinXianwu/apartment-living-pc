@@ -5,6 +5,12 @@ export const column = [
     prop: "orderNo",
   },
   {
+    label: "商品信息",
+    prop: "goodsInfo",
+    type: "custom",
+    minWidth: 150,
+  },
+  {
     label: "供应商",
     prop: "supplierName",
     showOverflowTooltip: true,

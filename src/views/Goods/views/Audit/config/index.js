@@ -75,7 +75,7 @@ export const column = [
     width: 110,
   },
   {
-    label: "创建时间",
+    label: "提交时间",
     prop: "createDate",
     width: 160,
   },
