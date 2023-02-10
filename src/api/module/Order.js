@@ -113,16 +113,6 @@ export default {
       apiFetch({
         url: apiPrefix + "/apartment-order/order/atsendsetting/getSendSetting",
         params,
-        isReturnAll: true,
-      })
-    );
-  },
-  // 新增配送设置
-  AddSendSetting(params) {
-    return catchAsyncFun(
-      apiFetch({
-        url: apiPrefix + "/apartment-order/order/atsendsetting/svaeSendSetting",
-        params,
       })
     );
   },
@@ -130,8 +120,7 @@ export default {
   UpdateSendSetting(params) {
     return catchAsyncFun(
       apiFetch({
-        url:
-          apiPrefix + "/apartment-order/order/atsendsetting/updateSendSetting",
+        url: apiPrefix + "/apartment-order/order/atsendsetting/svaeSendSetting",
         params,
       })
     );

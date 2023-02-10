@@ -108,9 +108,7 @@ export default {
   methods: {
     async getDetail() {
       const [, res] = await this.$http.Order.GetSendSettingDetail();
-      this.isUpdate = true;
-      if (res?.code !== this.AJAX_CODE.SUCCESS) this.isUpdate = false;
-      this.detailInfo = res?.data?.id ? { ...res.data } : {};
+      this.detailInfo = res?.id ? { ...res } : {};
       this.formData = { ...this.formData, ...this.detailInfo };
     },
     // 处理提交
@@ -129,9 +127,7 @@ export default {
         ...this.detailInfo,
         ...this.formData,
       };
-      const [, res] = await this.$http.Order[
-        this.isUpdate ? "UpdateSendSetting" : "AddSendSetting"
-      ](query);
+      const [, res] = await this.$http.Order.UpdateSendSetting(query);
       if (res) {
         this.getDetail();
         this.$message.success("保存成功");
