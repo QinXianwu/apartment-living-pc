@@ -42,6 +42,12 @@
       <template #action="{ scope }">
         <div class="action-groud">
           <el-button type="text" @click="lookDetail(scope)">查看</el-button>
+          <el-button
+            type="text"
+            @click="$emit('showOrderDialog', scope, 'SetCourierPeople')"
+            >配送</el-button
+          >
+          <slot name="action-btn" :scope="scope"></slot>
         </div>
       </template>
     </TablePanel>
@@ -114,10 +120,12 @@ export default {
   },
   methods: {
     lookDetail({ orderNo }) {
-      this.$router.push({
-        name: "OrderDetail",
-        query: { orderNo: orderNo || "", orderType: this.orderType },
-      });
+      this.$message.info("功能开发中...");
+      console.log(orderNo);
+      // this.$router.push({
+      //   name: "OrderDetail",
+      //   query: { orderNo: orderNo || "", orderType: this.orderType },
+      // });
     },
     initSelection() {
       if (!this.orderList?.length) return;

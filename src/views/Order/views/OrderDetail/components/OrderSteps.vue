@@ -115,9 +115,14 @@ export default {
     }
   }
   ::v-deep {
-    .el-step__title,
+    .el-step__title {
+      font-size: 14px;
+    }
+    .is-process {
+      font-weight: 500;
+    }
     .el-step__description {
-      font-size: 15px;
+      font-size: 12px;
     }
   }
 }

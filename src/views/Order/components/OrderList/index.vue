@@ -11,13 +11,25 @@
       :orderList="list"
       :orderTypeData="orderTypeData"
       :isShowCheckbox="isShowCheckbox"
-    />
+      @showOrderDialog="showOrderDialog"
+    >
+      <template #action-btn="{ scope }">
+        <slot name="action-btn" :scope="scope"></slot>
+      </template>
+    </ListMain>
     <Pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :page-size="page.pageSize"
       :current-page="page.pageNum"
       :total="total"
+    />
+    <!-- 订单编辑弹窗 -->
+    <OrderDialog
+      :show.sync="orderDialogkVisible"
+      :type="dialogType"
+      :dataSource="editRecord"
+      @close="onOrderDialogClose"
     />
   </div>
 </template>
@@ -27,11 +39,12 @@ import CONST from "@/constants/index";
 // import { digits2Str } from "@/utils/index";
 import OrderSearchForm from "./OrderSearchForm.vue";
 import OrderStatusTabs from "./OrderStatusTabs.vue";
+import OrderDialog from "../OrderDialog";
 import ListMain from "./ListMain.vue";
 
 export default {
   name: "OrderList",
-  components: { OrderSearchForm, OrderStatusTabs, ListMain },
+  components: { OrderSearchForm, OrderStatusTabs, ListMain, OrderDialog },
   props: {
     isShowCheckbox: Boolean,
     orderTypeData: {
@@ -51,6 +64,9 @@ export default {
       },
       total: 0,
       list: [],
+      editRecord: "", // 编辑中的订单
+      dialogType: "", // 显示的订单操作弹窗类型
+      orderDialogkVisible: false, // 订单操作弹窗
     };
   },
   computed: {
@@ -83,6 +99,16 @@ export default {
     onSearch(data) {
       this.query = { ...this.query, ...data };
       this.getList(true);
+    },
+    // 打开弹窗
+    showOrderDialog(data, componentName) {
+      this.editRecord = data;
+      this.dialogType = componentName;
+      return this.$message.info("功能开发中...");
+      // this.orderDialogkVisible = true;
+    },
+    onOrderDialogClose(val) {
+      if (val) this.getList();
     },
     async getList(isClear) {
       if (isClear) this.page.pageNum = 1;

@@ -61,7 +61,6 @@ export default {
       };
       const [, res] = await this.$http.Order.GetOrderDetail(query);
       this.isLoading = false;
-      console.log(res);
       if (!res) return this.$message.error("获取订单详情异常");
       this.orderInfo = { ...res };
     },
