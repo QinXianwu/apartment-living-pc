@@ -104,8 +104,8 @@ export default {
     showOrderDialog(data, componentName) {
       this.editRecord = data;
       this.dialogType = componentName;
-      // return this.$message.info("功能开发中...");
-      this.orderDialogkVisible = true;
+      return this.$message.info("功能开发中...");
+      // this.orderDialogkVisible = true;
     },
     onOrderDialogClose(val) {
       if (val) this.getList();
