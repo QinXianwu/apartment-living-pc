@@ -19,7 +19,6 @@ const actions = {
     const [, data] = await api.Courier.GetCourierListAll({
       status: CONST.COURIER_AUDIT_STATE.SUCCESS_CHECK,
     });
-    console.log(data);
     const list = data?.length ? data : [];
     commit("SET_COURIER_PEOPLE_LIST", list);
     return list;
