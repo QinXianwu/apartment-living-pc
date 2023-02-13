@@ -74,6 +74,11 @@
         :total="total"
       />
     </div>
+    <UpdateIntegralDiaog
+      :editInfo="editInfo"
+      :show.sync="showUpdateIntegral"
+      @close="close"
+    />
     <DrawerPopup v-model="showUserDetail">
       <UserDetail v-if="showUserDetail" :editInfo="editInfo" @close="close" />
     </DrawerPopup>
@@ -82,9 +87,10 @@
 
 <script>
 import { formData, column } from "./config";
+import UpdateIntegralDiaog from "./components/UpdateIntegral";
 import UserDetail from "./components/UserDetail.vue";
 export default {
-  components: { UserDetail },
+  components: { UserDetail, UpdateIntegralDiaog },
   data() {
     return {
       formData,
@@ -97,6 +103,7 @@ export default {
       query: {},
       editInfo: {},
       total: 0,
+      showUpdateIntegral: false,
       showUserDetail: false,
       isLoadingSetRemark: false,
       remarkInputMap: {},
@@ -142,12 +149,14 @@ export default {
         this.getList();
       }
     },
-    retroactivePoints() {
-      this.$message.info("功能开发中...");
+    retroactivePoints({ userId, nickName }) {
+      this.editInfo = { userId: userId || "", nickName: nickName || "" };
+      this.showUpdateIntegral = true;
     },
     close(isRefresh = false) {
       this.editInfo = "";
       this.showUserDetail = false;
+      this.showUpdateIntegral = false;
       if (isRefresh) this.getList();
     },
     async getList(isClear) {

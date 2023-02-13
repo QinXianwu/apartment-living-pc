@@ -37,3 +37,13 @@ export const ACTIVITY_TYPE_TEXT = {
 };
 
 export const ACTIVITY_TYPE_OPTIONS = () => getOpitonsByText(ACTIVITY_TYPE_TEXT);
+
+export const FLUCTUA_TYPE = {
+  REVENUE: 1, // 收入
+  EXPENDITURE: 2, // 支出
+};
+export const FLUCTUA_TYPE_TEXT = {
+  [FLUCTUA_TYPE.REVENUE]: "收入",
+  [FLUCTUA_TYPE.EXPENDITURE]: "支出",
+};
+export const FLUCTUA_TYPE_OPTIONS = () => getOpitonsByText(FLUCTUA_TYPE_TEXT);

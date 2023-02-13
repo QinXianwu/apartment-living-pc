@@ -41,4 +41,37 @@ export default {
       })
     );
   },
+  // 新增用户积分记录
+  AddUserIntegral(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-user/userIntegralRecord/add",
+        params,
+      })
+    );
+  },
+  // 获取用户积分记录
+  GetUserByIntegral(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url:
+          apiPrefix +
+          "/apartment-user/userIntegralRecord/getTotalIntegralByUserId",
+        params,
+        method: "GET",
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 获取用户积分列表
+  GetUserIntegralList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-user/userIntegralRecord/page",
+        params,
+        isReturnAll: true,
+      })
+    );
+  },
 };
