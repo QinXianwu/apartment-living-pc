@@ -17,6 +17,15 @@ export default {
       })
     );
   },
+  // 获取配送员列表-不分页
+  GetCourierListAll(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-user/courier/list",
+        params,
+      })
+    );
+  },
   // 获取配送员详情
   GetCourierDetail(params) {
     return catchAsyncFun(

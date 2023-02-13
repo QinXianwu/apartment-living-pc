@@ -54,6 +54,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "SetCourierPeople",
   components: {},
@@ -88,9 +89,9 @@ export default {
     };
   },
   computed: {
-    courierOptions() {
-      return [];
-    },
+    ...mapGetters({
+      courierOptions: "operationsManage/courierPeopleOptions",
+    }),
   },
   methods: {
     initForm() {

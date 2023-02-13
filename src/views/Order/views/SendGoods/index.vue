@@ -17,7 +17,7 @@ export default {
   computed: {},
   methods: {},
   mounted() {
-    //
+    this.$store.dispatch("operationsManage/GetCourierPeopleListAction");
   },
 };
 </script>
