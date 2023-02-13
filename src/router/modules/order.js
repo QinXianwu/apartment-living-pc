@@ -3,6 +3,7 @@ import MainLayout from "@/layouts/MainLayout/index";
 import PurchaseOrder from "@/views/Order/views/Purchase/index.vue";
 import OrderDetail from "@/views/Order/views/OrderDetail/index.vue";
 import SendGoodsOrder from "@/views/Order/views/SendGoods/index.vue";
+import SelfPickupOrder from "@/views/Order/views/SelfPickup/index.vue";
 import SendSetUp from "@/views/Order/views/SendSetUp/index.vue";
 
 export default {
@@ -42,6 +43,15 @@ export default {
       name: "SendGoodsOrder",
       meta: {
         title: "配送订单",
+        // PermissionId: PERMISSION_ID.Goods_List,
+      },
+    },
+    {
+      path: "SelfPickupOrder",
+      component: SelfPickupOrder,
+      name: "SelfPickupOrder",
+      meta: {
+        title: "自提订单",
         // PermissionId: PERMISSION_ID.Goods_List,
       },
     },
