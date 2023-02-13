@@ -114,7 +114,8 @@ export default {
         userId: this.editInfo.userId,
       });
       this.isLoadingIntegral = false;
-      this.integralTotal = res || "0";
+      this.integralTotal =
+        res?.code !== this.AJAX_CODE.SUCCESS ? 0 : res?.data || 0;
     },
     async handleSubmit() {
       try {

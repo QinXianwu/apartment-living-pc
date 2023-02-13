@@ -59,6 +59,7 @@ export default {
           "/apartment-user/userIntegralRecord/getTotalIntegralByUserId",
         params,
         method: "GET",
+        isReturnAll: true,
         isHeadersForm: true,
         isHandleParams: true,
       })
