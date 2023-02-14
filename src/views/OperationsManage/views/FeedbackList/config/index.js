@@ -42,7 +42,7 @@ export const column = [
     minWidth: 150,
   },
   {
-    label: "截图",
+    label: "问题截图",
     prop: "imageList",
     type: "image-list",
   },
