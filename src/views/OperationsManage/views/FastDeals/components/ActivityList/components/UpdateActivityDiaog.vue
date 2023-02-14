@@ -242,6 +242,10 @@ export default {
           this.activityInfo.secKillSessionIds[index] =
             this.$JSONbig.stringify(id);
         });
+        const ids = this.activityInfo.secKillSessionIds.join(",");
+        this.formData.secKillSessionIds = this.secKillSessionOptions
+          .filter((item) => ids.includes(item.value))
+          .map((item) => item.value);
       }
     },
     async handleSubmit() {
