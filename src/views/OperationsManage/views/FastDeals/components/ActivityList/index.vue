@@ -7,6 +7,30 @@
       </div>
       <TagPage :tabs="tabs" :state.sync="query.status" @getList="getList" />
       <TablePanel :tableData="list" :tableHead="column">
+        <template #goodsInfo="{ scope }">
+          <div class="goodsInfo">
+            <ImageView
+              customClass="table-img"
+              :src="scope.product && scope.product.mainImage"
+            />
+            <div class="name">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                :content="scope.product && scope.product.productName"
+                placement="right"
+              >
+                <span>{{ scope.product && scope.product.productName }}</span>
+              </el-tooltip>
+            </div>
+          </div>
+        </template>
+        <!-- 秒杀价 -->
+        <template #spikePrice="{ scope }">
+          <span>
+            {{ scope.product | priceRange("spikePriceMin", "spikePriceMax") }}
+          </span>
+        </template>
         <template #status="{ scope }">
           <div>
             <el-tag :type="getActivityTab(scope)">
@@ -270,6 +294,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.goodsInfo {
+  display: flex;
+  align-items: center;
+  .table-img {
+    width: 60px;
+    height: 60px;
+  }
+  .name {
+    margin-left: 10px;
+    @include overflow-eps(2);
+  }
+}
 .action {
   padding: 0 0 15px;
 }

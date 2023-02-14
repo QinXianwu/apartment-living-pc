@@ -30,6 +30,25 @@ export const column = [
     width: 160,
   },
   {
+    label: "适用服务点",
+    prop: "serviceStationName",
+  },
+  {
+    label: "商品名称",
+    prop: "goodsInfo",
+    type: "custom",
+    minWidth: 150,
+  },
+  {
+    label: "秒杀价",
+    prop: "spikePrice",
+    type: "custom",
+  },
+  {
+    label: "库存",
+    prop: "stockCount",
+  },
+  {
     label: "状态",
     prop: "status",
     type: "custom",
