@@ -92,14 +92,17 @@
                 :key="i"
                 :src="img"
                 class="table-img img_many"
-                v-show="i < 3 || scoped.row.showAll"
+                v-show="i < (item.showImgIndex || 3) || scoped.row.showAll"
                 :srcList="scoped.row[item.prop]"
               />
             </div>
             <div
               class="pointer theme-color-text"
               @click="$set(scoped.row, 'showAll', !scoped.row.showAll)"
-              v-if="scoped.row[item.prop] && scoped.row[item.prop].length > 3"
+              v-if="
+                scoped.row[item.prop] &&
+                scoped.row[item.prop].length > (item.showImgIndex || 3)
+              "
             >
               {{ !scoped.row.showAll ? "查看更多图片" : "收起" }}
               <i

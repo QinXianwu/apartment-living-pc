@@ -45,6 +45,7 @@ export const column = [
     label: "问题截图",
     prop: "imageList",
     type: "image-list",
+    showImgIndex: 1,
   },
   {
     label: "提交时间",
