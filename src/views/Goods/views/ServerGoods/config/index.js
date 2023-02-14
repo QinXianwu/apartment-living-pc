@@ -29,6 +29,14 @@ export const formData = [
     options: [],
     placeholder: "请选择供应商",
   },
+  {
+    label: "服务点",
+    prop: "stationId",
+    type: "select",
+    value: "",
+    options: [],
+    placeholder: "请选择服务点",
+  },
   // {
   //   label: "商品库存",
   //   prop: "status",

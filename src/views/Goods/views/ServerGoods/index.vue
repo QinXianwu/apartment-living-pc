@@ -6,7 +6,7 @@
         :formData="searchForm"
         @on-search="onSearch"
       />
-      <div class="action">
+      <div class="action" v-if="isService">
         <el-button
           type="primary"
           plain
@@ -109,13 +109,18 @@
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
-            <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
+            <el-button type="text" @click="handleEdit(scope)">{{
+              isService ? "编辑" : "查看"
+            }}</el-button>
             <el-button
               type="text"
               @click="
                 changeStatus({ ids: [scope.id], operStatus: scope.operStatus })
               "
-              v-if="scope.operStatus !== CONST.GOODS_OPER_STATE.NO_CHECK"
+              v-if="
+                isService &&
+                scope.operStatus !== CONST.GOODS_OPER_STATE.NO_CHECK
+              "
               >{{
                 scope.operStatus === CONST.GOODS_OPER_STATE.LISTING
                   ? CONST.GOODS_OPER_STATE_TEXT[CONST.GOODS_OPER_STATE.REMOVAL]
@@ -184,17 +189,37 @@ export default {
   },
   computed: {
     ...mapGetters({
+      isAdmin: "user/isAdmin",
       isService: "user/isService",
       serviceStationId: "user/serviceStationId",
       categoryAllOptions: "goods/CategoryAllOptions",
       supplierOptions: "accountRoleManage/supplierOptions",
+      serviceStationOptions: "accountRoleManage/serviceStationOptions",
     }),
-    searchForm({ categoryAllOptions, supplierOptions }) {
-      const categoryItem = formData.find((item) => item.prop === "categoryId");
+    searchForm({
+      formData,
+      isAdmin,
+      categoryAllOptions,
+      supplierOptions,
+      serviceStationOptions,
+    }) {
+      const filterPropStr = `${isAdmin ? "" : "stationId"}}`;
+      const filterColumn = formData.filter(
+        (item) => !filterPropStr.includes(item.prop)
+      );
+      const categoryItem = filterColumn.find(
+        (item) => item.prop === "categoryId"
+      );
       if (categoryItem) categoryItem.options = categoryAllOptions;
-      const supplierItem = formData.find((item) => item.prop === "supplierId");
+      const supplierItem = filterColumn.find(
+        (item) => item.prop === "supplierId"
+      );
       if (supplierItem) supplierItem.options = supplierOptions;
-      return formData;
+      const stationItem = filterColumn.find(
+        (item) => item.prop === "stationId"
+      );
+      if (stationItem) stationItem.options = serviceStationOptions;
+      return filterColumn;
     },
   },
   methods: {
@@ -220,8 +245,8 @@ export default {
       });
     },
     handleEdit({ productNo }) {
-      this.$store.commit("goods/SET_IS_SERVER_EDIT", 1);
-      this.$store.commit("goods/SET_IS_DISABLE_FORM", 0);
+      this.$store.commit("goods/SET_IS_SERVER_EDIT", this.isService ? 1 : 0);
+      this.$store.commit("goods/SET_IS_DISABLE_FORM", this.isService ? 0 : 1);
       this.$router.push({
         name: "GoodsEdit",
         query: { productNo: productNo || "" },
@@ -321,9 +346,9 @@ export default {
     async getList(isClear) {
       if (isClear) this.page.pageNum = 1;
       const query = {
+        stationId: this.serviceStationId,
         ...this.page,
         ...this.query,
-        stationId: this.serviceStationId,
       };
       const [, res] = await this.$http.Goods.GetServeGoodsList(query);
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
@@ -371,6 +396,7 @@ export default {
     this.getList();
     this.$store.dispatch("goods/GetCategoryAllAction");
     this.$store.dispatch("accountRoleManage/GetSupplierListAction");
+    this.$store.dispatch("accountRoleManage/GetServiceStationListAction");
   },
   // 激活的时候重新获取列表
   activated() {
