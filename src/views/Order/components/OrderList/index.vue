@@ -117,7 +117,7 @@ export default {
         ...this.query,
       };
       if (this.receiveWay) query.receiveWay = this.receiveWay;
-      if (this.source) query.receiveWay = this.source;
+      if (this.source) query.source = this.source;
       const [, res] = await this.$http.Order.GetOrderList(query);
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
         this.$message.error(res?.msg || "获取订单列表异常");
