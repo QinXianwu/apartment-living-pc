@@ -133,6 +133,10 @@ export default {
           value: CONST.ORDER_STATE.ALL,
         },
         {
+          label: "待配送",
+          value: CONST.ORDER_STATE.WAIT_SEND,
+        },
+        {
           label: "配送中",
           value: CONST.ORDER_STATE.IN_TRANSIT,
         },

@@ -121,7 +121,11 @@ export default {
       return "";
     },
     showSendBtn({ orderTypeData }) {
-      return orderTypeData?.isSendOrder || orderTypeData?.isPointsOrder;
+      return (
+        orderTypeData?.isSendOrder ||
+        orderTypeData?.isPointsOrder ||
+        orderTypeData?.isGroupOrder
+      );
     },
   },
   methods: {
