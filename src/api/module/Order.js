@@ -116,6 +116,26 @@ export default {
       })
     );
   },
+  // 更新订单配送员
+  UpdateOrderByCourier(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-order/order/atorder/updateOrderCourier",
+        params,
+      })
+    );
+  },
+  // 更新订单状态
+  UpdateOrderByStatus(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-order/order/atorder/updateOrderStatus",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
   // 更新配送设置
   UpdateSendSetting(params) {
     return catchAsyncFun(

@@ -34,11 +34,11 @@
       <el-form-item label="订单配送费">
         <span>￥{{ dataSource.voucherSendAmount | formatCurrency }}</span>
       </el-form-item>
-      <el-form-item label="配送员服务费" prop="serverAmount">
+      <el-form-item label="配送员服务费" prop="courierServiceAmount">
         <el-input
           placeholder="请输入配送员服务费"
           class="input-medium"
-          :value="formData.serverAmount"
+          :value="formData.courierServiceAmount"
           @input="(val) => onInputAmount(val)"
         >
           <template slot="append">元</template>
@@ -82,7 +82,7 @@ export default {
         courierId: [
           { required: true, message: "请选择配送员", trigger: "change" },
         ],
-        serverAmount: [
+        courierServiceAmount: [
           { required: true, message: "请输入配送员服务费", trigger: "blur" },
         ],
       },
@@ -101,7 +101,7 @@ export default {
       //正则表达试
       val = val.match(/^\d*(\.?\d{0,2})/g)[0] || 0;
       //重新赋值给input
-      this.$set(this.formData, "serverAmount", val);
+      this.$set(this.formData, "courierServiceAmount", val);
     },
     async handleSubmit() {
       // 表单校验
@@ -115,15 +115,15 @@ export default {
       }
       if (this.isLoading) return;
       this.isLoading = true;
-      this.$message.info("功能开发中...");
-      // const [, res] = await this.$http.Coupons.UpdateCouponsActivityRule(
-      //   this.activityRule
-      // );
+      const [, res] = await this.$http.Order.UpdateOrderByCourier({
+        ...this.formData,
+        orderNo: this.dataSource.orderNo,
+      });
       this.isLoading = false;
-      // this.$message[res ? "success" : "error"](
-      //   res?.message || res ? "保存成功" : "保存失败"
-      // );
-      // if (res) this.handleClose(false);
+      this.$message[res ? "success" : "error"](
+        res?.message || res ? "保存成功" : "保存失败"
+      );
+      if (res) this.$emit("refresh");
     },
   },
   mounted() {

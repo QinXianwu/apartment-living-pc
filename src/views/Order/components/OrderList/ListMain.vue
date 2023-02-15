@@ -43,6 +43,9 @@
         <div class="action-groud">
           <el-button type="text" @click="lookDetail(scope)">查看</el-button>
           <el-button
+            v-if="
+              showSendBtn && scope.orderStatus === CONST.ORDER_STATE.WAIT_SEND
+            "
             type="text"
             @click="$emit('showOrderDialog', scope, 'SetCourierPeople')"
             >配送</el-button
@@ -117,15 +120,16 @@ export default {
       if (orderTypeData?.isGroupOrder) return CONST.LOOK_ORDER_TYPE.GROUP_ORDER;
       return "";
     },
+    showSendBtn({ orderTypeData }) {
+      return orderTypeData?.isSendOrder || orderTypeData?.isPointsOrder;
+    },
   },
   methods: {
     lookDetail({ orderNo }) {
-      this.$message.info("功能开发中...");
-      console.log(orderNo);
-      // this.$router.push({
-      //   name: "OrderDetail",
-      //   query: { orderNo: orderNo || "", orderType: this.orderType },
-      // });
+      this.$router.push({
+        name: "OrderDetail",
+        query: { orderNo: orderNo || "", orderType: this.orderType },
+      });
     },
     initSelection() {
       if (!this.orderList?.length) return;

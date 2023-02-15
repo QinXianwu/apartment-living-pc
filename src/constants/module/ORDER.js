@@ -46,15 +46,16 @@ export const ORDER_STATE = {
   PLATFORM_CANCEL: 7, // 平台取消
   TO_BE_SHIPPED: 8, // 待出货
   TO_BE_WRITTEN_OFF: 9, // 待核销
+  WAIT_SEND: 10, // 待配送
   AFTER_SALE: 99, // 售后
   // TO_PICKED_UP: 1500, // 待到店自提
   // TO_BE_AUDITED: 1600, // 待审核
-  // WAIT_SEND: 1700, // 待发货
 };
 
 export const ORDER_STATE_TEXT = {
   [ORDER_STATE.ALL]: "所有",
   [ORDER_STATE.WAIT_PAY]: "待付款",
+  [ORDER_STATE.WAIT_SEND]: "待配送",
   [ORDER_STATE.IN_TRANSIT]: "配送中",
   [ORDER_STATE.WAIT_DELIVERY]: "待收货",
   [ORDER_STATE.FINISH]: "已完成",
