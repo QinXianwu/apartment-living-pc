@@ -47,6 +47,7 @@
           <el-popover
             placement="bottom-start"
             trigger="click"
+            transition="popover"
             v-if="!isDisableForm"
           >
             <el-button

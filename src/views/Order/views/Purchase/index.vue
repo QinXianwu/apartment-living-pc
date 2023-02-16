@@ -78,6 +78,7 @@
             <el-popover
               placement="bottom-start"
               trigger="manual"
+              transition="popover"
               v-model="showRemarkInputMap[scope.id]"
             >
               <el-button

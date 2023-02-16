@@ -320,3 +320,14 @@
     transform: rotate(360deg);
   }
 }
+
+.popover-enter-active,
+.popover-leave-active {
+  transition: all 0.3s;
+}
+
+.popover-enter,
+.popover-leave-to {
+  opacity: 0;
+  transform: translate(-50px, -50px) scale(0.2);
+}
