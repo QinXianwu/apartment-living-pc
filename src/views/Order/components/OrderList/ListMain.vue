@@ -100,7 +100,9 @@ export default {
     tableHead({ column, orderTypeData, afterSaleColumn }) {
       if (orderTypeData?.isAfterSale) return afterSaleColumn;
       const filterPropStr = `${
-        orderTypeData?.isSendOrder ? "" : "userInfo,cccc1,cccc2"
+        orderTypeData?.isSendOrder
+          ? ""
+          : "userInfo,courierName,courierServiceAmount"
       },${orderTypeData?.isPointsOrder ? "" : "iiii"},${
         orderTypeData?.isSelfPickupOrder ? "" : "pickingAddress,pickingTime"
       }`;

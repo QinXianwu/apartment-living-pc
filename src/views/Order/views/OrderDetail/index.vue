@@ -5,6 +5,7 @@
     <OrderSteps isAlignCenter :stepsInfo="orderInfo.atProcessOrderDate" />
     <WeChatUser :userInfo="orderInfo.orderUserVo" />
     <AddressInfo :addressInfo="orderInfo.sendPickeInfoVo" />
+    <CourierInfo v-if="showCourierInfo" />
     <PayData :payInfo="orderInfo.payVo" />
     <GoodsData
       :goodsList="orderInfo.productVoList"
@@ -20,6 +21,7 @@ import OrderSteps from "./components/OrderSteps.vue";
 import PriceBlock from "./components/PriceBlock.vue";
 import WeChatUser from "./components/WeChatUser.vue";
 import AddressInfo from "./components/AddressInfo.vue";
+import CourierInfo from "./components/CourierInfo.vue";
 import PayData from "./components/PayData.vue";
 import GoodsData from "./components/GoodsData.vue";
 import FooterView from "@/components/Footer";
@@ -30,6 +32,7 @@ export default {
     OrderSteps,
     WeChatUser,
     AddressInfo,
+    CourierInfo,
     PayData,
     GoodsData,
     FooterView,
@@ -50,6 +53,9 @@ export default {
     },
     orderType() {
       return this.$router.currentRoute.query?.orderType || "";
+    },
+    showCourierInfo({ orderInfo }) {
+      return !!orderInfo?.atProcessOrderDate?.sendDate;
     },
   },
   methods: {

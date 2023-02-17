@@ -60,19 +60,14 @@ export default {
       return activeIndex;
     },
     defaultStepList({ orderType, stepsInfo }) {
-      let sendTitle = "配送中";
-      let confirmTitle = "确认收货";
-      if (
-        orderType === CONST.LOOK_ORDER_TYPE.SEND_ORDER ||
-        orderType === CONST.LOOK_ORDER_TYPE.POINTS_ORDER
-      ) {
-        sendTitle = "配送中";
-        confirmTitle = "确认收货";
-      }
-      if (orderType === CONST.LOOK_ORDER_TYPE.SELF_PICKUP_ORDER) {
-        sendTitle = "已出货";
-        confirmTitle = "确认核销";
-      }
+      const sendTitle =
+        orderType === CONST.LOOK_ORDER_TYPE.SELF_PICKUP_ORDER
+          ? "已出货"
+          : "配送中";
+      const confirmTitle =
+        orderType === CONST.LOOK_ORDER_TYPE.SELF_PICKUP_ORDER
+          ? "确认核销"
+          : "确认收货";
       return [
         {
           label: "已下单",

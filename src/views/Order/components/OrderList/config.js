@@ -36,11 +36,11 @@ export const column = [
   },
   {
     label: "配送员",
-    prop: "cccc1",
+    prop: "courierName",
   },
   {
-    label: "配送费",
-    prop: "cccc2",
+    label: "配送服务费",
+    prop: "courierServiceAmount",
     type: "money",
   },
   {
