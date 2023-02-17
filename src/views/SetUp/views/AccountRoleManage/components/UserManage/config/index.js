@@ -48,12 +48,12 @@ export const column = [
     prop: "nickName",
     showOverflowTooltip: true,
   },
-  {
-    label: "部门",
-    prop: "deptName",
-    type: "custom",
-    showOverflowTooltip: true,
-  },
+  // {
+  //   label: "部门",
+  //   prop: "deptName",
+  //   type: "custom",
+  //   showOverflowTooltip: true,
+  // },
   {
     label: "手机号码",
     prop: "phonenumber",
