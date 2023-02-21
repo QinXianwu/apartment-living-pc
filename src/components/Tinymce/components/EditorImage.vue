@@ -9,10 +9,10 @@
       上传文件
     </el-button>
     <el-dialog title="图片上传" :visible.sync="dialogVisible" append-to-body>
-      <!-- <Uploader
+      <Uploader
         :list.sync="imgList"
         tip="建议尺寸：1000 x 600像素，小于1M，支持jpg、png、jpeg格式"
-      /> -->
+      />
 
       <div>
         <el-button @click="dialogVisible = false"> 取 消 </el-button>
@@ -23,10 +23,10 @@
 </template>
 
 <script>
-// import Uploader from "@/components/Uploader";
+import Uploader from "@/components/Uploader";
 export default {
   name: "EditorSlideUpload",
-  // components: { Uploader },
+  components: { Uploader },
   data() {
     return {
       dialogVisible: false,
@@ -34,6 +34,15 @@ export default {
       listObj: {},
       fileList: [],
     };
+  },
+  watch: {
+    dialogVisible(val) {
+      if (val) {
+        this.imgList = [];
+        this.fileList = [];
+        this.listObj = {};
+      }
+    },
   },
   methods: {
     handleSubmit() {

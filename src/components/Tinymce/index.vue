@@ -6,11 +6,11 @@
   >
     <textarea :id="tinymceId" class="tinymce-textarea" />
     <div class="editor-custom-btn-container">
-      <!-- <EditorImage
+      <EditorImage
         color=" rgb(25,179,130)"
         class="editor-upload-btn"
         @successCBK="imageSuccessCBK"
-      /> -->
+      />
     </div>
     <span class="form-tip">富文本若加载失败请刷新页面后再试</span>
   </div>
@@ -21,13 +21,13 @@
  * docs:
  * https://panjiachen.github.io/vue-element-admin-site/zh/feature/component/rich-editor.html#%E5%B8%B8%E8%A7%81%E5%AF%8C%E6%96%87%E6%9C%AC
  */
-// import editorImage from "./components/EditorImage";
+import EditorImage from "./components/EditorImage";
 import plugins from "./plugins";
 import toolbar from "./toolbar";
 let TinymceCase = window.tinymce; // 全局加载的 tinymce.min.js
 export default {
   name: "Tinymce",
-  // components: { editorImage },
+  components: { EditorImage },
   props: {
     id: {
       type: String,
