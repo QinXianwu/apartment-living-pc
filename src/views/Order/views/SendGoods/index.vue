@@ -15,7 +15,11 @@ export default {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    handleConfirm(data) {
+      console.log(data);
+    },
+  },
   mounted() {
     this.$store.dispatch("operationsManage/GetCourierPeopleListAction");
   },
