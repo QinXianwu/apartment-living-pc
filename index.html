@@ -11,99 +11,204 @@
 <body>
   <div id="app">
     <style>
-      html,
-      body,
-      #app {
+      body {
+        padding: 50px;
+        background: #e3e3e3;
+      }
+
+      .loader-content {
         width: 100%;
-        height: 100%;
-        padding: 0;
-        margin: 0;
-        background-color: #ffffff;
-      }
-
-      .first-loading-wrap {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
       }
 
-      .first-loading-wrap>h1 {
-        font-size: 128px;
+      .loader-left {
+        width: fit-content;
+        height: 300px !important;
+        margin-right: 30px
       }
 
-      .first-loading-wrap .loading-wrap {
+      .loader-left .loading-content {
+        margin-bottom: 30px;
+      }
+
+      .loader-left .loading-btn {
+        height: 40px !important;
+        margin-right: 10px;
+      }
+
+      .loader-left .loading-text-container {
+        width: 100px;
+      }
+
+      .loader-main {
+        width: inherit;
+      }
+
+      .movie--isloading {
+        height: 270px;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 15px;
+      }
+
+      .movie--isloading.loader-head {
+        height: 50px;
+        margin-bottom: 30px;
+      }
+
+      .movie--isloading .loading-image {
+        height: 210px;
+        background-image: -webkit-linear-gradient(left, #ececec 0px, #f4f4f4 40px, #ececec 80px);
+        background-image: -o-linear-gradient(left, #ececec 0px, #f4f4f4 40px, #ececec 80px);
+        background-image: linear-gradient(90deg, #ececec 0px, #f4f4f4 40px, #ececec 80px);
+        background-size: 250px;
+        -webkit-animation: shine-loading-image 2s infinite ease-out;
+        animation: shine-loading-image 2s infinite ease-out;
+      }
+
+      .movie--isloading .loading-content {
+        background: #f7f7f7;
+        padding: 15px;
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
         align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
         justify-content: center;
-        padding: 98px;
       }
 
-      .dot {
-        position: relative;
-        box-sizing: border-box;
-        display: inline-block;
-        width: 32px;
-        height: 32px;
-        font-size: 32px;
-        transform: rotate(45deg);
-        animation: ant-rotate 1.2s infinite linear;
+      .movie--isloading .loading-content .loading-text-container {
+        -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
       }
 
-      .dot i {
-        position: absolute;
-        display: block;
-        width: 14px;
-        height: 14px;
-        background-color: #1890ff;
-        border-radius: 100%;
-        opacity: 0.3;
-        transform: scale(0.75);
-        transform-origin: 50% 50%;
-        animation: ant-spin-move 1s infinite linear alternate;
+      .movie--isloading .loading-content .loading-main-text {
+        height: 10px;
+        width: 65%;
+        margin-bottom: 10px;
+        background: #ececec;
+        background-image: -webkit-linear-gradient(left, #ececec 0px, #ddd 40px, #ececec 80px);
+        background-image: -o-linear-gradient(left, #ececec 0px, #ddd 40px, #ececec 80px);
+        background-image: linear-gradient(90deg, #ececec 0px, #ddd 40px, #ececec 80px);
+        background-size: 250px;
+        border-radius: 10px;
+        -webkit-animation: shine-loading-container-items 2s infinite ease-out;
+        animation: shine-loading-container-items 2s infinite ease-out;
       }
 
-      .dot i:nth-child(1) {
-        top: 0;
-        left: 0;
+      .movie--isloading .loading-content .loading-sub-text {
+        height: 10px;
+        width: 50%;
+        background: #ececec;
+        background-image: -webkit-linear-gradient(left, #ececec 0px, #ddd 40px, #ececec 80px);
+        background-image: -o-linear-gradient(left, #ececec 0px, #ddd 40px, #ececec 80px);
+        background-image: linear-gradient(90deg, #ececec 0px, #ddd 40px, #ececec 80px);
+        background-size: 250px;
+        border-radius: 10px;
+        -webkit-animation: shine-loading-container-items 2s infinite ease-out;
+        animation: shine-loading-container-items 2s infinite ease-out;
       }
 
-      .dot i:nth-child(2) {
-        top: 0;
-        right: 0;
-        animation-delay: 0.4s;
+      .movie--isloading .loading-content .loading-btn {
+        width: 60px;
+        height: 25px;
+        background: #ececec;
+        background-image: -webkit-linear-gradient(left, #ececec 0px, #ddd 40px, #ececec 80px);
+        background-image: -o-linear-gradient(left, #ececec 0px, #ddd 40px, #ececec 80px);
+        background-image: linear-gradient(90deg, #ececec 0px, #ddd 40px, #ececec 80px);
+        background-size: 250px;
+        border-radius: 3px;
+        -webkit-animation: shine-loading-container-items 2s infinite ease-out;
+        animation: shine-loading-container-items 2s infinite ease-out;
       }
 
-      .dot i:nth-child(3) {
-        right: 0;
-        bottom: 0;
-        animation-delay: 0.8s;
-      }
+      @-webkit-keyframes shine-loading-image {
+        0% {
+          background-position: -32px;
+        }
 
-      .dot i:nth-child(4) {
-        bottom: 0;
-        left: 0;
-        animation-delay: 1.2s;
-      }
-
-      @keyframes ant-rotate {
-        to {
-          transform: rotate(405deg);
+        40%,
+        100% {
+          background-position: 208px;
         }
       }
 
-      @keyframes ant-spin-move {
-        to {
-          opacity: 1;
+
+      @keyframes shine-loading-image {
+        0% {
+          background-position: -32px;
+        }
+
+        40%,
+        100% {
+          background-position: 208px;
+        }
+      }
+
+      @-webkit-keyframes shine-loading-container-items {
+        0% {
+          background-position: -100px;
+        }
+
+        40%,
+        100% {
+          background-position: 140px;
+        }
+      }
+
+      @keyframes shine-loading-container-items {
+        0% {
+          background-position: -100px;
+        }
+
+        40%,
+        100% {
+          background-position: 140px;
         }
       }
 
     </style>
-    <div class="first-loading-wrap">
-      <div class="loading-wrap">
-        <span class="dot dot-spin"><i></i><i></i><i></i><i></i></span>
+    <div class="loader">
+      <div class="loader-head  movie--isloading">
+        <div class="loading-image"></div>
+      </div>
+      <div class="loader-content">
+        <div class="loader-left movie--isloading">
+          <div class="loading-content">
+            <div class="loading-btn"></div>
+            <div class="loading-text-container">
+              <div class="loading-main-text"></div>
+              <div class="loading-sub-text"></div>
+            </div>
+          </div>
+          <div class="loading-content">
+            <div class="loading-btn"></div>
+            <div class="loading-text-container">
+              <div class="loading-main-text"></div>
+              <div class="loading-sub-text"></div>
+            </div>
+          </div>
+          <div class="loading-content">
+            <div class="loading-btn"></div>
+            <div class="loading-text-container">
+              <div class="loading-main-text"></div>
+              <div class="loading-sub-text"></div>
+            </div>
+          </div>
+        </div>
+        <div class="loader-main movie--isloading">
+          <div class="loading-image"></div>
+          <div class="loading-content">
+            <div class="loading-text-container">
+              <div class="loading-main-text"></div>
+              <div class="loading-sub-text"></div>
+            </div>
+            <div class="loading-btn"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
