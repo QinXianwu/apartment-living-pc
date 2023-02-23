@@ -11,212 +11,135 @@
 <body>
   <div id="app">
     <style>
-      body {
-        padding: 20px;
-        background: #e3e3e3;
+      /* Absolute Center Spinner */
+      .loading {
+        position: fixed;
+        z-index: 999;
+        height: 2em;
+        width: 2em;
+        overflow: visible;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
       }
 
-      .loader-content {
+      /* Transparent Overlay */
+      .loading:before {
+        content: '';
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
-        display: flex;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
       }
 
-      .loader-left {
-        width: fit-content;
-        height: 300px !important;
-        margin-right: 30px
+      /* :not(:required) hides these rules from IE9 and below */
+      .loading:not(:required) {
+        /* hide "loading..." text */
+        font: 0/0 a;
+        color: transparent;
+        text-shadow: none;
+        background-color: transparent;
+        border: 0;
       }
 
-      .loader-left .loading-content {
-        margin-bottom: 30px;
-        border-radius: 4px;
+      .loading:not(:required):after {
+        content: '';
+        display: block;
+        font-size: 10px;
+        width: 1em;
+        height: 1em;
+        margin-top: -0.5em;
+        -webkit-animation: spinner 1500ms infinite linear;
+        -moz-animation: spinner 1500ms infinite linear;
+        -ms-animation: spinner 1500ms infinite linear;
+        -o-animation: spinner 1500ms infinite linear;
+        animation: spinner 1500ms infinite linear;
+        border-radius: 0.5em;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+        box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
       }
 
-      .loader-left .loading-btn {
-        height: 40px !important;
-        margin-right: 10px;
-      }
+      /* Animation */
 
-      .loader-left .loading-text-container {
-        width: 100px;
-      }
-
-      .loader-main {
-        width: inherit;
-        border-radius: 4px;
-      }
-
-      .loader-main .loading-content {
-        padding: 20px !important;
-      }
-
-      .movie--isloading {
-        height: 270px;
-        border-radius: 4px;
-        overflow: hidden;
-        margin-bottom: 15px;
-      }
-
-      .movie--isloading.loader-head {
-        height: 50px;
-        margin-bottom: 30px;
-      }
-
-      .movie--isloading .loading-image {
-        height: 200px;
-        background-image: -webkit-linear-gradient(left, #ececec 0px, #f4f4f4 40px, #ececec 80px);
-        background-image: -o-linear-gradient(left, #ececec 0px, #f4f4f4 40px, #ececec 80px);
-        background-image: linear-gradient(90deg, #ececec 0px, #f4f4f4 40px, #ececec 80px);
-        background-size: 250px;
-        -webkit-animation: shine-loading-image 2s infinite ease-out;
-        animation: shine-loading-image 2s infinite ease-out;
-      }
-
-      .movie--isloading .loading-content {
-        background: #f7f7f7;
-        padding: 15px;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-      }
-
-      .movie--isloading .loading-content .loading-text-container {
-        -ms-flex-preferred-size: 100%;
-        flex-basis: 100%;
-      }
-
-      .movie--isloading .loading-content .loading-main-text {
-        height: 10px;
-        width: 65%;
-        margin-bottom: 10px;
-        background: #ececec;
-        background-image: -webkit-linear-gradient(left, #ececec 0px, #ddd 40px, #ececec 80px);
-        background-image: -o-linear-gradient(left, #ececec 0px, #ddd 40px, #ececec 80px);
-        background-image: linear-gradient(90deg, #ececec 0px, #ddd 40px, #ececec 80px);
-        background-size: 250px;
-        border-radius: 10px;
-        -webkit-animation: shine-loading-container-items 2s infinite ease-out;
-        animation: shine-loading-container-items 2s infinite ease-out;
-      }
-
-      .movie--isloading .loading-content .loading-sub-text {
-        height: 10px;
-        width: 50%;
-        background: #ececec;
-        background-image: -webkit-linear-gradient(left, #ececec 0px, #ddd 40px, #ececec 80px);
-        background-image: -o-linear-gradient(left, #ececec 0px, #ddd 40px, #ececec 80px);
-        background-image: linear-gradient(90deg, #ececec 0px, #ddd 40px, #ececec 80px);
-        background-size: 250px;
-        border-radius: 10px;
-        -webkit-animation: shine-loading-container-items 2s infinite ease-out;
-        animation: shine-loading-container-items 2s infinite ease-out;
-      }
-
-      .movie--isloading .loading-content .loading-btn {
-        width: 60px;
-        height: 25px;
-        background: #ececec;
-        background-image: -webkit-linear-gradient(left, #ececec 0px, #ddd 40px, #ececec 80px);
-        background-image: -o-linear-gradient(left, #ececec 0px, #ddd 40px, #ececec 80px);
-        background-image: linear-gradient(90deg, #ececec 0px, #ddd 40px, #ececec 80px);
-        background-size: 250px;
-        border-radius: 3px;
-        -webkit-animation: shine-loading-container-items 2s infinite ease-out;
-        animation: shine-loading-container-items 2s infinite ease-out;
-      }
-
-      @-webkit-keyframes shine-loading-image {
+      @-webkit-keyframes spinner {
         0% {
-          background-position: -32px;
+          -webkit-transform: rotate(0deg);
+          -moz-transform: rotate(0deg);
+          -ms-transform: rotate(0deg);
+          -o-transform: rotate(0deg);
+          transform: rotate(0deg);
         }
 
-        40%,
         100% {
-          background-position: 208px;
+          -webkit-transform: rotate(360deg);
+          -moz-transform: rotate(360deg);
+          -ms-transform: rotate(360deg);
+          -o-transform: rotate(360deg);
+          transform: rotate(360deg);
         }
       }
 
-
-      @keyframes shine-loading-image {
+      @-moz-keyframes spinner {
         0% {
-          background-position: -32px;
+          -webkit-transform: rotate(0deg);
+          -moz-transform: rotate(0deg);
+          -ms-transform: rotate(0deg);
+          -o-transform: rotate(0deg);
+          transform: rotate(0deg);
         }
 
-        40%,
         100% {
-          background-position: 208px;
+          -webkit-transform: rotate(360deg);
+          -moz-transform: rotate(360deg);
+          -ms-transform: rotate(360deg);
+          -o-transform: rotate(360deg);
+          transform: rotate(360deg);
         }
       }
 
-      @-webkit-keyframes shine-loading-container-items {
+      @-o-keyframes spinner {
         0% {
-          background-position: -100px;
+          -webkit-transform: rotate(0deg);
+          -moz-transform: rotate(0deg);
+          -ms-transform: rotate(0deg);
+          -o-transform: rotate(0deg);
+          transform: rotate(0deg);
         }
 
-        40%,
         100% {
-          background-position: 140px;
+          -webkit-transform: rotate(360deg);
+          -moz-transform: rotate(360deg);
+          -ms-transform: rotate(360deg);
+          -o-transform: rotate(360deg);
+          transform: rotate(360deg);
         }
       }
 
-      @keyframes shine-loading-container-items {
+      @keyframes spinner {
         0% {
-          background-position: -100px;
+          -webkit-transform: rotate(0deg);
+          -moz-transform: rotate(0deg);
+          -ms-transform: rotate(0deg);
+          -o-transform: rotate(0deg);
+          transform: rotate(0deg);
         }
 
-        40%,
         100% {
-          background-position: 140px;
+          -webkit-transform: rotate(360deg);
+          -moz-transform: rotate(360deg);
+          -ms-transform: rotate(360deg);
+          -o-transform: rotate(360deg);
+          transform: rotate(360deg);
         }
       }
 
     </style>
-    <div class="loader">
-      <div class="loader-head  movie--isloading">
-        <div class="loading-image"></div>
-      </div>
-      <div class="loader-content">
-        <div class="loader-left movie--isloading">
-          <div class="loading-content">
-            <div class="loading-btn"></div>
-            <div class="loading-text-container">
-              <div class="loading-main-text"></div>
-              <div class="loading-sub-text"></div>
-            </div>
-          </div>
-          <div class="loading-content">
-            <div class="loading-btn"></div>
-            <div class="loading-text-container">
-              <div class="loading-main-text"></div>
-              <div class="loading-sub-text"></div>
-            </div>
-          </div>
-          <div class="loading-content">
-            <div class="loading-btn"></div>
-            <div class="loading-text-container">
-              <div class="loading-main-text"></div>
-              <div class="loading-sub-text"></div>
-            </div>
-          </div>
-        </div>
-        <div class="loader-main movie--isloading">
-          <div class="loading-image"></div>
-          <div class="loading-content">
-            <div class="loading-text-container">
-              <div class="loading-main-text"></div>
-              <div class="loading-sub-text"></div>
-            </div>
-            <div class="loading-btn"></div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="loading">Loading&#8230;</div>
   </div>
   <script type="module" src="/src/main.js"></script>
   <script>
