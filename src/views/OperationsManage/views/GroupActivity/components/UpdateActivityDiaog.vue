@@ -103,6 +103,17 @@
             </el-select>
           </el-input>
         </el-form-item>
+        <el-form-item label="是否热门" prop="hot">
+          <el-radio-group v-model="formData.hot">
+            <el-radio-button
+              v-for="(item, index) in $CONST.GROUP_HOT_TYPE_OPTIONS()"
+              :label="item.value"
+              :value="item.value"
+              :key="index"
+              >{{ item.label }}</el-radio-button
+            >
+          </el-radio-group>
+        </el-form-item>
       </el-form>
     </div>
     <ActivityGoods
@@ -162,6 +173,7 @@ export default {
         activityDate: [],
         serviceStationIds: [],
         timeType: this.$CONST.GROUP_LIMIT_TYPE.HOUR,
+        hot: this.$CONST.GROUP_HOT_TYPE.NOT,
       },
       isLoading: false,
       isLoadingInfo: false,
@@ -224,6 +236,7 @@ export default {
         activityDate: [],
         serviceStationIds: [],
         timeType: this.$CONST.GROUP_LIMIT_TYPE.HOUR,
+        hot: this.$CONST.GROUP_HOT_TYPE.NOT,
       };
     },
     // 全选select

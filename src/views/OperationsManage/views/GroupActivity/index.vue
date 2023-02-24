@@ -31,6 +31,13 @@
             {{ scope.product | priceRange("groupPriceMin", "groupPriceMax") }}
           </span>
         </template>
+        <template #hot="{ scope }">
+          <el-tag
+            :type="scope.hot === $CONST.GROUP_HOT_TYPE.NOT ? 'danger' : ''"
+          >
+            <span>{{ $CONST.GROUP_HOT_TYPE_TEXT[scope.hot] }}</span>
+          </el-tag>
+        </template>
         <template #status="{ scope }">
           <div>
             <el-tag :type="getActivityTab(scope)">

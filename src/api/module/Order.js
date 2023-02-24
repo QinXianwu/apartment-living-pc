@@ -125,6 +125,15 @@ export default {
       })
     );
   },
+  // 更新拼团订单配送员
+  UpdateGroupOrderByCourier(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/groupActivity/updateOrderCourier",
+        params,
+      })
+    );
+  },
   // 更新订单状态
   UpdateOrderByStatus(params) {
     return catchAsyncFun(

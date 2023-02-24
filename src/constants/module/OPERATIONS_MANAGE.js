@@ -76,3 +76,15 @@ export const GROUP_LIMIT_TYPE_TEXT = {
 };
 export const GROUP_LIMIT_OPTIONS = () =>
   getOpitonsByText(GROUP_LIMIT_TYPE_TEXT);
+
+// 拼团-是否为热门
+export const GROUP_HOT_TYPE = {
+  YES: 1, // 是
+  NOT: 2, // 否
+};
+export const GROUP_HOT_TYPE_TEXT = {
+  [GROUP_HOT_TYPE.YES]: "是",
+  [GROUP_HOT_TYPE.NOT]: "否",
+};
+export const GROUP_HOT_TYPE_OPTIONS = () =>
+  getOpitonsByText(GROUP_HOT_TYPE_TEXT);

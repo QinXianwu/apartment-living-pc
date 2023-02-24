@@ -45,6 +45,11 @@ export const column = [
     prop: "stockCount",
   },
   {
+    label: "是否热门",
+    prop: "hot",
+    type: "custom",
+  },
+  {
     label: "状态",
     prop: "status",
     type: "custom",

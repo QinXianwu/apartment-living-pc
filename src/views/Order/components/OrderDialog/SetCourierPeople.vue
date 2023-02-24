@@ -92,6 +92,12 @@ export default {
     ...mapGetters({
       courierOptions: "operationsManage/courierPeopleOptions",
     }),
+    orderType() {
+      return this.$router.currentRoute.query?.orderType || "";
+    },
+    isGroupOrder({ orderType }) {
+      return orderType === this.$LOOK_ORDER_TYPE.GROUP_ORDER;
+    },
   },
   methods: {
     initForm() {
@@ -115,7 +121,9 @@ export default {
       }
       if (this.isLoading) return;
       this.isLoading = true;
-      const [, res] = await this.$http.Order.UpdateOrderByCourier({
+      const [, res] = await this.$http.Order[
+        this.isGroupOrder ? "UpdateGroupOrderByCourier" : "UpdateOrderByCourier"
+      ]({
         ...this.formData,
         orderNo: this.dataSource.orderNo,
       });
