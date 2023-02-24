@@ -26,6 +26,7 @@
     />
     <!-- 订单编辑弹窗 -->
     <OrderDialog
+      :orderTypeData="orderTypeData"
       :show.sync="orderDialogkVisible"
       :type="dialogType"
       :dataSource="editRecord"

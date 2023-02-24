@@ -9,6 +9,7 @@
     <div class="order_dialog_main">
       <!-- 设置配送员 -->
       <SetCourierPeople
+        :orderTypeData="orderTypeData"
         v-if="type === 'SetCourierPeople'"
         :dataSource="dataSource"
         @close="handleClose(false)"
@@ -38,6 +39,10 @@ export default {
     type: {
       type: String,
       default: "",
+    },
+    orderTypeData: {
+      type: Object,
+      default: () => ({}),
     },
   },
   computed: {

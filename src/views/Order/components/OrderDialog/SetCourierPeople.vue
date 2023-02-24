@@ -65,6 +65,10 @@ export default {
         return {};
       },
     },
+    orderTypeData: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   watch: {
     dataSource: {
@@ -92,11 +96,8 @@ export default {
     ...mapGetters({
       courierOptions: "operationsManage/courierPeopleOptions",
     }),
-    orderType() {
-      return this.$router.currentRoute.query?.orderType || "";
-    },
-    isGroupOrder({ orderType }) {
-      return orderType === this.$LOOK_ORDER_TYPE.GROUP_ORDER;
+    isGroupOrder({ orderTypeData }) {
+      return !!orderTypeData?.isGroupOrder;
     },
   },
   methods: {
