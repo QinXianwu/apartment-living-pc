@@ -30,9 +30,9 @@ export default {
       return this.$router.currentRoute.query?.orderType || "";
     },
     title({ orderType }) {
-      return orderType === CONST.LOOK_ORDER_TYPE.SELF_PICKUP_ORDER
+      return orderType === CONST.ORDER_SOURCE.SELF_PICKUP_ORDER
         ? "自提"
-        : orderType === CONST.LOOK_ORDER_TYPE.SEND_ORDER
+        : orderType === CONST.ORDER_SOURCE.SEND_ORDER
         ? "配送"
         : "";
     },
@@ -43,7 +43,7 @@ export default {
         { label: "收件手机号", value: addressInfo?.receiptePhone },
         { label: "地址", value: addressInfo?.address },
       ];
-      if (orderType === CONST.LOOK_ORDER_TYPE.SELF_PICKUP_ORDER) {
+      if (orderType === CONST.ORDER_SOURCE.SELF_PICKUP_ORDER) {
         arr.push({ label: "自提时间", value: addressInfo?.pickingTime });
       }
       return [...arr, { label: "备注", value: addressInfo?.remark }];

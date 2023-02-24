@@ -46,7 +46,7 @@ export default {
   },
   computed: {
     title({ orderType }) {
-      return CONST.LOOK_ORDER_TYPE_TEXT[orderType] || "订单";
+      return CONST.ORDER_SOURCE_TEXT[orderType] || "订单";
     },
     orderNo() {
       return this.$router.currentRoute.query?.orderNo || "";

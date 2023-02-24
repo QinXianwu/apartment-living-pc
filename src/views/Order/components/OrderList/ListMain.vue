@@ -113,15 +113,14 @@ export default {
     // 订单类型
     orderType({ orderTypeData }) {
       // 配送订单
-      if (orderTypeData?.isSendOrder) return CONST.LOOK_ORDER_TYPE.SEND_ORDER;
+      if (orderTypeData?.isSendOrder) return CONST.ORDER_SOURCE.SEND_ORDER;
       // 自提订单
       if (orderTypeData?.isSelfPickupOrder)
-        return CONST.LOOK_ORDER_TYPE.SELF_PICKUP_ORDER;
+        return CONST.ORDER_SOURCE.SELF_PICKUP_ORDER;
       // 积分订单
-      if (orderTypeData?.isPointsOrder)
-        return CONST.LOOK_ORDER_TYPE.POINTS_ORDER;
+      if (orderTypeData?.isPointsOrder) return CONST.ORDER_SOURCE.POINTS_ORDER;
       // 拼团订单
-      if (orderTypeData?.isGroupOrder) return CONST.LOOK_ORDER_TYPE.GROUP_ORDER;
+      if (orderTypeData?.isGroupOrder) return CONST.ORDER_SOURCE.GROUP_ORDER;
       return "";
     },
     showSendBtn({ orderTypeData }) {
