@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       CONST,
-      tabValue: 0,
+      tabValue: this.orderTypeData?.isAfterSale ? "99999" : "0",
     };
   },
   computed: {
@@ -122,8 +122,9 @@ export default {
       return [
         {
           label: "全部",
-          value: CONST.ORDER_STATE.ALL,
+          value: 99999,
         },
+        ...CONST.A_S_ORDER_STATE_OPTIONS(),
       ];
     },
     groupTabList() {
@@ -157,13 +158,22 @@ export default {
   },
   methods: {
     tabClick() {
-      const orderStatus = !Number(this.tabValue) ? "" : this.tabValue;
-      this.$emit("update:orderStatus", orderStatus);
+      if (this.orderTypeData?.isAfterSale) {
+        this.$emit(
+          "update:orderStatus",
+          Number(this.tabValue) === 99999 ? "" : this.tabValue
+        );
+      } else {
+        this.$emit(
+          "update:orderStatus",
+          !Number(this.tabValue) ? "" : this.tabValue
+        );
+      }
       this.$emit("getList");
     },
   },
   mounted() {
-    if (this.orderStatus) this.tabValue = this.orderStatus;
+    if (this.orderStatus) this.tabValue = `${this.orderStatus}`;
   },
 };
 </script>

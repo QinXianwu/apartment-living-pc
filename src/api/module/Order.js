@@ -107,6 +107,29 @@ export default {
       })
     );
   },
+  // 获取运营后台售后订单列表
+  GetAfterSalesOrderList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-order/atorderafterserv/refundOrderList",
+        params,
+        isReturnAll: true,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 获取运营后台售后订单详情
+  GetAfterSalesOrderDetail(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-order/atorderafterserv/refundOrderInfo",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
   // 获取配送设置
   GetSendSettingDetail(params) {
     return catchAsyncFun(

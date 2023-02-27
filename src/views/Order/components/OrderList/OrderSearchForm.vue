@@ -26,9 +26,8 @@ export default {
       supplierOptions: "accountRoleManage/supplierOptions",
       serviceStationOptions: "accountRoleManage/serviceStationOptions",
     }),
-    formData({ defaultFormData, afterFormData, sendFormData, orderTypeData }) {
+    formData({ defaultFormData, afterFormData, orderTypeData }) {
       if (orderTypeData?.isAfterSale) return afterFormData;
-      if (orderTypeData?.isSendOrder) return sendFormData;
       return defaultFormData;
     },
     // 默认表单
@@ -88,12 +87,52 @@ export default {
       ];
     },
     // 售后
-    afterFormData({ defaultFormData }) {
-      return defaultFormData;
-    },
-    // 配送单
-    sendFormData({ defaultFormData }) {
-      return defaultFormData;
+    afterFormData({ serviceStationOptions }) {
+      return [
+        {
+          label: "订单号",
+          prop: "orderNo",
+          type: "text",
+          value: "",
+          placeholder: "请输入订单号",
+        },
+        {
+          label: "商品名称",
+          prop: "productName",
+          type: "text",
+          value: "",
+          placeholder: "请输入商品名称",
+        },
+        {
+          label: "服务点",
+          prop: "serviceId",
+          type: "select",
+          value: "",
+          options: serviceStationOptions,
+          placeholder: "请选择服务点",
+        },
+        {
+          label: "收货人姓名",
+          prop: "nickName",
+          type: "text",
+          value: "",
+          placeholder: "请输入收货人姓名",
+        },
+        {
+          label: "收货人手机号",
+          prop: "mobile",
+          type: "text",
+          value: "",
+          placeholder: "请输入收货人手机号",
+        },
+        {
+          label: "订单时间",
+          prop: "orderDate",
+          type: "datetimerange",
+          value: "",
+          placeholder: "请选择订单时间",
+        },
+      ];
     },
   },
   data() {

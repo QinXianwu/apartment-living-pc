@@ -79,4 +79,63 @@ export const column = [
 ];
 
 // 列表售后表格头
-export const afterSaleColumn = [];
+export const afterSaleColumn = [
+  {
+    label: "订单号",
+    prop: "orderNo",
+  },
+  {
+    label: "商品信息",
+    prop: "goodsInfo",
+    type: "custom",
+    minWidth: 150,
+  },
+  {
+    label: "退款金额",
+    prop: "refundAmount",
+    type: "money",
+  },
+  {
+    label: "申请原因",
+    prop: "reason",
+    showOverflowTooltip: true,
+  },
+  {
+    label: "服务点",
+    prop: "serviceName",
+    showOverflowTooltip: true,
+  },
+  {
+    label: "用户信息",
+    prop: "userInfo",
+    type: "custom",
+    width: 160,
+  },
+  {
+    label: "售前状态",
+    prop: "orderStatus",
+    type: "custom",
+    width: 100,
+  },
+  {
+    label: "售后类型",
+    prop: "type",
+  },
+  {
+    label: "售后状态",
+    prop: "operStatus",
+    type: "custom",
+  },
+  {
+    label: "申请时间",
+    prop: "applyDate",
+    width: 160,
+  },
+  {
+    label: "操作",
+    prop: "action",
+    type: "custom",
+    fixed: "right",
+    width: 250,
+  },
+];

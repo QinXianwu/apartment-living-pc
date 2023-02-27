@@ -9,35 +9,64 @@
       @selection-change="handleSelectionChange"
     >
       <template #goodsInfo="{ scope }">
-        <GoodsList :goodsList="scope.atOrderDetailVoList" />
+        <GoodsList
+          :goodsList="
+            orderTypeData.isAfterSale
+              ? scope.productVoList
+              : scope.atOrderDetailVoList
+          "
+        />
       </template>
       <template #userInfo="{ scope }">
         <el-tooltip class="item" effect="dark" placement="right">
           <div slot="content">
-            <div class="name">姓名：{{ scope.receipteName || "-" }}</div>
-            <div class="address">
+            <div class="name">
+              姓名：{{ scope.name || scope.receipteName || "-" }}
+            </div>
+            <div class="address" v-if="!orderTypeData.isAfterSale">
               <span>地址：{{ scope | filtersAddress(addressKey) }}</span>
             </div>
-            <div class="phone">联系方式：{{ scope.receiptePhone || "-" }}</div>
+            <div class="phone">
+              联系方式：{{ scope.mobile || scope.receiptePhone || "-" }}
+            </div>
           </div>
           <div class="userInfo">
-            <div class="name">姓名：{{ scope.receipteName || "-" }}</div>
-            <div class="address">
+            <div class="name">
+              姓名：{{ scope.name || scope.receipteName || "-" }}
+            </div>
+            <div class="address" v-if="!orderTypeData.isAfterSale">
               <span>地址：{{ scope | filtersAddress(addressKey) }}</span>
             </div>
-            <div class="phone">联系方式：{{ scope.receiptePhone || "-" }}</div>
+            <div class="phone">
+              联系方式：{{ scope.mobile || scope.receiptePhone || "-" }}
+            </div>
           </div>
         </el-tooltip>
       </template>
       <template #pickingAddress="scope">
         <span>{{ scope.pickingAddress }}</span>
       </template>
-      <!-- 状态 -->
+      <!-- 状态/售前状态 -->
       <template #orderStatus="{ scope }">
-        <el-tag :type="scope | statusTabType">{{
-          CONST.ORDER_STATE_TEXT[scope.orderStatus]
-        }}</el-tag>
+        <el-tag
+          :type="
+            orderTypeData.isAfterSale
+              ? scope.preSaleStatus
+              : scope.orderStatus | statusTabType
+          "
+          >{{
+            orderTypeData.isAfterSale
+              ? CONST.ORDER_STATE_TEXT[scope.preSaleStatus]
+              : CONST.ORDER_STATE_TEXT[scope.orderStatus]
+          }}</el-tag
+        >
       </template>
+      <!-- 售后状态 -->
+      <!-- <template #operStatus="{ scope }">
+        <el-tag :type="scope.operStatus | ASstatusTabType">{{
+          CONST.A_S_ORDER_STATE_TEXT[scope.orderStatus]
+        }}</el-tag>
+      </template> -->
       <!-- 操作 -->
       <template #action="{ scope }">
         <div class="action-groud">
@@ -121,6 +150,9 @@ export default {
       if (orderTypeData?.isPointsOrder) return CONST.ORDER_SOURCE.POINTS_ORDER;
       // 拼团订单
       if (orderTypeData?.isGroupOrder) return CONST.ORDER_SOURCE.GROUP_ORDER;
+      // 售后订单
+      if (orderTypeData?.isAfterSale)
+        return CONST.ORDER_SOURCE.AFTER_SALE_ORDER;
       return "";
     },
     showSendBtn({ orderTypeData }) {
@@ -159,7 +191,36 @@ export default {
     },
   },
   filters: {
-    statusTabType() {
+    statusTabType(status) {
+      if (status === CONST.ORDER_STATE.FINISH) return "success";
+      if (
+        status === CONST.ORDER_STATE.CANCEL ||
+        status === CONST.ORDER_STATE.EXPIRED_CANCEL ||
+        status === CONST.ORDER_STATE.PLATFORM_CANCEL
+      )
+        return "danger";
+      if (
+        status === CONST.ORDER_STATE.TO_BE_WRITTEN_OFF ||
+        status === CONST.ORDER_STATE.AFTER_SALE
+      )
+        return "warning";
+      return "";
+    },
+    ASstatusTabType(status) {
+      if (status === CONST.A_S_ORDER_STATE.RETURN_DOEN) return "success";
+      if (
+        status === CONST.A_S_ORDER_STATE.USER_WRITTEN_OFF ||
+        status === CONST.A_S_ORDER_STATE.FIAL ||
+        status === CONST.A_S_ORDER_STATE.AUDIT_FAIL ||
+        status === CONST.A_S_ORDER_STATEEXPIRED_CANCEL ||
+        status === CONST.A_S_ORDER_STATEAUDIT_FAIL_TO_NEW
+      )
+        return "danger";
+      if (
+        status === CONST.A_S_ORDER_STATEWAIT_REFUNDED ||
+        status === CONST.A_S_ORDER_STATERETURN_MONEY
+      )
+        return "warning";
       return "";
     },
   },

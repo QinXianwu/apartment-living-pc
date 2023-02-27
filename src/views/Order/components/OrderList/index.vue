@@ -116,15 +116,23 @@ export default {
         ...this.page,
         ...this.query,
       };
+      if (this.orderTypeData?.isAfterSale) {
+        query.operStatus = query.orderStatus;
+        delete query.orderStatus;
+      }
       if (this.receiveWay) query.receiveWay = this.receiveWay;
       if (this.source) query.source = this.source;
-      const [, res] = await this.$http.Order.GetOrderList(query);
+      const [, res] = await this.$http.Order[
+        this.orderTypeData?.isAfterSale
+          ? "GetAfterSalesOrderList"
+          : "GetOrderList"
+      ](query);
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
         this.$message.error(res?.msg || "获取订单列表异常");
       }
       const data = res?.rows?.length ? res.rows : [];
       // data.forEach((item) => {
-      //   digits2Str(item, ["id", "serviceId"]);
+      //   digits2Str(item, ["id"]);
       // });
       this.list = data;
       this.total = res?.total || 0;

@@ -48,8 +48,6 @@ export const ORDER_STATE = {
   TO_BE_WRITTEN_OFF: 9, // 待核销
   WAIT_SEND: 10, // 待配送
   AFTER_SALE: 99, // 售后
-  // TO_PICKED_UP: 1500, // 待到店自提
-  // TO_BE_AUDITED: 1600, // 待审核
 };
 
 export const ORDER_STATE_TEXT = {
@@ -66,7 +64,35 @@ export const ORDER_STATE_TEXT = {
   [ORDER_STATE.TO_BE_WRITTEN_OFF]: "待核销",
   [ORDER_STATE.AFTER_SALE]: "售后",
 };
+
 export const ORDER_STATE_OPTIONS = () => getOpitonsByText(ORDER_STATE_TEXT);
+
+// 售后订单状态
+export const A_S_ORDER_STATE = {
+  WAIT_AUDITED: 0, // 待审核
+  WAIT_DELIVERY: 2, // 待商家收货
+  WAIT_REFUNDED: 4, // 待退款
+  RETURN_MONEY: 5, // 待到账(退款中)
+  RETURN_DOEN: 6, // 已完成
+  USER_WRITTEN_OFF: 7, // 用户撤销
+  FIAL: 8, // 售后失败
+  AUDIT_FAIL: 15, // 售后拒绝
+  EXPIRED_CANCEL: 16, // 过期取消
+};
+
+export const A_S_ORDER_STATE_TEXT = {
+  [A_S_ORDER_STATE.WAIT_AUDITED]: "待审核",
+  [A_S_ORDER_STATE.WAIT_DELIVERY]: "待商家收货",
+  [A_S_ORDER_STATE.WAIT_REFUNDED]: "待退款",
+  [A_S_ORDER_STATE.RETURN_MONEY]: "待到账",
+  [A_S_ORDER_STATE.RETURN_DOEN]: "已完成",
+  [A_S_ORDER_STATE.USER_WRITTEN_OFF]: "用户撤销",
+  [A_S_ORDER_STATE.FIAL]: "售后失败",
+  [A_S_ORDER_STATE.AUDIT_FAIL]: "售后拒绝",
+  [A_S_ORDER_STATE.EXPIRED_CANCEL]: "过期取消",
+};
+export const A_S_ORDER_STATE_OPTIONS = () =>
+  getOpitonsByText(A_S_ORDER_STATE_TEXT);
 
 // 采购订单状态
 export const ORDER_PURCHASE_STATE = {

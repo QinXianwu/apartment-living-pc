@@ -6,6 +6,7 @@ import SendGoodsOrder from "@/views/Order/views/SendGoods/index.vue";
 import SelfPickupOrder from "@/views/Order/views/SelfPickup/index.vue";
 import PointsOrder from "@/views/Order/views/PointsOrder/index.vue";
 import GroupOrder from "@/views/Order/views/GroupOrder/index.vue";
+import AfterSales from "@/views/Order/views/AfterSales/index.vue";
 import SendSetUp from "@/views/Order/views/SendSetUp/index.vue";
 
 export default {
@@ -72,6 +73,15 @@ export default {
       name: "GroupOrder",
       meta: {
         title: "拼团订单",
+        // PermissionId: PERMISSION_ID.Goods_List,
+      },
+    },
+    {
+      path: "AfterSales",
+      component: AfterSales,
+      name: "AfterSales",
+      meta: {
+        title: "售后订单",
         // PermissionId: PERMISSION_ID.Goods_List,
       },
     },
