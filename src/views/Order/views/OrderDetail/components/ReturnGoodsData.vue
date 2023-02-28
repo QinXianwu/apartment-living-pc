@@ -56,7 +56,7 @@ export default {
           value: CONST.REFUND_METHOD_TEXT[orderInfo?.refundMethod],
         },
         { label: "退款人", value: orderInfo?.name },
-        { label: "收件电话", value: "" },
+        { label: "收件电话", value: orderInfo?.managePhone },
         { label: "收货地址/自提地址", value: orderInfo?.address },
         { label: "授权头像", value: orderInfo?.avatarUrl, type: "image" },
         { label: "授权昵称", value: orderInfo?.nickName },
