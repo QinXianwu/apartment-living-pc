@@ -75,11 +75,13 @@
       :show.sync="showActivityDiaog"
       @close="close"
     />
-    <CourierWithdrawalsDiaog
-      :editInfo="editInfo"
-      :show.sync="showWithdrawalsDiaog"
-      @close="close"
-    />
+    <DrawerPopup v-model="showDrawerPopup">
+      <CourierWithdrawals
+        v-if="showDrawerPopup"
+        :editInfo="editInfo"
+        @close="close"
+      />
+    </DrawerPopup>
   </div>
 </template>
 <script>
@@ -87,11 +89,14 @@ import { mapGetters } from "vuex";
 import CONST from "@/constants/index";
 import { column, formData, activityTab } from "./config";
 import UpdateCourierDiaog from "./components/UpdateCourierDiaog.vue";
-import CourierWithdrawalsDiaog from "./components/CourierWithdrawalsDiaog.vue";
+import CourierWithdrawals from "./components/CourierWithdrawals/index.vue";
 
 export default {
   name: "CourierManage",
-  components: { UpdateCourierDiaog, CourierWithdrawalsDiaog },
+  components: {
+    UpdateCourierDiaog,
+    CourierWithdrawals,
+  },
   data() {
     return {
       CONST,
@@ -106,7 +111,7 @@ export default {
       total: 0,
       query: {}, //过滤规则
       showActivityDiaog: false,
-      showWithdrawalsDiaog: false,
+      showDrawerPopup: false,
     };
   },
   computed: {
@@ -150,7 +155,7 @@ export default {
     },
     handleWithdrawals(data) {
       this.editInfo = { id: data.id };
-      this.showWithdrawalsDiaog = true;
+      this.showDrawerPopup = true;
     },
     async handleReview({ id, status }) {
       const title =
@@ -190,7 +195,7 @@ export default {
     close(isRefresh = false) {
       this.editInfo = "";
       this.showActivityDiaog = false;
-      this.showWithdrawalsDiaog = false;
+      this.showDrawerPopup = false;
       if (isRefresh) this.getList();
     },
     async getList(isClear) {
