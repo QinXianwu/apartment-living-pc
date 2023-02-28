@@ -66,7 +66,7 @@ export default {
       type: Array,
       default: () => [],
     },
-    payInfo: {
+    orderInfo: {
       type: Object,
       default: () => ({}),
     },
@@ -83,6 +83,12 @@ export default {
     };
   },
   computed: {
+    orderType() {
+      return this.$router.currentRoute.query?.orderType || "";
+    },
+    isAfterSales({ orderType }) {
+      return orderType === CONST.ORDER_SOURCE.AFTER_SALE_ORDER;
+    },
     list({ goodsList, page }) {
       const tempList = goodsList?.length ? goodsList : [];
       return tempList.slice(
@@ -90,9 +96,21 @@ export default {
         page.pageNum * page.pageSize
       );
     },
-    payDataList({ payInfo }) {
+    totalAmount({ goodsList }) {
+      const tempList = goodsList?.length ? goodsList : [];
+      let sum = 0;
+      tempList.forEach((item) => {
+        sum += item?.total;
+      });
+      return sum;
+    },
+    payDataList({ isAfterSales, totalAmount, orderInfo }) {
+      const payInfo = isAfterSales ? orderInfo : orderInfo?.payVo || {};
       return [
-        { label: "商品总额：", value: payInfo?.totalAmount },
+        {
+          label: "商品总额：",
+          value: isAfterSales ? totalAmount : payInfo?.totalAmount,
+        },
         { label: "优惠金额：", value: payInfo?.couponAmount },
         { label: "配送费：", value: payInfo?.sendAmount },
         { label: "配送优惠金额：", value: payInfo?.voucherSendAmount },

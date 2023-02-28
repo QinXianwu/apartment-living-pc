@@ -1,6 +1,6 @@
 <template>
   <div class="table">
-    <div class="table-item" v-for="(item, index) in tableData" :key="index">
+    <div class="table-item" v-for="(item, index) in tableList" :key="index">
       <div class="item-label">
         <div>{{ item.label || "-" }}</div>
       </div>
@@ -10,6 +10,38 @@
             customClass="table-img"
             :src="item[item.prop] || item.value || ''"
           />
+        </span>
+        <span
+          v-else-if="
+            item.type === 'image-list' &&
+            ((item[item.prop] && item[item.prop].length) ||
+              (item.value && item.value.length))
+          "
+        >
+          <div class="flex flex-center flex-wrap">
+            <ImageView
+              v-for="(img, i) in item[item.prop] || item.value"
+              :key="i"
+              :src="img"
+              class="table-img img_many"
+              v-show="i < (item.showImgIndex || 3) || item.showAll"
+              :srcList="item[item.prop] || item.value"
+            />
+          </div>
+          <div
+            class="pointer theme-color-text"
+            @click="$set(item, 'showAll', !item.showAll)"
+            v-if="
+              (item[item.prop] &&
+                item[item.prop].length > (item.showImgIndex || 3)) ||
+              (item.value && item.value.length > (item.showImgIndex || 3))
+            "
+          >
+            {{ !item.showAll ? "查看更多图片" : "收起" }}
+            <i
+              :class="item.showAll ? 'el-icon-arrow-up' : 'el-icon-arrow-down'"
+            ></i>
+          </div>
         </span>
         <span v-else-if="item.type === 'money'">
           ￥{{ item[item.prop] || item.value | formatCurrency }}
@@ -43,8 +75,15 @@ export default {
       default: "",
     },
   },
+  watch: {
+    tableData() {
+      this.init();
+    },
+  },
   data() {
-    return {};
+    return {
+      tableList: [],
+    };
   },
   computed: {},
   methods: {
@@ -65,9 +104,12 @@ export default {
         : "";
       return `min-width: ${minWidth};width: ${width}`;
     },
+    init() {
+      this.tableList = this.tableData;
+    },
   },
   mounted() {
-    //
+    this.init();
   },
 };
 </script>
@@ -85,6 +127,7 @@ export default {
     padding: 0;
     margin-right: 0px;
     margin-bottom: 0px;
+    line-height: 24px;
   }
   .item-label {
     display: flex;
@@ -105,6 +148,10 @@ export default {
   .table-img {
     width: 60px;
     height: 60px;
+    margin: 4px;
+  }
+  .pointer {
+    cursor: pointer;
   }
 }
 </style>

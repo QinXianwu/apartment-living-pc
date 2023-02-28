@@ -5,21 +5,22 @@
     <OrderSteps
       isAlignCenter
       :orderInfo="orderInfo"
-      :isAfterSales="isAfterSales"
       :stepsInfo="
         isAfterSales
           ? orderInfo.atProcessReturnDate
           : orderInfo.atProcessOrderDate
       "
     />
-    <WeChatUser :userInfo="orderInfo.orderUserVo" />
-    <AddressInfo :addressInfo="orderInfo.sendPickeInfoVo" />
-    <CourierInfo v-if="showCourierInfo" />
-    <PayData :payInfo="orderInfo.payVo" />
-    <GoodsData
-      :goodsList="orderInfo.productVoList"
-      :payInfo="orderInfo.payVo"
-    />
+    <template v-if="isAfterSales">
+      <ReturnGoodsData :orderInfo="orderInfo" />
+    </template>
+    <template v-else>
+      <WeChatUser :userInfo="orderInfo.orderUserVo" />
+      <AddressInfo :addressInfo="orderInfo.sendPickeInfoVo" />
+      <CourierInfo v-if="showCourierInfo" />
+      <PayData :payInfo="orderInfo.payVo" />
+    </template>
+    <GoodsData :goodsList="orderInfo.productVoList" :orderInfo="orderInfo" />
     <FooterView />
   </div>
 </template>
@@ -33,6 +34,7 @@ import AddressInfo from "./components/AddressInfo.vue";
 import CourierInfo from "./components/CourierInfo.vue";
 import PayData from "./components/PayData.vue";
 import GoodsData from "./components/GoodsData.vue";
+import ReturnGoodsData from "./components/ReturnGoodsData.vue";
 import FooterView from "@/components/Footer";
 export default {
   name: "OrderDetail",
@@ -44,6 +46,7 @@ export default {
     CourierInfo,
     PayData,
     GoodsData,
+    ReturnGoodsData,
     FooterView,
   },
   data() {
