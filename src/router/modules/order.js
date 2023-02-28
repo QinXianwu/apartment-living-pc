@@ -37,7 +37,7 @@ export default {
       hidden: true,
       meta: {
         title: "订单详情",
-        // PermissionId: PERMISSION_ID.Order_OrderDetail,
+        PermissionId: PERMISSION_ID.Order_OrderDetail,
       },
     },
     {
@@ -46,7 +46,7 @@ export default {
       name: "SendGoodsOrder",
       meta: {
         title: "配送订单",
-        // PermissionId: PERMISSION_ID.Goods_List,
+        PermissionId: PERMISSION_ID.Goods_SendGoodsOrder,
       },
     },
     {
@@ -55,7 +55,7 @@ export default {
       name: "SelfPickupOrder",
       meta: {
         title: "自提订单",
-        // PermissionId: PERMISSION_ID.Goods_List,
+        PermissionId: PERMISSION_ID.Goods_SelfPickupOrder,
       },
     },
     {
@@ -64,7 +64,7 @@ export default {
       name: "PointsOrder",
       meta: {
         title: "积分订单",
-        // PermissionId: PERMISSION_ID.Goods_List,
+        PermissionId: PERMISSION_ID.Goods_PointsOrder,
       },
     },
     {
@@ -73,7 +73,7 @@ export default {
       name: "GroupOrder",
       meta: {
         title: "拼团订单",
-        // PermissionId: PERMISSION_ID.Goods_List,
+        PermissionId: PERMISSION_ID.Goods_GroupOrder,
       },
     },
     {
@@ -82,7 +82,7 @@ export default {
       name: "AfterSales",
       meta: {
         title: "售后订单",
-        // PermissionId: PERMISSION_ID.Goods_List,
+        PermissionId: PERMISSION_ID.Goods_AfterSalesOrder,
       },
     },
     {
@@ -91,7 +91,7 @@ export default {
       name: "SendSetUp",
       meta: {
         title: "配送设置",
-        // PermissionId: PERMISSION_ID.Order_SendGoodsSetUp,
+        PermissionId: PERMISSION_ID.Order_SendSetUp,
       },
     },
   ],
