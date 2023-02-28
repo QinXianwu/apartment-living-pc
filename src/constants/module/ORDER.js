@@ -105,6 +105,13 @@ export const A_S_RETURNS_TYPE_TEXT = {
 
 export const A_S_RETURNS_TYPE_OPTIONS = getOptionsByText(A_S_RETURNS_TYPE_TEXT);
 
+export const REFUND_METHOD = {
+  SAME_WAY: 1, // 原路返回
+};
+export const REFUND_METHOD_TEXT = {
+  [REFUND_METHOD.SAME_WAY]: "原路返回",
+};
+
 //  订单审核状态
 export const ORDER_AUDIT_STATE = {
   SUCCESS_CHECK: 1, // 审核通过

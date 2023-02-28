@@ -51,7 +51,10 @@ export default {
         { label: "服务点", value: orderInfo?.serviceName },
         { label: "订单号", value: orderInfo?.orderNo },
         { label: "申请时间", value: orderInfo?.applyDate },
-        { label: "退款方式", value: orderInfo?.refundMethod },
+        {
+          label: "退款方式",
+          value: CONST.REFUND_METHOD_TEXT[orderInfo?.refundMethod],
+        },
         { label: "退款人", value: orderInfo?.name },
         { label: "收件电话", value: "" },
         { label: "收货地址/自提地址", value: orderInfo?.address },
