@@ -67,4 +67,28 @@ export default {
       })
     );
   },
+  // 获取配送员提现列表
+  GetCourierWithdrawalsList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-user/courier/pageRemit",
+        params,
+        method: "GET",
+        isReturnAll: true,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 更新配送员提现状态
+  UpdateCourierWithdrawalsStatus(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-user/courier/remit/updateStatus",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
 };

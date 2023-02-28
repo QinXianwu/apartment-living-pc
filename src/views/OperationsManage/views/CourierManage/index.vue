@@ -52,6 +52,12 @@
               v-if="scope.status === CONST.COURIER_AUDIT_STATE.NO_CHECK"
               >驳回</el-button
             >
+            <el-button
+              type="text"
+              @click="handleWithdrawals(scope)"
+              v-if="scope.status === CONST.COURIER_AUDIT_STATE.SUCCESS_CHECK"
+              >提现</el-button
+            >
           </div>
         </template>
       </TablePanel>
@@ -69,6 +75,11 @@
       :show.sync="showActivityDiaog"
       @close="close"
     />
+    <CourierWithdrawalsDiaog
+      :editInfo="editInfo"
+      :show.sync="showWithdrawalsDiaog"
+      @close="close"
+    />
   </div>
 </template>
 <script>
@@ -76,10 +87,11 @@ import { mapGetters } from "vuex";
 import CONST from "@/constants/index";
 import { column, formData, activityTab } from "./config";
 import UpdateCourierDiaog from "./components/UpdateCourierDiaog.vue";
+import CourierWithdrawalsDiaog from "./components/CourierWithdrawalsDiaog.vue";
 
 export default {
   name: "CourierManage",
-  components: { UpdateCourierDiaog },
+  components: { UpdateCourierDiaog, CourierWithdrawalsDiaog },
   data() {
     return {
       CONST,
@@ -94,6 +106,7 @@ export default {
       total: 0,
       query: {}, //过滤规则
       showActivityDiaog: false,
+      showWithdrawalsDiaog: false,
     };
   },
   computed: {
@@ -135,6 +148,10 @@ export default {
       this.editInfo = { id: data.id };
       this.showActivityDiaog = true;
     },
+    handleWithdrawals(data) {
+      this.editInfo = { id: data.id };
+      this.showWithdrawalsDiaog = true;
+    },
     async handleReview({ id, status }) {
       const title =
         status === CONST.COURIER_AUDIT_STATE.SUCCESS_CHECK
@@ -173,6 +190,7 @@ export default {
     close(isRefresh = false) {
       this.editInfo = "";
       this.showActivityDiaog = false;
+      this.showWithdrawalsDiaog = false;
       if (isRefresh) this.getList();
     },
     async getList(isClear) {

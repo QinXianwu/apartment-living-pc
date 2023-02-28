@@ -95,7 +95,7 @@ export default {
       component: CourierManage,
       name: "CourierManage",
       meta: {
-        title: "配送员列表",
+        title: "配送员管理",
         PermissionId: PERMISSION_ID.OperationsManage_CourierManage,
       },
     },
