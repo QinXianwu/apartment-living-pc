@@ -1,4 +1,4 @@
-import { getOpitonsByText } from "../utils";
+import { getOptionsByText } from "../utils";
 
 // 商品分类层级
 export const CATEGORY_LEVEL = {
@@ -13,7 +13,7 @@ export const CATEGORY_LEVEL_TEXT = {
 };
 // 商品分类层级options
 export const CATEGORY_LEVEL_OPTIONS = () =>
-  getOpitonsByText(CATEGORY_LEVEL_TEXT);
+  getOptionsByText(CATEGORY_LEVEL_TEXT);
 
 // 商品分类状态
 export const CATEGORY_STATE = {
@@ -26,7 +26,7 @@ export const CATEGORY_STATE_TEXT = {
 };
 // 商品分类状态options
 export const CATEGORY_STATE_OPTIONS = () =>
-  getOpitonsByText(CATEGORY_STATE_TEXT);
+  getOptionsByText(CATEGORY_STATE_TEXT);
 
 // 商品分类-导航栏显示状态
 export const CATEGORY_NAV_STATE = {
@@ -38,7 +38,7 @@ export const CATEGORY_NAV_STATE_TEXT = {
   [CATEGORY_NAV_STATE.HIDE]: "隐藏",
 };
 export const CATEGORY_NAV_STATE_OPTIONS = () =>
-  getOpitonsByText(CATEGORY_NAV_STATE_TEXT);
+  getOptionsByText(CATEGORY_NAV_STATE_TEXT);
 
 // 商品分类-是否为热门推荐
 export const CATEGORY_HOT_TYPE = {
@@ -50,7 +50,7 @@ export const CATEGORY_HOT_TYPE_TEXT = {
   [CATEGORY_HOT_TYPE.NOT]: "否",
 };
 export const CATEGORY_HOT_TYPE_OPTIONS = () =>
-  getOpitonsByText(CATEGORY_HOT_TYPE_TEXT);
+  getOptionsByText(CATEGORY_HOT_TYPE_TEXT);
 
 // 商品上下架状态
 export const GOODS_OPER_STATE = {
@@ -91,7 +91,7 @@ export const SPECIALS_TYPE_TEXT = {
   [SPECIALS_TYPE.NOT]: "否",
 };
 // 特价类型options
-export const SPECIALS_TYPE_OPTIONS = () => getOpitonsByText(SPECIALS_TYPE_TEXT);
+export const SPECIALS_TYPE_OPTIONS = () => getOptionsByText(SPECIALS_TYPE_TEXT);
 
 // 折扣类型
 export const DISCOUNTED_TYPE = {
@@ -104,7 +104,7 @@ export const DISCOUNTED_TYPE_TEXT = {
 };
 // 折扣类型options
 export const DISCOUNTED_TYPE_OPTIONS = () =>
-  getOpitonsByText(DISCOUNTED_TYPE_TEXT);
+  getOptionsByText(DISCOUNTED_TYPE_TEXT);
 
 // 限购类型
 export const RESTRICTED_TYPE = {
@@ -117,7 +117,7 @@ export const RESTRICTED_TYPE_TEXT = {
 };
 // 限购类型options
 export const RESTRICTED_TYPE_OPTIONS = () =>
-  getOpitonsByText(RESTRICTED_TYPE_TEXT);
+  getOptionsByText(RESTRICTED_TYPE_TEXT);
 
 // 预售类型
 export const PRE_SALE_TYPE = {
@@ -129,7 +129,7 @@ export const PRE_SALE_TYPE_TEXT = {
   [PRE_SALE_TYPE.NOT]: "否",
 };
 // 限购类型options
-export const PRE_SALE_TYPE_OPTIONS = () => getOpitonsByText(PRE_SALE_TYPE_TEXT);
+export const PRE_SALE_TYPE_OPTIONS = () => getOptionsByText(PRE_SALE_TYPE_TEXT);
 
 // 规格类型
 export const SPECIFICA_TYPE = {
@@ -142,7 +142,7 @@ export const SPECIFICA_TYPE_TEXT = {
 };
 // 规格类型options
 export const SPECIFICA_TYPE_OPTIONS = () =>
-  getOpitonsByText(SPECIFICA_TYPE_TEXT);
+  getOptionsByText(SPECIFICA_TYPE_TEXT);
 
 // 商品审核类型
 export const AUDIT_TYPE = {
@@ -158,7 +158,7 @@ export const AUDIT_TYPE_TEXT = {
   [AUDIT_TYPE.FAIL_CHECK]: "审核失败",
 };
 // 商品审核类型options
-export const AUDIT_TYPE_OPTIONS = () => getOpitonsByText(AUDIT_TYPE_TEXT);
+export const AUDIT_TYPE_OPTIONS = () => getOptionsByText(AUDIT_TYPE_TEXT);
 
 // 商品赠送状态
 export const GOODS_GIVE_STATE = {
@@ -171,4 +171,4 @@ export const GOODS_GIVE_STATE_TEXT = {
   [GOODS_GIVE_STATE.NOT_GIFTED]: "不赠送",
 };
 export const GOODS_GIVE_STATE_OPTIONS = () =>
-  getOpitonsByText(GOODS_GIVE_STATE_TEXT);
+  getOptionsByText(GOODS_GIVE_STATE_TEXT);

@@ -1,4 +1,4 @@
-import { getOpitonsByText } from "../utils";
+import { getOptionsByText } from "../utils";
 // 积分设置模块
 
 // 奖励积分
@@ -11,7 +11,7 @@ export const REWARD_INTEGRAL_STATE_TEXT = {
   [REWARD_INTEGRAL_STATE.NOT_GIFTED]: "不赠送",
 };
 export const REWARD_INTEGRAL_STATE_OPTIONS = () =>
-  getOpitonsByText(REWARD_INTEGRAL_STATE_TEXT);
+  getOptionsByText(REWARD_INTEGRAL_STATE_TEXT);
 
 // 活动限制日期类型
 export const ACTIVITY_LIMIT_DATE_TYPE = {
@@ -23,7 +23,7 @@ export const ACTIVITY_LIMIT_DATE_TYPE_TEXT = {
   [ACTIVITY_LIMIT_DATE_TYPE.LIMITED_TIME]: "限期活动",
 };
 export const ACTIVITY_LIMIT_DATE_TYPE_OPTIONS = () =>
-  getOpitonsByText(ACTIVITY_LIMIT_DATE_TYPE_TEXT);
+  getOptionsByText(ACTIVITY_LIMIT_DATE_TYPE_TEXT);
 
 // 积分瓜分活动类型
 export const INTEGRAL_CARVE_ACTIVITY_TYPE = {
@@ -36,7 +36,7 @@ export const ACTIVITY_TYPE_TEXT = {
   [INTEGRAL_CARVE_ACTIVITY_TYPE.LIMITED_TIME]: "期限活动",
 };
 
-export const ACTIVITY_TYPE_OPTIONS = () => getOpitonsByText(ACTIVITY_TYPE_TEXT);
+export const ACTIVITY_TYPE_OPTIONS = () => getOptionsByText(ACTIVITY_TYPE_TEXT);
 
 export const FLUCTUA_TYPE = {
   REVENUE: 1, // 收入
@@ -46,4 +46,4 @@ export const FLUCTUA_TYPE_TEXT = {
   [FLUCTUA_TYPE.REVENUE]: "收入",
   [FLUCTUA_TYPE.EXPENDITURE]: "支出",
 };
-export const FLUCTUA_TYPE_OPTIONS = () => getOpitonsByText(FLUCTUA_TYPE_TEXT);
+export const FLUCTUA_TYPE_OPTIONS = () => getOptionsByText(FLUCTUA_TYPE_TEXT);

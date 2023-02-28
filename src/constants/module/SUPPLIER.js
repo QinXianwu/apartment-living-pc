@@ -1,4 +1,4 @@
-import { getOpitonsByText } from "../utils";
+import { getOptionsByText } from "../utils";
 
 // 供应商状态
 export const SUPPLIER_STATE = {
@@ -10,4 +10,4 @@ export const SUPPLIER_STATE_TEXT = {
   [SUPPLIER_STATE.OFF]: "停用",
 };
 export const SUPPLIER_STATE_OPTIONS = () =>
-  getOpitonsByText(SUPPLIER_STATE_TEXT);
+  getOptionsByText(SUPPLIER_STATE_TEXT);

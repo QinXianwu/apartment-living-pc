@@ -1,4 +1,4 @@
-import { getOpitonsByText } from "../utils";
+import { getOptionsByText } from "../utils";
 
 // 优惠券状态
 export const COUPONS_STATE = {
@@ -11,7 +11,7 @@ export const COUPONS_STATE_TEXT = {
   [COUPONS_STATE.HIDE]: "禁用",
 };
 
-export const COUPONS_STATE_OPTIONS = () => getOpitonsByText(COUPONS_STATE_TEXT);
+export const COUPONS_STATE_OPTIONS = () => getOptionsByText(COUPONS_STATE_TEXT);
 
 // 优惠券类型
 export const COUPONS_TYPE = {
@@ -22,7 +22,7 @@ export const COUPONS_TYPE_TEXT = {
   [COUPONS_TYPE.FULL_MINUS]: "满减券",
   [COUPONS_TYPE.DISTRIBUTION]: "配送券",
 };
-export const COUPONS_TYPE_OPTIONS = () => getOpitonsByText(COUPONS_TYPE_TEXT);
+export const COUPONS_TYPE_OPTIONS = () => getOptionsByText(COUPONS_TYPE_TEXT);
 
 // 商品类型
 export const APPLY_PRODUCT_TYPE = {
@@ -34,7 +34,7 @@ export const APPLY_PRODUCT_TYPE_TEXT = {
   [APPLY_PRODUCT_TYPE.PART]: "部分商品",
 };
 export const APPLY_PRODUCT_TYPE_OPTIONS = () =>
-  getOpitonsByText(APPLY_PRODUCT_TYPE_TEXT);
+  getOptionsByText(APPLY_PRODUCT_TYPE_TEXT);
 
 // 服务点类型
 export const SERVE_TYPE = {
@@ -45,7 +45,7 @@ export const SERVE_TYPE_TEXT = {
   [SERVE_TYPE.ALL]: "全部服务点",
   [SERVE_TYPE.PART]: "部分服务点",
 };
-export const SERVE_TYPE_OPTIONS = () => getOpitonsByText(SERVE_TYPE_TEXT);
+export const SERVE_TYPE_OPTIONS = () => getOptionsByText(SERVE_TYPE_TEXT);
 
 // 单位内限制数量类型
 export const UNIT_LIMIT_TYPE = {
@@ -61,7 +61,7 @@ export const UNIT_LIMIT_TYPE_TEXT = {
   [UNIT_LIMIT_TYPE.UNLIMITED]: "不限",
 };
 
-export const UNIT_LIMIT_OPTIONS = () => getOpitonsByText(UNIT_LIMIT_TYPE_TEXT);
+export const UNIT_LIMIT_OPTIONS = () => getOptionsByText(UNIT_LIMIT_TYPE_TEXT);
 
 // 奖励优惠券状态
 export const REWARD_COUPONS_STATE = {
@@ -73,7 +73,7 @@ export const REWARD_COUPONS_STATE_TEXT = {
   [REWARD_COUPONS_STATE.NOT_GIFTED]: "不赠送",
 };
 export const REWARD_COUPONS_STATE_OPTIONS = () =>
-  getOpitonsByText(REWARD_COUPONS_STATE_TEXT);
+  getOptionsByText(REWARD_COUPONS_STATE_TEXT);
 
 // 优惠劵过期类型
 export const COUPONS_EXPIRE_TYPE = {
@@ -89,7 +89,7 @@ export const COUPONS_EXPIRE_TYPE_TEXT = {
 };
 
 export const COUPONS_EXPIRE_TYPE_OPTIONS = () =>
-  getOpitonsByText(COUPONS_EXPIRE_TYPE_TEXT);
+  getOptionsByText(COUPONS_EXPIRE_TYPE_TEXT);
 
 // 优惠劵领劵中心
 export const COUPONS_RELATION_TYPE = {

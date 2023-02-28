@@ -1,4 +1,4 @@
-import { getOpitonsByText } from "../utils";
+import { getOptionsByText } from "../utils";
 // 运营管理模块
 
 // 活动状态
@@ -20,7 +20,7 @@ export const ACTIVITY_STATUS_TEXT = {
   [ACTIVITY_STATUS.FAIL_CHECK]: "审核失败",
 };
 export const ACTIVITY_STATUS_OPTIONS = () =>
-  getOpitonsByText(ACTIVITY_STATUS_TEXT);
+  getOptionsByText(ACTIVITY_STATUS_TEXT);
 
 // 反馈状态
 export const FEED_BACK_STATE = {
@@ -33,7 +33,7 @@ export const FEED_BACK_STATE_TEXT = {
 };
 // options
 export const FEED_BACK_STATE_OPTIONS = () =>
-  getOpitonsByText(FEED_BACK_STATE_TEXT);
+  getOptionsByText(FEED_BACK_STATE_TEXT);
 
 // 招聘状态
 export const RECRUITER_STATE = {
@@ -46,7 +46,7 @@ export const RECRUITER_STATE_TEXT = {
 };
 // options
 export const RECRUITER_STATE_OPTIONS = () =>
-  getOpitonsByText(RECRUITER_STATE_TEXT);
+  getOptionsByText(RECRUITER_STATE_TEXT);
 
 // 配送员状态
 export const COURIER_AUDIT_STATE = {
@@ -63,7 +63,7 @@ export const COURIER_AUDIT_STATE_TEXT = {
 };
 // 审核options
 export const COURIER_AUDIT_STATE_OPTIONS = () =>
-  getOpitonsByText(COURIER_AUDIT_STATE_TEXT);
+  getOptionsByText(COURIER_AUDIT_STATE_TEXT);
 
 // 限制时间类型
 export const GROUP_LIMIT_TYPE = {
@@ -75,7 +75,7 @@ export const GROUP_LIMIT_TYPE_TEXT = {
   [GROUP_LIMIT_TYPE.DAYS]: "天",
 };
 export const GROUP_LIMIT_OPTIONS = () =>
-  getOpitonsByText(GROUP_LIMIT_TYPE_TEXT);
+  getOptionsByText(GROUP_LIMIT_TYPE_TEXT);
 
 // 拼团-是否为热门
 export const GROUP_HOT_TYPE = {
@@ -87,4 +87,4 @@ export const GROUP_HOT_TYPE_TEXT = {
   [GROUP_HOT_TYPE.NOT]: "否",
 };
 export const GROUP_HOT_TYPE_OPTIONS = () =>
-  getOpitonsByText(GROUP_HOT_TYPE_TEXT);
+  getOptionsByText(GROUP_HOT_TYPE_TEXT);

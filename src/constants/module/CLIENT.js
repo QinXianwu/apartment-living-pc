@@ -1,4 +1,4 @@
-import { getOpitonsByText } from "../utils";
+import { getOptionsByText } from "../utils";
 
 // 客户模块
 // 账号类型
@@ -20,7 +20,7 @@ export const GENDER_TEXT = {
   [GENDER.UNCERTAIN]: "未知",
 };
 // 用户性别options
-export const GENDER_OPTIONS = () => getOpitonsByText(GENDER_TEXT);
+export const GENDER_OPTIONS = () => getOptionsByText(GENDER_TEXT);
 
 // 状态
 export const USER_STATE = {
@@ -32,4 +32,4 @@ export const USER_STATE_TEXT = {
   [USER_STATE.OFF]: "停用",
 };
 // 用户options类型
-export const USER_STATE_OPTIONS = () => getOpitonsByText(USER_STATE_TEXT);
+export const USER_STATE_OPTIONS = () => getOptionsByText(USER_STATE_TEXT);

@@ -130,6 +130,39 @@ export default {
       })
     );
   },
+  // 审核售后订单
+  ReviewAfterSalesOrder(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-order/atorderafterserv/approve",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 售后订单-确认收货
+  confirmAfterSalesOrderReceipt(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-order/atorderafterserv/confirmReceipt",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 售后订单-退款
+  confirmAfterSalesOrderRefund(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-order/atorderafterserv/refund",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
   // 获取配送设置
   GetSendSettingDetail(params) {
     return catchAsyncFun(

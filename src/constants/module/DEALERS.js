@@ -1,4 +1,4 @@
-import { getOpitonsByText } from "../utils";
+import { getOptionsByText } from "../utils";
 // 分销商模块
 
 //  分销商状态
@@ -14,7 +14,7 @@ export const DEALERS_AUDIT_STATE_TEXT = {
 };
 // 审核options
 export const DEALERS_AUDIT_STATE_OPTIONS = () =>
-  getOpitonsByText(DEALERS_AUDIT_STATE_TEXT);
+  getOptionsByText(DEALERS_AUDIT_STATE_TEXT);
 
 //  分销商订单状态
 export const DEALERS_ORDER_STATE = {
@@ -29,7 +29,7 @@ export const DEALERS_ORDER_STATE_TEXT = {
 };
 // options
 export const DEALERS_ORDER_STATE_OPTIONS = () =>
-  getOpitonsByText(DEALERS_ORDER_STATE_TEXT);
+  getOptionsByText(DEALERS_ORDER_STATE_TEXT);
 
 // 提现类型
 export const WITHDRAWALS_TYPE = {
@@ -43,7 +43,7 @@ export const WITHDRAWALS_TYPE_TEXT = {
 };
 
 export const WITHDRAWALS_TYPE_OPTIONS = () =>
-  getOpitonsByText(WITHDRAWALS_TYPE_TEXT);
+  getOptionsByText(WITHDRAWALS_TYPE_TEXT);
 
 // 提现状态
 export const WITHDRAWALS_STATE = {
@@ -61,4 +61,4 @@ export const WITHDRAWALS_STATE_TEXT = {
 };
 
 export const WITHDRAWALS_STATE_OPTIONS = () =>
-  getOpitonsByText(WITHDRAWALS_STATE_TEXT);
+  getOptionsByText(WITHDRAWALS_STATE_TEXT);

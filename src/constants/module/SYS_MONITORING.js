@@ -1,4 +1,4 @@
-import { getOpitonsByText } from "../utils";
+import { getOptionsByText } from "../utils";
 
 // 任务组状态
 export const JOB_GROUP = {
@@ -10,7 +10,7 @@ export const JOB_GROUP_TEXT = {
   [JOB_GROUP.SYSTEM]: "系统",
 };
 // 任务组options类型
-export const JOB_GROUP_OPTIONS = () => getOpitonsByText(JOB_GROUP_TEXT);
+export const JOB_GROUP_OPTIONS = () => getOptionsByText(JOB_GROUP_TEXT);
 
 // 定时任务状态
 export const JOB_STATE = {
@@ -22,7 +22,7 @@ export const JOB_STATE_TEXT = {
   [JOB_STATE.OFF]: "停用",
 };
 // 定时任务状态options类型
-export const JOB_STATE_OPTIONS = () => getOpitonsByText(JOB_STATE_TEXT);
+export const JOB_STATE_OPTIONS = () => getOptionsByText(JOB_STATE_TEXT);
 
 // 执行策略
 export const EXECUTE_POLICY = {
@@ -39,7 +39,7 @@ export const EXECUTE_POLICY_TEXT = {
 };
 // 执行策略options类型
 export const EXECUTE_POLICY_OPTIONS = () =>
-  getOpitonsByText(EXECUTE_POLICY_TEXT);
+  getOptionsByText(EXECUTE_POLICY_TEXT);
 
 // 并发类型
 export const CONCURRENCY = {
@@ -51,4 +51,4 @@ export const CONCURRENCY_TEXT = {
   [CONCURRENCY.FORBID]: "禁止",
 };
 // 并发options类型
-export const CONCURRENCY_OPTIONS = () => getOpitonsByText(CONCURRENCY_TEXT);
+export const CONCURRENCY_OPTIONS = () => getOptionsByText(CONCURRENCY_TEXT);

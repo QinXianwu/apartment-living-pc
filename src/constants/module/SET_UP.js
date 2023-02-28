@@ -1,4 +1,4 @@
-import { getOpitonsByText } from "../utils";
+import { getOptionsByText } from "../utils";
 
 // 角色状态
 export const ROLE_STATE = {
@@ -10,7 +10,7 @@ export const ROLE_STATE_TEXT = {
   [ROLE_STATE.OFF]: "停用",
 };
 // 角色options类型
-export const ROLE_STATE_OPTIONS = () => getOpitonsByText(ROLE_STATE_TEXT);
+export const ROLE_STATE_OPTIONS = () => getOptionsByText(ROLE_STATE_TEXT);
 
 // 菜单状态
 export const MENU_STATE = {
@@ -22,7 +22,7 @@ export const MENU_STATE_TEXT = {
   [MENU_STATE.OFF]: "停用",
 };
 // 菜单options类型
-export const MENU_STATE_OPTIONS = () => getOpitonsByText(MENU_STATE_TEXT);
+export const MENU_STATE_OPTIONS = () => getOptionsByText(MENU_STATE_TEXT);
 
 // 菜单类型
 export const MENU_TYPE = {
@@ -36,7 +36,7 @@ export const MENU_TYPE_TEXT = {
   [MENU_TYPE.BUTTON]: "按钮",
 };
 // 菜单类型options类型
-export const MENU_TYPE_OPTIONS = () => getOpitonsByText(MENU_TYPE_TEXT);
+export const MENU_TYPE_OPTIONS = () => getOptionsByText(MENU_TYPE_TEXT);
 
 // 菜单显示状态
 export const MENU_SHOW_STATE = {
@@ -49,7 +49,7 @@ export const MENU_SHOW_STATE_TEXT = {
 };
 // 菜单options类型
 export const MENU_SHOW_STATE_OPTIONS = () =>
-  getOpitonsByText(MENU_SHOW_STATE_TEXT);
+  getOptionsByText(MENU_SHOW_STATE_TEXT);
 
 // 菜单是否为外链
 export const MENU_BACKLINKS = {
@@ -73,7 +73,7 @@ export const DEPT_STATE_TEXT = {
   [DEPT_STATE.OFF]: "停用",
 };
 // 部门options类型
-export const DEPT_STATE_OPTIONS = () => getOpitonsByText(DEPT_STATE_TEXT);
+export const DEPT_STATE_OPTIONS = () => getOptionsByText(DEPT_STATE_TEXT);
 
 // 岗位状态
 export const POST_STATE = {
@@ -85,7 +85,7 @@ export const POST_STATE_TEXT = {
   [POST_STATE.OFF]: "停用",
 };
 // 岗位options类型
-export const POST_STATE_OPTIONS = () => getOpitonsByText(POST_STATE_TEXT);
+export const POST_STATE_OPTIONS = () => getOptionsByText(POST_STATE_TEXT);
 
 // 字典状态
 export const DICT_STATE = {
@@ -97,7 +97,7 @@ export const DICT_STATE_TEXT = {
   [DICT_STATE.OFF]: "停用",
 };
 // 字典options类型
-export const DICT_STATE_OPTIONS = () => getOpitonsByText(DICT_STATE_TEXT);
+export const DICT_STATE_OPTIONS = () => getOptionsByText(DICT_STATE_TEXT);
 
 // 系统日志操作状态
 export const SYS_ACTION_STATE = {
@@ -110,7 +110,7 @@ export const SYS_ACTION_STATE_TEXT = {
 };
 // 系统日志操作状态options类型
 export const SYS_ACTION_STATE_OPTIONS = () =>
-  getOpitonsByText(SYS_ACTION_STATE_TEXT);
+  getOptionsByText(SYS_ACTION_STATE_TEXT);
 
 // 系统日志操作类型
 export const SYS_ACTION_TYPE = {
@@ -137,7 +137,7 @@ export const SYS_ACTION_TYPE_TEXT = {
 };
 // 系统日志操作类型options类型
 export const SYS_ACTION_TYPE_OPTIONS = () =>
-  getOpitonsByText(SYS_ACTION_TYPE_TEXT);
+  getOptionsByText(SYS_ACTION_TYPE_TEXT);
 
 // 协议类型
 export const PROTOCOL_TYPE = {
@@ -150,4 +150,4 @@ export const PROTOCOL_TYPE_TEXT = {
   [PROTOCOL_TYPE.PRIVACY_AGREEMENT]: "隐私协议",
 };
 
-export const PROTOCOL_TYPE_OPTIONS = getOpitonsByText(PROTOCOL_TYPE_TEXT);
+export const PROTOCOL_TYPE_OPTIONS = getOptionsByText(PROTOCOL_TYPE_TEXT);

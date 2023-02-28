@@ -1,4 +1,4 @@
-import { getOpitonsByText } from "../utils";
+import { getOptionsByText } from "../utils";
 
 // 服务点状态
 export const SERVICE_STATION_STATE = {
@@ -10,4 +10,4 @@ export const SERVICE_STATION_STATE_TEXT = {
   [SERVICE_STATION_STATE.OFF]: "停用",
 };
 export const SERVICE_STATION_STATE_OPTIONS = () =>
-  getOpitonsByText(SERVICE_STATION_STATE_TEXT);
+  getOptionsByText(SERVICE_STATION_STATE_TEXT);

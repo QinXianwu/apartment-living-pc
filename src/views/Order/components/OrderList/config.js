@@ -120,6 +120,7 @@ export const afterSaleColumn = [
   {
     label: "售后类型",
     prop: "type",
+    type: "custom",
   },
   {
     label: "售后状态",

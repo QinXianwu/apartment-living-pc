@@ -61,12 +61,16 @@
           }}</el-tag
         >
       </template>
+      <!-- 售后类型 -->
+      <template #type="{ scope }">
+        <el-tag>{{ CONST.A_S_RETURNS_TYPE_TEXT[scope.type] }}</el-tag>
+      </template>
       <!-- 售后状态 -->
-      <!-- <template #operStatus="{ scope }">
+      <template #operStatus="{ scope }">
         <el-tag :type="scope.operStatus | ASstatusTabType">{{
-          CONST.A_S_ORDER_STATE_TEXT[scope.orderStatus]
+          CONST.A_S_ORDER_STATE_TEXT[scope.operStatus]
         }}</el-tag>
-      </template> -->
+      </template>
       <!-- 操作 -->
       <template #action="{ scope }">
         <div class="action-groud">

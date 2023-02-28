@@ -1,4 +1,4 @@
-import { getOpitonsByText } from "../utils";
+import { getOptionsByText } from "../utils";
 
 // 订单来源(前端区分订单)
 export const ORDER_SOURCE = {
@@ -25,7 +25,7 @@ export const DELIVERY_TYPE_TEXT = {
   [DELIVERY_TYPE.HOME_DELIVERY]: "配送上门",
   [DELIVERY_TYPE.ARRIVE_AT_PICKED]: "站点自提",
 };
-export const DELIVERY_TYPE_OPTIONS = () => getOpitonsByText(DELIVERY_TYPE_TEXT);
+export const DELIVERY_TYPE_OPTIONS = () => getOptionsByText(DELIVERY_TYPE_TEXT);
 
 // 订单来源
 export const SOURCE_ORDER = {
@@ -65,7 +65,7 @@ export const ORDER_STATE_TEXT = {
   [ORDER_STATE.AFTER_SALE]: "售后",
 };
 
-export const ORDER_STATE_OPTIONS = () => getOpitonsByText(ORDER_STATE_TEXT);
+export const ORDER_STATE_OPTIONS = () => getOptionsByText(ORDER_STATE_TEXT);
 
 // 售后订单状态
 export const A_S_ORDER_STATE = {
@@ -92,7 +92,28 @@ export const A_S_ORDER_STATE_TEXT = {
   [A_S_ORDER_STATE.EXPIRED_CANCEL]: "过期取消",
 };
 export const A_S_ORDER_STATE_OPTIONS = () =>
-  getOpitonsByText(A_S_ORDER_STATE_TEXT);
+  getOptionsByText(A_S_ORDER_STATE_TEXT);
+
+export const A_S_RETURNS_TYPE = {
+  RETURN_M: 1, // 仅退款
+  RETURN_G_M: 2, // 退款退货
+};
+export const A_S_RETURNS_TYPE_TEXT = {
+  [A_S_RETURNS_TYPE.RETURN_M]: "仅退款",
+  [A_S_RETURNS_TYPE.RETURN_G_M]: "退款退货",
+};
+
+export const A_S_RETURNS_TYPE_OPTIONS = getOptionsByText(A_S_RETURNS_TYPE_TEXT);
+
+//  订单审核状态
+export const ORDER_AUDIT_STATE = {
+  SUCCESS_CHECK: 1, // 审核通过
+  FAIL_CHECK: 2, // 审核失败
+};
+export const ORDER_AUDIT_STATE_TEXT = {
+  [ORDER_AUDIT_STATE.SUCCESS_CHECK]: "审核通过",
+  [ORDER_AUDIT_STATE.FAIL_CHECK]: "审核失败",
+};
 
 // 采购订单状态
 export const ORDER_PURCHASE_STATE = {
@@ -122,4 +143,4 @@ export const SEND_SETTING_TYPE_TEXT = {
 };
 
 export const SEND_SETTING_TYPE_OPTIONS = () =>
-  getOpitonsByText(SEND_SETTING_TYPE_TEXT);
+  getOptionsByText(SEND_SETTING_TYPE_TEXT);
