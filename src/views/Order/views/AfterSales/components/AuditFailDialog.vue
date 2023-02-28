@@ -14,6 +14,14 @@
             placeholder="请输入驳回原因"
           />
         </el-form-item>
+        <el-form-item label="描述" prop="description">
+          <el-input
+            class="input-medium"
+            v-model="formData.description"
+            placeholder="请输入描述"
+            type="textarea"
+          />
+        </el-form-item>
       </el-form>
     </div>
     <span slot="footer">

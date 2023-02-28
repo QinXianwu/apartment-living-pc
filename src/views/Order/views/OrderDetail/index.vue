@@ -2,7 +2,16 @@
   <div class="OrderDetail view-container">
     <div class="title">{{ title || "订单" }}详情</div>
     <PriceBlock title="订单号" :value="orderNo || '-'" />
-    <OrderSteps isAlignCenter :stepsInfo="orderInfo.atProcessOrderDate" />
+    <OrderSteps
+      isAlignCenter
+      :orderInfo="orderInfo"
+      :isAfterSales="isAfterSales"
+      :stepsInfo="
+        isAfterSales
+          ? orderInfo.atProcessReturnDate
+          : orderInfo.atProcessOrderDate
+      "
+    />
     <WeChatUser :userInfo="orderInfo.orderUserVo" />
     <AddressInfo :addressInfo="orderInfo.sendPickeInfoVo" />
     <CourierInfo v-if="showCourierInfo" />
@@ -48,11 +57,17 @@ export default {
     title({ orderType }) {
       return CONST.ORDER_SOURCE_TEXT[orderType] || "订单";
     },
+    orderId() {
+      return this.$router.currentRoute.query?.orderId || "";
+    },
     orderNo() {
       return this.$router.currentRoute.query?.orderNo || "";
     },
     orderType() {
       return this.$router.currentRoute.query?.orderType || "";
+    },
+    isAfterSales({ orderType }) {
+      return orderType === CONST.ORDER_SOURCE.AFTER_SALE_ORDER;
     },
     showCourierInfo({ orderInfo }) {
       return !!orderInfo?.atProcessOrderDate?.sendDate;
@@ -65,7 +80,13 @@ export default {
       const query = {
         orderNo: this.orderNo || "",
       };
-      const [, res] = await this.$http.Order.GetOrderDetail(query);
+      if (this.isAfterSales) {
+        query.id = this.orderId;
+        delete query.orderNo;
+      }
+      const [, res] = await this.$http.Order[
+        this.isAfterSales ? "GetAfterSalesOrderDetail" : "GetOrderDetail"
+      ](query);
       this.isLoading = false;
       if (!res) return this.$message.error("获取订单详情异常");
       this.orderInfo = { ...res };

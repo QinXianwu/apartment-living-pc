@@ -1,11 +1,16 @@
 <template>
-  <div class="OrderSteps">
-    <el-steps :active="activeIndex" :align-center="isAlignCenter">
+  <div class="OrderSteps" v-if="stepList.length">
+    <el-steps
+      :active="activeIndex"
+      status="success"
+      :align-center="isAlignCenter"
+    >
       <el-step
         :title="item.label"
         :description="item.description || ''"
         v-for="(item, index) in stepList"
         :key="index"
+        :status="item.label === '审核驳回' ? 'error' : ''"
       >
         <template #icon>
           <div
@@ -29,6 +34,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    orderInfo: {
+      type: Object,
+      default: () => ({}),
+    },
     stepsInfo: {
       type: Object,
       default: () => ({}),
@@ -42,7 +51,11 @@ export default {
     orderType() {
       return this.$router.currentRoute.query?.orderType || "";
     },
-    stepList({ steps, defaultStepList }) {
+    isAfterSales({ orderType }) {
+      return orderType === CONST.ORDER_SOURCE.AFTER_SALE_ORDER;
+    },
+    stepList({ steps, isAfterSales, defaultStepList, afterSalesStepList }) {
+      if (isAfterSales) return afterSalesStepList;
       return steps?.length ? steps : defaultStepList;
     },
     activeIndex({ stepList }) {
@@ -57,7 +70,7 @@ export default {
       } catch (error) {
         return activeIndex;
       }
-      return activeIndex;
+      return activeIndex === 0 ? stepList.length : activeIndex;
     },
     defaultStepList({ orderType, stepsInfo }) {
       const sendTitle =
@@ -90,6 +103,49 @@ export default {
           description: stepsInfo?.completeDate,
         },
       ];
+    },
+    afterSalesStepList({ stepsInfo, orderInfo }) {
+      if (orderInfo?.operStatus === CONST.A_S_ORDER_STATE.AUDIT_FAIL)
+        return [
+          {
+            label: "提交申请",
+            description: stepsInfo?.applyDate,
+          },
+          {
+            label: "审核驳回",
+            description: stepsInfo?.completeDate,
+          },
+          {
+            label: "已完成",
+            description: stepsInfo?.completeDate,
+          },
+        ];
+      const tempList = [
+        {
+          label: "提交申请",
+          description: stepsInfo?.applyDate,
+        },
+        {
+          label: "审核通过",
+          description: stepsInfo?.passDate,
+        },
+        {
+          label: "确认收货",
+          description: stepsInfo?.receiptTime,
+        },
+        {
+          label: "退款",
+          description: stepsInfo?.refundDate,
+        },
+        {
+          label: "已完成",
+          description: stepsInfo?.completeDate,
+        },
+      ];
+      const keyStr = `${
+        orderInfo?.type === CONST.A_S_RETURNS_TYPE.RETURN_M ? "确认收货" : ""
+      }`;
+      return tempList.filter((item) => !keyStr.includes(item.label));
     },
   },
   methods: {},

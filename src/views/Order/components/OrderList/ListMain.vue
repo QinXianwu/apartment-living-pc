@@ -168,10 +168,14 @@ export default {
     },
   },
   methods: {
-    lookDetail({ orderNo }) {
+    lookDetail({ id, orderNo }) {
       this.$router.push({
         name: "OrderDetail",
-        query: { orderNo: orderNo || "", orderType: this.orderType },
+        query: {
+          orderId: id || "",
+          orderNo: orderNo || "",
+          orderType: this.orderType,
+        },
       });
     },
     initSelection() {
