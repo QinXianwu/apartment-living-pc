@@ -1,228 +1,75 @@
 <template>
-  <div class="CourierManage view-container">
+  <div class="view-container" v-if="isPermission">
+    <el-tabs v-model="activeName">
+      <template v-for="(item, index) in tabPaneList">
+        <el-tab-pane
+          :label="item.label"
+          :name="item.name"
+          :key="index"
+          v-if="$hasPermission(item.permission)"
+        />
+      </template>
+    </el-tabs>
+
     <div class="content">
-      <SearchForm
-        isReturnFormData
-        :formData="searchForm"
-        @on-search="onSearch"
-      />
-      <div class="action">
-        <el-button type="primary" @click="handleAdd"> 新增配送员 </el-button>
-      </div>
-      <TablePanel :tableData="list" :tableHead="column">
-        <template #status="{ scope }">
-          <el-tag :type="getActivityTab(scope)">{{
-            CONST.COURIER_AUDIT_STATE_TEXT[scope.status]
-          }}</el-tag>
-        </template>
-        <!-- 操作 -->
-        <template #action="{ scope }">
-          <div class="action-groud">
-            <el-button type="text" @click="handleEdit(scope)">编辑</el-button>
-            <el-button
-              type="text"
-              @click="
-                handleReview({
-                  id: scope.id,
-                  status: CONST.COURIER_AUDIT_STATE.SUCCESS_CHECK,
-                })
-              "
-              v-if="scope.status === CONST.COURIER_AUDIT_STATE.NO_CHECK"
-              >审核通过</el-button
-            >
-            <el-button
-              type="text"
-              @click="
-                handleReview({
-                  id: scope.id,
-                  status: CONST.COURIER_AUDIT_STATE.INTERDICTED,
-                })
-              "
-              v-if="scope.status === CONST.COURIER_AUDIT_STATE.SUCCESS_CHECK"
-              >停职</el-button
-            >
-            <el-button
-              type="text"
-              @click="
-                handleReview({
-                  id: scope.id,
-                  status: CONST.COURIER_AUDIT_STATE.FAIL_CHECK,
-                })
-              "
-              v-if="scope.status === CONST.COURIER_AUDIT_STATE.NO_CHECK"
-              >驳回</el-button
-            >
-            <el-button
-              type="text"
-              @click="handleWithdrawals(scope)"
-              v-if="scope.status === CONST.COURIER_AUDIT_STATE.SUCCESS_CHECK"
-              >提现</el-button
-            >
-          </div>
-        </template>
-      </TablePanel>
-      <!-- 分页 -->
-      <Pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :page-size="page.pageSize"
-        :current-page="page.pageNum"
-        :total="total"
-      />
+      <CourierList v-if="activeName === 'CourierList'" />
+      <CourierWithdrawals v-if="activeName === 'CourierWithdrawals'" />
     </div>
-    <UpdateCourierDiaog
-      :editInfo="editInfo"
-      :show.sync="showActivityDiaog"
-      @close="close"
-    />
-    <DrawerPopup v-model="showDrawerPopup">
-      <CourierWithdrawals
-        v-if="showDrawerPopup"
-        :editInfo="editInfo"
-        @close="close"
-      />
-    </DrawerPopup>
   </div>
+  <Page401 v-else />
 </template>
 <script>
-import { mapGetters } from "vuex";
-import CONST from "@/constants/index";
-import { column, formData, activityTab } from "./config";
-import UpdateCourierDiaog from "./components/UpdateCourierDiaog.vue";
+import Page401 from "@/views/ErrorPage/401";
+import CourierList from "./components/CourierList/index.vue";
 import CourierWithdrawals from "./components/CourierWithdrawals/index.vue";
 
 export default {
   name: "CourierManage",
   components: {
-    UpdateCourierDiaog,
+    CourierList,
     CourierWithdrawals,
+    Page401,
   },
   data() {
     return {
-      CONST,
-      formData,
-      column, //表格头
-      editInfo: "",
-      list: [],
-      page: {
-        pageNum: 1,
-        pageSize: 10,
-      },
-      total: 0,
-      query: {}, //过滤规则
-      showActivityDiaog: false,
-      showDrawerPopup: false,
+      isPermission: false,
+      activeName: "CourierList",
+      tabPaneList: [
+        {
+          label: "配送员列表",
+          name: "CourierList",
+          permission: this.$PERMISSION_ID.OperationsManage_CourierList,
+        },
+        {
+          label: "配送员提现",
+          name: "CourierWithdrawals",
+          permission: this.$PERMISSION_ID.OperationsManage_CourierWithdrawals,
+        },
+      ],
     };
   },
-  computed: {
-    ...mapGetters({
-      serviceStationOptions: "accountRoleManage/serviceStationOptions",
-    }),
-    searchForm({ serviceStationOptions }) {
-      const serviceItem = formData.find(
-        (item) => item.prop === "serviceStationId"
-      );
-      if (serviceItem) serviceItem.options = serviceStationOptions;
-      return formData;
-    },
-  },
-  methods: {
-    handleSizeChange(val) {
-      this.page.pageSize = val;
-      this.page.pageNum = 1;
-      this.getList(true);
-    },
-    handleCurrentChange(val) {
-      this.page.pageNum = val;
-      this.getList(false);
-    },
-    getActivityTab(data) {
-      const keyArr = [...activityTab()];
-      const tabTypeItem = keyArr.find((item) => item.is === data?.status);
-      return tabTypeItem?.tabType || "";
-    },
-    onSearch(data) {
-      this.query = { ...data };
-      this.getList(true);
-    },
-    handleAdd() {
-      this.editInfo = "";
-      this.showActivityDiaog = true;
-    },
-    handleEdit(data) {
-      this.editInfo = { id: data.id };
-      this.showActivityDiaog = true;
-    },
-    handleWithdrawals(data) {
-      this.editInfo = { id: data.id };
-      this.showDrawerPopup = true;
-    },
-    async handleReview({ id, status }) {
-      const title =
-        status === CONST.COURIER_AUDIT_STATE.SUCCESS_CHECK
-          ? "通过"
-          : status === CONST.COURIER_AUDIT_STATE.INTERDICTED
-          ? "停职"
-          : "驳回";
-      try {
-        await this.$confirm(`是否确认'${title}'该配送员？`, `${title}提示`, {
-          type: "warning",
-          showClose: false,
-        });
-        const [, res] = await this.$http.Courier.UpdateCourierStatus({
-          id,
-          status,
-        });
-        const msg = res ? res?.msg || `${title}成功` : `${title}失败`;
-        this.$confirm(msg, `${title}提示`, {
-          showClose: false,
-          showCancelButton: false,
-          type: res ? "success" : "error",
-        }).then(() => {
-          if (res) {
-            this.getList();
-            this.$store.dispatch(
-              "operationsManage/GetCourierPeopleListAction",
-              true
-            );
-          }
-        });
-      } catch (error) {
-        console.error(error);
-        error;
-      }
-    },
-    close(isRefresh = false) {
-      this.editInfo = "";
-      this.showActivityDiaog = false;
-      this.showDrawerPopup = false;
-      if (isRefresh) this.getList();
-    },
-    async getList(isClear) {
-      if (isClear) this.page.pageNum = 1;
-      const query = {
-        ...this.page,
-        ...this.query,
-      };
-      const [, res] = await this.$http.Courier.GetCourierList(query);
-      if (res?.code !== this.AJAX_CODE.SUCCESS) {
-        this.$message.error(res?.msg || "获取配送员列表异常");
-      }
-      this.list = res?.rows || [];
-      this.total = res?.total || 0;
-    },
-  },
+  methods: {},
   mounted() {
-    this.getList();
-    this.$store.dispatch("accountRoleManage/GetServiceStationListAction");
+    try {
+      this.tabPaneList.forEach((item) => {
+        if (this.$hasPermission(item.permission)) {
+          this.isPermission = true;
+          this.activeName = item.name;
+          throw new Error();
+        }
+      });
+    } catch (error) {
+      //
+    }
   },
 };
 </script>
+
 <style lang="scss" scoped>
 .view-container {
-  background: #fff;
-}
-.action {
-  padding: 0 0 15px;
+  background: #ffffff;
+  .content {
+    padding: 20px 0;
+  }
 }
 </style>

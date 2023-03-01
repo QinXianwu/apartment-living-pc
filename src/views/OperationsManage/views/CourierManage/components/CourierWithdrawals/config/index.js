@@ -30,15 +30,13 @@ export const formData = [
 // 表格头
 export const column = [
   {
-    label: "用户信息",
-    prop: "info",
-    type: "custom",
-    minWidth: 150,
+    label: "用户名",
+    prop: "userName",
+    showOverflowTooltip: true,
   },
   {
     label: "手机号",
-    prop: "phone",
-    type: "custom",
+    prop: "userPhone",
   },
   {
     label: "提现方式",

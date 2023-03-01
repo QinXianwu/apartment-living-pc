@@ -96,7 +96,10 @@ export default {
       name: "CourierManage",
       meta: {
         title: "配送员管理",
-        PermissionId: PERMISSION_ID.OperationsManage_CourierManage,
+        PermissionIds: [
+          PERMISSION_ID.OperationsManage_CourierList,
+          PERMISSION_ID.OperationsManage_CourierWithdrawals,
+        ],
       },
     },
     {
