@@ -1,9 +1,9 @@
 <template>
   <div class="CourierWithdrawals">
-    <div class="action">
-      <el-button type="primary" @click="getList">刷新</el-button>
-    </div>
     <div class="content">
+      <div class="action">
+        <el-button type="primary" @click="getList">刷新</el-button>
+      </div>
       <TablePanel :tableData="list" :tableHead="column">
         <template #type="{ scope }">
           <span>{{ CONST.WITHDRAWALS_TYPE_TEXT[scope.type] }}</span>
