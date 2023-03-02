@@ -244,7 +244,12 @@ export default {
     handleBatchStatus(operStatus) {
       if (!Object.keys(this.selectDataMap)?.length)
         return this.$message.error("请选择商品后再试");
-      const ids = Object.keys(this.selectDataMap);
+      const tempGoodsList = Object.values(this.selectDataMap).filter(
+        (item) => item.operStatus !== CONST.GOODS_OPER_STATE.NO_CHECK
+      );
+      if (!tempGoodsList?.length)
+        return this.$message.error("请选择审核通过的商品后再试");
+      const ids = tempGoodsList.map((item) => item.id);
       this.changeStatus({ ids, operStatus });
     },
     async changeStatus({ ids, operStatus }) {
