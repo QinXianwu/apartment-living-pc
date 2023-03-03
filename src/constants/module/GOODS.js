@@ -58,28 +58,15 @@ export const GOODS_OPER_STATE = {
   LISTING: 1, // 上架
   REMOVAL: 2, // 下架
   NO_CHECK: 3, // 待审核
+  FAIL_CHECK: 4, // 审核失败
 };
 export const GOODS_OPER_STATE_TEXT = {
   [GOODS_OPER_STATE.ALL]: "全部",
   [GOODS_OPER_STATE.LISTING]: "上架",
   [GOODS_OPER_STATE.REMOVAL]: "下架",
   [GOODS_OPER_STATE.NO_CHECK]: "待审核",
+  [GOODS_OPER_STATE.FAIL_CHECK]: "审核失败",
 };
-// 商品上下架状态options
-export const GOODS_OPER_STATE_OPTIONS = () => [
-  {
-    label: GOODS_OPER_STATE_TEXT[GOODS_OPER_STATE.LISTING],
-    value: GOODS_OPER_STATE.LISTING,
-  },
-  {
-    label: GOODS_OPER_STATE_TEXT[GOODS_OPER_STATE.REMOVAL],
-    value: GOODS_OPER_STATE.REMOVAL,
-  },
-  {
-    label: GOODS_OPER_STATE_TEXT[GOODS_OPER_STATE.NO_CHECK],
-    value: GOODS_OPER_STATE.NO_CHECK,
-  },
-];
 
 // 特价类型
 export const SPECIALS_TYPE = {

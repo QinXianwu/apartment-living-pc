@@ -187,6 +187,10 @@ export const tabs = [
     label: "待审核",
     value: CONST.GOODS_OPER_STATE.NO_CHECK,
   },
+  {
+    label: "审核失败",
+    value: CONST.GOODS_OPER_STATE.FAIL_CHECK,
+  },
 ];
 
 // 活动标签

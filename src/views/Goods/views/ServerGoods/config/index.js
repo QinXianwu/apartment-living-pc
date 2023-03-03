@@ -191,10 +191,6 @@ export const tabs = [
     label: "下架",
     value: CONST.GOODS_OPER_STATE.REMOVAL,
   },
-  {
-    label: "待审核",
-    value: CONST.GOODS_OPER_STATE.NO_CHECK,
-  },
 ];
 
 // 活动标签
