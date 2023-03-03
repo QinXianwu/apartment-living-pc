@@ -119,7 +119,7 @@ export const column = [
     label: "状态",
     prop: "operStatus",
     type: "custom",
-    width: 100,
+    width: 110,
   },
   {
     label: "更新时间",
