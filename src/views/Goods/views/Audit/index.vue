@@ -78,7 +78,10 @@
               effect="dark"
               :content="`驳回原因：${scope.remark}`"
               placement="right-start"
-              v-if="scope.remark"
+              v-if="
+                scope.approvalStatus === CONST.AUDIT_TYPE.FAIL_CHECK &&
+                scope.remark
+              "
             >
               <i class="el-icon-warning ml-10" />
             </el-tooltip>

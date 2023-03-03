@@ -99,14 +99,29 @@
         </template>
         <!-- 上下架状态 -->
         <template #operStatus="{ scope }">
-          <el-tag
-            :type="
-              scope.operStatus === CONST.GOODS_OPER_STATE.REMOVAL
-                ? 'danger'
-                : ''
-            "
-            >{{ CONST.GOODS_OPER_STATE_TEXT[scope.operStatus] }}</el-tag
-          >
+          <div class="status">
+            <el-tag
+              :type="
+                scope.operStatus === CONST.GOODS_OPER_STATE.REMOVAL ||
+                scope.operStatus === CONST.GOODS_OPER_STATE.FAIL_CHECK
+                  ? 'danger'
+                  : ''
+              "
+              >{{ CONST.GOODS_OPER_STATE_TEXT[scope.operStatus] }}</el-tag
+            >
+            <el-tooltip
+              class="item"
+              effect="dark"
+              :content="`驳回原因：${scope.remark}`"
+              placement="right-start"
+              v-if="
+                scope.operStatus === CONST.GOODS_OPER_STATE.FAIL_CHECK &&
+                scope.remark
+              "
+            >
+              <i class="el-icon-warning ml-10" />
+            </el-tooltip>
+          </div>
         </template>
         <!-- 操作 -->
         <template #action="{ scope }">
