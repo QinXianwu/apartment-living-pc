@@ -112,7 +112,9 @@
         <template #action="{ scope }">
           <div class="action-groud">
             <el-button type="text" @click="handleEdit(scope)">{{
-              !isService ? "编辑" : "查看"
+              !isService && scope.operStatus !== CONST.GOODS_OPER_STATE.NO_CHECK
+                ? "编辑"
+                : "查看"
             }}</el-button>
             <el-button
               type="text"
@@ -232,9 +234,12 @@ export default {
         query: {},
       });
     },
-    handleEdit({ productNo }) {
+    handleEdit({ productNo, operStatus }) {
       this.$store.commit("goods/SET_IS_SERVER_EDIT", 0);
-      this.$store.commit("goods/SET_IS_DISABLE_FORM", this.isService ? 1 : 0);
+      this.$store.commit(
+        "goods/SET_IS_DISABLE_FORM",
+        this.isService || operStatus === CONST.GOODS_OPER_STATE.NO_CHECK ? 1 : 0
+      );
       this.$router.push({
         name: "GoodsEdit",
         query: { productNo: productNo || "" },
