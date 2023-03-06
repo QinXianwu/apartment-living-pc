@@ -44,7 +44,7 @@
                 :value="
                   (formData.serviceStationIds &&
                     formData.serviceStationIds.length) ===
-                  serviceStationOptions.length
+                  enableServiceStationOptions.length
                 "
                 @change="selectAll('serviceStationIds')"
                 >全选</el-checkbox
@@ -54,7 +54,7 @@
               :key="index"
               :label="ele.label"
               :value="ele.value"
-              v-for="(ele, index) in serviceStationOptions"
+              v-for="(ele, index) in enableServiceStationOptions"
             >
             </el-option>
           </el-select>
@@ -219,7 +219,8 @@ export default {
     ...mapGetters({
       isService: "user/isService",
       serviceStationId: "user/serviceStationId",
-      serviceStationOptions: "accountRoleManage/serviceStationOptions",
+      enableServiceStationOptions:
+        "accountRoleManage/enableServiceStationOptions",
     }),
   },
   methods: {
@@ -243,7 +244,7 @@ export default {
     selectAll(formKey) {
       let options = [];
       if (formKey === "serviceStationIds") {
-        options = this.serviceStationOptions;
+        options = this.enableServiceStationOptions;
       }
       if (this.formData[formKey]?.length === options.length) {
         this.formData[formKey] = [];

@@ -32,7 +32,7 @@
               :key="index"
               :label="ele.label"
               :value="ele.value"
-              v-for="(ele, index) in serviceStationOptions"
+              v-for="(ele, index) in enableServiceStationOptions"
             />
           </el-select>
         </el-form-item>
@@ -105,7 +105,8 @@ export default {
   computed: {
     ...mapGetters({
       isService: "user/isService",
-      serviceStationOptions: "accountRoleManage/serviceStationOptions",
+      enableServiceStationOptions:
+        "accountRoleManage/enableServiceStationOptions",
     }),
   },
   methods: {

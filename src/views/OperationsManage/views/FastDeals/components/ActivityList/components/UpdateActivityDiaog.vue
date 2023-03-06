@@ -71,7 +71,7 @@
               <el-checkbox
                 :value="
                   formData.serviceStationIds.length ===
-                  serviceStationOptions.length
+                  enableServiceStationOptions.length
                 "
                 @change="selectAll('serviceStationIds')"
                 >全选</el-checkbox
@@ -81,7 +81,7 @@
               :key="index"
               :label="ele.label"
               :value="ele.value"
-              v-for="(ele, index) in serviceStationOptions"
+              v-for="(ele, index) in enableServiceStationOptions"
             >
             </el-option>
           </el-select>
@@ -197,7 +197,8 @@ export default {
       isService: "user/isService",
       serviceStationId: "user/serviceStationId",
       secKillSessionOptions: "fastDeals/secKillSessionOptions",
-      serviceStationOptions: "accountRoleManage/serviceStationOptions",
+      enableServiceStationOptions:
+        "accountRoleManage/enableServiceStationOptions",
     }),
   },
   methods: {
@@ -207,7 +208,7 @@ export default {
       if (formKey === "secKillSessionIds") {
         options = this.secKillSessionOptions;
       } else if (formKey === "serviceStationIds") {
-        options = this.serviceStationOptions;
+        options = this.enableServiceStationOptions;
       }
       if (this.formData[formKey]?.length === options.length) {
         this.formData[formKey] = [];

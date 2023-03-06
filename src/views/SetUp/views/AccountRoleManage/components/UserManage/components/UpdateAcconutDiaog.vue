@@ -87,7 +87,7 @@
             :value="ele.value"
             :label="ele.label"
             :key="index"
-            v-for="(ele, index) in serviceStationOptions"
+            v-for="(ele, index) in enableServiceStationOptions"
           >
           </el-option>
         </el-select>
@@ -239,7 +239,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      serviceStationOptions: "accountRoleManage/serviceStationOptions",
+      enableServiceStationOptions:
+        "accountRoleManage/enableServiceStationOptions",
       supplierOptions: "accountRoleManage/supplierOptions",
     }),
     dialogTitle({ editInfo }) {
