@@ -55,6 +55,7 @@ input[type="number"] {
 }
 .el-popper.productTag {
   display: none !important;
+
   .el-select-dropdown__empty {
     display: none !important;
   }

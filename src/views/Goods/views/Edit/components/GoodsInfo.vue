@@ -37,7 +37,7 @@
         <el-form-item label="商品标签" prop="productTag">
           <el-select
             v-model="formData.productTag"
-            class="input-medium"
+            class="input-medium productTag"
             popper-class="productTag"
             multiple
             filterable
@@ -266,6 +266,11 @@ export default {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 20px;
+  }
+  .productTag {
+    ::v-deep .el-input__suffix {
+      display: none !important;
+    }
   }
   ::v-deep .el-radio-button__inner {
     padding: 9px 20px;
