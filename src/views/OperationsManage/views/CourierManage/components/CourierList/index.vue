@@ -100,14 +100,19 @@ export default {
   },
   computed: {
     ...mapGetters({
+      isService: "user/isService",
       serviceStationOptions: "accountRoleManage/serviceStationOptions",
     }),
-    searchForm({ serviceStationOptions }) {
-      const serviceItem = formData.find(
+    searchForm({ isService, serviceStationOptions }) {
+      const filterPropStr = `${isService ? "stationId" : ""}`;
+      const filterColumn = formData.filter(
+        (item) => !filterPropStr.includes(item.prop)
+      );
+      const serviceItem = filterColumn.find(
         (item) => item.prop === "serviceStationId"
       );
       if (serviceItem) serviceItem.options = serviceStationOptions;
-      return formData;
+      return filterColumn;
     },
   },
   methods: {

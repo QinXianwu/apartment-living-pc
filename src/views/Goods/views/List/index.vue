@@ -215,16 +215,25 @@ export default {
   },
   computed: {
     ...mapGetters({
+      isVendor: "user/isVendor",
       isService: "user/isService",
       categoryAllOptions: "goods/CategoryAllOptions",
       supplierOptions: "accountRoleManage/supplierOptions",
     }),
-    searchForm({ categoryAllOptions, supplierOptions }) {
-      const categoryItem = formData.find((item) => item.prop === "categoryId");
+    searchForm({ isVendor, categoryAllOptions, supplierOptions }) {
+      const filterPropStr = `${isVendor ? "supplierId" : ""}`;
+      const filterColumn = formData.filter(
+        (item) => !filterPropStr.includes(item.prop)
+      );
+      const categoryItem = filterColumn.find(
+        (item) => item.prop === "categoryId"
+      );
       if (categoryItem) categoryItem.options = categoryAllOptions;
-      const supplierItem = formData.find((item) => item.prop === "supplierId");
+      const supplierItem = filterColumn.find(
+        (item) => item.prop === "supplierId"
+      );
       if (supplierItem) supplierItem.options = supplierOptions;
-      return formData;
+      return filterColumn;
     },
   },
   methods: {

@@ -184,12 +184,27 @@ export default {
       supplierOptions: "accountRoleManage/supplierOptions",
       serviceStationOptions: "accountRoleManage/serviceStationOptions",
     }),
-    searchForm({ supplierOptions, serviceStationOptions }) {
-      const supplierItem = formData.find((item) => item.prop === "supplierId");
+    searchForm({
+      isVendor,
+      isService,
+      supplierOptions,
+      serviceStationOptions,
+    }) {
+      const filterPropStr = `${isService ? "serviceId" : ""},${
+        isVendor ? "supplierId" : ""
+      }`;
+      const filterColumn = formData.filter(
+        (item) => !filterPropStr.includes(item.prop)
+      );
+      const supplierItem = filterColumn.find(
+        (item) => item.prop === "supplierId"
+      );
       if (supplierItem) supplierItem.options = supplierOptions;
-      const serviceItem = formData.find((item) => item.prop === "serviceId");
+      const serviceItem = filterColumn.find(
+        (item) => item.prop === "serviceId"
+      );
       if (serviceItem) serviceItem.options = serviceStationOptions;
-      return formData;
+      return filterColumn;
     },
   },
   methods: {

@@ -203,7 +203,7 @@ export default {
       supplierOptions,
       serviceStationOptions,
     }) {
-      const filterPropStr = `${isAdmin ? "" : "stationId"}}`;
+      const filterPropStr = `${isAdmin ? "" : "stationId"}`;
       const filterColumn = formData.filter(
         (item) => !filterPropStr.includes(item.prop)
       );

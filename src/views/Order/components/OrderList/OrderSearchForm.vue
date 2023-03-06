@@ -1,6 +1,6 @@
 <template>
   <div class="OrderSearchForm">
-    <SearchForm isReturnFormData :formData="formData" @on-search="onSearch" />
+    <SearchForm isReturnFormData :formData="searchForm" @on-search="onSearch" />
   </div>
 </template>
 
@@ -23,12 +23,20 @@ export default {
   },
   computed: {
     ...mapGetters({
+      isVendor: "user/isVendor",
+      isService: "user/isService",
       supplierOptions: "accountRoleManage/supplierOptions",
       serviceStationOptions: "accountRoleManage/serviceStationOptions",
     }),
     formData({ defaultFormData, afterFormData, orderTypeData }) {
       if (orderTypeData?.isAfterSale) return afterFormData;
       return defaultFormData;
+    },
+    searchForm({ isVendor, isService, formData }) {
+      const filterPropStr = `${isService ? "serviceId" : ""},${
+        isVendor ? "supplierId" : ""
+      }`;
+      return formData.filter((item) => !filterPropStr.includes(item.prop));
     },
     // 默认表单
     defaultFormData({ supplierOptions, serviceStationOptions }) {
