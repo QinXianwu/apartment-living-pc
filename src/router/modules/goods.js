@@ -44,7 +44,7 @@ export default {
       hidden: true,
       meta: {
         title: "商品发布",
-        PermissionId: PERMISSION_ID.Goods_Category,
+        PermissionId: PERMISSION_ID.Goods_Edit,
       },
     },
     {
@@ -53,7 +53,7 @@ export default {
       name: "GoodsCategory",
       meta: {
         title: "商品分类",
-        PermissionId: PERMISSION_ID.Goods_Specification,
+        PermissionId: PERMISSION_ID.Goods_Category,
       },
     },
     {
@@ -62,7 +62,7 @@ export default {
       name: "Specification",
       meta: {
         title: "商品规格",
-        PermissionId: PERMISSION_ID.Goods_Edit,
+        PermissionId: PERMISSION_ID.Goods_Specification,
       },
     },
     {
