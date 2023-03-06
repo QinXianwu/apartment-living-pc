@@ -1,4 +1,5 @@
 import api from "@/api/module";
+import CONST from "@/constants/index";
 const state = {
   menuTreeList: [], // 角色菜单
   serviceStationList: [], // 服务点列表
@@ -54,9 +55,29 @@ const getters = {
       value: String(item.id),
     }));
   },
+  enableServiceStationOptions({ serviceStationList }) {
+    if (!serviceStationList?.length) return [];
+    const tempArr = serviceStationList.filter(
+      (item) => item?.status === CONST.SERVICE_STATION_STATE.ON
+    );
+    return tempArr.map((item) => ({
+      label: item.name,
+      value: String(item.id),
+    }));
+  },
   supplierOptions({ supplierList }) {
     if (!supplierList?.length) return [];
     return supplierList.map((item) => ({
+      label: item.name,
+      value: String(item.id),
+    }));
+  },
+  enableSupplierOptions({ supplierList }) {
+    if (!supplierList?.length) return [];
+    const tempArr = supplierList.filter(
+      (item) => item?.status === CONST.SUPPLIER_STATE.ON
+    );
+    return tempArr.map((item) => ({
       label: item.name,
       value: String(item.id),
     }));
