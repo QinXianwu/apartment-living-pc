@@ -53,4 +53,10 @@ input[type="number"] {
   padding: 20px;
   margin: 20px;
 }
+.el-popper.productTag {
+  display: none !important;
+  .el-select-dropdown__empty {
+    display: none !important;
+  }
+}
 </style>

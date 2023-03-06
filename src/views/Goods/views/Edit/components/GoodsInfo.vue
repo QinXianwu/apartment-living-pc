@@ -38,6 +38,7 @@
           <el-select
             v-model="formData.productTag"
             class="input-medium"
+            popper-class="productTag"
             multiple
             filterable
             allow-create
