@@ -5,12 +5,17 @@
       <el-form ref="form" :model="formData" :rules="rules" label-width="150px">
         <el-form-item label="适用服务点类型" prop="applyStationStatus">
           <el-radio-group v-model="formData.applyStationStatus">
-            <el-radio-button
+            <!-- <el-radio-button
               v-for="(item, index) in CONST.SERVE_TYPE_OPTIONS()"
               :label="item.value"
               :value="item.value"
               :key="index"
               >{{ item.label }}</el-radio-button
+            > -->
+            <el-radio-button
+              :label="CONST.SERVE_TYPE.ALL"
+              :value="CONST.SERVE_TYPE.ALL"
+              >全部服务点</el-radio-button
             >
           </el-radio-group>
         </el-form-item>

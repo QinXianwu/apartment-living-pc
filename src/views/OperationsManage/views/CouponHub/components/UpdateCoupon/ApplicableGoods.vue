@@ -5,12 +5,17 @@
       <el-form ref="form" :model="formData" :rules="rules" label-width="150px">
         <el-form-item label="适用商品类型" prop="applyProductType">
           <el-radio-group v-model="formData.applyProductType">
-            <el-radio-button
+            <!-- <el-radio-button
               v-for="(item, index) in CONST.APPLY_PRODUCT_TYPE_OPTIONS()"
               :label="item.value"
               :value="item.value"
               :key="index"
               >{{ item.label }}</el-radio-button
+            > -->
+            <el-radio-button
+              :label="CONST.APPLY_PRODUCT_TYPE.ALL"
+              :value="CONST.APPLY_PRODUCT_TYPE.ALL"
+              >全部商品</el-radio-button
             >
           </el-radio-group>
         </el-form-item>
