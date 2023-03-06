@@ -30,7 +30,7 @@
         </template>
         <!-- 操作 -->
         <template #action="{ scope }">
-          <div class="action-groud" v-if="scope.id !== 1">
+          <div class="action-groud" v-if="scope.userId !== 1">
             <el-button type="text" @click="handleEdit(scope)"> 编辑 </el-button>
             <el-button type="text" @click="handleDelete(scope)">
               删除
@@ -182,8 +182,8 @@ export default {
           type: "warning",
           showClose: false,
         });
-        const [, res] = await this.$http.FastDeals.UpdateSessionCountStatus({
-          id: item?.id || "",
+        const [, res] = await this.$http.AccountRoleManage.UpdateUserStatus({
+          userId: item?.userId || "",
           status: item?.status,
         });
         const msg = res ? res?.msg || `${tipText}成功` : `${tipText}失败`;
