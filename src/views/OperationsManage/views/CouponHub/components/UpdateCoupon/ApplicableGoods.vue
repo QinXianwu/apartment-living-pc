@@ -117,13 +117,16 @@ export default {
   },
   methods: {
     init() {
-      this.formData.applyProductType =
-        this.couponsInfo?.applyProductType || CONST.APPLY_PRODUCT_TYPE.ALL;
-      if (this.couponsInfo?.applyProductType === CONST.APPLY_PRODUCT_TYPE.ALL) {
-        this.list = [];
-        return;
-      }
-      const goodsList = this.couponsInfo?.productList || [];
+      // this.formData.applyProductType =
+      //   this.couponsInfo?.applyProductType || CONST.APPLY_PRODUCT_TYPE.ALL;
+      // if (this.couponsInfo?.applyProductType === CONST.APPLY_PRODUCT_TYPE.ALL) {
+      //   this.list = [];
+      //   return;
+      // }
+      // const goodsList = this.couponsInfo?.productList || [];
+
+      this.formData.applyProductType = CONST.APPLY_PRODUCT_TYPE.ALL;
+      const goodsList = [];
       goodsList.forEach((item) =>
         digits2Str(item, ["categoryId", "supplierId"])
       );

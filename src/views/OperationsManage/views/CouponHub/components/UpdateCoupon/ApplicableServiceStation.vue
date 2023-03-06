@@ -124,13 +124,16 @@ export default {
   },
   methods: {
     init() {
-      this.formData.applyStationStatus =
-        this.couponsInfo?.applyStationStatus || CONST.SERVE_TYPE.ALL;
-      if (this.couponsInfo?.applyStationStatus === CONST.SERVE_TYPE.ALL) {
-        this.list = [];
-        return;
-      }
-      const stationList = this.couponsInfo?.stationList || [];
+      // this.formData.applyStationStatus =
+      //   this.couponsInfo?.applyStationStatus || CONST.SERVE_TYPE.ALL;
+      // if (this.couponsInfo?.applyStationStatus === CONST.SERVE_TYPE.ALL) {
+      //   this.list = [];
+      //   return;
+      // }
+      // const stationList = this.couponsInfo?.stationList || [];
+      this.formData.applyStationStatus = CONST.SERVE_TYPE.ALL;
+      this.list = [];
+      const stationList = [];
       this.list = [].concat(stationList);
     },
     handleSizeChange(val) {
