@@ -55,10 +55,10 @@
               type="text"
               @click="sendGoods(scope)"
               v-if="
-                !isService &&
+                isVendor &&
                 scope.operStatus === CONST.ORDER_PURCHASE_STATE.WAIT_SEND
               "
-              >配送</el-button
+              >发货</el-button
             >
             <el-button
               type="text"
@@ -179,6 +179,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      isVendor: "user/isVendor",
       isService: "user/isService",
       supplierOptions: "accountRoleManage/supplierOptions",
       serviceStationOptions: "accountRoleManage/serviceStationOptions",

@@ -141,6 +141,7 @@ export default {
       page: {
         pageNum: 1,
         pageSize: 10,
+        operStatus: this.$CONST.GOODS_OPER_STATE.LISTING,
       },
       total: 0,
       query: {}, //过滤规则
