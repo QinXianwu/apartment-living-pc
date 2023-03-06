@@ -46,7 +46,7 @@
           /> -->
           <el-input
             class="input-medium"
-            placeholder="请输入所在城市"
+            placeholder="所在城市"
             :value="addressText"
             :disabled="true"
           />
@@ -54,7 +54,7 @@
         <el-form-item label="详情地址" prop="detailAddress">
           <el-input
             class="input-medium"
-            placeholder="请输入详情地址"
+            placeholder="详情地址"
             :disabled="true"
             type="textarea"
             :rows="2"
