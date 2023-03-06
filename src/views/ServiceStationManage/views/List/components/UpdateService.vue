@@ -55,6 +55,7 @@
           <el-input
             class="input-medium"
             placeholder="请输入详情地址"
+            :disabled="true"
             type="textarea"
             :rows="2"
             v-model="formData.detailAddress"
