@@ -216,14 +216,14 @@ export default {
       this.editInfo = item;
       this.isAssignRole = true;
     },
-    async handleDelete({ id }) {
+    async handleDelete({ userId }) {
       try {
         await this.$confirm("确定要删除该账号吗?", "删除提示", {
           type: "warning",
           showClose: false,
         });
         const [, res] = await this.$http.AccountRoleManage.DeleteUser({
-          id,
+          userId,
         });
         const msg = res ? res?.msg || `删除成功` : `删除失败`;
         this.$confirm(msg, "删除提示", {
