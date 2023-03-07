@@ -64,7 +64,7 @@ import GoodsDetail from "./components/GoodsDetail";
 import SimilarSuggest from "./components/Association/SimilarSuggest.vue";
 import SuggestPurchase from "./components/Association/SuggestPurchase.vue";
 import FrequentlyPurchased from "./components/Association/FrequentlyPurchased.vue";
-import FooterView from "@/components/Footer/";
+import FooterView from "@/components/Footer";
 
 export default {
   name: "Edit",
@@ -174,6 +174,24 @@ export default {
         .filter((item) => data[item.key] === item.is && item.label)
         .map((item) => item.label);
     },
+    async DeleteGoodsService() {
+      if (!this.productNo) return;
+      const oldServiceList = this.productInfo?.productSerList || [];
+      let oldIds = oldServiceList.map((item) => item?.id).join(",");
+      const serviceList = this.BaseInfo?.productSerList || [];
+      const ids = serviceList.filter((item) => item?.id);
+      ids.map((item) => {
+        oldIds = oldIds.replace(item.id, "");
+      });
+      const queryIds = oldIds.split(",").filter((id) => id);
+      if (!queryIds?.length) return;
+      const [, res] = await this.$http.Goods.DeleteGoodsService(
+        JSON.stringify(queryIds)
+      );
+      this.$message[res ? "success" : "error"](
+        res?.msg || `更新商品服务${res ? "成功" : "失败"}`
+      );
+    },
     async handleSubmit() {
       // 表单校验
       this.isLoading = true;
@@ -192,6 +210,7 @@ export default {
           ? "UpdateGoods"
           : "AddGoods"
       ](query);
+      await this.DeleteGoodsService();
       this.$message[res ? "success" : "error"](
         res?.msg || `发布商品${res ? "成功" : "失败"}`
       );

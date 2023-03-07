@@ -40,6 +40,7 @@
 <script>
 import { mapState } from "vuex";
 import CONST from "@/constants/index";
+import { simpleCloneDeep } from "@/utils";
 
 export default {
   name: "GoodsServe",
@@ -89,7 +90,7 @@ export default {
   methods: {
     init() {
       if (this.productInfo?.productSerList?.length)
-        this.list = this.productInfo.productSerList;
+        this.list = simpleCloneDeep(this.productInfo.productSerList);
     },
     addServe() {
       this.list.push({

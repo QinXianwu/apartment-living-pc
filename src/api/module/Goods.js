@@ -87,6 +87,15 @@ export default {
       })
     );
   },
+  // 删除商品服务
+  DeleteGoodsService(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-product/product/atproduct/deletePdSer",
+        params,
+      })
+    );
+  },
   // 商品上架
   UpdateUpGoods(params) {
     return catchAsyncFun(
