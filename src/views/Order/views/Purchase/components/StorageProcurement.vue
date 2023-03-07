@@ -35,7 +35,7 @@
             <el-input-number
               class="putNum"
               v-model="scope.putNum"
-              placeholder="采购数量"
+              :placeholder="`采购数量(最大值:${scope.orderNum})`"
               :min="0"
               :max="scope.orderNum"
               :controls="false"
