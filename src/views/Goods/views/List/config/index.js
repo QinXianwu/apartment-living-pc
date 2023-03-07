@@ -55,6 +55,7 @@ export const column = [
     label: "商品标签",
     prop: "goodsTab",
     type: "custom",
+    minWidth: 110,
   },
   {
     label: "供应商",
