@@ -380,6 +380,13 @@ export default {
           for (const index in this.list) {
             if (!this.list[index]?.images || !this.list[index]?.images?.length)
               throw Error("请上传相关商品规格图片");
+            if (!this.list[index]?.sellPrice)
+              throw Error("相关规格销售价不得小于0.01元");
+            const DealerSum =
+              Number(this.list[index]?.firstDistributionAmount) +
+              Number(this.list[index]?.secondDistributionAmount);
+            if (Number(this.list[index]?.sellPrice) < DealerSum)
+              throw Error("分销佣金之和不得大于销售价");
           }
         } catch (error) {
           console.error(error);
