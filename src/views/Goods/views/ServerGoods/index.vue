@@ -131,9 +131,7 @@
               type="text"
               @click="handleProcured(scope)"
               v-if="
-                isService &&
-                (scope.operStatus === CONST.GOODS_OPER_STATE.LISTING ||
-                  scope.operStatus === CONST.GOODS_OPER_STATE.REMOVAL)
+                isService && scope.operStatus === CONST.GOODS_OPER_STATE.LISTING
               "
               >采购</el-button
             >
