@@ -19,7 +19,7 @@
             :step="1"
           />
         </el-form-item>
-        <el-form-item label="兑换数量" prop="exchangeCount">
+        <!-- <el-form-item label="兑换数量" prop="exchangeCount">
           <el-input-number
             class="input-medium"
             v-model="formData.exchangeCount"
@@ -29,7 +29,7 @@
             :precision="0"
             :step="1"
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="库存" prop="stockCount">
           <el-input-number
             class="input-medium"
