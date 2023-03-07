@@ -188,9 +188,9 @@ export default {
       const [, res] = await this.$http.Goods.DeleteGoodsService(
         JSON.stringify(queryIds)
       );
-      this.$message[res ? "success" : "error"](
-        res?.msg || `更新商品服务${res ? "成功" : "失败"}`
-      );
+      if (!res) {
+        this.$message.error(res?.msg || `更新商品服务失败`);
+      }
     },
     async handleSubmit() {
       // 表单校验
