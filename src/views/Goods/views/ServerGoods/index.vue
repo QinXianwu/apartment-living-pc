@@ -47,13 +47,18 @@
         <!-- 商品标签 -->
         <template #goodsTab="{ scope }">
           <span v-if="!scope.productTag">-</span>
-          <el-tag
-            v-else
-            class="mr-10 mb-10"
-            v-for="(item, index) in scope.productTag.split(',') || []"
-            :key="index"
-            >{{ item }}</el-tag
-          >
+          <div class="goodsTab" v-else>
+            <el-tooltip
+              class="goodsTab-item"
+              effect="dark"
+              :content="item"
+              placement="right"
+              v-for="(item, index) in scope.productTag.split(',') || []"
+              :key="index"
+            >
+              <el-tag class="mr-10 mb-10">{{ item }}</el-tag>
+            </el-tooltip>
+          </div>
         </template>
         <!-- 活动标签 -->
         <template #activityTab="{ scope }">
@@ -420,6 +425,14 @@ export default {
   .name {
     margin-left: 10px;
     @include overflow-eps(2);
+  }
+}
+.goodsTab {
+  display: flex;
+  flex-wrap: wrap;
+  &-item {
+    display: block !important;
+    @include overflow-eps(1);
   }
 }
 .activityTab {
