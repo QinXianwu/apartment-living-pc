@@ -19,17 +19,6 @@
             :step="1"
           />
         </el-form-item>
-        <!-- <el-form-item label="兑换数量" prop="exchangeCount">
-          <el-input-number
-            class="input-medium"
-            v-model="formData.exchangeCount"
-            placeholder="兑换数量"
-            :min="0"
-            :controls="false"
-            :precision="0"
-            :step="1"
-          />
-        </el-form-item> -->
         <el-form-item label="库存" prop="stockCount">
           <el-input-number
             class="input-medium"
@@ -117,15 +106,6 @@ export default {
             type: "number",
             min: 1,
             message: "积分必须大于0",
-            trigger: "blur",
-          },
-        ],
-        exchangeCount: [
-          { required: true, message: "请输入兑换数量", trigger: "blur" },
-          {
-            type: "number",
-            min: 1,
-            message: "兑换数量必须大于0",
             trigger: "blur",
           },
         ],
