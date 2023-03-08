@@ -156,6 +156,11 @@ export default {
       }
       const GoodsInfo = await this.$refs.ActivityGoods.getQuery();
       const SpecsInfo = await this.$refs.GoodsSpecs.getQuery();
+      if (
+        Number(this.formData?.stockCount) > Number(GoodsInfo?.product?.stock)
+      ) {
+        return this.$message.error("库存数量不得大于商品剩余库存");
+      }
       if (this.isLoading) return;
       this.isLoading = true;
       const query = {

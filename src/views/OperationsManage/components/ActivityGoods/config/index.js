@@ -45,6 +45,10 @@ export const GoodsColumn = [
     type: "custom",
   },
   {
+    label: "当前剩余库存",
+    prop: "stock",
+  },
+  {
     label: "操作",
     prop: "action",
     type: "custom",
