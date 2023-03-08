@@ -127,10 +127,29 @@ export default {
         ? this.productInfo.productStockPriceList
         : [];
     },
+    async handleVerify() {
+      // eslint-disable-next-line
+      return new Promise(async (resolve) => {
+        try {
+          for (const index in this.list) {
+            if (!Number(this.list[index]?.num)) {
+              throw new Error("请输入相关规格采购数量");
+            }
+          }
+        } catch (error) {
+          this.$message.error(error);
+          return false;
+        }
+        // 表单校验
+        resolve(true);
+      });
+    },
     // 处理提交
     async handleSubmit() {
       if (!this.list?.length)
         return this.$message.error("该商品暂无规格可采购");
+      const verify = await this.handleVerify();
+      if (!verify) return;
       this.isLoading = true;
       const queryData = this.list.map((item) => ({
         num: item?.num || 0,
