@@ -35,9 +35,7 @@
             <el-input-number
               class="putNum"
               v-model="scope.putNum"
-              :placeholder="`采购数量(最大值:${scope.orderNum})`"
-              :min="0"
-              :max="scope.orderNum"
+              :placeholder="`采购数量`"
               :controls="false"
               :precision="0"
               :step="1"
@@ -123,8 +121,32 @@ export default {
         : [];
       this.list.forEach((item) => digits2Str(item, keys2));
     },
+    async handleVerify() {
+      // eslint-disable-next-line
+      return new Promise(async (resolve) => {
+        try {
+          for (const index in this.list) {
+            const putNum = Number(this.list[index]?.putNum);
+            const orderNum = Number(this.list[index]?.orderNum);
+            if (!this.list[index]?.putNum && this.list[index]?.putNum !== 0) {
+              throw new Error("请输入相关规格入库数量");
+            } else if (putNum > orderNum)
+              throw new Error(
+                `相关规格入库数量(${putNum})不得大于采购数量(${orderNum})`
+              );
+          }
+        } catch (error) {
+          this.$message.error(error);
+          return false;
+        }
+        // 表单校验
+        resolve(true);
+      });
+    },
     // 处理提交
     async handleSubmit() {
+      const verify = await this.handleVerify();
+      if (!verify) return;
       this.isLoading = true;
       const queryData = this.list.map((item) => ({
         ...item,
