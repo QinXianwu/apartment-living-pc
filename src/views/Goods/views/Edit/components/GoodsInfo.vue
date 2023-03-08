@@ -168,6 +168,13 @@ export default {
             trigger: "blur",
           },
         ],
+        supplierId: [
+          {
+            required: true,
+            message: "请选择供应商",
+            trigger: "blur",
+          },
+        ],
         productName: [
           {
             required: true,
