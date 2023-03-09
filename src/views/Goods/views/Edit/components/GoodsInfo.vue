@@ -86,7 +86,11 @@
             >
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="是否为特价商品" prop="bargainIs">
+        <el-form-item
+          label="是否为特价商品"
+          prop="bargainIs"
+          v-if="formData.discountIs !== CONST.DISCOUNTED_TYPE.YES"
+        >
           <el-radio-group v-model="formData.bargainIs">
             <el-radio-button
               v-for="(item, index) in CONST.SPECIALS_TYPE_OPTIONS()"
@@ -96,8 +100,15 @@
               >{{ item.label }}</el-radio-button
             >
           </el-radio-group>
+          <div>
+            <span class="form-tip">特价商品部参与任何优惠</span>
+          </div>
         </el-form-item>
-        <el-form-item label="是否进行折扣" prop="discountIs">
+        <el-form-item
+          label="是否进行折扣"
+          prop="discountIs"
+          v-if="formData.bargainIs !== CONST.SPECIALS_TYPE.YES"
+        >
           <el-radio-group v-model="formData.discountIs">
             <el-radio-button
               v-for="(item, index) in CONST.DISCOUNTED_TYPE_OPTIONS()"
@@ -107,6 +118,9 @@
               >{{ item.label }}</el-radio-button
             >
           </el-radio-group>
+          <div>
+            <span class="form-tip">折扣商品部参与任何优惠</span>
+          </div>
         </el-form-item>
         <el-form-item label="是否进行限购" prop="isLimit">
           <el-radio-group v-model="formData.isLimit">
