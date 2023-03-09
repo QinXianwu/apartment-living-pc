@@ -250,8 +250,10 @@ export default {
         } catch (error) {
           if (!this.formData?.categoryId)
             return this.$message.error("请选择商品分类");
-          if (!this.formData?.productName)
+          else if (!this.formData?.productName)
             return this.$message.error("请输入商品名称");
+          else if (!this.formData?.supplierId)
+            return this.$message.error("请选择供应商");
         }
         resolve({
           ...this.formData,
