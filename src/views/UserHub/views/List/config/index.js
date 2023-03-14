@@ -46,31 +46,17 @@ export const column = [
     showOverflowTooltip: true,
   },
   {
-    label: "消费金额",
-    prop: "123",
-    showOverflowTooltip: true,
-  },
-  {
-    label: "订单数",
-    prop: "123",
-  },
-  {
     label: "优惠劵数量",
-    prop: "123",
+    prop: "totalUseCoupon",
   },
   {
     label: "余额",
-    prop: "123",
+    prop: "123", // 后端没给(说：先默认0)
     type: "money",
   },
   {
     label: "积分",
-    prop: "123",
-  },
-  {
-    label: "分销累计佣金",
-    prop: "123",
-    type: "money",
+    prop: "totalIntegral",
   },
   {
     label: "注册时间",
