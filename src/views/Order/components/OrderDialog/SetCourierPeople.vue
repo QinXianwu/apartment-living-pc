@@ -104,6 +104,7 @@ export default {
   methods: {
     initForm() {
       this.formData = {};
+      this.courierOptions = [];
       this.GetCourierPeopleList();
     },
     async GetCourierPeopleList() {
