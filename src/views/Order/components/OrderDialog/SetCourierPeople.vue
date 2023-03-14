@@ -112,8 +112,8 @@ export default {
       const query = {
         status: CONST.COURIER_AUDIT_STATE.SUCCESS_CHECK,
       };
-      if (this.dataSource?.serviceStationId)
-        query.serviceStationId = this.dataSource.serviceStationId;
+      if (this.dataSource?.serviceId)
+        query.serviceStationId = this.dataSource.serviceId;
       const [, data] = await this.$http.Courier.GetCourierListAll(query);
       this.isCourierLoading = false;
       this.courierOptions = data?.length ? data : [];
