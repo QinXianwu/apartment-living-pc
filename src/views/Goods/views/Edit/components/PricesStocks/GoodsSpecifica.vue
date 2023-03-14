@@ -223,13 +223,17 @@ export default {
     async selectSpecifica(val) {
       if (val && !this.specificaValMap[val]) {
         const list = await this.getSpecificaValList({ id: val });
-        this.$set(this.specificaValMap, val, simpleCloneDeep(list));
+        // 选择规格 默认不添加全部规格值
+        // this.$set(this.specificaValMap, val, simpleCloneDeep(list));
+        // this.$set(this.specificaValMapOld, val, simpleCloneDeep(list));
+        // this.$set(
+        //   this.specificaValCheckboxMap,
+        //   val,
+        //   list.map((item) => item.specificationValueId)
+        // );
+        this.$set(this.specificaValMap, val, []);
         this.$set(this.specificaValMapOld, val, simpleCloneDeep(list));
-        this.$set(
-          this.specificaValCheckboxMap,
-          val,
-          list.map((item) => item.specificationValueId)
-        );
+        this.$set(this.specificaValCheckboxMap, val, []);
       }
     },
     handleTagClose(id, index) {

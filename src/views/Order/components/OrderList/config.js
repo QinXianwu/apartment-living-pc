@@ -33,6 +33,7 @@ export const column = [
     label: "配送信息",
     prop: "userInfo",
     type: "custom",
+    minWidth: 190,
   },
   {
     label: "配送员",

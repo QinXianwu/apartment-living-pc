@@ -141,7 +141,9 @@ export default {
         ? [this.detailInfo.product]
         : [];
       this.$emit("update:selectGoods", this.goodsList);
-      this.specsList = this.detailInfo?.product?.productStockPriceList || [];
+      this.specsList = (
+        this.detailInfo?.product?.productStockPriceList || []
+      ).filter((item) => item.id === this.detailInfo?.productStockPriceId);
       this.formData = { ...this.formData, ...this.detailInfo };
     },
     async handleSubmit() {
@@ -156,10 +158,8 @@ export default {
       }
       const GoodsInfo = await this.$refs.ActivityGoods.getQuery();
       const SpecsInfo = await this.$refs.GoodsSpecs.getQuery();
-      if (
-        Number(this.formData?.stockCount) > Number(GoodsInfo?.product?.stock)
-      ) {
-        return this.$message.error("库存数量不得大于商品剩余库存");
+      if (Number(this.formData?.stockCount) > Number(SpecsInfo?.stock)) {
+        return this.$message.error("库存数量不得大于商品规格剩余库存");
       }
       if (this.isLoading) return;
       this.isLoading = true;
@@ -167,7 +167,7 @@ export default {
         ...this.detailInfo,
         ...this.formData,
         ...GoodsInfo,
-        ...SpecsInfo,
+        productStockPriceId: SpecsInfo.productStockPriceId,
       };
       const id = this.editInfo?.id || "";
       const [, res] = await this.$http.Goods[

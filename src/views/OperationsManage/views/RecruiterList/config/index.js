@@ -10,6 +10,13 @@ export const formData = [
     placeholder: "请输入用户名称",
   },
   {
+    label: "联系方式",
+    prop: "phone",
+    type: "text",
+    value: "",
+    placeholder: "请输入联系方式",
+  },
+  {
     label: "状态",
     prop: "status",
     type: "select",
@@ -22,7 +29,7 @@ export const formData = [
 export const column = [
   {
     label: "用户名称",
-    prop: "userName",
+    prop: "name",
     showOverflowTooltip: true,
   },
   // {
@@ -37,7 +44,8 @@ export const column = [
   },
   {
     label: "招募类型",
-    prop: "aaa",
+    prop: "type",
+    type: "custom",
   },
   {
     label: "备注",

@@ -105,11 +105,12 @@
               <el-input-number
                 class="input-small"
                 v-model="formData.leaderRate"
-                :min="0"
+                placeholder="积分比例"
                 :controls="false"
                 :precision="0"
-                placeholder="积分比例"
                 :step="1"
+                :max="99"
+                :min="0"
               />
               <span class="append el-input-group__append">%</span>
             </div>
@@ -194,6 +195,7 @@ export default {
       const [, res] = await this.$http.PointsSetting.GetIntegralCarveDetail();
       this.integralCarve = res?.id ? res : {};
       this.formData = { ...this.integralCarve };
+      this.formData.leaderRate = Number(this.integralCarve?.leaderRate) * 100;
       const startTime = this.integralCarve?.startTime || "";
       const endTime = this.integralCarve?.endTime || "";
       const state =
@@ -222,6 +224,7 @@ export default {
         ...this.integralCarve,
         ...this.formData,
       };
+      query.leaderRate = Number(query.leaderRate) / 100;
       query.startTime =
         query.limitTimeStatus === CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM
           ? query.activityTime

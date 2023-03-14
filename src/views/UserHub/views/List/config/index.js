@@ -1,12 +1,12 @@
 // 搜索选项
 export const formData = [
-  {
-    label: "用户名称",
-    prop: "name",
-    type: "text",
-    value: "",
-    placeholder: "请输入用户名称",
-  },
+  // {
+  //   label: "用户名称",
+  //   prop: "name",
+  //   type: "text",
+  //   value: "",
+  //   placeholder: "请输入用户名称",
+  // },
   {
     label: "用户昵称",
     prop: "nickName",

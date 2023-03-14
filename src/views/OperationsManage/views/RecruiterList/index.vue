@@ -18,6 +18,9 @@
             </div>
           </div>
         </template>
+        <template #type="{ scope }">
+          <span>{{ $CONST.RECRUITER_TYPE_TEXT[scope.type] }}</span>
+        </template>
         <template #status="{ scope }">
           <el-tag
             :type="
@@ -107,10 +110,12 @@ export default {
           type: "warning",
           showClose: false,
         });
-        const [, res] = await this.$http.OperationsManage.UpdateFeedbackStatus({
-          id,
-          status: this.$CONST.RECRUITER_STATE.A_S_PROCESSED,
-        });
+        const [, res] = await this.$http.OperationsManage.UpdateRecruiterStatus(
+          {
+            id,
+            status: this.$CONST.RECRUITER_STATE.A_S_PROCESSED,
+          }
+        );
         const msg = res ? res?.msg || `处理成功` : `处理失败`;
         this.$confirm(msg, "处理结果", {
           showClose: false,

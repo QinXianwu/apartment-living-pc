@@ -151,6 +151,7 @@ export default {
         resolve({
           ...this.formData,
           productStockPriceId: specsData.id,
+          stock: specsData?.stock || 0,
         });
       });
     },

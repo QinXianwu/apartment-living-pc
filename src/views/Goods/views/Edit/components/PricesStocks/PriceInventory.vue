@@ -185,10 +185,10 @@ export default {
       return arr;
     },
     initData({ column }) {
-      const obj = {
-        images: [],
-      };
-      column.forEach((item) => (obj[item.prop] = 0));
+      const strKey = "procurNum,stock";
+      const tempColumn = column.filter((item) => !strKey.includes(item.prop));
+      const obj = { images: [] };
+      tempColumn.forEach((item) => (obj[item.prop] = 0));
       return obj;
     },
   },
@@ -236,7 +236,11 @@ export default {
       }));
     },
     closeRow(item) {
-      this.column.forEach((ele) => (item[ele.prop] = 0));
+      const strKey = "procurNum,stock";
+      const tempColumn = this.column.filter(
+        (item) => !strKey.includes(item.prop)
+      );
+      tempColumn.forEach((ele) => (item[ele.prop] = 0));
     },
     batchAction(key) {
       this.batchData.key = key;

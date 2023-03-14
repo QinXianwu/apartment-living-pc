@@ -35,6 +35,16 @@ export const FEED_BACK_STATE_TEXT = {
 export const FEED_BACK_STATE_OPTIONS = () =>
   getOptionsByText(FEED_BACK_STATE_TEXT);
 
+// 招聘类型
+export const RECRUITER_TYPE = {
+  COURIER: 1, // 配送员
+  CASHIERS: 2, // 收银员
+};
+export const RECRUITER_TYPE_TEXT = {
+  [RECRUITER_TYPE.COURIER]: "配送员",
+  [RECRUITER_TYPE.CASHIERS]: "收银员",
+};
+
 // 招聘状态
 export const RECRUITER_STATE = {
   A_S_HANDLE: 1, // 待处理
