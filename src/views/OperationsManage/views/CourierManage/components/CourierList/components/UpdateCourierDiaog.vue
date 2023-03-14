@@ -147,10 +147,6 @@ export default {
           : `${id ? "编辑" : "新增"}失败`
       );
       if (res) {
-        this.$store.dispatch(
-          "operationsManage/GetCourierPeopleListAction",
-          true
-        );
         this.handleClose(true);
       }
     },

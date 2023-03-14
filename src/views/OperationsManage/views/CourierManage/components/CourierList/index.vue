@@ -166,10 +166,6 @@ export default {
         }).then(() => {
           if (res) {
             this.getList();
-            this.$store.dispatch(
-              "operationsManage/GetCourierPeopleListAction",
-              true
-            );
           }
         });
       } catch (error) {

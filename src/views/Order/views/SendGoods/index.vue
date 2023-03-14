@@ -21,7 +21,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("operationsManage/GetCourierPeopleListAction");
+    //
   },
 };
 </script>

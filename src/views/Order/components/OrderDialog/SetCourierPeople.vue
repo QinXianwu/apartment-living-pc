@@ -22,12 +22,13 @@
           class="input-medium"
           placeholder="请选择配送员"
           v-model="formData.courierId"
+          v-loading="isCourierLoading"
         >
           <el-option
             v-for="item in courierOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
           />
         </el-select>
       </el-form-item>
@@ -54,7 +55,8 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import CONST from "@/constants/index";
+
 export default {
   name: "SetCourierPeople",
   components: {},
@@ -81,6 +83,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      isCourierLoading: false,
       formData: {},
       rules: {
         courierId: [
@@ -90,12 +93,10 @@ export default {
           { required: true, message: "请输入配送员服务费", trigger: "blur" },
         ],
       },
+      courierOptions: [],
     };
   },
   computed: {
-    ...mapGetters({
-      courierOptions: "operationsManage/courierPeopleOptions",
-    }),
     isGroupOrder({ orderTypeData }) {
       return !!orderTypeData?.isGroupOrder;
     },
@@ -103,6 +104,19 @@ export default {
   methods: {
     initForm() {
       this.formData = {};
+      this.GetCourierPeopleList();
+    },
+    async GetCourierPeopleList() {
+      if (this.isCourierLoading) return;
+      this.isCourierLoading = true;
+      const query = {
+        status: CONST.COURIER_AUDIT_STATE.SUCCESS_CHECK,
+      };
+      if (this.dataSource?.serviceStationId)
+        query.serviceStationId = this.dataSource.serviceStationId;
+      const [, data] = await this.$http.Courier.GetCourierListAll(query);
+      this.isCourierLoading = false;
+      this.courierOptions = data?.length ? data : [];
     },
     onInputAmount(val) {
       //正则表达试
@@ -136,7 +150,7 @@ export default {
     },
   },
   mounted() {
-    //
+    this.initForm();
   },
 };
 </script>
