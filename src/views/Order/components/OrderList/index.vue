@@ -60,7 +60,7 @@ export default {
         pageSize: 10,
       },
       query: {
-        orderStatus: "",
+        orderStatus: String(CONST.ORDER_STATE.ALL),
       },
       total: 0,
       list: [],
@@ -118,6 +118,11 @@ export default {
       if (this.orderTypeData?.isAfterSale) {
         query.operStatus = query.orderStatus;
         delete query.orderStatus;
+      } else {
+        query.orderStatus =
+          query.orderStatus === String(CONST.ORDER_STATE.ALL)
+            ? ""
+            : query.orderStatus;
       }
       if (this.receiveWay) query.receiveWay = this.receiveWay;
       if (this.source) query.source = this.source;

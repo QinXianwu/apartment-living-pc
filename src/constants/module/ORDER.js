@@ -36,7 +36,8 @@ export const SOURCE_ORDER = {
 
 // 订单状态
 export const ORDER_STATE = {
-  ALL: 0, // 所有 0转->字符串空
+  ALL: 99999, // 所有 99999转->字符串空
+  ALREADY_PAY: 0, // 已支付
   WAIT_PAY: 1, // 待付款
   IN_TRANSIT: 2, // 配送中
   WAIT_DELIVERY: 3, // 待收货
@@ -52,6 +53,7 @@ export const ORDER_STATE = {
 
 export const ORDER_STATE_TEXT = {
   [ORDER_STATE.ALL]: "所有",
+  [ORDER_STATE.ALREADY_PAY]: "已支付",
   [ORDER_STATE.WAIT_PAY]: "待付款",
   [ORDER_STATE.WAIT_SEND]: "待配送",
   [ORDER_STATE.IN_TRANSIT]: "配送中",

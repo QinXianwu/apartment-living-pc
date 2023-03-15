@@ -19,7 +19,7 @@
               <span>{{ item.productName || "-" }}</span>
             </el-tooltip>
           </div>
-          <div class="specification">
+          <div class="specification" v-if="item.specificationName" >
             <el-tag>{{ item.specificationName || "" }}</el-tag>
           </div>
         </div>
