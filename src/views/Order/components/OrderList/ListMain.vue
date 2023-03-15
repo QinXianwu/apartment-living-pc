@@ -43,9 +43,6 @@
           </div>
         </el-tooltip>
       </template>
-      <template #pickingAddress="scope">
-        <span>{{ scope.pickingAddress }}</span>
-      </template>
       <!-- 状态/售前状态 -->
       <template #orderStatus="{ scope }">
         <el-tag

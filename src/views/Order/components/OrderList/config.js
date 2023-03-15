@@ -47,7 +47,7 @@ export const column = [
   {
     label: "自提信息",
     prop: "pickingAddress",
-    type: "custom",
+    showOverflowTooltip: true,
   },
   {
     label: "自提时间",

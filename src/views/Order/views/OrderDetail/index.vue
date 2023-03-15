@@ -17,7 +17,10 @@
     <template v-else>
       <WeChatUser :userInfo="orderInfo.orderUserVo" />
       <AddressInfo :addressInfo="orderInfo.sendPickeInfoVo" />
-      <CourierInfo v-if="showCourierInfo" />
+      <CourierInfo
+        :courierInfo="orderInfo.sendPickeInfoVo"
+        v-if="showCourierInfo"
+      />
       <PayData :payInfo="orderInfo.payVo" />
     </template>
     <GoodsData :goodsList="orderInfo.productVoList" :orderInfo="orderInfo" />
