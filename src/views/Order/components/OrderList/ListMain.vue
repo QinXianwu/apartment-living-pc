@@ -13,6 +13,8 @@
           :goodsList="
             orderTypeData.isAfterSale
               ? scope.productVoList
+              : orderTypeData.isGroupOrder
+              ? [scope.product]
               : scope.atOrderDetailVoList
           "
         />

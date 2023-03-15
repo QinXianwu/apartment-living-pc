@@ -37,7 +37,6 @@
 
 <script>
 import CONST from "@/constants/index";
-// import { digits2Str } from "@/utils/index";
 import OrderSearchForm from "./OrderSearchForm.vue";
 import OrderStatusTabs from "./OrderStatusTabs.vue";
 import OrderDialog from "../OrderDialog";
@@ -122,18 +121,16 @@ export default {
       }
       if (this.receiveWay) query.receiveWay = this.receiveWay;
       if (this.source) query.source = this.source;
-      const [, res] = await this.$http.Order[
-        this.orderTypeData?.isAfterSale
-          ? "GetAfterSalesOrderList"
-          : "GetOrderList"
-      ](query);
+      const ApiMethod = this.orderTypeData?.isAfterSale
+        ? "GetAfterSalesOrderList"
+        : this.orderTypeData?.isGroupOrder
+        ? "GetGroupOrderList"
+        : "GetOrderList";
+      const [, res] = await this.$http.Order[ApiMethod](query);
       if (res?.code !== this.AJAX_CODE.SUCCESS) {
         this.$message.error(res?.msg || "获取订单列表异常");
       }
       const data = res?.rows?.length ? res.rows : [];
-      // data.forEach((item) => {
-      //   digits2Str(item, ["id"]);
-      // });
       this.list = data;
       this.total = res?.total || 0;
     },

@@ -130,6 +130,16 @@ export default {
       })
     );
   },
+  // 获取拼团订单列表
+  GetGroupOrderList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/groupActivity/joinRecord",
+        params,
+        isReturnAll: true,
+      })
+    );
+  },
   // 审核售后订单
   ReviewAfterSalesOrder(params) {
     return catchAsyncFun(
