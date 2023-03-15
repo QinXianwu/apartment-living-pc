@@ -105,6 +105,11 @@ export default {
       type: Boolean,
       default: false, // 默认多选
     },
+    // 显示库存
+    showStock: {
+      type: Boolean,
+      default: true,
+    },
     // 显示新人价
     showCouple: {
       type: Boolean,
@@ -149,12 +154,19 @@ export default {
     };
   },
   computed: {
-    tableHead({ isRadio, column, showCouple, showSpikePrice, showGroupPrice }) {
+    tableHead({
+      isRadio,
+      column,
+      showStock,
+      showCouple,
+      showSpikePrice,
+      showGroupPrice,
+    }) {
       const filterPropStr = `action,${showCouple ? "" : "couple"},${
         showSpikePrice ? "" : "spikePrice"
       },${showGroupPrice ? "" : "groupPrice"},${
         isRadio ? "" : "custom_checkbox"
-      }`;
+      },${showStock ? "" : "stock"}`;
       return column.filter((item) => !filterPropStr.includes(item.prop));
     },
     ...mapGetters({
