@@ -27,6 +27,11 @@ export const column = [
     prop: "remark",
   },
   {
+    label: "状态",
+    prop: "status",
+    type: "custom",
+  },
+  {
     label: "创建时间",
     prop: "createTime",
     width: 160,

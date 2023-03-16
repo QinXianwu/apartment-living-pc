@@ -11,6 +11,12 @@
         <template #productType="{ scope }">
           <span>{{ $CONST.APPLY_PRODUCT_TYPE_TEXT[scope.productType] }}</span>
         </template>
+        <template #status="{ scope }">
+          <el-tag
+            :type="scope.status === $CONST.MEMBERSHIP_STATE.OFF ? 'danger' : ''"
+            >{{ $CONST.MEMBERSHIP_STATE_TEXT[scope.status] }}</el-tag
+          >
+        </template>
         <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
