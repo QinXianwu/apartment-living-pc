@@ -8,14 +8,18 @@
             <template #price="{ scope }">
               <el-input
                 v-model="scope.price"
-                :placeholder="`请输入${MEMBERSHIP_TYPE_TEXT[scope.type]}价格`"
+                :placeholder="`请输入${
+                  CONST.MEMBERSHIP_TYPE_TEXT[scope.type]
+                }价格`"
                 @input="(val) => onInputPrice(val, scope)"
               />
             </template>
             <template #day="{ scope }">
               <el-input
                 v-model="scope.day"
-                :placeholder="`请输入${MEMBERSHIP_TYPE_TEXT[scope.type]}天数`"
+                :placeholder="`请输入${
+                  CONST.MEMBERSHIP_TYPE_TEXT[scope.type]
+                }天数`"
                 @input="(val) => onInputDay(val, scope)"
               />
             </template>
@@ -34,16 +38,6 @@
 </template>
 
 <script>
-const MEMBERSHIP_TYPE = {
-  MONTHLY: 1, // 月卡
-  SEASON: 2, // 季卡
-  ANNUAL: 3, // 年卡
-};
-const MEMBERSHIP_TYPE_TEXT = {
-  [MEMBERSHIP_TYPE.MONTHLY]: "月卡",
-  [MEMBERSHIP_TYPE.SEASON]: "季卡",
-  [MEMBERSHIP_TYPE.ANNUAL]: "年卡",
-};
 import CONST from "@/constants/index";
 import { simpleCloneDeep } from "@/utils";
 
@@ -59,8 +53,6 @@ export default {
   data() {
     return {
       CONST,
-      MEMBERSHIP_TYPE,
-      MEMBERSHIP_TYPE_TEXT,
       column: [
         {
           label: "名称",
@@ -93,27 +85,31 @@ export default {
   },
   computed: {
     initList({ infoData }) {
-      const valKey = Object.values(MEMBERSHIP_TYPE);
+      const valKey = Object.values(CONST.MEMBERSHIP_TYPE);
       return valKey.map((val) => {
         const tempData = {
           day: "",
           price: "",
           showApplet: CONST.MEMBERSHIP_SHOW_STATE.HIDE,
         };
-        if (val === MEMBERSHIP_TYPE.MONTHLY) {
+        if (val === CONST.MEMBERSHIP_TYPE.MONTHLY) {
           tempData.day = infoData?.monthDay || "";
           tempData.price = infoData?.monthPrice || "";
           if (infoData?.monthType) tempData.showApplet = infoData.monthType;
-        } else if (val === MEMBERSHIP_TYPE.SEASON) {
+        } else if (val === CONST.MEMBERSHIP_TYPE.SEASON) {
           tempData.day = infoData?.seasonDay || "";
           tempData.price = infoData?.seasonPrice || "";
           if (infoData?.seasonType) tempData.showApplet = infoData.seasonType;
-        } else if (val === MEMBERSHIP_TYPE.ANNUAL) {
+        } else if (val === CONST.MEMBERSHIP_TYPE.ANNUAL) {
           tempData.day = infoData?.yearDay || "";
           tempData.price = infoData?.yearPrice || "";
           if (infoData?.yearType) tempData.showApplet = infoData.yearType;
         }
-        return { type: val, name: MEMBERSHIP_TYPE_TEXT[val], ...tempData };
+        return {
+          type: val,
+          name: CONST.MEMBERSHIP_TYPE_TEXT[val],
+          ...tempData,
+        };
       });
     },
   },
@@ -140,9 +136,13 @@ export default {
           for (const index in this.list) {
             const item = this.list[index];
             if (!item?.price) {
-              throw new Error(`请输入${MEMBERSHIP_TYPE_TEXT[item.type]}价格`);
+              throw new Error(
+                `请输入${CONST.MEMBERSHIP_TYPE_TEXT[item.type]}价格`
+              );
             } else if (!item?.day) {
-              throw new Error(`请输入${MEMBERSHIP_TYPE_TEXT[item.type]}天数`);
+              throw new Error(
+                `请输入${CONST.MEMBERSHIP_TYPE_TEXT[item.type]}天数`
+              );
             }
           }
         } catch (error) {
@@ -150,15 +150,15 @@ export default {
         }
         const aging = {};
         this.list.forEach((item) => {
-          if (item.type === MEMBERSHIP_TYPE.MONTHLY) {
+          if (item.type === CONST.MEMBERSHIP_TYPE.MONTHLY) {
             aging.monthDay = item.day;
             aging.monthPrice = item.price;
             aging.monthType = item.showApplet;
-          } else if (item.type === MEMBERSHIP_TYPE.SEASON) {
+          } else if (item.type === CONST.MEMBERSHIP_TYPE.SEASON) {
             aging.seasonDay = item.day;
             aging.seasonPrice = item.price;
             aging.seasonType = item.showApplet;
-          } else if (item.type === MEMBERSHIP_TYPE.ANNUAL) {
+          } else if (item.type === CONST.MEMBERSHIP_TYPE.ANNUAL) {
             aging.yearDay = item.day;
             aging.yearPrice = item.price;
             aging.yearType = item.showApplet;

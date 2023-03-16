@@ -18,7 +18,7 @@
                 v-model="formData.productDiscount"
                 placeholder="请输入会员折扣"
                 :controls="false"
-                :precision="1"
+                :precision="0"
               />
               <span class="append el-input-group__append">%</span>
             </div>

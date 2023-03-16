@@ -15,7 +15,9 @@ export const column = [
   },
   {
     label: "时效",
-    prop: "",
+    prop: "aging",
+    type: "custom",
+    minWidth: 250,
   },
   {
     label: "适用商品",
@@ -25,6 +27,7 @@ export const column = [
   {
     label: "备注",
     prop: "remark",
+    showOverflowTooltip: true,
   },
   {
     label: "状态",

@@ -166,7 +166,9 @@ export default {
         resolve({
           ...this.formData,
           productIds:
-            productType === CONST.APPLY_PRODUCT_TYPE.ALL ? [] : this.ids,
+            productType === CONST.APPLY_PRODUCT_TYPE.ALL
+              ? ""
+              : this.ids.join(","),
         });
       });
     },

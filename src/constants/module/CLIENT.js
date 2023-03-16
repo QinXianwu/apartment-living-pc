@@ -51,3 +51,16 @@ export const MEMBERSHIP_SHOW_STATE = {
   SHOW: 1, // 显示
   HIDE: 2, //不显示
 };
+
+// 卡包类型
+export const MEMBERSHIP_TYPE = {
+  MONTHLY: 1, // 月卡
+  SEASON: 2, // 季卡
+  ANNUAL: 3, // 年卡
+};
+
+export const MEMBERSHIP_TYPE_TEXT = {
+  [MEMBERSHIP_TYPE.MONTHLY]: "月卡",
+  [MEMBERSHIP_TYPE.SEASON]: "季卡",
+  [MEMBERSHIP_TYPE.ANNUAL]: "年卡",
+};

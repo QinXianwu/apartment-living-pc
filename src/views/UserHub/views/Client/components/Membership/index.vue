@@ -9,10 +9,13 @@
     <div class="content">
       <TablePanel :tableData="list" :tableHead="column">
         <template #productDiscount="{ scope }">
-          <span>{{ scope.productDiscount * 10 }}</span>
+          <span>{{ scope.productDiscount * 10 }}%</span>
         </template>
         <template #productType="{ scope }">
           <span>{{ $CONST.APPLY_PRODUCT_TYPE_TEXT[scope.productType] }}</span>
+        </template>
+        <template #aging="{ scope }">
+          <span>{{ scope | filtersAging }}</span>
         </template>
         <template #status="{ scope }">
           <el-tag
@@ -55,6 +58,7 @@
 </template>
 
 <script>
+import CONST from "@/constants/index";
 import { formData, column } from "./config";
 import ChooseGoodsDiaog from "@/components/ChooseGoodsDiaog";
 import UpdateMembership from "./components/UpdateMembership";
@@ -130,6 +134,21 @@ export default {
       const data = res?.rows?.length ? res?.rows : [];
       this.list = data || [];
       this.total = res?.total || 0;
+    },
+  },
+  filters: {
+    filtersAging(data) {
+      const tempArr = [];
+      if (data.monthType === CONST.MEMBERSHIP_SHOW_STATE.SHOW) {
+        tempArr.push(`月卡(${data?.monthDay || "~"}天)`);
+      }
+      if (data.seasonType === CONST.MEMBERSHIP_SHOW_STATE.SHOW) {
+        tempArr.push(`季卡(${data?.seasonDay || "~"}天)`);
+      }
+      if (data.yearType === CONST.MEMBERSHIP_SHOW_STATE.SHOW) {
+        tempArr.push(`年卡(${data?.yearDay || "~"}天)`);
+      }
+      return tempArr.join("，");
     },
   },
   mounted() {
