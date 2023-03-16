@@ -168,7 +168,7 @@ export default {
           productIds:
             productType === CONST.APPLY_PRODUCT_TYPE.ALL
               ? ""
-              : this.ids.join(","),
+              : this.list.map((item) => item.productNo).join(","),
         });
       });
     },
