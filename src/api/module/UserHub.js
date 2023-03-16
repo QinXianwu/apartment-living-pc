@@ -75,4 +75,43 @@ export default {
       })
     );
   },
+  // 获取会员卡列表
+  GetMemberCardlList(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-user/memberCard/page",
+        params,
+        isReturnAll: true,
+      })
+    );
+  },
+  // 获取会员卡详情
+  GetMemberCardDetail(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-user/memberCard/detail",
+        params,
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
+  // 新增会员卡
+  AddMemberCard(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-user/memberCard/add",
+        params,
+      })
+    );
+  },
+  // 更新会员卡
+  UpdateMemberCard(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-user/memberCard/update",
+        params,
+      })
+    );
+  },
 };

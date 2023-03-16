@@ -2,6 +2,7 @@ import PERMISSION_ID from "@/permission/PERMISSION_ID";
 import MainLayout from "@/layouts/MainLayout/index";
 import List from "@/views/UserHub/views/List/index.vue";
 import PointsSetting from "@/views/UserHub/views/PointsSetting/index.vue";
+import Client from "@/views/UserHub/views/Client/index.vue";
 
 export default {
   path: "/UserHub",
@@ -35,6 +36,18 @@ export default {
           PERMISSION_ID.UserHub_PointsSetting_PointsSignIn,
           PERMISSION_ID.UserHub_PointsSetting_PointsRules,
           PERMISSION_ID.UserHub_PointsSetting_TeamSharePoints,
+        ],
+      },
+    },
+    {
+      path: "Client",
+      component: Client,
+      name: "Client",
+      meta: {
+        title: "会员管理",
+        notPassPermissionVerify: true,
+        PermissionIds: [
+          // PERMISSION_ID.UserHub_PointsSetting_TeamSharePoints,
         ],
       },
     },

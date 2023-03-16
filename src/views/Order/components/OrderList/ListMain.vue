@@ -137,7 +137,7 @@ export default {
         orderTypeData?.isGroupOrder
           ? ""
           : "userInfo,courierName,courierServiceAmount"
-      },${orderTypeData?.isPointsOrder ? "" : "iiii"},${
+      },${orderTypeData?.isPointsOrder ? "" : "creditByPoints"},${
         orderTypeData?.isSelfPickupOrder ? "" : "pickingAddress,pickingTime"
       }`;
       return column.filter((item) => !filterPropStr.includes(item.prop));

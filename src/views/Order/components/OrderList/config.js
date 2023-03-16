@@ -27,7 +27,7 @@ export const column = [
   },
   {
     label: "兑换积分",
-    prop: "iiii",
+    prop: "creditByPoints",
   },
   {
     label: "配送信息",

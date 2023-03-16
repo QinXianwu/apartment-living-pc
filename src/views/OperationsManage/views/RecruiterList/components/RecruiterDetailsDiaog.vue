@@ -25,7 +25,7 @@
           <div>{{ detailsInfo.phone || "-" }}</div>
         </el-form-item>
         <el-form-item label="招募类型">
-          <div>{{ "-" }}</div>
+          <div>{{ $CONST.RECRUITER_TYPE_TEXT[detailsInfo.type] }}</div>
         </el-form-item>
         <el-form-item label="备注">
           <div>{{ detailsInfo.remark || "-" }}</div>

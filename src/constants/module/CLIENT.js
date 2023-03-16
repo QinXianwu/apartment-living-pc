@@ -33,3 +33,21 @@ export const USER_STATE_TEXT = {
 };
 // 用户options类型
 export const USER_STATE_OPTIONS = () => getOptionsByText(USER_STATE_TEXT);
+
+// 会员卡状态
+export const MEMBERSHIP_STATE = {
+  ON: 1, // 正常
+  OFF: 2, //停用
+};
+export const MEMBERSHIP_STATE_TEXT = {
+  [MEMBERSHIP_STATE.ON]: "正常",
+  [MEMBERSHIP_STATE.OFF]: "停用",
+};
+export const MEMBERSHIP_STATE_OPTIONS = () =>
+  getOptionsByText(MEMBERSHIP_STATE_TEXT);
+
+// 卡包显示状态
+export const MEMBERSHIP_SHOW_STATE = {
+  SHOW: 1, // 显示
+  HIDE: 2, //不显示
+};
