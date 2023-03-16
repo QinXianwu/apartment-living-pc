@@ -46,9 +46,7 @@ export default {
       meta: {
         title: "会员管理",
         notPassPermissionVerify: true,
-        PermissionIds: [
-          // PERMISSION_ID.UserHub_PointsSetting_TeamSharePoints,
-        ],
+        PermissionIds: [PERMISSION_ID.UserHub_Client_Membership],
       },
     },
   ],

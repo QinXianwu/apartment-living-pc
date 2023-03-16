@@ -35,7 +35,7 @@ export default {
         {
           label: "会员卡管理",
           name: "Membership",
-          // permission: this.$PERMISSION_ID.UserHub_PointsSetting_Membership,
+          permission: this.$PERMISSION_ID.UserHub_Client_Membership,
         },
       ],
     };
