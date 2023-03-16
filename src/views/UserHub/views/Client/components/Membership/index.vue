@@ -1,7 +1,10 @@
 <template>
   <div class="Client">
     <div class="action">
-      <el-button type="primary" plain @click="getList()"> 刷新 </el-button>
+      <el-button type="primary" plain @click="getList"> 刷新 </el-button>
+      <el-button type="primary" @click="handleAdd" v-if="!list.length">
+        新增会员卡
+      </el-button>
     </div>
     <div class="content">
       <TablePanel :tableData="list" :tableHead="column">
@@ -89,6 +92,10 @@ export default {
     onSearch(data) {
       this.query = { ...data };
       this.getList(true);
+    },
+    handleAdd() {
+      this.editInfo = {};
+      this.showUpdateMembership = true;
     },
     handleEdit(item) {
       this.editInfo = { id: item.id };
