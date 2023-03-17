@@ -85,6 +85,7 @@ export default {
     height: 60px;
   }
   .name {
+    text-align: left;
     margin-bottom: 5px;
     @include overflow-eps(2);
   }

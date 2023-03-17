@@ -8,7 +8,7 @@ export const column = [
     label: "商品信息",
     prop: "goodsInfo",
     type: "custom",
-    minWidth: 150,
+    minWidth: 200,
   },
   {
     label: "供应商",
@@ -30,6 +30,12 @@ export const column = [
     prop: "creditByPoints",
   },
   {
+    label: "收货类型",
+    prop: "receiveWay",
+    type: "custom",
+    showOverflowTooltip: true,
+  },
+  {
     label: "配送信息",
     prop: "userInfo",
     type: "custom",
@@ -38,6 +44,8 @@ export const column = [
   {
     label: "配送员",
     prop: "courierName",
+    type: "custom",
+    showOverflowTooltip: true,
   },
   {
     label: "配送服务费",
@@ -52,7 +60,7 @@ export const column = [
   {
     label: "自提时间",
     prop: "pickingTime",
-    width: 160,
+    width: 180,
   },
   {
     label: "状态",

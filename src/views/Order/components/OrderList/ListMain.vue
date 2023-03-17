@@ -19,6 +19,9 @@
           "
         />
       </template>
+      <template #receiveWay="{ scope }">
+        <span>{{ CONST.DELIVERY_TYPE_TEXT[scope.receiveWay] || "-" }}</span>
+      </template>
       <template #userInfo="{ scope }">
         <el-tooltip class="item" effect="dark" placement="right">
           <div slot="content">
@@ -44,6 +47,9 @@
             </div>
           </div>
         </el-tooltip>
+      </template>
+      <template #courierName="{ scope }">
+        <span>{{ scope.courierName || "-" }}</span>
       </template>
       <!-- 状态/售前状态 -->
       <template #orderStatus="{ scope }">
@@ -76,7 +82,9 @@
           <el-button type="text" @click="lookDetail(scope)">查看</el-button>
           <el-button
             v-if="
-              showSendBtn && scope.orderStatus === CONST.ORDER_STATE.WAIT_SEND
+              showSendBtn &&
+              scope.orderStatus === CONST.ORDER_STATE.WAIT_SEND &&
+              scope.receiveWay === CONST.DELIVERY_TYPE.HOME_DELIVERY
             "
             type="text"
             @click="$emit('showOrderDialog', scope, 'SetCourierPeople')"
@@ -138,7 +146,11 @@ export default {
           ? ""
           : "userInfo,courierName,courierServiceAmount"
       },${orderTypeData?.isPointsOrder ? "" : "creditByPoints"},${
-        orderTypeData?.isSelfPickupOrder ? "" : "pickingAddress,pickingTime"
+        orderTypeData?.isSelfPickupOrder ||
+        orderTypeData?.isGroupOrder ||
+        orderTypeData?.isPointsOrder
+          ? ""
+          : "pickingAddress,pickingTime"
       }`;
       return column.filter((item) => !filterPropStr.includes(item.prop));
     },
