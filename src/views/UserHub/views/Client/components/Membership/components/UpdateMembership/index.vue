@@ -61,7 +61,7 @@ export default {
         id: this.editInfo.id,
       });
       if (!res) return this.$message.error("获取卡包详情异常");
-      this.infoData = { ...res, productDiscount: res.productDiscount * 10 };
+      this.infoData = { ...res };
     },
     // 处理提交
     async handleSubmit() {
@@ -74,7 +74,6 @@ export default {
         ...AgingInfo,
         ...GoodsInfo,
       };
-      query.productDiscount = Math.floor(query.productDiscount * 100) / 1000;
       const id = this.editInfo?.id || "";
       this.isLoading = true;
       const [, res] = await this.$http.UserHub[

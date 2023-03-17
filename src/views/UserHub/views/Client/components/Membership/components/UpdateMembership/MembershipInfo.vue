@@ -18,9 +18,9 @@
                 v-model="formData.productDiscount"
                 placeholder="请输入会员折扣"
                 :controls="false"
-                :precision="0"
+                :precision="1"
               />
-              <span class="append el-input-group__append">%</span>
+              <span class="append el-input-group__append">折</span>
             </div>
           </div>
         </el-form-item>
@@ -69,9 +69,9 @@ export default {
           { required: true, message: "请输入会员折扣", trigger: "blur" },
           {
             type: "number",
-            min: 1,
-            max: 100,
-            message: "会员折扣不得小于1且不得大于100",
+            min: 0.1,
+            max: 10,
+            message: "会员折扣不得小于0.1且不得大于10",
           },
         ],
       },

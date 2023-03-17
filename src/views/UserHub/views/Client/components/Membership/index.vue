@@ -9,7 +9,7 @@
     <div class="content">
       <TablePanel :tableData="list" :tableHead="column">
         <template #productDiscount="{ scope }">
-          <span>{{ scope.productDiscount * 10 }}%</span>
+          <span>{{ scope.productDiscount }}折</span>
         </template>
         <template #productType="{ scope }">
           <span>{{ $CONST.APPLY_PRODUCT_TYPE_TEXT[scope.productType] }}</span>
