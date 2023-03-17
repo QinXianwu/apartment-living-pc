@@ -9,7 +9,15 @@ const state = {
   device: "desktop",
   size: localStorage.getItem("size") || "medium",
   // 全局读取的配置
-  SysGlobal: window.SysGlobal || {},
+  SysGlobal: {
+    ...(window.SysGlobal || {}),
+    ConfigInfo: {
+      ...(window.SysGlobal?.ConfigInfo || {}),
+      CommonStatic:
+        import.meta.env.VITE_APP_BASE_API_URL ||
+        window.SysGlobal?.ConfigInfo?.CommonStatic,
+    },
+  },
 };
 
 const mutations = {
