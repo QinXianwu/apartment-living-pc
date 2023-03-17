@@ -75,6 +75,9 @@ export default {
     isAfterSales({ orderType }) {
       return orderType === CONST.ORDER_SOURCE.AFTER_SALE_ORDER;
     },
+    isGroupOrder({ orderType }) {
+      return orderType === CONST.ORDER_SOURCE.GROUP_ORDER;
+    },
     showCourierInfo({ orderInfo }) {
       return !!orderInfo?.atProcessOrderDate?.sendDate;
     },
@@ -91,7 +94,11 @@ export default {
         delete query.orderNo;
       }
       const [, res] = await this.$http.Order[
-        this.isAfterSales ? "GetAfterSalesOrderDetail" : "GetOrderDetail"
+        this.isAfterSales
+          ? "GetAfterSalesOrderDetail"
+          : this.isGroupOrder
+          ? "GetGroupOrderDetail"
+          : "GetOrderDetail"
       ](query);
       this.isLoading = false;
       if (!res) return this.$message.error("获取订单详情异常");

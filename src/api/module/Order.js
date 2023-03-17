@@ -140,6 +140,18 @@ export default {
       })
     );
   },
+  // 获取运营后台拼团订单详情
+  GetGroupOrderDetail(params) {
+    return catchAsyncFun(
+      apiFetch({
+        url: apiPrefix + "/apartment-activity/groupActivity/joinRecordDetail",
+        params,
+        method: "GET",
+        isHeadersForm: true,
+        isHandleParams: true,
+      })
+    );
+  },
   // 审核售后订单
   ReviewAfterSalesOrder(params) {
     return catchAsyncFun(
