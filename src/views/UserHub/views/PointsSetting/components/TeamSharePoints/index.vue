@@ -23,7 +23,7 @@
           "
         >
           <el-date-picker
-            v-model="formData.activityTime"
+            v-model="activityTime"
             type="datetime"
             :picker-options="datePickerOptions"
             value-format="yyyy-MM-dd HH:mm:ss"
@@ -144,6 +144,13 @@ export default {
   name: "TeamSharePoints",
   components: { RulesForm, FooterView },
   data() {
+    const validateActivityTime = (rule, value, callback) => {
+      if (!this.activityTime) {
+        callback(new Error("请选择活动开始日期"));
+      } else {
+        callback();
+      }
+    };
     return {
       CONST,
       datePickerOptions: {
@@ -152,14 +159,15 @@ export default {
         },
       },
       integralCarve: {},
+      activityTime: "",
       formData: {
-        activityTime: "",
         activityDate: [],
         limitTimeStatus: CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM,
       },
       rules: {
         activityTime: [
-          { required: true, message: "请选择活动开始日期", trigger: "blur" },
+          // { required: true, message: "请选择活动开始日期", trigger: "blur" },
+          { validator: validateActivityTime, trigger: "blur" },
         ],
         activityDate: [
           { required: true, message: "请选择活动日期期限", trigger: "blur" },
@@ -191,6 +199,9 @@ export default {
     },
   },
   methods: {
+    changeTime(val) {
+      console.log(val);
+    },
     async getDetail() {
       const [, res] = await this.$http.PointsSetting.GetIntegralCarveDetail();
       this.integralCarve = res?.id ? res : {};
@@ -202,7 +213,7 @@ export default {
         this.integralCarve?.limitTimeStatus ||
         CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM;
       if (state === CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM) {
-        this.formData.activityTime = startTime || "";
+        this.activityTime = startTime || "";
       } else if (state === CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LIMITED_TIME) {
         this.formData.activityDate =
           startTime && endTime ? [startTime, endTime] : [];
@@ -227,13 +238,12 @@ export default {
       query.leaderRate = Number(query.leaderRate) / 100;
       query.startTime =
         query.limitTimeStatus === CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM
-          ? query.activityTime
+          ? this.activityTime
           : query.activityDate[0];
       query.endTime =
         query.limitTimeStatus === CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM
           ? ""
           : query.activityDate[1];
-      delete query.activityTime;
       delete query.activityDate;
       const [, res] = await this.$http.PointsSetting.UpdateIntegralCarve(query);
       if (res) {
