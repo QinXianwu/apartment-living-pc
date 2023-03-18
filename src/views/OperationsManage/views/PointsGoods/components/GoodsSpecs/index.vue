@@ -176,7 +176,6 @@ export default {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
     .table-img {
       width: 60px;
       height: 60px;
