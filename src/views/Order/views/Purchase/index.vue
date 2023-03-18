@@ -91,7 +91,7 @@
                 "
                 >备注</el-button
               >
-              <div class="addVal-input">
+              <div class="addVal-input" v-if="showRemarkInputMap[scope.id]">
                 <el-input
                   type="text"
                   placeholder="请输入备注"
