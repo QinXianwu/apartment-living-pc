@@ -80,18 +80,19 @@
               trigger="manual"
               transition="popover"
               v-model="showRemarkInputMap[scope.id]"
+              :append-to-body="false"
             >
               <el-button
                 class="remark-btn"
                 type="text"
                 slot="reference"
-                @click="
-                  showRemarkInputMap = {};
-                  showRemarkInputMap[scope.id] = !showRemarkInputMap[scope.id];
-                "
+                @click="onClickPopover(scope)"
                 >备注</el-button
               >
-              <div class="addVal-input" v-if="showRemarkInputMap[scope.id]">
+              <div
+                class="addVal-input"
+                v-if="showRemarkInputMap[scope.id] && scope.id"
+              >
                 <el-input
                   type="text"
                   placeholder="请输入备注"
@@ -283,6 +284,11 @@ export default {
       this.showDrawerPopup = true;
       this.showProcurementDetail = true;
     },
+    onClickPopover(item) {
+      this.showRemarkInputMap = {};
+      this.showRemarkInputMap[item.id] = !this.showRemarkInputMap[item.id];
+    },
+
     async handleRemark({ id, pdOrderNo }) {
       if (!this.remarkInputMap[id])
         return this.$message.error("请输入备注后再试");
