@@ -79,9 +79,11 @@
               placement="bottom-start"
               trigger="manual"
               transition="popover"
+              popper-class="Purchase-popover"
               v-model="showRemarkInputMap[scope.id]"
-              :append-to-body="false"
+              :ref="`popover-${scope.id}`"
             >
+              <!-- :append-to-body="true" -->
               <el-button
                 class="remark-btn"
                 type="text"
@@ -285,6 +287,10 @@ export default {
       this.showProcurementDetail = true;
     },
     onClickPopover(item) {
+      for (const id in this.showRemarkInputMap) {
+        console.log(this.$refs[`popover-${id}`]);
+        // this.$refs[`popover-${id}`].style.display = "none";
+      }
       this.showRemarkInputMap = {};
       this.showRemarkInputMap[item.id] = !this.showRemarkInputMap[item.id];
     },
@@ -389,13 +395,6 @@ export default {
     @include overflow-eps(2);
   }
 }
-// .remark-btn {
-//   &:after {
-//     content: "|";
-//     color: $--color-primary;
-//     margin: 0 5px;
-//   }
-// }
 .activityTab {
   text-align: left;
 }

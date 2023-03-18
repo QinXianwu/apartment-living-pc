@@ -133,7 +133,7 @@ export const column = [
     label: "操作",
     prop: "action",
     type: "custom",
-    fixed: "right",
+    // fixed: "right",
     width: 250,
   },
 ];
