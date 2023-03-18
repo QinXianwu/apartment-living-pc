@@ -131,11 +131,14 @@ export default {
       // eslint-disable-next-line
       return new Promise(async (resolve) => {
         try {
+          let sum = 0;
           for (const index in this.list) {
-            if (!Number(this.list[index]?.num)) {
-              throw new Error("请输入相关规格采购数量");
-            }
+            // if (!Number(this.list[index]?.num)) {
+            //   throw new Error("请输入相关规格采购数量");
+            // }
+            sum += Number(this.list[index]?.num || 0);
           }
+          if (!sum) throw new Error("请输入相关规格采购数量");
         } catch (error) {
           this.$message.error(error);
           return false;
