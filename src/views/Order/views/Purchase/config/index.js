@@ -99,7 +99,7 @@ export const column = [
     type: "money",
   },
   {
-    label: "收件信息",
+    label: "服务点信息",
     prop: "serveInfo",
     type: "custom",
     minWidth: 150,
