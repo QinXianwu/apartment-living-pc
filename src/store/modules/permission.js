@@ -24,7 +24,6 @@ export function filterAsyncRoutes(routes, permissionHash) {
     tmp.OrderNum = p ? p.OrderNum : 9999; // 如果没有对应的权限，默认设置成大值
 
     // 配置 PermissionIds以及tmp?.meta?.notPassPermissionVerify 为 true
-    // 校验ids中的权限是否存在 全部不存在 则不显示该路由在侧边菜单中
     const PermissionIds = tmp?.meta?.PermissionIds?.length
       ? tmp.meta.PermissionIds
       : [];
