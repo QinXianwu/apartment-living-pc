@@ -23,7 +23,6 @@
             >{{ $CONST.MEMBERSHIP_STATE_TEXT[scope.status] }}</el-tag
           >
         </template>
-        <!-- 操作 -->
         <template #action="{ scope }">
           <div class="action-groud">
             <el-button type="text" @click="handleEdit(scope)"> 编辑 </el-button>
