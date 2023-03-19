@@ -23,7 +23,11 @@
           "
         >
           <el-date-picker
+<<<<<<< HEAD
             v-model="formData.activityTime"
+=======
+            v-model="activityTime"
+>>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
             type="datetime"
             :picker-options="datePickerOptions"
             value-format="yyyy-MM-dd HH:mm:ss"
@@ -144,6 +148,16 @@ export default {
   name: "TeamSharePoints",
   components: { RulesForm, FooterView },
   data() {
+<<<<<<< HEAD
+=======
+    const validateActivityTime = (rule, value, callback) => {
+      if (!this.activityTime) {
+        callback(new Error("请选择活动开始日期"));
+      } else {
+        callback();
+      }
+    };
+>>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
     return {
       CONST,
       datePickerOptions: {
@@ -152,14 +166,24 @@ export default {
         },
       },
       integralCarve: {},
+<<<<<<< HEAD
       formData: {
         activityTime: "",
+=======
+      activityTime: "",
+      formData: {
+>>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
         activityDate: [],
         limitTimeStatus: CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM,
       },
       rules: {
         activityTime: [
+<<<<<<< HEAD
           { required: true, message: "请选择活动开始日期", trigger: "blur" },
+=======
+          // { required: true, message: "请选择活动开始日期", trigger: "blur" },
+          { validator: validateActivityTime, trigger: "blur" },
+>>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
         ],
         activityDate: [
           { required: true, message: "请选择活动日期期限", trigger: "blur" },
@@ -191,6 +215,12 @@ export default {
     },
   },
   methods: {
+<<<<<<< HEAD
+=======
+    changeTime(val) {
+      console.log(val);
+    },
+>>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
     async getDetail() {
       const [, res] = await this.$http.PointsSetting.GetIntegralCarveDetail();
       this.integralCarve = res?.id ? res : {};
@@ -202,7 +232,11 @@ export default {
         this.integralCarve?.limitTimeStatus ||
         CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM;
       if (state === CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM) {
+<<<<<<< HEAD
         this.formData.activityTime = startTime || "";
+=======
+        this.activityTime = startTime || "";
+>>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
       } else if (state === CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LIMITED_TIME) {
         this.formData.activityDate =
           startTime && endTime ? [startTime, endTime] : [];
@@ -227,13 +261,20 @@ export default {
       query.leaderRate = Number(query.leaderRate) / 100;
       query.startTime =
         query.limitTimeStatus === CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM
+<<<<<<< HEAD
           ? query.activityTime
+=======
+          ? this.activityTime
+>>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
           : query.activityDate[0];
       query.endTime =
         query.limitTimeStatus === CONST.INTEGRAL_CARVE_ACTIVITY_TYPE.LONG_TERM
           ? ""
           : query.activityDate[1];
+<<<<<<< HEAD
       delete query.activityTime;
+=======
+>>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
       delete query.activityDate;
       const [, res] = await this.$http.PointsSetting.UpdateIntegralCarve(query);
       if (res) {

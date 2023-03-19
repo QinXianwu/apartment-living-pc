@@ -99,7 +99,11 @@ export const column = [
     type: "money",
   },
   {
+<<<<<<< HEAD
     label: "收件信息",
+=======
+    label: "服务点信息",
+>>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
     prop: "serveInfo",
     type: "custom",
     minWidth: 150,
@@ -133,7 +137,11 @@ export const column = [
     label: "操作",
     prop: "action",
     type: "custom",
+<<<<<<< HEAD
     fixed: "right",
+=======
+    // fixed: "right",
+>>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
     width: 250,
   },
 ];

@@ -41,7 +41,11 @@
                 "
                 >备注</el-button
               >
+<<<<<<< HEAD
               <div class="addVal-input">
+=======
+              <div class="addVal-input" v-if="showRemarkInputMap[scope.userId]">
+>>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
                 <el-input
                   type="text"
                   placeholder="请输入备注"

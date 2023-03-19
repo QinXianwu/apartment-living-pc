@@ -61,6 +61,10 @@ export const column = [
     label: "自提时间",
     prop: "pickingTime",
     width: 180,
+<<<<<<< HEAD
+=======
+    type: "custom",
+>>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
   },
   {
     label: "状态",
