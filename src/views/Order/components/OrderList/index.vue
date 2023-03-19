@@ -115,24 +115,13 @@ export default {
         ...this.page,
         ...this.query,
       };
-<<<<<<< HEAD
-      if (this.orderTypeData?.isAfterSale) {
-        query.operStatus = query.orderStatus;
-        delete query.orderStatus;
-      } else {
-        query.orderStatus =
-          query.orderStatus === String(CONST.ORDER_STATE.ALL)
-            ? ""
-            : query.orderStatus;
-=======
-      query.orderStatus =
+       query.orderStatus =
         String(query.orderStatus) === String(CONST.ORDER_STATE.ALL)
           ? ""
           : query.orderStatus;
       if (this.orderTypeData?.isAfterSale) {
         query.operStatus = query.orderStatus;
         delete query.orderStatus;
->>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
       }
       if (this.receiveWay) query.receiveWay = this.receiveWay;
       if (this.source) query.source = this.source;

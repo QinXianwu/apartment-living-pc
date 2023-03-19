@@ -66,8 +66,6 @@
           }}</el-tag
         >
       </template>
-<<<<<<< HEAD
-=======
       <!-- 自提时间 -->
       <template #pickingTime="{ scope }">
         <span>{{
@@ -77,7 +75,6 @@
             .replace("后天", "")
         }}</span>
       </template>
->>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
       <!-- 售后类型 -->
       <template #type="{ scope }">
         <el-tag>{{ CONST.A_S_RETURNS_TYPE_TEXT[scope.type] }}</el-tag>

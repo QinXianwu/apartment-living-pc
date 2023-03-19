@@ -158,11 +158,7 @@ export default {
       );
       this.isLoading = false;
       this.$message[res ? "success" : "error"](
-<<<<<<< HEAD
-        res?.msg || `提交采购单${res ? "成功" : "失败"}`
-=======
         res?.msg || `提交${res ? "成功" : "失败"}`
->>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
       );
       if (res) this.$emit("close", true);
     },

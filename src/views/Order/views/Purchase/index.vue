@@ -79,29 +79,12 @@
               placement="bottom-start"
               trigger="manual"
               transition="popover"
-<<<<<<< HEAD
               v-model="showRemarkInputMap[scope.id]"
             >
-=======
-              popper-class="Purchase-popover"
-              v-model="showRemarkInputMap[scope.id]"
-              :ref="`popover-${scope.id}`"
-            >
-              <!-- :append-to-body="true" -->
->>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
               <el-button
                 class="remark-btn"
                 type="text"
                 slot="reference"
-<<<<<<< HEAD
-                @click="
-                  showRemarkInputMap = {};
-                  showRemarkInputMap[scope.id] = !showRemarkInputMap[scope.id];
-                "
-                >备注</el-button
-              >
-              <div class="addVal-input">
-=======
                 @click="onClickPopover(scope)"
                 >备注</el-button
               >
@@ -109,7 +92,6 @@
                 class="addVal-input"
                 v-if="showRemarkInputMap[scope.id] && scope.id"
               >
->>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
                 <el-input
                   type="text"
                   placeholder="请输入备注"
@@ -301,8 +283,6 @@ export default {
       this.showDrawerPopup = true;
       this.showProcurementDetail = true;
     },
-<<<<<<< HEAD
-=======
     onClickPopover(item) {
       for (const id in this.showRemarkInputMap) {
         console.log(this.$refs[`popover-${id}`]);
@@ -311,8 +291,6 @@ export default {
       this.showRemarkInputMap = {};
       this.showRemarkInputMap[item.id] = !this.showRemarkInputMap[item.id];
     },
-
->>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
     async handleRemark({ id, pdOrderNo }) {
       if (!this.remarkInputMap[id])
         return this.$message.error("请输入备注后再试");
@@ -413,16 +391,6 @@ export default {
     @include overflow-eps(2);
   }
 }
-<<<<<<< HEAD
-// .remark-btn {
-//   &:after {
-//     content: "|";
-//     color: $--color-primary;
-//     margin: 0 5px;
-//   }
-// }
-=======
->>>>>>> d0739a6b459e4945672b0a74ebdfd09268e7f1ae
 .activityTab {
   text-align: left;
 }
